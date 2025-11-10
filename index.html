@@ -5,16 +5,94 @@
 	<meta name='robots' content='noindex,nofollow'>
 	<title>Venus</title>
 	<style type='text/css'>
+		/* animated background */
+		body {
+			margin: 0;
+			font-family: "Poppins", Arial, sans-serif;
+			background: linear-gradient(-45deg, #4158D0, #C850C0, #FFCC70, #0093E9);
+			background-size: 400% 400%;
+			animation: bgmove 16s ease infinite;
+			min-height: 100vh;
+			color: #fff;
+		}
+		@keyframes bgmove {
+			0% { background-position: 0% 50%; }
+			50% { background-position: 100% 50%; }
+			100% { background-position: 0% 50%; }
+		}
+
+		/* glass container */
+		.glass-wrapper {
+			max-width: 1150px;
+			margin: 40px auto;
+			background: rgba(255,255,255,0.13);
+			border: 1px solid rgba(255,255,255,0.25);
+			box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+			backdrop-filter: blur(12px);
+			-webkit-backdrop-filter: blur(12px);
+			border-radius: 24px;
+			padding: 28px 28px 60px 28px;
+		}
+
 		.spacer { line-height:.7em; }
-		.title { font-size:13pt; font-weight:bold; font-family:"Times New Roman", "Times", serif; color:#000000; }
-		.qnumber { font-size:12pt; font-family:"Times New Roman", "Times", serif; color:#000000; text-align:right; }
-		.choice { font-size:12pt; font-family:"Times New Roman", "Times", serif; color:#000000; }
-		.default { font-size:12pt; font-family:"Times New Roman", "Times", serif; color:#000000; }
-		.qinfo { font-size:12pt; font-family:"Times New Roman", "Times", serif; color:#000000; }
-		.points { font-size:8pt; font-family:"Times New Roman", "Times", serif; color:#000000; }
+		.title {
+			font-size: 20pt;
+			font-weight: 600;
+			font-family: "Poppins", Arial, sans-serif;
+			color:#fff;
+			margin-bottom: 10px;
+		}
+		.qnumber { font-size:12pt; font-family:"Poppins", Arial, sans-serif; color:#fff; text-align:right; }
+		.choice, .default, .qinfo, .points {
+			font-size:12pt;
+			font-family:"Poppins", Arial, sans-serif;
+			color:#fff;
+		}
 		TD.pad { padding: 0pt 4pt 0pt 4pt; }
-		.font1 { font-family:"Times New Roman", "Times", serif; }
-		.font2 { font-family:"Times New Roman", "Times", serif; }
+
+		/* form controls glassy */
+		input[type="text"], input[type="email"], select {
+			background: rgba(255,255,255,0.7);
+			border: none;
+			border-radius: 10px;
+			padding: 6px 10px;
+			margin: 4px 0;
+			color: #000;
+			font-size: 12pt;
+		}
+
+		select {
+			min-width: 65px;
+		}
+
+		img {
+			border-radius: 14px;
+		}
+
+		/* buttons */
+		.actions-row {
+			margin-top: 24px;
+		}
+		.glass-btn {
+			background: rgba(255,255,255,0.2);
+			border: 1px solid rgba(255,255,255,0.4);
+			color: #fff;
+			padding: 10px 22px;
+			border-radius: 14px;
+			cursor: pointer;
+			transition: 0.25s;
+			text-decoration: none;
+			display: inline-block;
+		}
+		.glass-btn:hover {
+			background: rgba(255,255,255,0.35);
+			transform: translateY(-1px);
+		}
+
+		/* table tidy on glass */
+		table {
+			color: #fff;
+		}
 	</style>
 <script type='text/javascript' language='JavaScript1.1'>
 <!--
@@ -267,7 +345,6 @@
 	{
 	}
 
-
 	function CompletionCompare(responseText, answerText)
 	{
 		return(false);
@@ -282,7 +359,7 @@
 		len = s.length;
 		while(i < len && s.charAt(i) == " ")
 		{
-			index = ++i;			
+			index = ++i;
 	    }
 
 		if (len == 0)
@@ -292,7 +369,7 @@
 
 		return(s);
 	}
-	
+
 	function FixMTF(f)
 	{
 	}
@@ -314,7 +391,7 @@
 					if (choices[j].checked)
 						selected[selected.length] = choices[j].value;
 				}
-				
+
 				selected.sort();
 				f.elements[i].value = selected.join(",");
 			}
@@ -337,22 +414,11 @@
 // -->
 </script>
 </head>
-<body onResize='if(document.layers && navigator.appVersion.indexOf("Win") < 0){history.go(0);}'
-bgcolor='#FFFFFF' style='background-image:url(/header.gif); background-repeat:no-repeat'>
+<body onResize='if(document.layers && navigator.appVersion.indexOf("Win") < 0){history.go(0);}'>
+<div class="glass-wrapper">
 <noscript>
 	<h3><font color='#FF0000'>Javascript not enabled</font></h3>
 </noscript>
-<script type='text/javascript' language='JavaScript'>
-<!--
-if (navigator.appName.indexOf("Netscape") >= 0) {
-	if (parseInt(navigator.appVersion.charAt(0)) < 4)
-		alert("This document requires Netscape Navigator version 4.0 or later.");
-} else if (navigator.appName.indexOf("Explorer") >= 0) {
-	if (parseInt(navigator.appVersion.charAt(0)) < 4)
-		alert("This document requires Internet Explorer version 4.0 or later.");
-}
-// -->
-</script>
 <form name='TestForm' action='http://score.examview.com/cgi-bin/results.cgi' method='POST'
 	onSubmit='return(HandleSubmit(this))' onReset='return(AllowReset())'>
 <input type='hidden' name='product_version' value='11.5.0.2'>
@@ -371,12 +437,11 @@ if (navigator.appName.indexOf("Netscape") >= 0) {
 <input type='hidden' name='score_subjective' value='0'>
 <input type='hidden' name='score_details' value=''>
 <input type='hidden' name='score_showresults' value='1'>
-<div class='spacer'>&nbsp;</div>
+
 <div class='default'>
-	<div style='margin-left:1em'>
+	<div style='margin-bottom:1.5em'>
 	<b>Name:</b>&nbsp;<input type='text' name='student_name' size='30'> &nbsp;&nbsp;
-	<b>ID:</b>&nbsp;<input type='text' name='student_id' size='12'><br>
-	<div class='spacer'>&nbsp;</div>
+	<b>ID:</b>&nbsp;<input type='text' name='student_id' size='12'><br><br>
 	<b>Email:</b>&nbsp;<input type='text' name='student_email' size='45'><br><br>
 	</div>
 </div>
@@ -407,7 +472,7 @@ case</span></span></td></tr></table></div>
 <tr valign='baseline'>
 	<td>
 		<select name='MA:1' align='top' onmousewheel='return(false);'>
-			<option value=' '> 
+			<option value=' '>
 			<option value='A'>A
 			<option value='B'>B
 			<option value='C'>C
@@ -419,16 +484,14 @@ case</span></span></td></tr></table></div>
 		<p class='qnumber'>&nbsp;1.&nbsp;</p>
 	</td>
 	<td width='100%'>
-<span class='default'><span style='font-size:12pt'><span style='color:#ff00ff'><img width='123'
-height='73' align='top' alt="ma001-1.jpg" src=".../ma001-1.jpg"
-border='0'></span></span></span>
+<span class='default'><img width='123' height='73' align='top' alt="ma001-1.jpg" src="ma001-1.jpg" border='0'></span>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
 <tr valign='baseline'>
 	<td>
 		<select name='MA:2' align='top' onmousewheel='return(false);'>
-			<option value=' '> 
+			<option value=' '>
 			<option value='A'>A
 			<option value='B'>B
 			<option value='C'>C
@@ -440,16 +503,14 @@ border='0'></span></span></span>
 		<p class='qnumber'>&nbsp;2.&nbsp;</p>
 	</td>
 	<td width='100%'>
-<span class='default'><span style='font-size:12pt'><span style='color:#f810cc'><img width='130'
-height='75' align='top' alt="ma002-1.jpg" src=".../ma002-1.jpg"
-border='0'></span></span></span>
+<span class='default'><img width='130' height='75' align='top' alt="ma002-1.jpg" src="ma002-1.jpg" border='0'></span>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
 <tr valign='baseline'>
 	<td>
 		<select name='MA:3' align='top' onmousewheel='return(false);'>
-			<option value=' '> 
+			<option value=' '>
 			<option value='A'>A
 			<option value='B'>B
 			<option value='C'>C
@@ -461,16 +522,15 @@ border='0'></span></span></span>
 		<p class='qnumber'>&nbsp;3.&nbsp;</p>
 	</td>
 	<td width='100%'>
-<span class='default'><span style='font-size:12pt'><span style='color:#ff00ff'><img width='193'
-height='141' align='top' alt="ma003-1.jpg" src=".../ma003-1.jpg"
-border='0'></span></span><br></span>
+<span class='default'><img width='193'
+height='141' align='top' alt="ma003-1.jpg" src="ma003-1.jpg" border='0'><br></span>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
 <tr valign='baseline'>
 	<td>
 		<select name='MA:4' align='top' onmousewheel='return(false);'>
-			<option value=' '> 
+			<option value=' '>
 			<option value='A'>A
 			<option value='B'>B
 			<option value='C'>C
@@ -482,16 +542,15 @@ border='0'></span></span><br></span>
 		<p class='qnumber'>&nbsp;4.&nbsp;</p>
 	</td>
 	<td width='100%'>
-<span class='default'><span style='font-size:12pt'><span style='color:#f810cc'><img width='121'
-height='25' align='top' alt="ma004-1.jpg" src=".../ma004-1.jpg"
-border='0'></span></span></span>
+<span class='default'><img width='121'
+height='25' align='top' alt="ma004-1.jpg" src="ma004-1.jpg" border='0'></span>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
 <tr valign='baseline'>
 	<td>
 		<select name='MA:5' align='top' onmousewheel='return(false);'>
-			<option value=' '> 
+			<option value=' '>
 			<option value='A'>A
 			<option value='B'>B
 			<option value='C'>C
@@ -504,7 +563,7 @@ border='0'></span></span></span>
 	</td>
 	<td width='100%'>
 <span class='default'><img width='177' height='86' align='top' alt="ma005-1.jpg"
-src=".../ma005-1.jpg" border='0'></span>
+src="ma005-1.jpg" border='0'></span>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
@@ -530,7 +589,7 @@ style='font-size:12pt'>It&#8217;s a ruler.</span></span></td></tr></table></div>
 <tr valign='baseline'>
 	<td>
 		<select name='MA:6' align='top' onmousewheel='return(false);'>
-			<option value=' '> 
+			<option value=' '>
 			<option value='A'>A
 			<option value='B'>B
 			<option value='C'>C
@@ -542,16 +601,16 @@ style='font-size:12pt'>It&#8217;s a ruler.</span></span></td></tr></table></div>
 		<p class='qnumber'>&nbsp;6.&nbsp;</p>
 	</td>
 	<td width='100%'>
-<span class='default'><span style='font-size:12pt'><img width='57' height='37' align='top'
-alt="ma006-1.jpg" src=".../ma006-1.jpg" border='0'><br><br>What&#8217;s
-this?</span></span>
+<span class='default'><img width='57' height='37' align='top'
+alt="ma006-1.jpg" src="ma006-1.jpg" border='0'><br><br>What&#8217;s
+this?</span>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
 <tr valign='baseline'>
 	<td>
 		<select name='MA:7' align='top' onmousewheel='return(false);'>
-			<option value=' '> 
+			<option value=' '>
 			<option value='A'>A
 			<option value='B'>B
 			<option value='C'>C
@@ -563,15 +622,15 @@ this?</span></span>
 		<p class='qnumber'>&nbsp;7.&nbsp;</p>
 	</td>
 	<td width='100%'>
-<span class='default'><span style='font-size:12pt'><img width='126' height='84' align='top'
-alt="ma007-1.jpg" src=".../ma007-1.jpg" border='0'><br>What&#8217;s this?</span></span>
+<span class='default'><img width='126' height='84' align='top'
+alt="ma007-1.jpg" src="ma007-1.jpg" border='0'><br>What&#8217;s this?</span>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
 <tr valign='baseline'>
 	<td>
 		<select name='MA:8' align='top' onmousewheel='return(false);'>
-			<option value=' '> 
+			<option value=' '>
 			<option value='A'>A
 			<option value='B'>B
 			<option value='C'>C
@@ -583,15 +642,15 @@ alt="ma007-1.jpg" src=".../ma007-1.jpg" border='0'><br>What&#8217;s this?</span>
 		<p class='qnumber'>&nbsp;8.&nbsp;</p>
 	</td>
 	<td width='100%'>
-<span class='default'><span style='font-size:12pt'><img width='202' height='99' align='top'
-alt="ma008-1.jpg" src=".../ma008-1.jpg" border='0'><br>What&#8217;s this?</span></span>
+<span class='default'><img width='202' height='99' align='top'
+alt="ma008-1.jpg" src="ma008-1.jpg" border='0'><br>What&#8217;s this?</span>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
 <tr valign='baseline'>
 	<td>
 		<select name='MA:9' align='top' onmousewheel='return(false);'>
-			<option value=' '> 
+			<option value=' '>
 			<option value='A'>A
 			<option value='B'>B
 			<option value='C'>C
@@ -603,15 +662,15 @@ alt="ma008-1.jpg" src=".../ma008-1.jpg" border='0'><br>What&#8217;s this?</span>
 		<p class='qnumber'>&nbsp;9.&nbsp;</p>
 	</td>
 	<td width='100%'>
-<span class='default'><span style='font-size:12pt'><img width='192' height='217' align='top'
-alt="ma009-1.jpg" src=".../ma009-1.jpg" border='0'><br>What&#8217;s this?</span></span>
+<span class='default'><img width='192' height='217' align='top'
+alt="ma009-1.jpg" src="ma009-1.jpg" border='0'><br>What&#8217;s this?</span>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
 <tr valign='baseline'>
 	<td>
 		<select name='MA:10' align='top' onmousewheel='return(false);'>
-			<option value=' '> 
+			<option value=' '>
 			<option value='A'>A
 			<option value='B'>B
 			<option value='C'>C
@@ -623,8 +682,8 @@ alt="ma009-1.jpg" src=".../ma009-1.jpg" border='0'><br>What&#8217;s this?</span>
 		<p class='qnumber'>&nbsp;10.&nbsp;</p>
 	</td>
 	<td width='100%'>
-<span class='default'><span style='font-size:12pt'><img width='154' height='102' align='top'
-alt="ma010-1.jpg" src=".../ma010-1.jpg" border='0'><br>What&#8217;s this?</span></span>
+<span class='default'><img width='154' height='102' align='top'
+alt="ma010-1.jpg" src="ma010-1.jpg" border='0'><br>What&#8217;s this?</span>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
@@ -640,7 +699,7 @@ alt="ma010-1.jpg" src=".../ma010-1.jpg" border='0'><br>What&#8217;s this?</span>
 <tr valign='baseline'>
 	<td>
 		<select name='MC:11' align='top' onmousewheel='return(false);'>
-			<option value=' '> 
+			<option value=' '>
 			<option value='A'>A
 			<option value='B'>B
 		</select>
@@ -649,21 +708,21 @@ alt="ma010-1.jpg" src=".../ma010-1.jpg" border='0'><br>What&#8217;s this?</span>
 		<p class='qnumber'>&nbsp;11.&nbsp;</p>
 	</td>
 	<td width='100%'>
-<div class='default'><span style='font-size:12pt'><img width='241' height='161' align='top'
-alt="mc011-1.jpg" src="/mc011-1.jpg" border='0'><br><br>What&#8217;s this? Is it a
-board?</span></div>
+<div class='default'><img width='241' height='161' align='top'
+alt="mc011-1.jpg" src="mc011-1.jpg" border='0'><br><br>What&#8217;s this? Is it a
+board?</div>
 <div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
 valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
-class='default'><span style='font-size:12pt'>Yes, it is.</span></span></td><td width='4%'><div
-class='choice'>b.</div></td><td width='46%'><span class='default'><span style='font-size:12pt'>No, it
-isn&#8217;t.</span></span></td></tr></table></div>
+class='default'>Yes, it is.</span></td><td width='4%'><div
+class='choice'>b.</div></td><td width='46%'><span class='default'>No, it
+isn&#8217;t.</span></td></tr></table></div>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
 <tr valign='baseline'>
 	<td>
 		<select name='MC:12' align='top' onmousewheel='return(false);'>
-			<option value=' '> 
+			<option value=' '>
 			<option value='A'>A
 			<option value='B'>B
 		</select>
@@ -672,21 +731,21 @@ isn&#8217;t.</span></span></td></tr></table></div>
 		<p class='qnumber'>&nbsp;12.&nbsp;</p>
 	</td>
 	<td width='100%'>
-<div class='default'><span style='font-size:12pt'><img width='126' height='84' align='top'
-alt="mc012-1.jpg" src="/mc012-1.jpg" border='0'><br><br>What&#8217;s this? Is it a
-crayon?</span></div>
+<div class='default'><img width='126' height='84' align='top'
+alt="mc012-1.jpg" src="mc012-1.jpg" border='0'><br><br>What&#8217;s this? Is it a
+crayon?</div>
 <div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
 valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
-class='default'><span style='font-size:12pt'>Yes, it is.</span></span></td><td width='4%'><div
-class='choice'>b.</div></td><td width='46%'><span class='default'><span style='font-size:12pt'>No, it
-isn&#8217;t.</span></span></td></tr></table></div>
+class='default'>Yes, it is.</span></td><td width='4%'><div
+class='choice'>b.</div></td><td width='46%'><span class='default'>No, it
+isn&#8217;t.</span></td></tr></table></div>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
 <tr valign='baseline'>
 	<td>
 		<select name='MC:13' align='top' onmousewheel='return(false);'>
-			<option value=' '> 
+			<option value=' '>
 			<option value='A'>A
 			<option value='B'>B
 		</select>
@@ -695,21 +754,21 @@ isn&#8217;t.</span></span></td></tr></table></div>
 		<p class='qnumber'>&nbsp;13.&nbsp;</p>
 	</td>
 	<td width='100%'>
-<div class='default'><span style='font-size:12pt'><img width='152' height='169' align='top'
-alt="mc013-1.jpg" src="/mc013-1.jpg" border='0'><br>What&#8217;s this? Is it a pencil
-case?</span></div>
+<div class='default'><img width='152' height='169' align='top'
+alt="mc013-1.jpg" src="mc013-1.jpg" border='0'><br>What&#8217;s this? Is it a pencil
+case?</div>
 <div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
 valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
-class='default'><span style='font-size:12pt'>Yes, it is.</span></span></td><td width='4%'><div
-class='choice'>b.</div></td><td width='46%'><span class='default'><span style='font-size:12pt'>No, it
-isn&#8217;t.</span></span></td></tr></table></div>
+class='default'>Yes, it is.</span></td><td width='4%'><div
+class='choice'>b.</div></td><td width='46%'><span class='default'>No, it
+isn&#8217;t.</span></td></tr></table></div>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
 <tr valign='baseline'>
 	<td>
 		<select name='MC:14' align='top' onmousewheel='return(false);'>
-			<option value=' '> 
+			<option value=' '>
 			<option value='A'>A
 			<option value='B'>B
 		</select>
@@ -718,21 +777,21 @@ isn&#8217;t.</span></span></td></tr></table></div>
 		<p class='qnumber'>&nbsp;14.&nbsp;</p>
 	</td>
 	<td width='100%'>
-<div class='default'><span style='font-size:12pt'><img width='144' height='96' align='top'
-alt="mc014-1.jpg" src="/mc014-1.jpg" border='0'><br>What&#8217;s this? Is it a
-pencil?</span></div>
+<div class='default'><img width='144' height='96' align='top'
+alt="mc014-1.jpg" src="mc014-1.jpg" border='0'><br>What&#8217;s this? Is it a
+pencil?</div>
 <div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
 valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
-class='default'><span style='font-size:12pt'>Yes, it is.</span></span></td><td width='4%'><div
-class='choice'>b.</div></td><td width='46%'><span class='default'><span style='font-size:12pt'>No, it
-isn&#8217;t.</span></span></td></tr></table></div>
+class='default'>Yes, it is.</span></td><td width='4%'><div
+class='choice'>b.</div></td><td width='46%'><span class='default'>No, it
+isn&#8217;t.</span></td></tr></table></div>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
 <tr valign='baseline'>
 	<td>
 		<select name='MC:15' align='top' onmousewheel='return(false);'>
-			<option value=' '> 
+			<option value=' '>
 			<option value='A'>A
 			<option value='B'>B
 		</select>
@@ -741,21 +800,21 @@ isn&#8217;t.</span></span></td></tr></table></div>
 		<p class='qnumber'>&nbsp;15.&nbsp;</p>
 	</td>
 	<td width='100%'>
-<div class='default'><span style='font-size:12pt'><img width='127' height='85' align='top'
-alt="mc015-1.jpg" src="/mc015-1.jpg" border='0'><br>What&#8217;s this? Is it a
-rubber?</span></div>
+<div class='default'><img width='127' height='85' align='top'
+alt="mc015-1.jpg" src="mc015-1.jpg" border='0'><br>What&#8217;s this? Is it a
+rubber?</div>
 <div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
 valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
-class='default'><span style='font-size:12pt'>Yes, it is.</span></span></td><td width='4%'><div
-class='choice'>b.</div></td><td width='46%'><span class='default'><span style='font-size:12pt'>No, it
-isn&#8217;t.</span></span></td></tr></table></div>
+class='default'>Yes, it is.</span></td><td width='4%'><div
+class='choice'>b.</div></td><td width='46%'><span class='default'>No, it
+isn&#8217;t.</span></td></tr></table></div>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
 <tr valign='baseline'>
 	<td>
 		<select name='MC:16' align='top' onmousewheel='return(false);'>
-			<option value=' '> 
+			<option value=' '>
 			<option value='A'>A
 			<option value='B'>B
 		</select>
@@ -764,21 +823,21 @@ isn&#8217;t.</span></span></td></tr></table></div>
 		<p class='qnumber'>&nbsp;16.&nbsp;</p>
 	</td>
 	<td width='100%'>
-<div class='default'><span style='font-size:12pt'><img width='100' height='21' align='top'
-alt="mc016-1.jpg" src="/mc016-1.jpg" border='0'><br><br>What&#8217;s this? Is it a
-pencil?</span></div>
+<div class='default'><img width='100' height='21' align='top'
+alt="mc016-1.jpg" src="mc016-1.jpg" border='0'><br><br>What&#8217;s this? Is it a
+pencil?</div>
 <div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
 valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
-class='default'><span style='font-size:12pt'>Yes, it is.</span></span></td><td width='4%'><div
-class='choice'>b.</div></td><td width='46%'><span class='default'><span style='font-size:12pt'>No, it
-isn&#8217;t.</span></span></td></tr></table></div>
+class='default'>Yes, it is.</span></td><td width='4%'><div
+class='choice'>b.</div></td><td width='46%'><span class='default'>No, it
+isn&#8217;t.</span></td></tr></table></div>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
 <tr valign='baseline'>
 	<td>
 		<select name='MC:17' align='top' onmousewheel='return(false);'>
-			<option value=' '> 
+			<option value=' '>
 			<option value='A'>A
 			<option value='B'>B
 		</select>
@@ -787,21 +846,21 @@ isn&#8217;t.</span></span></td></tr></table></div>
 		<p class='qnumber'>&nbsp;17.&nbsp;</p>
 	</td>
 	<td width='100%'>
-<div class='default'><span style='font-size:12pt'><img width='192' height='169' align='top'
-alt="mc017-1.jpg" src="/mc017-1.jpg" border='0'><br><br>What&#8217;s this? Is it a
-desk?</span></div>
+<div class='default'><img width='192' height='169' align='top'
+alt="mc017-1.jpg" src="mc017-1.jpg" border='0'><br><br>What&#8217;s this? Is it a
+desk?</div>
 <div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
 valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
-class='default'><span style='font-size:12pt'>Yes, it is.</span></span></td><td width='4%'><div
-class='choice'>b.</div></td><td width='46%'><span class='default'><span style='font-size:12pt'>No, it
-isn&#8217;t.</span></span></td></tr></table></div>
+class='default'>Yes, it is.</span></td><td width='4%'><div
+class='choice'>b.</div></td><td width='46%'><span class='default'>No, it
+isn&#8217;t.</span></td></tr></table></div>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
 <tr valign='baseline'>
 	<td>
 		<select name='MC:18' align='top' onmousewheel='return(false);'>
-			<option value=' '> 
+			<option value=' '>
 			<option value='A'>A
 			<option value='B'>B
 		</select>
@@ -810,21 +869,21 @@ isn&#8217;t.</span></span></td></tr></table></div>
 		<p class='qnumber'>&nbsp;18.&nbsp;</p>
 	</td>
 	<td width='100%'>
-<div class='default'><span style='font-size:12pt'><img width='202' height='99' align='top'
-alt="mc018-1.jpg" src="/mc018-1.jpg" border='0'><br><br>What&#8217;s this? Is it a
-ruler?</span></div>
+<div class='default'><img width='202' height='99' align='top'
+alt="mc018-1.jpg" src="mc018-1.jpg" border='0'><br><br>What&#8217;s this? Is it a
+ruler?</div>
 <div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
 valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
-class='default'><span style='font-size:12pt'>Yes, it is.</span></span></td><td width='4%'><div
-class='choice'>b.</div></td><td width='46%'><span class='default'><span style='font-size:12pt'>No, it
-isn&#8217;t.</span></span></td></tr></table></div>
+class='default'>Yes, it is.</span></td><td width='4%'><div
+class='choice'>b.</div></td><td width='46%'><span class='default'>No, it
+isn&#8217;t.</span></td></tr></table></div>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
 <tr valign='baseline'>
 	<td>
 		<select name='MC:19' align='top' onmousewheel='return(false);'>
-			<option value=' '> 
+			<option value=' '>
 			<option value='A'>A
 			<option value='B'>B
 		</select>
@@ -833,21 +892,21 @@ isn&#8217;t.</span></span></td></tr></table></div>
 		<p class='qnumber'>&nbsp;19.&nbsp;</p>
 	</td>
 	<td width='100%'>
-<div class='default'><span style='font-size:12pt'><img width='147' height='120' align='top'
-alt="mc019-1.jpg" src="/mc019-1.jpg" border='0'><br><br>What&#8217;s this? Is it a
-pen?</span></div>
+<div class='default'><img width='147' height='120' align='top'
+alt="mc019-1.jpg" src="mc019-1.jpg" border='0'><br><br>What&#8217;s this? Is it a
+pen?</div>
 <div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
 valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
-class='default'><span style='font-size:12pt'>Yes, it is.</span></span></td><td width='4%'><div
-class='choice'>b.</div></td><td width='46%'><span class='default'><span style='font-size:12pt'>No, it
-isn&#8217;t.</span></span></td></tr></table></div>
+class='default'>Yes, it is.</span></td><td width='4%'><div
+class='choice'>b.</div></td><td width='46%'><span class='default'>No, it
+isn&#8217;t.</span></td></tr></table></div>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
 <tr valign='baseline'>
 	<td>
 		<select name='MC:20' align='top' onmousewheel='return(false);'>
-			<option value=' '> 
+			<option value=' '>
 			<option value='A'>A
 			<option value='B'>B
 		</select>
@@ -856,14 +915,14 @@ isn&#8217;t.</span></span></td></tr></table></div>
 		<p class='qnumber'>&nbsp;20.&nbsp;</p>
 	</td>
 	<td width='100%'>
-<div class='default'><span style='font-size:12pt'><img width='162' height='108' align='top'
-alt="mc020-1.jpg" src="/mc020-1.jpg" border='0'><br>What&#8217;s this? Is it a
-board?</span></div>
+<div class='default'><img width='162' height='108' align='top'
+alt="mc020-1.jpg" src="mc020-1.jpg" border='0'><br>What&#8217;s this? Is it a
+board?</div>
 <div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
 valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
-class='default'><span style='font-size:12pt'>Yes, it is.</span></span></td><td width='4%'><div
-class='choice'>b.</div></td><td width='46%'><span class='default'><span style='font-size:12pt'>No, it
-isn&#8217;t.</span></span></td></tr></table></div>
+class='default'>Yes, it is.</span></td><td width='4%'><div
+class='choice'>b.</div></td><td width='46%'><span class='default'>No, it
+isn&#8217;t.</span></td></tr></table></div>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
@@ -879,7 +938,7 @@ isn&#8217;t.</span></span></td></tr></table></div>
 <tr valign='baseline'>
 	<td>
 		<select name='MC:21' align='top' onmousewheel='return(false);'>
-			<option value=' '> 
+			<option value=' '>
 			<option value='A'>A
 			<option value='B'>B
 		</select>
@@ -888,19 +947,19 @@ isn&#8217;t.</span></span></td></tr></table></div>
 		<p class='qnumber'>&nbsp;21.&nbsp;</p>
 	</td>
 	<td width='100%'>
-<div class='default'><span style='font-size:12pt'>What&#8217;s this?</span></div>
+<div class='default'>What&#8217;s this?</div>
 <div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
 valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
-class='default'><span style='font-size:12pt'>It&#8217;s a desk.</span></span></td><td width='4%'><div
-class='choice'>b.</div></td><td width='46%'><span class='default'><span style='font-size:12pt'>It a
-desk.</span></span></td></tr></table></div>
+class='default'>It&#8217;s a desk.</span></td><td width='4%'><div
+class='choice'>b.</div></td><td width='46%'><span class='default'>It a
+desk.</span></td></tr></table></div>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
 <tr valign='baseline'>
 	<td>
 		<select name='MC:22' align='top' onmousewheel='return(false);'>
-			<option value=' '> 
+			<option value=' '>
 			<option value='A'>A
 			<option value='B'>B
 		</select>
@@ -909,19 +968,19 @@ desk.</span></span></td></tr></table></div>
 		<p class='qnumber'>&nbsp;22.&nbsp;</p>
 	</td>
 	<td width='100%'>
-<div class='default'><span style='font-size:12pt'>Is it a chair?</span></div>
+<div class='default'>Is it a chair?</div>
 <div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
 valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
-class='default'><span style='font-size:12pt'>Yes, it is.</span></span></td><td width='4%'><div
-class='choice'>b.</div></td><td width='46%'><span class='default'><span style='font-size:12pt'>Yes,
-is.</span></span></td></tr></table></div>
+class='default'>Yes, it is.</span></td><td width='4%'><div
+class='choice'>b.</div></td><td width='46%'><span class='default'>Yes,
+is.</span></td></tr></table></div>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
 <tr valign='baseline'>
 	<td>
 		<select name='MC:23' align='top' onmousewheel='return(false);'>
-			<option value=' '> 
+			<option value=' '>
 			<option value='A'>A
 			<option value='B'>B
 		</select>
@@ -930,12 +989,12 @@ is.</span></span></td></tr></table></div>
 		<p class='qnumber'>&nbsp;23.&nbsp;</p>
 	</td>
 	<td width='100%'>
-<div class='default'><span style='font-size:12pt'>Is it a book?</span></div>
+<div class='default'>Is it a book?</div>
 <div class='default'><table cellpadding='0' cellspacing='0' width='95%' border='0'><tr
 valign='baseline'><td width='4%'><div class='choice'>a.</div></td><td width='46%'><span
-class='default'><span style='font-size:12pt'>No, it is.</span></span></td><td width='4%'><div
-class='choice'>b.</div></td><td width='46%'><span class='default'><span style='font-size:12pt'>No, it
-isn&#8217;t.</span></span></td></tr></table></div>
+class='default'>No, it is.</span></td><td width='4%'><div
+class='choice'>b.</div></td><td width='46%'><span class='default'>No, it
+isn&#8217;t.</span></td></tr></table></div>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
@@ -945,7 +1004,7 @@ isn&#8217;t.</span></span></td></tr></table></div>
 	<td>
 <div class='spacer'>&nbsp;</div>
 <div class='default'><span style='font-size:12pt'><b>Read and choose the things.<br><br></b><img
-width='313' height='191' align='bottom' alt="nar003-1.jpg" src="/nar003-1.jpg"
+width='313' height='191' align='bottom' alt="nar003-1.jpg" src="nar003-1.jpg"
 border='0'><br><br>Have a look! Look at the pencil case. It&#8217;s really cool! What can you see in
 the pencil case? What&#8217;s this? It&#8217;s a crayon. It&#8217;s orange. <br><br>Look again.
 What&#8217;s this? It&#8217;s a rubber. What&#8217;s this? It&#8217;s a pen. It&#8217;s blue.
@@ -990,7 +1049,7 @@ style='font-size:12pt'>a blue pen</span></span></td></tr></table></div>		<input 
 	<td>
 <div class='spacer'>&nbsp;</div>
 <div class='default'><span style='font-size:12pt'><b>Read and match.<br><br></b><img width='306'
-height='187' align='bottom' alt="grp003-1.jpg" src="/grp003-1.jpg"
+height='187' align='bottom' alt="grp003-1.jpg" src="grp003-1.jpg"
 border='0'><br><br>Have a look! Look at the pencil case. It&#8217;s really cool! What can you see in
 the pencil case? What&#8217;s this? It&#8217;s a crayon. It&#8217;s orange. <br><br>Look again.
 What&#8217;s this? It&#8217;s a rubber. What&#8217;s this? It&#8217;s a pen. It&#8217;s blue.
@@ -1008,7 +1067,7 @@ style='font-size:12pt'>cool.</span></span></td></tr></table></div>
 <tr valign='baseline'>
 	<td>
 		<select name='MA:25' align='top' onmousewheel='return(false);'>
-			<option value=' '> 
+			<option value=' '>
 			<option value='A'>A
 			<option value='B'>B
 			<option value='C'>C
@@ -1018,14 +1077,14 @@ style='font-size:12pt'>cool.</span></span></td></tr></table></div>
 		<p class='qnumber'>&nbsp;25.&nbsp;</p>
 	</td>
 	<td width='100%'>
-<span class='default'><span style='font-size:12pt'>The pencil case is</span></span>
+<span class='default'>The pencil case is</span>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
 <tr valign='baseline'>
 	<td>
 		<select name='MA:26' align='top' onmousewheel='return(false);'>
-			<option value=' '> 
+			<option value=' '>
 			<option value='A'>A
 			<option value='B'>B
 			<option value='C'>C
@@ -1035,14 +1094,14 @@ style='font-size:12pt'>cool.</span></span></td></tr></table></div>
 		<p class='qnumber'>&nbsp;26.&nbsp;</p>
 	</td>
 	<td width='100%'>
-<span class='default'><span style='font-size:12pt'>The pen is</span></span>
+<span class='default'>The pen is</span>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
 <tr valign='baseline'>
 	<td>
 		<select name='MA:27' align='top' onmousewheel='return(false);'>
-			<option value=' '> 
+			<option value=' '>
 			<option value='A'>A
 			<option value='B'>B
 			<option value='C'>C
@@ -1052,7 +1111,7 @@ style='font-size:12pt'>cool.</span></span></td></tr></table></div>
 		<p class='qnumber'>&nbsp;27.&nbsp;</p>
 	</td>
 	<td width='100%'>
-<span class='default'><span style='font-size:12pt'>The crayon is</span></span>
+<span class='default'>The crayon is</span>
 <div class='spacer'>&nbsp;</div>
 	</td>
 </tr>
@@ -1060,20 +1119,12 @@ style='font-size:12pt'>cool.</span></span></td></tr></table></div>
 <br clear='all'>
 <br>
 <br>
-<table align='left' width='100%' cellpadding='0' cellspacing='0' border='0'>
-<tr>
-    <td bgcolor='#000000'>
-    <div style='font-size:1pt'>&nbsp;</div>
-    </td>
-</tr>
-<tr>
-    <td><input type='image' src='/submit.gif' alt='Grade and Submit'>
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<a href='#' onclick='Restart(); return false'><img
-	    src='/restart.gif' border='0' alt='Start Over'></a>
-    </td>
-</tr>
-</table>
+<div class="actions-row">
+	<button type="submit" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);backdrop-filter:blur(12px);color:#fff;padding:10px 22px;border-radius:14px;cursor:pointer;">Grade and Submit</button>
+
+	<a href='#' onclick='Restart(); return false' class="glass-btn">Start Over</a>
+</div>
 </form>
+</div>
 </body>
 </html>
