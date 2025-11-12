@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Oxford Discover 3 — Sky 1 Homework</title>
+<meta name="color-scheme" content="light dark">
+
+<!-- CSP that allows posting to Google Forms + Apps Script -->
+<meta http-equiv="Content-Security-Policy"
+  content="default-src 'self' data: blob:;
+           script-src 'self' 'unsafe-inline';
+           style-src 'self' 'unsafe-inline';
+           img-src 'self' data: blob:;
+           connect-src 'self' https://docs.google.com https://forms.gle https://script.google.com https://script.googleusercontent.com;
+           form-action 'self' https://docs.google.com https://script.google.com https://script.googleusercontent.com;
+           frame-src 'self' https://docs.google.com https://script.google.com https://script.googleusercontent.com;">
+
+<style>
+:root{
+  --tint:#0A84FF; --tint-2:#5AC8FA; --gold:#D4AF37; --ok:#34C759;
+  --bg: color-mix(in srgb, Canvas 96%, transparent);
+  --glass: color-mix(in srgb, Canvas 85%, transparent);
+  --border: color-mix(in srgb, CanvasText 20%, transparent);
+  --radius-xl: 26px; --shadow-1: 0 8px 30px rgba(0,0,0,.18);
+  --shadow-2: 0 2px 0 rgba(255,255,255,.35) inset, 0 1px 0 rgba(255,255,255,.15);
+  --blur: saturate(180%) blur(18px);
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg: color-mix(in srgb, Canvas 10%, black);
+         --glass: color-mix(in srgb, Canvas 16%, transparent);
+         --border: color-mix(in srgb, CanvasText 35%, transparent); }
+}
+*{box-sizing:border-box}
+body{
+  margin:0; font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,system-ui,"Helvetica Neue",Arial,sans-serif; color:CanvasText;
+  background:
+    radial-gradient(900px 600px at 10% -10%, color-mix(in srgb, var(--tint) 15%, transparent), transparent 60%),
+    radial-gradient(1000px 700px at 110% 0%, color-mix(in srgb, var(--gold) 22%, transparent), transparent 70%),
+    linear-gradient(180deg, color-mix(in srgb, var(--bg) 70%, transparent), var(--bg));
+}
+@keyframes sheen{to{transform:translateX(140%)}}
+header{
+  position:sticky; top:0; z-index:20; backdrop-filter:var(--blur); -webkit-backdrop-filter:var(--blur);
+  background: color-mix(in srgb, var(--bg) 70%, transparent); border-bottom:1px solid var(--border);
+}
+.header-wrap{max-width:1100px;margin:auto;padding:18px clamp(16px,3vw,24px);display:flex;align-items:center;gap:16px;justify-content:space-between}
+.badge{padding:4px 10px; border-radius:999px; font-size:12px; color:#fff; background: linear-gradient(135deg, var(--tint), var(--tint-2)); box-shadow: var(--shadow-1);}
+h1{font-size:28px;margin:0}
+.sub{font-size:13px;color:color-mix(in srgb, CanvasText 60%, transparent);margin-top:4px}
+.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+button{
+  appearance:none; position:relative; overflow:hidden; cursor:pointer; border:1px solid var(--border); color:inherit; border-radius:14px;
+  padding:10px 14px; background:linear-gradient(180deg, color-mix(in srgb, var(--glass) 90%, transparent), color-mix(in srgb, var(--glass) 60%, transparent));
+  box-shadow:var(--shadow-1), var(--shadow-2); transition:.2s transform, .2s box-shadow, .25s filter;
+}
+button::before{content:""; position:absolute; inset:0; background:linear-gradient(120deg, rgba(255,255,255,.55), rgba(255,255,255,0) 30% 70%, rgba(255,255,255,.25)); mix-blend-mode:overlay; transform:translateX(-140%);}
+button:hover{transform:translateY(-1px); filter:saturate(1.1)} button:hover::before{animation:sheen .9s ease}
+.btn-primary{background:linear-gradient(180deg, color-mix(in srgb, var(--tint) 92%, #fff 8%), color-mix(in srgb, var(--tint-2) 90%, #000 10%)); color:#fff; border-color:transparent}
+.btn-ghost{background:linear-gradient(180deg, color-mix(in srgb, var(--glass) 92%, transparent), color-mix(in srgb, var(--glass) 60%, transparent));}
+main{max-width:1100px;margin:22px auto 120px auto;padding:0 clamp(16px,3vw,24px)}
+.card{border:1px solid var(--border); border-radius:var(--radius-xl); overflow:hidden; background:linear-gradient(180deg, color-mix(in srgb, var(--glass) 90%, transparent), color-mix(in srgb, var(--glass) 60%, transparent)); box-shadow: var(--shadow-1);}
+.meta{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:18px}
+.meta .field{display:flex;gap:8px;align-items:center}
+.meta .field input, textarea, select{
+  width:100%; padding:12px 14px; border-radius:14px; border:1px solid var(--border);
+  background: linear-gradient(180deg, color-mix(in srgb, Canvas 96%, transparent), color-mix(in srgb, Canvas 92%, transparent));
+  color:inherit; box-shadow: inset 0 1px 0 rgba(255,255,255,.6);
+}
+.meta .field input:focus, textarea:focus, select:focus{outline:2px solid color-mix(in srgb, var(--tint) 50%, transparent); outline-offset:2px}
+.legend{padding:16px;border-top:1px solid var(--border);display:flex;gap:14px;align-items:center;justify-content:space-between}
+.progress{height:10px;background:color-mix(in srgb, CanvasText 12%, transparent);border-radius:999px;overflow:hidden;flex:1;box-shadow:inset 0 2px 4px rgba(0,0,0,.06)}
+.progress>i{display:block;height:100%;width:0;background:linear-gradient(90deg, var(--tint), var(--gold))}
+.steps{display:flex;gap:8px}
+.step{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:linear-gradient(180deg, color-mix(in srgb, var(--glass) 92%, transparent), color-mix(in srgb, var(--glass) 60%, transparent));border:1px solid var(--border); font-size:12px; color:color-mix(in srgb, CanvasText 60%, transparent); box-shadow: var(--shadow-2);}
+.step.done{background:linear-gradient(180deg, color-mix(in srgb, var(--ok) 25%, transparent), color-mix(in srgb, var(--ok) 12%, transparent)); color:var(--ok); border-color:color-mix(in srgb, var(--ok) 55%, transparent)}
+section.accordion{margin-top:22px;display:grid;gap:16px}
+.ac{border:1px solid var(--border);border-radius:20px;overflow:hidden;background:linear-gradient(180deg, color-mix(in srgb, var(--glass) 92%, transparent), color-mix(in srgb, var(--glass) 70%, transparent)); box-shadow:var(--shadow-1)}
+.ac summary{list-style:none;cursor:pointer;padding:16px 18px;display:flex;gap:12px;align-items:center;justify-content:space-between}
+.ac summary::-webkit-details-marker{display:none}
+.ac .title{display:flex;align-items:center;gap:10px;font-weight:700}
+.tag{font-size:12px;padding:4px 10px;background:linear-gradient(135deg, color-mix(in srgb, var(--tint) 18%, transparent), color-mix(in srgb, var(--tint-2) 18%, transparent));color:var(--tint);border-radius:999px}
+.kids{padding:0 18px 18px 18px;display:grid;gap:12px}
+.helper{font-size:14px;color:color-mix(in srgb, CanvasText 60%, transparent)}
+.grid-2{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+textarea{min-height:110px;resize:vertical}
+.inline-bank{display:flex;flex-wrap:wrap;gap:8px}
+.bank-chip{padding:6px 10px; border-radius:999px; border:1px dashed var(--border); background:linear-gradient(180deg, color-mix(in srgb, Canvas 95%, transparent), color-mix(in srgb, Canvas 92%, transparent)); box-shadow:inset 0 1px 0 rgba(255,255,255,.6); font-size:13px}
+.q{padding:12px;border:1px dashed var(--border);border-radius:14px;background:linear-gradient(180deg, color-mix(in srgb, Canvas 98%, transparent), color-mix(in srgb, Canvas 94%, transparent))}
+.q label{font-weight:700;display:block;margin-bottom:6px}
+.q .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.q select, .q input[type="number"]{padding:8px 10px;border-radius:10px;border:1px solid var(--border);background:linear-gradient(180deg, color-mix(in srgb, Canvas 98%, transparent), color-mix(in srgb, Canvas 94%, transparent))}
+.small{font-size:13px}
+footer.actions{position:fixed;bottom:10px;left:0;right:0;z-index:40;display:flex;justify-content:center;padding:8px}
+.actions .bar{display:flex;gap:10px;padding:12px 12px;border-radius:18px;background:linear-gradient(180deg, color-mix(in srgb, var(--bg) 70%, transparent), color-mix(in srgb, var(--bg) 40%, transparent));border:1px solid var(--border); box-shadow:var(--shadow-1); backdrop-filter:var(--blur)}
+.notice{font-size:12px;color:color-mix(in srgb, CanvasText 60%, transparent);margin-left:6px}
+.icon{width:18px;height:18px;display:inline-block;vertical-align:-3px;background:conic-gradient(from 90deg, var(--gold) 0 25%, transparent 0 100%);border-radius:4px;margin-right:6px}
+#fx{position:fixed;pointer-events:none;inset:0;z-index:100}
+.toast{position:fixed; right:18px; bottom:18px; padding:12px 14px; z-index:120; border:1px solid var(--border); border-radius:14px; background:linear-gradient(180deg, color-mix(in srgb, var(--glass) 95%, transparent), color-mix(in srgb, var(--glass) 75%, transparent)); backdrop-filter:var(--blur); box-shadow:var(--shadow-1); display:none;}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-wrap">
+    <div class="h-title">
+      <span class="badge">Happy English Club</span>
+      <div>
+        <h1>Oxford Discover 3 — Sky 1</h1>
+        <div class="sub">Teacher Victor • Due 15 Nov • Interactive homework</div>
+      </div>
+    </div>
+    <div class="controls">
+      <button id="printBtn">Print / Save PDF</button>
+      <button id="clearBtn" class="btn-ghost">Clear my data</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Meta -->
+  <div class="card">
+    <div class="meta">
+      <div class="field"><strong>Student name</strong>
+        <input id="studentName" required placeholder="Type your full name" autocomplete="off">
+      </div>
+      <div class="field"><strong>Class</strong><input value="Sky 1" disabled></div>
+      <div class="field"><strong>Teacher</strong><input value="Victor" disabled></div>
+      <div class="field"><strong>School</strong><input value="Happy English Club" disabled></div>
+      <div class="field"><strong>Parent email</strong><input id="parentEmail" type="email" placeholder="optional"></div>
+      <div class="field"><div><strong>Tip</strong><br><small class="small">Your work saves automatically on this device.</small></div></div>
+    </div>
+    <div class="legend">
+      <div class="steps" id="steps">
+        <div class="step">A</div><div class="step">B</div><div class="step">C</div><div class="step">D</div><div class="step">F</div><div class="step">✓</div>
+      </div>
+      <div class="progress"><i id="progressFill"></i></div>
+    </div>
+  </div>
+
+  <!-- Accordion -->
+  <section class="accordion" id="accordion">
+
+    <!-- A. Vocabulary (scrambled) -->
+    <details class="ac" open data-section="A">
+      <summary><div class="title"><span class="icon"></span> Part A — Words</div><span class="tag" id="tag-A">Start</span></summary>
+      <div class="kids">
+        <div class="helper">Word bank:</div><div class="inline-bank" id="wordBank"></div>
+        <div class="q">
+          <label>Match the meanings. The order changes each time.</label>
+          <div id="vocabMatch" class="grid-2"></div>
+        </div>
+        <div class="q">
+          <label>Write 5 sentences. Use the frames.</label>
+          <textarea data-k="A.s1" placeholder="I like ______ in the (season)."></textarea>
+          <textarea data-k="A.s2" placeholder="My family is ______ this weekend."></textarea>
+          <textarea data-k="A.s3" placeholder="We are ______ to get ready for the move."></textarea>
+          <textarea data-k="A.s4" placeholder="Yesterday I tried ______ for the first time."></textarea>
+          <textarea data-k="A.s5" placeholder="After we finish ______, we will rest."></textarea>
+        </div>
+        <button class="btn-primary next">Mark A done</button>
+      </div>
+    </details>
+
+    <!-- B -->
+    <details class="ac" data-section="B">
+      <summary><div class="title"><span class="icon"></span> Part B — Think & Write</div><span class="tag" id="tag-B">Start</span></summary>
+      <div class="kids">
+        <div class="q"><label>1) What do you like about your city?</label><textarea data-k="B.q1" placeholder="I like ______ because ______."></textarea></div>
+        <div class="q"><label>2) What is it like to move far away?</label><textarea data-k="B.q2" placeholder="I think moving far away is ______. It is ______ because ______."></textarea></div>
+        <div class="q"><label>3) Why is moving good?</label><textarea data-k="B.q3" placeholder="It is good because ______. You can ______ and ______."></textarea></div>
+        <button class="btn-primary next">Mark B done</button>
+      </div>
+    </details>
+
+    <!-- C -->
+    <details class="ac" data-section="C">
+      <summary><div class="title"><span class="icon"></span> Part C — Sequence of Events</div><span class="tag" id="tag-C">Start</span></summary>
+      <div class="kids">
+        <div class="q">
+          <label>Story 1</label><div class="helper small">Number the events. Use 1–3.</div>
+          <div class="grid-2">
+            <div class="row"><input type="number" min="1" max="3" data-k="C.s1.a" style="width:70px"> lived in Portugal</div>
+            <div class="row"><input type="number" min="1" max="3" data-k="C.s1.b" style="width:70px"> moved to Brazil</div>
+            <div class="row"><input type="number" min="1" max="3" data-k="C.s1.c" style="width:70px"> went to a new school</div>
+          </div>
+        </div>
+        <div class="q">
+          <label>Story 2</label>
+          <div class="grid-2">
+            <div class="row"><input type="number" min="1" max="3" data-k="C.s2.a" style="width:70px"> loaded the car</div>
+            <div class="row"><input type="number" min="1" max="3" data-k="C.s2.b" style="width:70px"> met neighbors</div>
+            <div class="row"><input type="number" min="1" max="3" data-k="C.s2.c" style="width:70px"> packed boxes</div>
+          </div>
+        </div>
+        <div class="q">
+          <label>Story 3</label>
+          <div class="grid-2">
+            <div class="row"><input type="number" min="1" max="3" data-k="C.s3.a" style="width:70px"> went shopping</div>
+            <div class="row"><input type="number" min="1" max="3" data-k="C.s3.b" style="width:70px"> checked the map</div>
+            <div class="row"><input type="number" min="1" max="3" data-k="C.s3.c" style="width:70px"> drove to the new house</div>
+          </div>
+        </div>
+        <div class="q">
+          <label>Build a timeline</label>
+          <div class="grid-2">
+            <input data-k="C.t1" placeholder="First …">
+            <input data-k="C.t2" placeholder="Next …">
+            <input data-k="C.t3" placeholder="Finally …">
+          </div>
+        </div>
+        <button class="btn-primary next">Mark C done</button>
+      </div>
+    </details>
+
+    <!-- D -->
+    <details class="ac" data-section="D">
+      <summary><div class="title"><span class="icon"></span> Part D — My Move or Dream Move</div><span class="tag" id="tag-D">Start</span></summary>
+      <div class="kids">
+        <div class="grid-2">
+          <div class="q">
+            <label>Planner</label>
+            <input data-k="D.from" placeholder="From">
+            <input data-k="D.to" placeholder="To">
+            <input data-k="D.when" placeholder="When">
+            <input data-k="D.who" placeholder="Who moves with you">
+            <input data-k="D.step1" placeholder="Step 1">
+            <input data-k="D.step2" placeholder="Step 2">
+            <input data-k="D.step3" placeholder="Step 3">
+            <input data-k="D.step4" placeholder="Step 4">
+            <input data-k="D.new" placeholder="New things I will do">
+          </div>
+          <div class="q">
+            <label>Paragraph (6–10 sentences). Use time words.</label>
+            <textarea data-k="D.par" placeholder="First we… Before that… Next… After that… Finally… In my new city I will… I feel… because…"></textarea>
+          </div>
+        </div>
+        <button class="btn-primary next">Mark D done</button>
+      </div>
+    </details>
+
+    <!-- F -->
+    <details class="ac" data-section="F">
+      <summary><div class="title"><span class="icon"></span> Part F — Grammar Quick Check</div><span class="tag" id="tag-F">Start</span></summary>
+      <div class="kids">
+        <div class="q">
+          <label>Circle the correct word</label>
+          <div class="grid-2">
+            <div>We <select data-k="F.g1"><option value="">—</option><option>pack</option><option>packed</option></select> our things yesterday.</div>
+            <div>First we <select data-k="F.g2a"><option value="">—</option><option>move</option><option>moved</option></select>, then we <select data-k="F.g2b"><option value="">—</option><option>meet</option><option>met</option></select> our neighbors.</div>
+            <div>Before we left, we <select data-k="F.g3"><option value="">—</option><option>shop</option><option>shopped</option></select> for boxes.</div>
+          </div>
+        </div>
+        <div class="q">
+          <label>Combine with “before” or “after”</label>
+          <input data-k="F.c1" placeholder="We packed. We went shopping. →">
+          <input data-k="F.c2" placeholder="I went to my new school. I moved to the city. →">
+        </div>
+        <button class="btn-primary next">Mark F done</button>
+      </div>
+    </details>
+
+    <!-- Checklist -->
+    <details class="ac" data-section="Checklist">
+      <summary><div class="title"><span class="icon"></span> Final check</div><span class="tag" id="tag-Checklist">Start</span></summary>
+      <div class="kids">
+        <label class="small">Tick when done:</label>
+        <div class="grid-2 small">
+          <label><input type="checkbox" data-k="CL.1"> Used 4+ time words</label>
+          <label><input type="checkbox" data-k="CL.2"> Used 4+ vocabulary words</label>
+          <label><input type="checkbox" data-k="CL.3"> Events in clear order</label>
+          <label><input type="checkbox" data-k="CL.4"> Capitals and punctuation</label>
+          <label><input type="checkbox" data-k="CL.5"> Reread</label>
+        </div>
+        <button class="btn-primary next">Complete</button>
+        <div class="helper small">A green check will appear in the header when each part is done.</div>
+      </div>
+    </details>
+
+  </section>
+</main>
+
+<footer class="actions">
+  <div class="bar">
+    <button id="submitBtn" class="btn-primary">Submit to Teacher</button>
+    <span class="notice">Autosaves locally • Sends to Google Form + Google Doc</span>
+  </div>
+</footer>
+
+<div id="toast" class="toast">Submitted to teacher.</div>
+<canvas id="fx"></canvas>
+
+<script>
+/* ===== Google Form mapping =====
+   Form action resolved from your link:
+   https://docs.google.com/forms/d/e/1FAIpQLSeVstxYs3B_SzhOsk-Lxe96ilZdPOokT2qiE0ucDQlNBB4sGg/formResponse
+   Field IDs from your prefilled URL:
+     Name   → entry.1714798495
+     Answers→ entry.1036145399
+====================================================== */
+const FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSeVstxYs3B_SzhOsk-Lxe96ilZdPOokT2qiE0ucDQlNBB4sGg/formResponse';
+const FIELD_NAME = 'entry.1714798495';
+const FIELD_JSON = 'entry.1036145399';
+
+/* ===== Apps Script Web App (Google Doc writer) =====
+   Deploy your script as a Web App (Execute as Me, Anyone).
+   Replace the two constants below. They are required.
+*/
+const DOC_WEB_APP_URL = 'REPLACE_WITH_YOUR_APPS_SCRIPT_WEB_APP_URL';
+const DOC_SHARED_SECRET = 'REPLACE_WITH_YOUR_SHARED_SECRET';
+
+/* ---------- Scoring + extract open-ended ---------- */
+function norm(s){
+  return (s||"")
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/[^a-z0-9\s]/g,"")
+    .replace(/\s+/g," ")
+    .trim();
+}
+
+const A_KEY = {
+  "Putting things in boxes": ["packing","pack","we pack","to pack"],
+  "Going to a new city": ["moving","move","to move"],
+  "Saying hello to new people": ["meeting neighbors","meet neighbors","meeting people","meet people","meeting new neighbors"],
+  "Buying things": ["shopping","shop","to shop"],
+  "Skating on ice": ["ice skating","skating on ice","iceskating","ice-skating"],
+  "Catching fish": ["fishing","go fishing","to fish","fish"],
+  "Cleaning leaves in the yard": ["raking leaves","rake leaves","raking the leaves"],
+  "Moving to music": ["dancing","dance","to dance"],
+  "Throwing balls of snow": ["throwing snowballs","snowball fight","snowballs"],
+  "Going down a snowy hill": ["sledding","sledging","to sled","sledge"]
+};
+// expected orders for Part C
+const C_KEY = {
+  story1: { portugal: 1, moved_brazil: 2, new_school: 3 },
+  story2: { packed: 1, loaded: 2, met: 3 },
+  story3: { checked_map: 1, went_shopping: 2, drove: 3 }
+};
+// correct choices for Part F
+const F_KEY = { g1: "packed", g2a: "moved", g2b: "met", g3: "shopped" };
+
+function scoreSubmission(payload){
+  const out = { sections:{}, total:0, max:0, percent:0 };
+
+  // A. Vocabulary match (10 items)
+  let aCorrect = 0, aTotal = 0, aDetail = [];
+  if (payload?.A?.match?.length){
+    payload.A.match.forEach(it=>{
+      const prompt = it?.prompt || "";
+      const ans = norm(it?.answer);
+      const valid = (A_KEY[prompt]||[]).map(norm);
+      const ok = ans && valid.some(v => ans === v || ans.includes(v) || v.includes(ans));
+      aDetail.push({prompt, answer: it?.answer||"", ok});
+      aCorrect += ok ? 1 : 0;
+      aTotal += 1;
+    });
+  }
+  out.sections.A = { correct:aCorrect, total:aTotal, detail:aDetail };
+
+  // C. Sequence (9 points total)
+  let cCorrect = 0, cTotal = 0, cDetail = {};
+  ["story1","story2","story3"].forEach(s=>{
+    const key = C_KEY[s], given = payload?.C?.[s] || {};
+    cDetail[s] = {};
+    Object.keys(key).forEach(k=>{
+      const want = key[k];
+      const got = Number(given[k]||"");
+      const ok = got === want;
+      cDetail[s][k] = {want, got: isNaN(got)? null : got, ok};
+      cCorrect += ok ? 1 : 0;
+      cTotal += 1;
+    });
+  });
+  out.sections.C = { correct:cCorrect, total:cTotal, detail:cDetail };
+
+  // F. Grammar choices (4 points)
+  let fCorrect = 0, fTotal = 0, fDetail = {};
+  const ch = payload?.F?.choose || {};
+  Object.entries(F_KEY).forEach(([k, want])=>{
+    const got = (ch[k]||"").toLowerCase();
+    const ok = got === want;
+    fDetail[k] = {want, got, ok};
+    fCorrect += ok ? 1 : 0;
+    fTotal += 1;
+  });
+  out.sections.F = { correct:fCorrect, total:fTotal, detail:fDetail };
+
+  // Totals
+  out.total = aCorrect + cCorrect + fCorrect;
+  out.max = aTotal + cTotal + fTotal;
+  out.percent = out.max > 0 ? Math.round(100 * out.total / out.max) : 0;
+  return out;
+}
+
+function extractOpenEnded(payload){
+  const safe = v => (v ?? "").toString();
+  const arr = v => Array.isArray(v) ? v : [];
+  return {
+    A_sentences: arr(payload?.A?.sentences).filter(Boolean),
+    B_q1: safe(payload?.B?.q1),
+    B_q2: safe(payload?.B?.q2),
+    B_q3: safe(payload?.B?.q3),
+    C_timeline: {
+      first: safe(payload?.C?.timeline?.first),
+      next: safe(payload?.C?.timeline?.next),
+      finally: safe(payload?.C?.timeline?.finally)
+    },
+    D_paragraph: safe(payload?.D?.paragraph || payload?.D?.par),
+    F_combine: {
+      c1: safe(payload?.F?.combine?.c1),
+      c2: safe(payload?.F?.combine?.c2)
+    }
+  };
+}
+
+/* ===== UI + data plumbing ===== */
+const DUE_TEXT = "15 Nov";
+const STORAGE_PREFIX = "od3_sky1_";
+
+const $ = (s, el=document)=>el.querySelector(s);
+const $$ = (s, el=document)=>[...el.querySelectorAll(s)];
+const progressFill = $("#progressFill");
+const stepEls = $$("#steps .step");
+const nameInput = $("#studentName");
+const parentEmail = $("#parentEmail");
+
+function toast(msg="Submitted"){ const t=$("#toast"); t.textContent=msg; t.style.display="block"; setTimeout(()=>t.style.display="none", 2800); }
+
+/* Vocabulary scramble */
+const WORD_BANK = ["packing","moving","meeting neighbors","shopping","ice skating","fishing","raking leaves","dancing","throwing snowballs","sledding"];
+const VOCAB_PROMPTS = ["Putting things in boxes","Going to a new city","Saying hello to new people","Buying things","Skating on ice","Catching fish","Cleaning leaves in the yard","Moving to music","Throwing balls of snow","Going down a snowy hill"];
+function shuffle(a){ return a.map(v=>({v, r:Math.random()})).sort((a,b)=>a.r-b.r).map(o=>o.v); }
+function renderVocab(){
+  const bank = $("#wordBank"); bank.innerHTML="";
+  shuffle(WORD_BANK).forEach(w=>{ const span=document.createElement("span"); span.className="bank-chip"; span.textContent=w; bank.appendChild(span); });
+  const box = $("#vocabMatch"); box.innerHTML="";
+  const prompts = shuffle(VOCAB_PROMPTS.slice());
+  prompts.forEach((text, i)=>{ const wrap=document.createElement("div"); wrap.innerHTML = `<div class="row small"><strong>${i+1}.</strong> ${text} →</div><input data-k="A.match.${i+1}" data-prompt="${text}" placeholder="write the word">`; box.appendChild(wrap); });
+}
+
+/* Autosave */
+function storageKey(){ const n=(nameInput.value||"").trim(); return STORAGE_PREFIX + (n||"_anon_"); }
+function save(){
+  const data={};
+  $$("[data-k]").forEach(el=>{ data[el.dataset.k] = el.type==="checkbox" ? el.checked : el.value; if(el.dataset.prompt) data[el.dataset.k+"_prompt"] = el.dataset.prompt; });
+  data.meta = { studentName: nameInput.value.trim(), parentEmail: parentEmail.value.trim(), class: "Sky 1", teacher: "Victor", school:"Happy English Club", due:DUE_TEXT };
+  localStorage.setItem(storageKey(), JSON.stringify(data));
+  updateProgress();
+}
+function load(){
+  const raw=localStorage.getItem(storageKey()); if(!raw) return;
+  try{
+    const data=JSON.parse(raw);
+    $$("[data-k]").forEach(el=>{ if(data[el.dataset.k]!==undefined){ if(el.type==="checkbox") el.checked = !!data[el.dataset.k]; else el.value = data[el.dataset.k]; }});
+    if(data.meta){ nameInput.value=data.meta.studentName||nameInput.value; parentEmail.value=data.meta.parentEmail||parentEmail.value; }
+  }catch(_){}
+  updateProgress();
+}
+document.addEventListener("input", e=>{ if(e.target.matches("[data-k], input, textarea, select")) save(); });
+nameInput.addEventListener("input", ()=>{ load(); save(); });
+parentEmail.addEventListener("input", save);
+
+/* Progress + Section flow */
+function markSectionDone(idx){ stepEls[idx].classList.add("done"); updateProgress(); confetti(); }
+function updateProgress(){ const all=$$("[data-k]"); const filled=all.filter(i=> i.type==="checkbox" ? i.checked : (i.value||"").trim().length>0).length; const pct=Math.round((filled/all.length)*100); progressFill.style.width=pct+"%"; }
+$$("details.ac").forEach((d,idx)=>{
+  d.addEventListener("toggle",()=>{ if(d.open){ $$("details.ac").forEach(o=>{ if(o!==d) o.removeAttribute("open"); }); }});
+  const btn=d.querySelector(".next"); if(btn){ btn.addEventListener("click", e=>{ e.preventDefault(); markSectionDone(idx); const list=$$("details.ac"); if(list[idx+1]) list[idx+1].setAttribute("open","open"); d.removeAttribute("open"); }); }
+});
+$("#printBtn").addEventListener("click",()=>window.print());
+$("#clearBtn").addEventListener("click",()=>{ if(confirm("Clear all saved answers on this device?")){ localStorage.removeItem(storageKey()); $$("[data-k]").forEach(i=>{ if(i.type==="checkbox") i.checked=false; else i.value=""; }); updateProgress(); }});
+
+/* Collect JSON */
+function collectJSON(){
+  const A = { match: [], sentences: [] };
+  $$("[data-k^='A.match.']").forEach(el=>{ A.match.push({ prompt: el.dataset.prompt, answer: (el.value||"").trim() }); });
+  for(let i=1;i<=5;i++){ A.sentences.push($(`[data-k="A.s${i}"]`).value||""); }
+  const B = { q1:$(`[data-k="B.q1"]`).value||"", q2:$(`[data-k="B.q2"]`).value||"", q3:$(`[data-k="B.q3"]`).value||"" };
+  const C = {
+    story1:{ portugal:$(`[data-k="C.s1.a"]`).value||"", moved_brazil:$(`[data-k="C.s1.b"]`).value||"", new_school:$(`[data-k="C.s1.c"]`).value||"" },
+    story2:{ loaded:$(`[data-k="C.s2.a"]`).value||"", met:$(`[data-k="C.s2.b"]`).value||"", packed:$(`[data-k="C.s2.c"]`).value||"" },
+    story3:{ shopping:$(`[data-k="C.s3.a"]`).value||"", checked_map:$(`[data-k="C.s3.b"]`).value||"", drove:$(`[data-k="C.s3.c"]`).value||"" },
+    timeline:{ first:$(`[data-k="C.t1"]`).value||"", next:$(`[data-k="C.t2"]`).value||"", finally:$(`[data-k="C.t3"]`).value||"" }
+  };
+  const D = { planner:{ from:$(`[data-k="D.from"]`).value||"", to:$(`[data-k="D.to"]`).value||"", when:$(`[data-k="D.when"]`).value||"", who:$(`[data-k="D.who"]`).value||"", step1:$(`[data-k="D.step1"]`).value||"", step2:$(`[data-k="D.step2"]`).value||"", step3:$(`[data-k="D.step3"]`).value||"", step4:$(`[data-k="D.step4"]`).value||"", new:$(`[data-k="D.new"]`).value||"" }, paragraph:$(`[data-k="D.par"]`).value||"" };
+  const F = { choose:{ g1:$(`[data-k="F.g1"]`).value||"", g2a:$(`[data-k="F.g2a"]`).value||"", g2b:$(`[data-k="F.g2b"]`).value||"", g3:$(`[data-k="F.g3"]`).value||"" }, combine:{ c1:$(`[data-k="F.c1"]`).value||"", c2:$(`[data-k="F.c2"]`).value||"" } };
+  const checklist = { time_words:$(`[data-k="CL.1"]`).checked||false, vocab_words:$(`[data-k="CL.2"]`).checked||false, clear_order:$(`[data-k="CL.3"]`).checked||false, punctuation:$(`[data-k="CL.4"]`).checked||false, reread:$(`[data-k="CL.5"]`).checked||false };
+  const meta = { student: nameInput.value.trim(), parent_email: parentEmail.value.trim(), klass: "Sky 1", teacher: "Victor", school: "Happy English Club", due: "15 Nov", submitted_at: new Date().toISOString() };
+  return { meta, A, B, C, D, F, checklist };
+}
+
+/* Compact JSON to fit Google Form limits */
+function compactJSON(obj){
+  const pruned = JSON.stringify(obj, (k,v)=> v==="" ? undefined : v);
+  const MAX = 9000;
+  return pruned.length>MAX ? pruned.slice(0,MAX-3)+'...' : pruned;
+}
+
+/* Submit to Google Form */
+function submitToGoogleForm(json){
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = FORM_ACTION;
+  form.style.display = 'none';
+
+  const add = (name, value) => { const i=document.createElement('input'); i.name=name; i.value=value; form.appendChild(i); };
+  add(FIELD_NAME, json.meta.student || '');
+  add(FIELD_JSON, compactJSON(json));
+  add('fvv','1'); add('draftResponse','[]'); add('pageHistory','0');
+
+  const sink = document.createElement('iframe');
+  sink.name = 'sink';
+  sink.style.display = 'none';
+  document.body.appendChild(sink);
+  form.target = 'sink';
+
+  document.body.appendChild(form);
+  form.submit();
+
+  setTimeout(()=>{ form.remove(); sink.remove(); }, 2500);
+}
+
+/* Send to Google Doc via Apps Script Web App */
+function sendScoreAndOpenEndedToDoc(payload){
+  if (DOC_WEB_APP_URL.startsWith('REPLACE_') || DOC_SHARED_SECRET.startsWith('REPLACE_')){
+    console.warn('Apps Script URL/secret not set. Skipping Doc export.');
+    return;
+  }
+  // attach client score for display; server may rescore
+  const score = scoreSubmission(payload);
+  payload.score = score;
+  payload.openEnded = extractOpenEnded(payload);
+
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = DOC_WEB_APP_URL;
+  form.style.display = 'none';
+
+  const add = (name, value) => { const i=document.createElement('input'); i.name=name; i.value=value; form.appendChild(i); };
+  add('token', DOC_SHARED_SECRET);
+  add('payload', JSON.stringify(payload));
+
+  const sink = document.createElement('iframe');
+  sink.name = 'sink_doc';
+  sink.style.display = 'none';
+  document.body.appendChild(sink);
+  form.target = 'sink_doc';
+
+  document.body.appendChild(form);
+  form.submit();
+
+  setTimeout(()=>{ form.remove(); sink.remove(); }, 2500);
+}
+
+/* Submit button */
+document.getElementById("submitBtn").addEventListener("click", (e)=>{
+  e.preventDefault();
+  const name = document.getElementById("studentName").value.trim();
+  if (!name){ alert('Type your full name before submitting.'); return; }
+
+  const json = collectJSON();
+  const score = scoreSubmission(json);
+  json.score = score;
+
+  submitToGoogleForm(json);
+  sendScoreAndOpenEndedToDoc(json);
+
+  toast(`Submitted. Score: ${score.total}/${score.max} (${score.percent}%)`);
+  confetti();
+});
+
+/* Confetti */
+function confetti(){
+  const canvas=$("#fx"), ctx=canvas.getContext("2d");
+  canvas.width=innerWidth; canvas.height=innerHeight;
+  const n=120, parts=[];
+  for(let i=0;i<n;i++){ parts.push({x:Math.random()*canvas.width,y:-20-Math.random()*40,s:2+Math.random()*3,v:1+Math.random()*2,a:Math.random()*Math.PI,h:Math.random()<.5?205:46}); }
+  let t=0, raf;
+  (function tick(){ t++; ctx.clearRect(0,0,canvas.width,canvas.height);
+    parts.forEach(p=>{ p.y+=p.v; p.x+=Math.sin(p.a+=.06)*.9; ctx.fillStyle=`hsl(${p.h}deg 80% ${60+20*Math.sin(t/20)}%)`; ctx.fillRect(p.x,p.y,p.s,p.s*2); });
+    if(t<150) raf=requestAnimationFrame(tick); else { cancelAnimationFrame(raf); ctx.clearRect(0,0,canvas.width,canvas.height); }
+  })();
+}
+
+/* Init */
+window.addEventListener("load", ()=>{ renderVocab(); load(); });
+document.addEventListener("keydown", e=>{ if(e.key==="Escape"){ const open=$("details.ac[open]"); if(open) open.removeAttribute("open"); }});
+</script>
+</body>
+</html>
