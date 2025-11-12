@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jupiter — OD1 Units 4 & 5 Test</title>
+<meta name="color-scheme" content="light dark">
+<meta http-equiv="Content-Security-Policy"
+  content="default-src 'self' data: blob:;
+           script-src 'self' 'unsafe-inline';
+           style-src 'self' 'unsafe-inline';
+           img-src 'self' data:;
+           connect-src 'self';
+           form-action 'self' https://docs.google.com;
+           frame-src 'self' https://docs.google.com;">
+<style>
+:root{
+  --tint:#0A84FF; --tint2:#5AC8FA; --ok:#34C759; --gold:#D4AF37;
+  --bg: color-mix(in srgb, Canvas 96%, transparent);
+  --glass: color-mix(in srgb, Canvas 86%, transparent);
+  --border: color-mix(in srgb, CanvasText 16%, transparent);
+  --shadow1: 0 18px 60px rgba(0,0,0,.20);
+  --blur: saturate(180%) blur(18px);
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg: color-mix(in srgb, Canvas 12%, black);
+         --glass: color-mix(in srgb, Canvas 18%, transparent);
+         --border: color-mix(in srgb, CanvasText 35%, transparent); }
+}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,system-ui,"Helvetica Neue",Arial,sans-serif;color:CanvasText;
+  background:
+   radial-gradient(900px 600px at -10% -10%, color-mix(in srgb, var(--tint) 16%, transparent), transparent 60%),
+   radial-gradient(1000px 700px at 110% 0%, color-mix(in srgb, var(--gold) 22%, transparent), transparent 70%),
+   linear-gradient(180deg, color-mix(in srgb, var(--bg) 70%, transparent), var(--bg));
+}
+header{position:sticky;top:0;z-index:20;backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+  background:color-mix(in srgb, var(--bg) 75%, transparent);border-bottom:1px solid var(--border)}
+.hwrap{display:flex;gap:12px;align-items:center;justify-content:space-between;max-width:900px;margin:auto;padding:14px}
+h1{margin:0;font-size:18px}
+.badge{font-size:12px;padding:6px 12px;border-radius:999px;color:#fff;background:linear-gradient(135deg,var(--tint),var(--tint2));box-shadow:0 0 0 0 rgba(10,132,255,.6);animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(10,132,255,.5)}70%{box-shadow:0 0 0 16px rgba(10,132,255,0)}100%{box-shadow:0 0 0 0 rgba(10,132,255,0)}}
+.sub{font-size:12px;color:color-mix(in srgb, CanvasText 60%, transparent)}
+main{max-width:900px;margin:16px auto 120px auto;padding:0 14px;display:grid;gap:14px}
+.card{border:1px solid var(--border);border-radius:22px;background:
+  linear-gradient(180deg, color-mix(in srgb, var(--glass) 92%, transparent), color-mix(in srgb, var(--glass) 70%, transparent));
+  box-shadow:var(--shadow1);overflow:hidden}
+.card .inner{padding:14px}
+.row{display:grid;grid-template-columns:1fr;gap:10px}
+.input{display:flex;gap:8px;align-items:center}
+.input input, .input select, textarea{
+  width:100%;padding:12px;border-radius:14px;border:1px solid var(--border);
+  background:linear-gradient(180deg, color-mix(in srgb, Canvas 96%, transparent), color-mix(in srgb, Canvas 92%, transparent));
+}
+.section{border-top:1px solid var(--border)}
+.section summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;justify-content:space-between;align-items:center}
+.section summary::-webkit-details-marker{display:none}
+.section[complete] summary::after{content:"✓";font-weight:700;color:var(--ok)}
+.section .body{padding:0 14px 14px 14px;display:grid;gap:12px}
+.q{padding:12px;border:1px dashed var(--border);border-radius:16px;background:linear-gradient(180deg, color-mix(in srgb, Canvas 98%, transparent), color-mix(in srgb, Canvas 94%, transparent))}
+.q label{font-weight:600;display:block;margin-bottom:6px}
+.small{font-size:13px}
+.actions{position:fixed;left:0;right:0;bottom:10px;display:flex;justify-content:center;z-index:40;padding:0 10px}
+.actions .bar{display:flex;gap:8px;padding:10px;border:1px solid var(--border);border-radius:18px;background:linear-gradient(180deg, color-mix(in srgb, var(--bg) 70%, transparent), color-mix(in srgb, var(--bg) 40%, transparent));backdrop-filter:var(--blur);box-shadow:var(--shadow1)}
+button{appearance:none;border:1px solid var(--border);border-radius:14px;padding:10px 14px;background:linear-gradient(180deg,color-mix(in srgb, var(--glass) 95%, transparent),color-mix(in srgb, var(--glass) 70%, transparent));cursor:pointer}
+.btn{font-weight:600}
+.btn-primary{color:white;border-color:transparent;background:linear-gradient(180deg, color-mix(in srgb, var(--tint) 92%, #fff 8%), color-mix(in srgb, var(--tint2) 90%, #000 10%))}
+.progress{height:8px;border-radius:999px;background:color-mix(in srgb, CanvasText 12%, transparent);overflow:hidden}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--tint),var(--ok))}
+.imgwrap{display:flex;justify-content:center;align-items:center;padding:10px;border-radius:16px;border:1px solid var(--border);
+  background:linear-gradient(180deg, color-mix(in srgb, Canvas 98%, transparent), color-mix(in srgb, Canvas 94%, transparent))}
+.imgwrap img{max-width:100%;height:auto;border-radius:12px;mix-blend:multiply}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.grid1{display:grid;grid-template-columns:1fr;gap:12px}
+.caption{font-size:12px;opacity:.6;margin-top:4px}
+#results{display:none;max-width:900px;margin:18px auto;padding:0 14px}
+.results-card{border:1px solid var(--border);border-radius:22px;background:linear-gradient(180deg, color-mix(in srgb, var(--glass) 92%, transparent), color-mix(in srgb, var(--glass) 70%, transparent));box-shadow:var(--shadow1);padding:16px}
+.results-big{font-size:36px;margin:0}
+.results-sub{color:color-mix(in srgb, CanvasText 60%, transparent);margin:6px 0 16px}
+.kv{display:flex;gap:8px;flex-wrap:wrap}
+.kv .chip{font-size:12px;padding:4px 10px;border-radius:999px;border:1px solid var(--border)}
+.toast{position:fixed;right:14px;bottom:14px;padding:12px 14px;border:1px solid var(--border);border-radius:14px;background:linear-gradient(180deg, color-mix(in srgb, var(--glass) 95%, transparent), color-mix(in srgb, var(--glass) 75%, transparent));backdrop-filter:var(--blur);display:none;z-index:120}
+.confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:200}
+.confetti i{position:absolute;width:8px;height:14px;border-radius:2px;background:linear-gradient(180deg,var(--gold),#fff);opacity:.9;animation:fall 1.6s linear forwards}
+@keyframes fall{to{transform:translateY(100vh) rotate(360deg);opacity:0}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hwrap">
+    <div>
+      <div class="badge">Happy English Club</div>
+      <h1>Jupiter — Oxford Discover 1 Units 4 & 5</h1>
+      <div class="sub">Teacher Victor • Listening excluded • Auto-graded</div>
+    </div>
+    <div class="kv"><div class="chip" id="scoreChip">Score: 0%</div></div>
+  </div>
+</header>
+
+<main id="main">
+  <!-- Meta -->
+  <div class="card">
+    <div class="inner">
+      <div class="row">
+        <div class="input"><strong>Student</strong><input id="studentName" placeholder="Full name" autocomplete="off"></div>
+        <div class="input"><strong>Class</strong><input value="Jupiter" disabled></div>
+        <div class="input"><strong>Teacher</strong><input value="Victor" disabled></div>
+        <div class="input"><strong>School</strong><input value="Happy English Club" disabled></div>
+        <div class="input"><strong>Due</strong><input value="15 Nov" disabled></div>
+      </div>
+      <div class="progress" style="margin-top:10px"><i id="pbar"></i></div>
+    </div>
+  </div>
+
+  <!-- Unit 4 -->
+  <details class="card section" open id="secU4">
+    <summary><strong>Unit 4</strong><span class="small">Sections A–C & E</span></summary>
+    <div class="body">
+
+      <!-- U4-A -->
+      <div class="q">
+        <label>U4-A. Look and circle the correct words. (3)</label>
+        <div class="grid3">
+          <div>
+            <div class="imgwrap"><img src="4a.png" alt="test image"></div>
+            <div class="caption">1</div>
+            <select data-k="U4A.1"><option value="">—</option><option>pants</option><option>shorts</option></select>
+          </div>
+          <div>
+            <div class="imgwrap"><img src="4a.png" alt="test image"></div>
+            <div class="caption">2</div>
+            <select data-k="U4A.2"><option value="">—</option><option>jellyfish</option><option>jacket</option></select>
+          </div>
+          <div>
+            <div class="imgwrap"><img src="4a.png" alt="test image"></div>
+            <div class="caption">3</div>
+            <select data-k="U4A.3"><option value="">—</option><option>sneakers</option><option>seashells</option></select>
+          </div>
+        </div>
+      </div>
+
+      <!-- U4-B -->
+      <div class="q">
+        <label>U4-B. Complete the sentences. Use the word bank. (4)</label>
+        <div class="small">Word bank: sand, mix, ocean, starfish</div>
+        <div class="grid1">
+          <div>1) There is <select data-k="U4B.1"><option value="">—</option><option>sand</option><option>mix</option><option>ocean</option><option>starfish</option></select> in my sneakers!</div>
+          <div>2) We can <select data-k="U4B.2"><option value="">—</option><option>sand</option><option>mix</option><option>ocean</option><option>starfish</option></select> red and yellow paint and make the color orange.</div>
+          <div>3) Many different fish live in the <select data-k="U4B.3"><option value="">—</option><option>sand</option><option>mix</option><option>ocean</option><option>starfish</option></select>.</div>
+          <div>4) There’s an orange <select data-k="U4B.4"><option value="">—</option><option>sand</option><option>mix</option><option>ocean</option><option>starfish</option></select> on my jacket.</div>
+        </div>
+      </div>
+
+      <!-- U4-C -->
+      <div class="q">
+        <label>U4-C. Write the words. (4)</label>
+        <div class="grid1">
+          <div class="imgwrap"><img src="4c.png" alt="test image"></div>
+          <div class="grid2" style="margin-top:8px">
+            <input data-k="U4C.1" placeholder="fielsyljh">
+            <input data-k="U4C.2" placeholder="weesade">
+            <input data-k="U4C.3" placeholder="salseehl">
+            <input data-k="U4C.4" placeholder="risftash">
+          </div>
+        </div>
+      </div>
+
+      <!-- U4-E -->
+      <div class="q">
+        <label>U4-E. Write the words in the correct order to make sentences. Then match them to the pictures. (4)</label>
+        <div class="imgwrap"><img src="4e.png" alt="test image"></div>
+        <div class="grid1" style="margin-top:8px">
+          <div>1) The T-shirt isn’t next to the jacket. → <select data-k="U4E.1"><option value="">—</option><option>a</option><option>b</option><option>c</option><option>d</option></select></div>
+          <div>2) The hat is under the jacket. → <select data-k="U4E.2"><option value="">—</option><option>a</option><option>b</option><option>c</option><option>d</option></select></div>
+          <div>3) Starfish and jellyfish are in the mural. → <select data-k="U4E.3"><option value="">—</option><option>a</option><option>b</option><option>c</option><option>d</option></select></div>
+          <div>4) The seashells aren’t on the sand. → <select data-k="U4E.4"><option value="">—</option><option>a</option><option>b</option><option>c</option><option>d</option></select></div>
+        </div>
+      </div>
+
+    </div>
+  </details>
+
+  <!-- Unit 5 -->
+  <details class="card section" id="secU5">
+    <summary><strong>Unit 5</strong><span class="small">Sections B–E</span></summary>
+    <div class="body">
+
+      <!-- U5-B -->
+      <div class="q">
+        <label>U5-B. Look and read. True or False. (5)</label>
+        <div class="imgwrap"><img src="Screenshot 2025-11-12 230321.png" alt="test image"></div>
+        <div class="grid1" style="margin-top:8px">
+          <div>1) <select data-k="U5B.1"><option value="">—</option><option>True</option><option>False</option></select></div>
+          <div>2) <select data-k="U5B.2"><option value="">—</option><option>True</option><option>False</option></select></div>
+          <div>3) <select data-k="U5B.3"><option value="">—</option><option>True</option><option>False</option></select></div>
+          <div>4) <select data-k="U5B.4"><option value="">—</option><option>True</option><option>False</option></select></div>
+          <div>5) <select data-k="U5B.5"><option value="">—</option><option>True</option><option>False</option></select></div>
+        </div>
+      </div>
+
+      <!-- U5-C -->
+      <div class="q">
+        <label>U5-C. Complete the words. (3)</label>
+        <div class="imgwrap"><img src="5c.png" alt="test image"></div>
+        <div class="grid3" style="margin-top:8px">
+          <input data-k="U5C.1" placeholder="xofes">
+          <input data-k="U5C.2" placeholder="gfoldhsi">
+          <input data-k="U5C.3" placeholder="aglese">
+        </div>
+      </div>
+
+      <!-- U5-D -->
+      <div class="q">
+        <label>U5-D. Circle the correct words. (6)</label>
+        <div class="imgwrap"><img src="Screenshot 2025-11-12 230531.png" alt="test image"></div>
+        <div class="grid1" style="margin-top:8px">
+          <div>1) Where <select data-k="U5D.1a"><option value="">—</option><option>is</option><option>are</option></select> the eagles? They’re in the <select data-k="U5D.1b"><option value="">—</option><option>sky</option><option>nest</option></select>.</div>
+          <div>2) Where <select data-k="U5D.2a"><option value="">—</option><option>is</option><option>are</option></select> the squirrel? It’s <select data-k="U5D.2b"><option value="">—</option><option>on the grass</option><option>in the tree</option></select>.</div>
+          <div>3) <select data-k="U5D.3a"><option value="">—</option><option>Is</option><option>Are</option></select> the honeybees in the hive? No, <select data-k="U5D.3b"><option value="">—</option><option>it isn’t</option><option>they aren’t</option></select>.</div>
+        </div>
+      </div>
+
+      <!-- U5-E -->
+      <div class="q">
+        <label>U5-E. Write the questions. Look at the pictures and answer the questions. (8 — not scored)</label>
+        <div class="imgwrap"><img src="Screenshot 2025-11-12 230729.png" alt="test image"></div>
+        <div class="grid1" style="margin-top:8px">
+          <div>1) Q: <input data-k="U5E.q1" placeholder=""> A: <input data-k="U5E.a1" placeholder=""></div>
+          <div>2) Q: <input data-k="U5E.q2" placeholder=""> A: <input data-k="U5E.a2" placeholder=""></div>
+          <div>3) Q: <input data-k="U5E.q3" placeholder=""> A: <input data-k="U5E.a3" placeholder=""></div>
+          <div>4) Q: <input data-k="U5E.q4" placeholder=""> A: <input data-k="U5E.a4" placeholder=""></div>
+        </div>
+      </div>
+
+    </div>
+  </details>
+</main>
+
+<!-- Results page -->
+<section id="results">
+  <div class="results-card">
+    <h2 class="results-big" id="resScore">Score: 0%</h2>
+    <div class="results-sub" id="resSummary">You completed the test.</div>
+    <div class="kv" id="resChips"></div>
+    <div style="margin-top:14px">
+      <div class="card" style="padding:14px">
+        <strong>Section breakdown</strong>
+        <ul id="resBreakdown"></ul>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px;padding:14px">
+      <strong>Goodbye</strong>
+      <p class="small">Well done. Check your score above. Thank you for your hard work today.</p>
+    </div>
+    <div style="margin-top:14px">
+      <button onclick="location.reload()" class="btn">Back to start</button>
+    </div>
+  </div>
+</section>
+
+<div class="actions" id="actionBar">
+  <div class="bar">
+    <button id="gradeBtn" class="btn btn-primary">Submit & Show My Score</button>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+<div id="fx" class="confetti" aria-hidden="true"></div>
+
+<script>
+/* ===== Google Form submission (your form IDs from the link you gave) ===== */
+const FORM_ACTION   = 'https://docs.google.com/forms/d/e/1FAIpQLSeVstxYs3B_SzhOsk-Lxe96ilZdPOokT2qiE0ucDQlNBB4sGg/formResponse';
+const FIELD_STUDENT = 'entry.1714798495';
+const FIELD_JSON    = 'entry.1036145399';
+
+/* ===== Helpers ===== */
+const $ = (s,el=document)=>el.querySelector(s);
+const $$ = (s,el=document)=>[...el.querySelectorAll(s)];
+function n(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,'').replace(/\s+/g,' ').trim();}
+function toast(m){const t=$("#toast");t.textContent=m;t.style.display="block";setTimeout(()=>t.style.display="none",2600);}
+function progress(){ const all=$$("[data-k]");const done=all.filter(el=> (el.value||"").trim().length>0).length; $("#pbar").style.width=(100*done/Math.max(all.length,1))+"%"; }
+function markComplete(){
+  ['secU4','secU5'].forEach(id=>{
+    const d=$("#"+id), fields=$$("[data-k]", d);
+    const filled=fields.every(el=> (el.value||"").length>0);
+    d.toggleAttribute('complete', filled);
+  });
+}
+document.addEventListener("input",e=>{ if(e.target.matches("[data-k],input,select,textarea")){ progress(); markComplete(); save(); }});
+
+/* ===== Answer keys ===== */
+const KEY = {
+  U4A: ['pants','jacket','sneakers'],
+  U4B: ['sand','mix','ocean','starfish'],
+  U4C: ['jellyfish','seaweed','seashell','starfish'],
+  U4E: ['c','a','b','d'],
+  U5B: ['True','False','False','False','True'],
+  U5C: ['foxes','goldfish','eagles'],
+  U5D: [['are','nest'], ['is','on the grass'], ['Are','they aren\'t']]
+};
+
+/* ===== Grading ===== */
+function grade(){
+  const student = $("#studentName").value.trim();
+  const out = { meta:{ student, klass:"Jupiter", teacher:"Victor", school:"Happy English Club", due:"15 Nov", submitted_at:new Date().toISOString() }, sections:{}, total:0, max:0, percent:0 };
+
+  // U4-A
+  let s=0; ['1','2','3'].forEach((i,idx)=>{ if($(`[data-k="U4A.${i}"]`).value===KEY.U4A[idx]) s++; });
+  out.sections.U4A={correct:s,total:3}; out.total+=s; out.max+=3;
+
+  // U4-B
+  s=0; for(let i=1;i<=4;i++){ if($(`[data-k="U4B.${i}"]`).value===KEY.U4B[i-1]) s++; }
+  out.sections.U4B={correct:s,total:4}; out.total+=s; out.max+=4;
+
+  // U4-C
+  s=0; for(let i=1;i<=4;i++){ if(n($(`[data-k="U4C.${i}"]`).value)===n(KEY.U4C[i-1])) s++; }
+  out.sections.U4C={correct:s,total:4}; out.total+=s; out.max+=4;
+
+  // U4-E
+  s=0; for(let i=1;i<=4;i++){ if($(`[data-k="U4E.${i}"]`).value===KEY.U4E[i-1]) s++; }
+  out.sections.U4E={correct:s,total:4}; out.total+=s; out.max+=4;
+
+  // U5-B
+  s=0; for(let i=1;i<=5;i++){ if($(`[data-k="U5B.${i}"]`).value===KEY.U5B[i-1]) s++; }
+  out.sections.U5B={correct:s,total:5}; out.total+=s; out.max+=5;
+
+  // U5-C
+  s=0; for(let i=1;i<=3;i++){ if(n($(`[data-k="U5C.${i}"]`).value)===n(KEY.U5C[i-1])) s++; }
+  out.sections.U5C={correct:s,total:3}; out.total+=s; out.max+=3;
+
+  // U5-D
+  s=0;
+  const d1a=$(`[data-k="U5D.1a"]`).value, d1b=$(`[data-k="U5D.1b"]`).value;
+  const d2a=$(`[data-k="U5D.2a"]`).value, d2b=$(`[data-k="U5D.2b"]`).value;
+  const d3a=$(`[data-k="U5D.3a"]`).value, d3b=$(`[data-k="U5D.3b"]`).value;
+  s += (d1a===KEY.U5D[0][0]) + (d1b===KEY.U5D[0][1]) + (d2a===KEY.U5D[1][0]) + (d2b===KEY.U5D[1][1]) + (d3a===KEY.U5D[2][0]) + (d3b===KEY.U5D[2][1]);
+  out.sections.U5D={correct:s,total:6}; out.total+=s; out.max+=6;
+
+  // U5-E collected but not scored
+  out.sections.U5E={correct:0,total:0,qs:[
+    ($(`[data-k="U5E.q1"]`).value||'').trim(),($(`[data-k="U5E.a1"]`).value||'').trim(),
+    ($(`[data-k="U5E.q2"]`).value||'').trim(),($(`[data-k="U5E.a2"]`).value||'').trim(),
+    ($(`[data-k="U5E.q3"]`).value||'').trim(),($(`[data-k="U5E.a3"]`).value||'').trim(),
+    ($(`[data-k="U5E.q4"]`).value||'').trim(),($(`[data-k="U5E.a4"]`).value||'').trim()
+  ]};
+
+  out.percent = out.max>0 ? Math.round(100*out.total/out.max) : 0;
+  $("#scoreChip").textContent = `Score: ${out.percent}%`;
+  return out;
+}
+
+/* ===== Confetti ===== */
+function confetti(){
+  const fx=$("#fx");
+  for(let i=0;i<60;i++){
+    const p=document.createElement('i');
+    p.style.left=Math.random()*100+"vw";
+    p.style.top="-20px";
+    p.style.transform=`translateY(0) rotate(${Math.random()*180}deg)`;
+    p.style.animationDelay=(Math.random()*0.6)+"s";
+    p.style.background=`linear-gradient(180deg,hsl(${Math.random()*360},80%,60%),#fff)`;
+    fx.appendChild(p);
+    setTimeout(()=>p.remove(),1800);
+  }
+}
+
+/* ===== Google Form POST (grades JSON only) ===== */
+function compact(obj,max=5000){const s=JSON.stringify(obj);return s.length>max ? s.slice(0,max-3)+'...' : s;}
+function submitToGoogleForm(gradeJson){
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = FORM_ACTION;
+  form.style.display = 'none';
+  const add = (name,val) => { const i=document.createElement('input'); i.name=name; i.value=val; form.appendChild(i); };
+  add(FIELD_STUDENT, gradeJson.meta.student||'');
+  add(FIELD_JSON, compact(gradeJson));
+  add('fvv','1'); add('draftResponse','[]'); add('pageHistory','0');
+  const sink = document.createElement('iframe'); sink.name='sink'; sink.style.display='none';
+  document.body.appendChild(sink); form.target='sink';
+  document.body.appendChild(form); form.submit();
+  setTimeout(()=>{ form.remove(); sink.remove(); }, 1400);
+}
+
+/* ===== Results view ===== */
+function showResults(g){
+  const main = $("#main"), res=$("#results"), bar=$("#actionBar");
+  main.style.display="none"; bar.style.display="none"; res.style.display="block";
+  $("#resScore").textContent = `Score: ${g.percent}%`;
+  $("#resSummary").textContent = `You scored ${g.total} out of ${g.max}.`;
+  const chips = $("#resChips"); chips.innerHTML="";
+  ['U4A','U4B','U4C','U4E','U5B','U5C','U5D'].forEach(k=>{
+    const span=document.createElement('span'); const v=g.sections[k];
+    span.className="chip"; span.textContent=`${k}: ${v.correct}/${v.total}`;
+    chips.appendChild(span);
+  });
+  const ul = $("#resBreakdown"); ul.innerHTML="";
+  ['U4A','U4B','U4C','U4E','U5B','U5C','U5D'].forEach(k=>{
+    const li=document.createElement('li'); const v=g.sections[k];
+    li.textContent=`${k} — ${v.correct}/${v.total}`; ul.appendChild(li);
+  });
+  confetti();
+}
+
+/* ===== Autosave ===== */
+const SAVE_KEY='jupiter.v2';
+function save(){
+  const data={};
+  $$('[data-k]').forEach(el=>data[el.getAttribute('data-k')]=el.value);
+  data.student=$("#studentName").value;
+  localStorage.setItem(SAVE_KEY, JSON.stringify(data));
+}
+function load(){
+  try{
+    const data=JSON.parse(localStorage.getItem(SAVE_KEY)||'{}');
+    Object.entries(data).forEach(([k,v])=>{
+      if(k==='student'){$("#studentName").value=v; return;}
+      const el=$(`[data-k="${k}"]`); if(el) el.value=v;
+    });
+  }catch(e){}
+}
+
+/* Wire */
+$("#gradeBtn").addEventListener("click", ()=>{
+  const name = $("#studentName").value.trim();
+  if(!name){ alert("Enter student name."); return; }
+  const g = grade();
+  submitToGoogleForm(g);
+  toast(`Graded ${g.total}/${g.max} (${g.percent}%).`);
+  showResults(g);
+});
+
+window.addEventListener("load", ()=>{ load(); progress(); markComplete(); });
+</script>
+</body>
+</html>
