@@ -6,15 +6,15 @@
 <title>Oxford Discover 3 — Sky 1 Homework</title>
 <meta name="color-scheme" content="light dark">
 
-<!-- CSP that allows posting to Google Forms + Apps Script -->
+<!-- CSP: allow background post to Google Forms -->
 <meta http-equiv="Content-Security-Policy"
   content="default-src 'self' data: blob:;
            script-src 'self' 'unsafe-inline';
            style-src 'self' 'unsafe-inline';
            img-src 'self' data: blob:;
-           connect-src 'self' https://docs.google.com https://forms.gle https://script.google.com https://script.googleusercontent.com;
-           form-action 'self' https://docs.google.com https://script.google.com https://script.googleusercontent.com;
-           frame-src 'self' https://docs.google.com https://script.google.com https://script.googleusercontent.com;">
+           connect-src 'self' https://docs.google.com https://forms.gle;
+           form-action 'self' https://docs.google.com;
+           frame-src 'self' https://docs.google.com;">
 
 <style>
 :root{
@@ -97,6 +97,14 @@ footer.actions{position:fixed;bottom:10px;left:0;right:0;z-index:40;display:flex
 .icon{width:18px;height:18px;display:inline-block;vertical-align:-3px;background:conic-gradient(from 90deg, var(--gold) 0 25%, transparent 0 100%);border-radius:4px;margin-right:6px}
 #fx{position:fixed;pointer-events:none;inset:0;z-index:100}
 .toast{position:fixed; right:18px; bottom:18px; padding:12px 14px; z-index:120; border:1px solid var(--border); border-radius:14px; background:linear-gradient(180deg, color-mix(in srgb, var(--glass) 95%, transparent), color-mix(in srgb, var(--glass) 75%, transparent)); backdrop-filter:var(--blur); box-shadow:var(--shadow-1); display:none;}
+
+/* results card */
+#results{max-width:1100px;margin:18px auto;padding:0 clamp(16px,3vw,24px);display:none}
+.results-card{border:1px solid var(--border);border-radius:var(--radius-xl);background:linear-gradient(180deg, color-mix(in srgb, var(--glass) 92%, transparent), color-mix(in srgb, var(--glass) 70%, transparent));box-shadow:var(--shadow-1);padding:18px}
+.results-big{font-size:34px;margin:0}
+.results-sub{color:color-mix(in srgb, CanvasText 60%, transparent);margin:6px 0 16px}
+.kv{display:flex;gap:8px;flex-wrap:wrap}
+.kv .chip{font-size:12px;padding:4px 10px;border-radius:999px;border:1px solid var(--border)}
 </style>
 </head>
 <body>
@@ -195,8 +203,8 @@ footer.actions{position:fixed;bottom:10px;left:0;right:0;z-index:40;display:flex
         <div class="q">
           <label>Story 3</label>
           <div class="grid-2">
-            <div class="row"><input type="number" min="1" max="3" data-k="C.s3.a" style="width:70px"> went shopping</div>
-            <div class="row"><input type="number" min="1" max="3" data-k="C.s3.b" style="width:70px"> checked the map</div>
+            <div class="row"><input type="number" min="1" max="3" data-k="C.s3.a" style="width:70px"> checked the map</div>
+            <div class="row"><input type="number" min="1" max="3" data-k="C.s3.b" style="width:70px"> went shopping</div>
             <div class="row"><input type="number" min="1" max="3" data-k="C.s3.c" style="width:70px"> drove to the new house</div>
           </div>
         </div>
@@ -279,36 +287,48 @@ footer.actions{position:fixed;bottom:10px;left:0;right:0;z-index:40;display:flex
   </section>
 </main>
 
+<!-- Results -->
+<section id="results">
+  <div class="results-card">
+    <h2 class="results-big" id="resScore">Score: 0%</h2>
+    <div class="results-sub" id="resSummary">You completed the homework.</div>
+    <div class="kv" id="resChips"></div>
+  </div>
+</section>
+
 <footer class="actions">
   <div class="bar">
-    <button id="submitBtn" class="btn-primary">Submit to Teacher</button>
-    <span class="notice">Autosaves locally • Sends to Google Form + Google Doc</span>
+    <button id="submitBtn" class="btn-primary">Submit & Show Score</button>
+    <span class="notice"></span>
   </div>
 </footer>
 
-<div id="toast" class="toast">Submitted to teacher.</div>
+<div id="toast" class="toast">Submitted.</div>
 <canvas id="fx"></canvas>
 
 <script>
-/* ===== Google Form mapping =====
-   Form action resolved from your link:
-   https://docs.google.com/forms/d/e/1FAIpQLSeVstxYs3B_SzhOsk-Lxe96ilZdPOokT2qiE0ucDQlNBB4sGg/formResponse
-   Field IDs from your prefilled URL:
-     Name   → entry.1714798495
-     Answers→ entry.1036145399
+/* ===== Google Form (posts ONLY open-ended answers + name) =====
+Form action from your link:
+  https://docs.google.com/forms/d/e/1FAIpQLSeVstxYs3B_SzhOsk-Lxe96ilZdPOokT2qiE0ucDQlNBB4sGg/formResponse
+Field IDs:
+  Name   → entry.1714798495
+  JSON   → entry.1036145399
 ====================================================== */
 const FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSeVstxYs3B_SzhOsk-Lxe96ilZdPOokT2qiE0ucDQlNBB4sGg/formResponse';
 const FIELD_NAME = 'entry.1714798495';
 const FIELD_JSON = 'entry.1036145399';
 
-/* ===== Apps Script Web App (Google Doc writer) =====
-   Deploy your script as a Web App (Execute as Me, Anyone).
-   Replace the two constants below. They are required.
-*/
-const DOC_WEB_APP_URL = 'REPLACE_WITH_YOUR_APPS_SCRIPT_WEB_APP_URL';
-const DOC_SHARED_SECRET = 'REPLACE_WITH_YOUR_SHARED_SECRET';
-
-/* ---------- Scoring + extract open-ended ---------- */
+/* ---------- Utilities ---------- */
+const DUE_TEXT = "15 Nov";
+const STORAGE_PREFIX = "od3_sky1_";
+const $ = (s, el=document)=>el.querySelector(s);
+const $$ = (s, el=document)=>[...el.querySelectorAll(s)];
+const progressFill = $("#progressFill");
+const stepEls = $$("#steps .step");
+const nameInput = $("#studentName");
+const parentEmail = $("#parentEmail");
+function toast(msg="Submitted"){ const t=$("#toast"); t.textContent=msg; t.style.display="block"; setTimeout(()=>t.style.display="none", 2800); }
+function shuffle(a){ return a.map(v=>({v, r:Math.random()})).sort((a,b)=>a.r-b.r).map(o=>o.v); }
 function norm(s){
   return (s||"")
     .toLowerCase()
@@ -317,6 +337,10 @@ function norm(s){
     .replace(/\s+/g," ")
     .trim();
 }
+
+/* ---------- Keys & scoring ---------- */
+const WORD_BANK = ["packing","moving","meeting neighbors","shopping","ice skating","fishing","raking leaves","dancing","throwing snowballs","sledding"];
+const VOCAB_PROMPTS = ["Putting things in boxes","Going to a new city","Saying hello to new people","Buying things","Skating on ice","Catching fish","Cleaning leaves in the yard","Moving to music","Throwing balls of snow","Going down a snowy hill"];
 
 const A_KEY = {
   "Putting things in boxes": ["packing","pack","we pack","to pack"],
@@ -330,19 +354,19 @@ const A_KEY = {
   "Throwing balls of snow": ["throwing snowballs","snowball fight","snowballs"],
   "Going down a snowy hill": ["sledding","sledging","to sled","sledge"]
 };
-// expected orders for Part C
+
 const C_KEY = {
   story1: { portugal: 1, moved_brazil: 2, new_school: 3 },
   story2: { packed: 1, loaded: 2, met: 3 },
   story3: { checked_map: 1, went_shopping: 2, drove: 3 }
 };
-// correct choices for Part F
+
 const F_KEY = { g1: "packed", g2a: "moved", g2b: "met", g3: "shopped" };
 
 function scoreSubmission(payload){
   const out = { sections:{}, total:0, max:0, percent:0 };
 
-  // A. Vocabulary match (10 items)
+  // A. match (10)
   let aCorrect = 0, aTotal = 0, aDetail = [];
   if (payload?.A?.match?.length){
     payload.A.match.forEach(it=>{
@@ -357,7 +381,7 @@ function scoreSubmission(payload){
   }
   out.sections.A = { correct:aCorrect, total:aTotal, detail:aDetail };
 
-  // C. Sequence (9 points total)
+  // C. sequence (9)
   let cCorrect = 0, cTotal = 0, cDetail = {};
   ["story1","story2","story3"].forEach(s=>{
     const key = C_KEY[s], given = payload?.C?.[s] || {};
@@ -373,7 +397,7 @@ function scoreSubmission(payload){
   });
   out.sections.C = { correct:cCorrect, total:cTotal, detail:cDetail };
 
-  // F. Grammar choices (4 points)
+  // F. grammar (4)
   let fCorrect = 0, fTotal = 0, fDetail = {};
   const ch = payload?.F?.choose || {};
   Object.entries(F_KEY).forEach(([k, want])=>{
@@ -385,13 +409,13 @@ function scoreSubmission(payload){
   });
   out.sections.F = { correct:fCorrect, total:fTotal, detail:fDetail };
 
-  // Totals
   out.total = aCorrect + cCorrect + fCorrect;
   out.max = aTotal + cTotal + fTotal;
   out.percent = out.max > 0 ? Math.round(100 * out.total / out.max) : 0;
   return out;
 }
 
+/* ---------- open-ended extractor ---------- */
 function extractOpenEnded(payload){
   const safe = v => (v ?? "").toString();
   const arr = v => Array.isArray(v) ? v : [];
@@ -413,23 +437,7 @@ function extractOpenEnded(payload){
   };
 }
 
-/* ===== UI + data plumbing ===== */
-const DUE_TEXT = "15 Nov";
-const STORAGE_PREFIX = "od3_sky1_";
-
-const $ = (s, el=document)=>el.querySelector(s);
-const $$ = (s, el=document)=>[...el.querySelectorAll(s)];
-const progressFill = $("#progressFill");
-const stepEls = $$("#steps .step");
-const nameInput = $("#studentName");
-const parentEmail = $("#parentEmail");
-
-function toast(msg="Submitted"){ const t=$("#toast"); t.textContent=msg; t.style.display="block"; setTimeout(()=>t.style.display="none", 2800); }
-
-/* Vocabulary scramble */
-const WORD_BANK = ["packing","moving","meeting neighbors","shopping","ice skating","fishing","raking leaves","dancing","throwing snowballs","sledding"];
-const VOCAB_PROMPTS = ["Putting things in boxes","Going to a new city","Saying hello to new people","Buying things","Skating on ice","Catching fish","Cleaning leaves in the yard","Moving to music","Throwing balls of snow","Going down a snowy hill"];
-function shuffle(a){ return a.map(v=>({v, r:Math.random()})).sort((a,b)=>a.r-b.r).map(o=>o.v); }
+/* ---------- render + autosave + flow ---------- */
 function renderVocab(){
   const bank = $("#wordBank"); bank.innerHTML="";
   shuffle(WORD_BANK).forEach(w=>{ const span=document.createElement("span"); span.className="bank-chip"; span.textContent=w; bank.appendChild(span); });
@@ -438,7 +446,6 @@ function renderVocab(){
   prompts.forEach((text, i)=>{ const wrap=document.createElement("div"); wrap.innerHTML = `<div class="row small"><strong>${i+1}.</strong> ${text} →</div><input data-k="A.match.${i+1}" data-prompt="${text}" placeholder="write the word">`; box.appendChild(wrap); });
 }
 
-/* Autosave */
 function storageKey(){ const n=(nameInput.value||"").trim(); return STORAGE_PREFIX + (n||"_anon_"); }
 function save(){
   const data={};
@@ -456,11 +463,11 @@ function load(){
   }catch(_){}
   updateProgress();
 }
+
 document.addEventListener("input", e=>{ if(e.target.matches("[data-k], input, textarea, select")) save(); });
 nameInput.addEventListener("input", ()=>{ load(); save(); });
 parentEmail.addEventListener("input", save);
 
-/* Progress + Section flow */
 function markSectionDone(idx){ stepEls[idx].classList.add("done"); updateProgress(); confetti(); }
 function updateProgress(){ const all=$$("[data-k]"); const filled=all.filter(i=> i.type==="checkbox" ? i.checked : (i.value||"").trim().length>0).length; const pct=Math.round((filled/all.length)*100); progressFill.style.width=pct+"%"; }
 $$("details.ac").forEach((d,idx)=>{
@@ -470,7 +477,7 @@ $$("details.ac").forEach((d,idx)=>{
 $("#printBtn").addEventListener("click",()=>window.print());
 $("#clearBtn").addEventListener("click",()=>{ if(confirm("Clear all saved answers on this device?")){ localStorage.removeItem(storageKey()); $$("[data-k]").forEach(i=>{ if(i.type==="checkbox") i.checked=false; else i.value=""; }); updateProgress(); }});
 
-/* Collect JSON */
+/* ---------- collect full JSON ---------- */
 function collectJSON(){
   const A = { match: [], sentences: [] };
   $$("[data-k^='A.match.']").forEach(el=>{ A.match.push({ prompt: el.dataset.prompt, answer: (el.value||"").trim() }); });
@@ -479,7 +486,7 @@ function collectJSON(){
   const C = {
     story1:{ portugal:$(`[data-k="C.s1.a"]`).value||"", moved_brazil:$(`[data-k="C.s1.b"]`).value||"", new_school:$(`[data-k="C.s1.c"]`).value||"" },
     story2:{ loaded:$(`[data-k="C.s2.a"]`).value||"", met:$(`[data-k="C.s2.b"]`).value||"", packed:$(`[data-k="C.s2.c"]`).value||"" },
-    story3:{ shopping:$(`[data-k="C.s3.a"]`).value||"", checked_map:$(`[data-k="C.s3.b"]`).value||"", drove:$(`[data-k="C.s3.c"]`).value||"" },
+    story3:{ checked_map:$(`[data-k="C.s3.a"]`).value||"", went_shopping:$(`[data-k="C.s3.b"]`).value||"", drove:$(`[data-k="C.s3.c"]`).value||"" },
     timeline:{ first:$(`[data-k="C.t1"]`).value||"", next:$(`[data-k="C.t2"]`).value||"", finally:$(`[data-k="C.t3"]`).value||"" }
   };
   const D = { planner:{ from:$(`[data-k="D.from"]`).value||"", to:$(`[data-k="D.to"]`).value||"", when:$(`[data-k="D.when"]`).value||"", who:$(`[data-k="D.who"]`).value||"", step1:$(`[data-k="D.step1"]`).value||"", step2:$(`[data-k="D.step2"]`).value||"", step3:$(`[data-k="D.step3"]`).value||"", step4:$(`[data-k="D.step4"]`).value||"", new:$(`[data-k="D.new"]`).value||"" }, paragraph:$(`[data-k="D.par"]`).value||"" };
@@ -489,87 +496,59 @@ function collectJSON(){
   return { meta, A, B, C, D, F, checklist };
 }
 
-/* Compact JSON to fit Google Form limits */
+/* ---------- compact + post ONLY open-ended ---------- */
 function compactJSON(obj){
   const pruned = JSON.stringify(obj, (k,v)=> v==="" ? undefined : v);
   const MAX = 9000;
   return pruned.length>MAX ? pruned.slice(0,MAX-3)+'...' : pruned;
 }
 
-/* Submit to Google Form */
-function submitToGoogleForm(json){
+function submitOpenEndedToGoogleForm(name, openObj){
   const form = document.createElement('form');
   form.method = 'POST';
   form.action = FORM_ACTION;
   form.style.display = 'none';
 
-  const add = (name, value) => { const i=document.createElement('input'); i.name=name; i.value=value; form.appendChild(i); };
-  add(FIELD_NAME, json.meta.student || '');
-  add(FIELD_JSON, compactJSON(json));
+  const add = (n,v) => { const i=document.createElement('input'); i.name=n; i.value=v; form.appendChild(i); };
+  add(FIELD_NAME, name || '');
+  add(FIELD_JSON, compactJSON(openObj));
+  // required hidden params for background submit
   add('fvv','1'); add('draftResponse','[]'); add('pageHistory','0');
 
-  const sink = document.createElement('iframe');
-  sink.name = 'sink';
-  sink.style.display = 'none';
-  document.body.appendChild(sink);
-  form.target = 'sink';
-
-  document.body.appendChild(form);
-  form.submit();
-
-  setTimeout(()=>{ form.remove(); sink.remove(); }, 2500);
+  const sink = document.createElement('iframe'); sink.name='sink'; sink.style.display='none';
+  document.body.appendChild(sink); form.target='sink';
+  document.body.appendChild(form); form.submit();
+  setTimeout(()=>{ form.remove(); sink.remove(); }, 2000);
 }
 
-/* Send to Google Doc via Apps Script Web App */
-function sendScoreAndOpenEndedToDoc(payload){
-  if (DOC_WEB_APP_URL.startsWith('REPLACE_') || DOC_SHARED_SECRET.startsWith('REPLACE_')){
-    console.warn('Apps Script URL/secret not set. Skipping Doc export.');
-    return;
-  }
-  // attach client score for display; server may rescore
-  const score = scoreSubmission(payload);
-  payload.score = score;
-  payload.openEnded = extractOpenEnded(payload);
-
-  const form = document.createElement('form');
-  form.method = 'POST';
-  form.action = DOC_WEB_APP_URL;
-  form.style.display = 'none';
-
-  const add = (name, value) => { const i=document.createElement('input'); i.name=name; i.value=value; form.appendChild(i); };
-  add('token', DOC_SHARED_SECRET);
-  add('payload', JSON.stringify(payload));
-
-  const sink = document.createElement('iframe');
-  sink.name = 'sink_doc';
-  sink.style.display = 'none';
-  document.body.appendChild(sink);
-  form.target = 'sink_doc';
-
-  document.body.appendChild(form);
-  form.submit();
-
-  setTimeout(()=>{ form.remove(); sink.remove(); }, 2500);
+/* ---------- results UI ---------- */
+function showResults(g){
+  const res = $("#results"), chips=$("#resChips");
+  $("#resScore").textContent = `Score: ${g.percent}%`;
+  $("#resSummary").textContent = `You scored ${g.total} out of ${g.max}.`;
+  chips.innerHTML = "";
+  Object.entries(g.sections).forEach(([k,v])=>{
+    if(v.total>0){ const s=document.createElement('span'); s.className='chip'; s.textContent=`${k}: ${v.correct}/${v.total}`; chips.appendChild(s); }
+  });
+  res.style.display = "block";
+  res.scrollIntoView({behavior:"smooth"});
 }
 
-/* Submit button */
+/* ---------- submit: grade → show score → send open-ended ---------- */
 document.getElementById("submitBtn").addEventListener("click", (e)=>{
   e.preventDefault();
-  const name = document.getElementById("studentName").value.trim();
+  const name = nameInput.value.trim();
   if (!name){ alert('Type your full name before submitting.'); return; }
-
   const json = collectJSON();
   const score = scoreSubmission(json);
-  json.score = score;
-
-  submitToGoogleForm(json);
-  sendScoreAndOpenEndedToDoc(json);
-
+  showResults(score);
+  const openOnly = { meta: json.meta, open: extractOpenEnded(json) };
+  submitOpenEndedToGoogleForm(name, openOnly);
   toast(`Submitted. Score: ${score.total}/${score.max} (${score.percent}%)`);
   confetti();
 });
 
-/* Confetti */
+/* ---------- confetti ---------- */
 function confetti(){
   const canvas=$("#fx"), ctx=canvas.getContext("2d");
   canvas.width=innerWidth; canvas.height=innerHeight;
@@ -582,7 +561,7 @@ function confetti(){
   })();
 }
 
-/* Init */
+/* ---------- init ---------- */
 window.addEventListener("load", ()=>{ renderVocab(); load(); });
 document.addEventListener("keydown", e=>{ if(e.key==="Escape"){ const open=$("details.ac[open]"); if(open) open.removeAttribute("open"); }});
 </script>
