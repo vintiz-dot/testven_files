@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Happy English Club — Grading Console</title>
+<meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tint:#0A84FF; --tint2:#5AC8FA; --ok:#34C759; --warn:#FF9F0A; --bad:#FF3B30; --gold:#D4AF37;
+  --font-sans: 'Inter', -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,system-ui,"Helvetica Neue",Arial,sans-serif;
+  --bg: color-mix(in srgb, Canvas 96%, transparent);
+  --glass: color-mix(in srgb, Canvas 86%, transparent);
+  --border: color-mix(in srgb, CanvasText 16%, transparent);
+  --shadow-sm: 0 4px 12px rgba(0,0,0,.06);
+  --shadow: 0 10px 30px rgba(0,0,0,.08);
+  --shadow-lg: 0 18px 60px rgba(0,0,0,.12);
+  --blur: saturate(180%) blur(18px);
+  --radius: 20px;
+  --transition: 250ms ease;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg: color-mix(in srgb, Canvas 10%, black);
+    --glass: color-mix(in srgb, Canvas 15%, #000 20%);
+    --border: color-mix(in srgb, CanvasText 25%, transparent);
+    --shadow-sm: 0 4px 12px rgba(0,0,0,.1);
+    --shadow: 0 10px 30px rgba(0,0,0,.15);
+    --shadow-lg: 0 18px 60px rgba(0,0,0,.2);
+  }
+}
+@keyframes subtle-bg-pan{0%{background-position:0% 0%}100%{background-position:10% 10%}}
+*{box-sizing:border-box}
+body{
+  margin:0; font:16px/1.6 var(--font-sans); color:CanvasText;
+  background:
+    radial-gradient(900px 600px at -10% -10%, color-mix(in srgb, var(--tint) 16%, transparent), transparent 60%),
+    radial-gradient(1000px 700px at 110% 0%, color-mix(in srgb, var(--gold) 22%, transparent), transparent 70%),
+    linear-gradient(180deg, color-mix(in srgb, var(--bg) 70%, transparent), var(--bg));
+  background-attachment: fixed; animation: subtle-bg-pan 25s ease infinite alternate;
+}
+header{
+  position:sticky; top:0; z-index:50; border-bottom:1px solid var(--border);
+  background:var(--glass); backdrop-filter:var(--blur); -webkit-backdrop-filter:var(--blur);
+}
+.hbar{max-width:1000px;margin:auto;display:flex;gap:12px;align-items:center;justify-content:space-between;padding:14px 20px}
+.brand{display:flex;align-items:center;gap:12px}
+.badge{font-size:12px;font-weight:600;color:#fff;padding:6px 12px;border-radius:999px;background:linear-gradient(135deg,var(--tint),var(--tint2));box-shadow:var(--shadow-lg)}
+h1{margin:0;font-size:20px;font-weight:600}
+.controls{display:flex;gap:8px;flex-wrap:wrap}
+button,.btn{
+  appearance:none; border:1px solid var(--border); border-radius:14px; padding:10px 16px; cursor:pointer; color:inherit;
+  font-family: var(--font-sans); font-size: 15px; font-weight: 500;
+  background:var(--glass); box-shadow:var(--shadow-sm); transition: all var(--transition);
+}
+button:not(:disabled):hover,.btn:not(:disabled):hover{transform: translateY(-2px); box-shadow: var(--shadow-lg); border-color: color-mix(in srgb, CanvasText 30%, transparent)}
+button:focus-visible,.btn:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline: 2px solid var(--tint); outline-offset: 2px}
+button:active,.btn:active{transform: translateY(0); box-shadow: var(--shadow-sm)}
+button:disabled,.btn:disabled{opacity:.6; cursor:not-allowed}
+.btn-primary{color:#fff; border-color:transparent; background:var(--tint); font-weight:600; box-shadow:var(--shadow)}
+.btn-primary:not(:disabled):hover{background: color-mix(in srgb, var(--tint) 90%, black); box-shadow: var(--shadow-lg)}
+main{max-width:1000px;margin:24px auto 120px auto;padding:0 20px;display:grid;gap:24px}
+.card{border:1px solid var(--border);border-radius:var(--radius);background:var(--glass);box-shadow:var(--shadow);transition: all var(--transition);overflow:hidden}
+.card:hover{box-shadow: var(--shadow-lg)}
+.card.report.report-entering{opacity:0; transform: translateY(20px)}
+.card.report{transition: transform 400ms ease, opacity 400ms ease}
+.card.empty-state{text-align:center;padding:40px 20px}
+.card .inner{padding:20px}
+.form-group{ display:grid; gap:6px }
+.form-group label{ font-weight:500 }
+.grid{display:grid;gap:16px}
+.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+input,select,textarea{
+  width:100%;padding:12px;border-radius:12px;border:1px solid var(--border);
+  font-family: var(--font-sans); font-size: 15px;
+  background: color-mix(in srgb, Canvas 96%, transparent);
+  transition: all var(--transition);
+}
+input:focus,select:focus,textarea:focus{outline:none; border-color: var(--tint); box-shadow: 0 0 0 3px color-mix(in srgb, var(--tint) 20%, transparent)}
+textarea{min-height:160px;resize:vertical;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.helper{font-size:13px;color:color-mix(in srgb, CanvasText 60%, transparent)}
+.flex{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tag{font-size:12px;padding:4px 10px;border-radius:999px;border:1px solid var(--border)}
+.progress{height:10px;border-radius:999px;background:color-mix(in srgb, CanvasText 12%, transparent);overflow:hidden}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--tint),var(--ok))}
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{padding:10px;border-bottom:1px solid var(--border);text-align:left;vertical-align:middle}
+.table th{font-size:14px;font-weight:500}
+.row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+.bad{color:var(--bad)} .ok{color:var(--ok)} .warn{color:var(--warn)}
+.report{padding:16px}
+h2{margin:0 0 8px 0; font-weight:600; font-size:22px}
+.kv{display:flex;gap:8px;flex-wrap:wrap}
+.kv .chip{font-size:12px;padding:4px 10px;border-radius:999px;border:1px solid var(--border)}
+.sep{height:1px;background:var(--border);margin:16px 0}
+.printbar{position:fixed;left:0;right:0;bottom:10px;display:flex;justify-content:center;z-index:60}
+.printbar .dock{display:flex;gap:8px;padding:10px;border:1px solid var(--border);border-radius:18px;background:var(--glass);backdrop-filter:var(--blur);box-shadow:var(--shadow-lg)}
+.oe-wrap{display:grid;gap:10px}
+.oe-controls{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.oe-controls .small{font-size:12px}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap}
+@media print{
+  header,.printbar,.card.input{display:none!important}
+  body{background:white; font-size:12px}
+  main{margin:0; gap:10px}
+  .card.report{box-shadow:none;border:1px solid #ddd; border-radius:0; page-break-inside:avoid}
+  .card .inner{padding:10px}
+}
+@media (max-width:640px){
+  .grid-2{ grid-template-columns:1fr }
+  .hbar{ flex-direction:column; gap:16px; padding-bottom:20px }
+  .controls{ justify-content:center }
+  .row{ grid-template-columns:1fr }
+  .row div[style*="min-width"]{ min-width:100%!important }
+  .oe-controls{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="hbar">
+    <div class="brand">
+      <span class="badge">Happy English Club</span>
+      <div>
+        <h1>Grading Console</h1>
+        <div class="helper">Paste submission JSON. Choose class. Render a premium report. Manually grade open-ended and merge into the score.</div>
+      </div>
+    </div>
+    <div class="controls">
+      <button id="demoBtn" class="btn">Load demo</button>
+      <button id="printBtnTop" class="btn btn-primary">Print / Save PDF</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="card input">
+    <div class="inner grid grid-2">
+      <div class="form-group">
+        <label for="klass"><strong>Class</strong></label>
+        <select id="klass">
+          <option value="auto">Auto-detect</option>
+          <option value="Jupiter">Jupiter</option>
+          <option value="Sky 1">Sky 1</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="mode"><strong>Mode</strong></label>
+        <select id="mode">
+          <option value="auto">Auto (prefer embedded score)</option>
+          <option value="compute">Compute from sections if available</option>
+          <option value="display">Display only (no compute)</option>
+        </select>
+      </div>
+      <div class="form-group" style="grid-column:1/-1">
+        <label for="paste"><strong>Submission JSON</strong></label>
+        <textarea id="paste" placeholder='Paste a single JSON object, an array, or multiple objects (one per line).'></textarea>
+        <div class="flex">
+          <button id="renderBtn" class="btn btn-primary">Render report</button>
+          <span class="helper">Tip: You can paste multiple lines.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="reports" class="grid"></div>
+</main>
+
+<div class="printbar">
+  <div class="dock">
+    <button id="printBtnBottom" class="btn btn-primary">Print / Save PDF</button>
+  </div>
+</div>
+
+<script>
+/* ===== Helpers ===== */
+const $ = (s, el=document)=>el.querySelector(s);
+const $$ = (s, el=document)=>[...el.querySelectorAll(s)];
+let REPORT_SEQ = 0;
+
+function tryParse(line){ try{ return JSON.parse(line); }catch{ return null; } }
+function parseMany(raw){
+  raw = (raw||"").trim(); if(!raw) return [];
+  let out = [];
+  const once = tryParse(raw);
+  if(once && typeof once==='object'){
+    if(Array.isArray(once)) return once.filter(o=>o && typeof o==='object');
+    out.push(once); return out;
+  }
+  raw.split(/\r?\n/).forEach(l=>{ const j = tryParse(l.trim()); if(j && typeof j==='object' && !Array.isArray(j)) out.push(j); });
+  return out;
+}
+function pct(correct,total){ return total>0 ? Math.round(100*correct/total) : 0; }
+function barWidth(p){ return Math.max(2, Math.min(100,p)); }
+function fmtDate(iso){ if(!iso) return '—'; try{ const d=new Date(iso); return d.toLocaleString(undefined,{dateStyle:'medium',timeStyle:'short'}); }catch{ return iso; } }
+
+/* ===== Grade computation ===== */
+function computeScore(obj){
+  if(typeof obj.percent==='number' && obj.sections){
+    return { total:obj.total, max:obj.max, percent:obj.percent, sections:obj.sections };
+  }
+  if(obj.score && typeof obj.score.percent==='number'){
+    return obj.score;
+  }
+  if(obj.sections){
+    let total=0,max=0; const secs={};
+    for(const [k,v] of Object.entries(obj.sections)){
+      const c=+v.correct||0, t=+v.total||0;
+      secs[k]={correct:c,total:t};
+      total+=c; max+=t;
+    }
+    return { total, max, percent: max?Math.round(100*total/max):0, sections:secs };
+  }
+  return null;
+}
+
+/* ===== UI builders ===== */
+function buildSectionRows(sec){
+  let rows='';
+  Object.entries(sec).forEach(([k,v])=>{
+    const c=+v.correct||0, t=+v.total||0, p=pct(c,t);
+    const cls = t===0 ? '' : p>=90?'ok':p<60?'bad':'';
+    rows += `<tr>
+      <td>${k}</td>
+      <td>${c} / ${t}</td>
+      <td class="${cls}">${t? p+'%':'—'}</td>
+      <td><div class="progress"><i style="width:${barWidth(p)}%"></i></div></td>
+    </tr>`;
+  });
+  return rows;
+}
+
+function renderReport(data){
+  const rid = ++REPORT_SEQ;
+  const meta = data.meta || {};
+  const detectedKlass = meta.klass || $('#klass').value || '—';
+  const mode = $('#mode').value;
+  let score = null;
+  if(mode==='display'){
+    score = (data.score || (typeof data.percent==='number'? {total:data.total,max:data.max,percent:data.percent,sections:data.sections}: null));
+  }else if(mode==='compute'){
+    score = computeScore(data);
+  }else{
+    score = (data.score || (typeof data.percent==='number'? {total:data.total,max:data.max,percent:data.percent,sections:data.sections}: null) || computeScore(data));
+  }
+
+  const overallPercent = score ? score.percent : null;
+  const chipColor = !score ? '' : overallPercent>=90 ? 'ok' : overallPercent<60 ? 'bad' : 'warn';
+
+  const wrap = document.createElement('div');
+  wrap.className = 'card report report-entering';
+
+  const tbodyId = `tbody_${rid}`;
+  const overallId = `overall_${rid}`;
+  const barId = `bar_${rid}`;
+  const noteId = `note_${rid}`;
+
+  // Detect open-ended payloads
+  const jU5E = data.sections?.U5E?.qs;
+  const sOpen = data.open;
+  const hasOE = Array.isArray(jU5E) || !!sOpen;
+
+  // Default OE section key & max suggestion
+  const oeSectionKey = Array.isArray(jU5E) ? 'U5E' : 'OpenEnded';
+  const defaultMax = Array.isArray(jU5E) ? Math.ceil(jU5E.length/2) : 10;
+
+  // Build OE preview HTML
+  function oePreview(){
+    let html = '';
+    if(Array.isArray(jU5E)){
+      html += `<div class="grid" style="gap:6px">`;
+      for(let i=0;i<jU5E.length;i+=2){
+        const q = jU5E[i]||'', a = jU5E[i+1]||'';
+        html += `<div class="card" style="padding:12px;border-radius:14px;background:var(--bg)">
+          <div class="helper">Q${(i/2)+1}</div>
+          <div><em>${q}</em></div>
+          <div class="helper" style="margin-top:4px">Answer</div>
+          <div>${a}</div>
+        </div>`;
+      }
+      html += `</div>`;
+    }
+    if(sOpen){
+      if (Array.isArray(sOpen.A_sentences) && sOpen.A_sentences.length){
+        html += `<div class="sep"></div><div><strong>Part A — Sentences</strong><div class="helper">${sOpen.A_sentences.length} set(s)</div></div>`;
+        sOpen.A_sentences.forEach((t,i)=>{ html += `<div class="card" style="padding:12px;border-radius:14px;margin-top:6px;background:var(--bg)"><div class="helper">Set ${i+1}</div><div>${(t||'').replace(/\n/g,'<br>')}</div></div>`; });
+      }
+      if (sOpen.B_q1 || sOpen.B_q2 || sOpen.B_q3){
+        html += `<div class="sep"></div><strong>Part B — Think & Write</strong>`;
+        if(sOpen.B_q1) html += `<div class="card" style="padding:12px;border-radius:14px;margin-top:6px;background:var(--bg)"><div class="helper">Q1</div>${sOpen.B_q1}</div>`;
+        if(sOpen.B_q2) html += `<div class="card" style="padding:12px;border-radius:14px;margin-top:6px;background:var(--bg)"><div class="helper">Q2</div>${sOpen.B_q2}</div>`;
+        if(sOpen.B_q3) html += `<div class="card" style="padding:12px;border-radius:14px;margin-top:6px;background:var(--bg)"><div class="helper">Q3</div>${sOpen.B_q3}</div>`;
+      }
+      if (sOpen.C_timeline && (sOpen.C_timeline.first||sOpen.C_timeline.next||sOpen.C_timeline.finally)){
+        html += `<div class="sep"></div><strong>Part C — Timeline</strong>
+          <div class="flex" style="gap:6px;margin-top:6px">
+            ${sOpen.C_timeline.first? `<div class="tag">First: ${sOpen.C_timeline.first}</div>`:''}
+            ${sOpen.C_timeline.next? `<div class="tag">Next: ${sOpen.C_timeline.next}</div>`:''}
+            ${sOpen.C_timeline.finally? `<div class="tag">Finally: ${sOpen.C_timeline.finally}</div>`:''}
+          </div>`;
+      }
+      if (sOpen.F_combine && (sOpen.F_combine.c1||sOpen.F_combine.c2)){
+        html += `<div class="sep"></div><strong>Part F — Combine</strong>
+          ${sOpen.F_combine.c1? `<div class="card" style="padding:12px;border-radius:14px;margin-top:6px;background:var(--bg)">${sOpen.F_combine.c1}</div>`:''}
+          ${sOpen.F_combine.c2? `<div class="card" style="padding:12px;border-radius:14px;margin-top:6px;background:var(--bg)">${sOpen.F_combine.c2}</div>`:''}`;
+      }
+    }
+    return html;
+  }
+
+  // Top block + sections table
+  wrap.innerHTML = `
+    <div class="inner report">
+      <div class="row"><h2>${meta.student || 'Student'}</h2>
+        <div class="kv">
+          <span class="chip">Class: ${detectedKlass}</span>
+          <span class="chip">Teacher: ${meta.teacher||'—'}</span>
+          <span class="chip">School: ${meta.school||'—'}</span>
+          <span class="chip">Due: ${meta.due||'—'}</span>
+          <span class="chip">Submitted: ${fmtDate(meta.submitted_at)}</span>
+        </div>
+      </div>
+      <div class="sep"></div>
+      ${score ? `
+        <div class="grid" style="gap:10px">
+          <div class="row">
+            <div id="${overallId}">
+              <strong>Overall</strong> — <span class="${chipColor}" style="font-size:1.1em;font-weight:600;">${score.percent}%</span> (${score.total}/${score.max})
+            </div>
+            <div style="min-width:40%;max-width:50%">
+              <div class="progress"><i id="${barId}" style="width:${barWidth(score.percent)}%"></i></div>
+            </div>
+          </div>
+          <div class="helper" id="${noteId}" style="margin-top:-6px"></div>
+        </div>
+      ` : `<div class="helper">No score embedded. Switch “Mode” to <b>Compute</b> if section scores are present.</div>`}
+    </div>
+    <div class="inner" style="padding-top:0">
+      <table class="table">
+        <thead><tr><th>Section</th><th style="width:120px">Score</th><th style="width:70px">%</th><th>Progress</th></tr></thead>
+        <tbody id="${tbodyId}">${buildSectionRows(score?.sections || data.sections || {})}</tbody>
+      </table>
+    </div>
+    ${hasOE ? `
+    <div class="inner" style="padding-top:0">
+      <div class="sep"></div>
+      <div class="oe-wrap">
+        <strong>Open-ended — teacher grading</strong>
+        <div class="helper">Preview below. Enter awarded points to add this to the overall score. This writes into the <b>${oeSectionKey}</b> section.</div>
+        <div class="oe-controls">
+          <div class="form-group">
+            <label><small>Max points</small></label>
+            <input type="number" min="0" step="1" id="oeMax_${rid}" value="${defaultMax}">
+          </div>
+          <div class="form-group">
+            <label><small>Awarded points</small></label>
+            <input type="number" min="0" step="0.5" id="oeAward_${rid}" value="0">
+          </div>
+          <div class="form-group">
+            <label><small>&nbsp;</small></label>
+            <div class="btn-row">
+              <button class="btn btn-primary" id="oeApply_${rid}">Apply to score</button>
+              <button class="btn" id="oeClear_${rid}">Clear OE score</button>
+            </div>
+          </div>
+        </div>
+        ${oePreview()}
+      </div>
+    </div>`:``}
+  `;
+
+  // Apply/Clear handlers
+  if(hasOE){
+    const btnApply = $(`#oeApply_${rid}`, wrap);
+    const btnClear = $(`#oeClear_${rid}`, wrap);
+    const inpMax   = $(`#oeMax_${rid}`, wrap);
+    const inpAward = $(`#oeAward_${rid}`, wrap);
+    const tbody    = $(`#${tbodyId}`, wrap);
+    const overall  = $(`#${overallId}`, wrap);
+    const bar      = $(`#${barId}`, wrap);
+    const note     = $(`#${noteId}`, wrap);
+
+    function refreshUI(){
+      const s = computeScore(data);
+      if(!s) return;
+      overall.innerHTML = `<strong>Overall</strong> — <span class="${s.percent>=90?'ok': s.percent<60?'bad':'warn'}" style="font-size:1.1em;font-weight:600;">${s.percent}%</span> (${s.total}/${s.max})`;
+      bar.style.width = barWidth(s.percent)+'%';
+      tbody.innerHTML = buildSectionRows(s.sections || {});
+    }
+
+    btnApply.addEventListener('click', ()=>{
+      const max = Math.max(0, Number(inpMax.value||0));
+      const got = Math.max(0, Number(inpAward.value||0));
+      // Write into data.sections
+      data.sections = data.sections || {};
+      data.sections[oeSectionKey] = { correct: Math.min(got, max), total: max, ...(Array.isArray(jU5E)? { qs: jU5E } : {}) };
+      note.textContent = `Open-ended score applied to ${oeSectionKey}: ${Math.min(got,max)} / ${max}.`;
+      refreshUI();
+    });
+
+    btnClear.addEventListener('click', ()=>{
+      if(data.sections && data.sections[oeSectionKey]){
+        delete data.sections[oeSectionKey];
+        note.textContent = `Open-ended score cleared from ${oeSectionKey}.`;
+        refreshUI();
+      }
+    });
+  }
+
+  // Remove entering animation
+  setTimeout(()=>wrap.classList.remove('report-entering'), 80);
+  return wrap;
+}
+
+/* ===== Wire up ===== */
+function renderFromTextarea(){
+  const btn = $('#renderBtn'); const originalText = btn.textContent;
+  btn.disabled = true; btn.textContent = 'Rendering…';
+  const raw = $('#paste').value;
+  const list = parseMany(raw);
+  const host = $('#reports'); host.innerHTML='';
+
+  if(!list.length){
+    const empty = document.createElement('div');
+    empty.className='card empty-state';
+    empty.innerHTML = `<div class="helper" style="font-size:15px">No valid JSON found. Paste one object per line, a single object, or a JSON array.</div>`;
+    host.appendChild(empty);
+  }else{
+    list.forEach((obj, i)=>{ host.appendChild(renderReport(obj)); });
+    setTimeout(()=>host.scrollIntoView({behavior:'smooth', block:'start'}), 60);
+  }
+  setTimeout(()=>{ btn.disabled=false; btn.textContent=originalText; }, 300);
+}
+$('#renderBtn').addEventListener('click', renderFromTextarea);
+$('#printBtnTop').addEventListener('click', ()=>window.print());
+$('#printBtnBottom').addEventListener('click', ()=>window.print());
+
+/* Demo */
+$('#demoBtn').addEventListener('click', ()=>{
+  $('#klass').value='Jupiter';
+  $('#mode').value='auto';
+  $('#paste').value =
+`{"meta":{"student":"cute nosiy","klass":"Jupiter","teacher":"Victor","school":"Happy English Club","due":"15 Nov","submitted_at":"2025-11-14T10:12:29.670Z"},"sections":{"U4A":{"correct":3,"total":3},"U4B":{"correct":4,"total":4},"U4C":{"correct":3,"total":4},"U4E":{"correct":4,"total":4},"U5B":{"correct":4,"total":5},"U5C":{"correct":1,"total":3},"U5D":{"correct":4,"total":6},"U5E":{"correct":0,"total":0,"qs":["Are the honey bees in the field?","No, they aren't.","Where is the chick?","On the tree.","Is the opossum in the tree hollow?","Yes, it is.","Where are the crabs?","They are in the sand."]}},"total":23,"max":29,"percent":79}
+{"meta":{"student":"smart sheep","klass":"Sky 1","teacher":"Anna","school":"Happy English Club","due":"15 Nov","submitted_at":"2025-11-14T11:22:01.120Z"}, "score": {"total":38,"max":40,"percent":95,"sections":{"Reading":{"correct":10,"total":10},"Grammar":{"correct":8,"total":10},"Writing":{"correct":10,"total":10},"Listening":{"correct":10,"total":10}}}, "open":{"A_sentences":["I like summer…"],"B_q1":"Hanoi has great food…","C_timeline":{"first":"We packed","next":"We traveled","finally":"We arrived"},"F_combine":{"c1":"After we packed…","c2":"Before we moved…"}}}`;
+  renderFromTextarea();
+});
+</script>
+</body>
+</html>

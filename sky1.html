@@ -40,12 +40,13 @@ body{
     linear-gradient(180deg, color-mix(in srgb, var(--bg) 70%, transparent), var(--bg));
 }
 @keyframes sheen{to{transform:translateX(140%)}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(10,132,255,.5)}70%{box-shadow:0 0 0 16px rgba(10,132,255,0)}100%{box-shadow:0 0 0 0 rgba(10,132,255,0)}}
 header{
   position:sticky; top:0; z-index:20; backdrop-filter:var(--blur); -webkit-backdrop-filter:var(--blur);
   background: color-mix(in srgb, var(--bg) 70%, transparent); border-bottom:1px solid var(--border);
 }
 .header-wrap{max-width:1100px;margin:auto;padding:18px clamp(16px,3vw,24px);display:flex;align-items:center;gap:16px;justify-content:space-between}
-.badge{padding:4px 10px; border-radius:999px; font-size:12px; color:#fff; background: linear-gradient(135deg, var(--tint), var(--tint-2)); box-shadow: var(--shadow-1);}
+.badge{padding:4px 10px; border-radius:999px; font-size:12px; color:#fff; background: linear-gradient(135deg, var(--tint), var(--tint-2)); box-shadow: 0 0 0 0 rgba(10,132,255,.6); animation:pulse 2.4s infinite;}
 h1{font-size:28px;margin:0}
 .sub{font-size:13px;color:color-mix(in srgb, CanvasText 60%, transparent);margin-top:4px}
 .controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
@@ -299,7 +300,7 @@ footer.actions{position:fixed;bottom:10px;left:0;right:0;z-index:40;display:flex
 <footer class="actions">
   <div class="bar">
     <button id="submitBtn" class="btn-primary">Submit & Show Score</button>
-    <span class="notice"></span>
+    <span class="notice">Autosaves locally • Sends only open-ended + score JSON to Google Form</span>
   </div>
 </footer>
 
@@ -307,7 +308,7 @@ footer.actions{position:fixed;bottom:10px;left:0;right:0;z-index:40;display:flex
 <canvas id="fx"></canvas>
 
 <script>
-/* ===== Google Form (posts ONLY open-ended answers + name) =====
+/* ===== Google Form (posts ONLY open-ended + client-side score JSON + name) =====
 Form action from your link:
   https://docs.google.com/forms/d/e/1FAIpQLSeVstxYs3B_SzhOsk-Lxe96ilZdPOokT2qiE0ucDQlNBB4sGg/formResponse
 Field IDs:
@@ -496,14 +497,14 @@ function collectJSON(){
   return { meta, A, B, C, D, F, checklist };
 }
 
-/* ---------- compact + post ONLY open-ended ---------- */
+/* ---------- compact + post ONLY open-ended + score ---------- */
 function compactJSON(obj){
   const pruned = JSON.stringify(obj, (k,v)=> v==="" ? undefined : v);
-  const MAX = 9000;
+  const MAX = 12000;
   return pruned.length>MAX ? pruned.slice(0,MAX-3)+'...' : pruned;
 }
 
-function submitOpenEndedToGoogleForm(name, openObj){
+function submitOpenEndedToGoogleForm(name, openObjWithScore){
   const form = document.createElement('form');
   form.method = 'POST';
   form.action = FORM_ACTION;
@@ -511,7 +512,7 @@ function submitOpenEndedToGoogleForm(name, openObj){
 
   const add = (n,v) => { const i=document.createElement('input'); i.name=n; i.value=v; form.appendChild(i); };
   add(FIELD_NAME, name || '');
-  add(FIELD_JSON, compactJSON(openObj));
+  add(FIELD_JSON, compactJSON(openObjWithScore));
   // required hidden params for background submit
   add('fvv','1'); add('draftResponse','[]'); add('pageHistory','0');
 
@@ -534,16 +535,37 @@ function showResults(g){
   res.scrollIntoView({behavior:"smooth"});
 }
 
-/* ---------- submit: grade → show score → send open-ended ---------- */
+/* ---------- submit: grade → show score → send open-ended + score JSON ---------- */
 document.getElementById("submitBtn").addEventListener("click", (e)=>{
   e.preventDefault();
   const name = nameInput.value.trim();
   if (!name){ alert('Type your full name before submitting.'); return; }
-  const json = collectJSON();
-  const score = scoreSubmission(json);
+
+  // 1) Build full payload + score
+  const json   = collectJSON();
+  const score  = scoreSubmission(json);
+
+  // 2) Show local results
   showResults(score);
-  const openOnly = { meta: json.meta, open: extractOpenEnded(json) };
-  submitOpenEndedToGoogleForm(name, openOnly);
+
+  // 3) Build the JSON we ship to Google Form: includes client-side score & sections
+  const openWithScore = {
+    meta: json.meta,
+    score: {
+      total:   score.total,
+      max:     score.max,
+      percent: score.percent,
+      sections: score.sections
+    },
+    open: extractOpenEnded(json),
+    grader: 'client_v2',
+    graded_at: new Date().toISOString()
+  };
+
+  // 4) Post to Google Form (hidden background submit)
+  submitOpenEndedToGoogleForm(name, openWithScore);
+
+  // 5) UX feedback
   toast(`Submitted. Score: ${score.total}/${score.max} (${score.percent}%)`);
   confetti();
 });
@@ -562,7 +584,18 @@ function confetti(){
 }
 
 /* ---------- init ---------- */
-window.addEventListener("load", ()=>{ renderVocab(); load(); });
+function updateTags(){
+  ["A","B","C","D","F","Checklist"].forEach((sec,i)=>{
+    const details = document.querySelector(`details[data-section="${sec}"]`);
+    const tag = document.querySelector(`#tag-${sec}`);
+    const fields = $$("[data-k]", details);
+    const filled = fields.filter(el=> el.type==="checkbox" ? el.checked : (el.value||"").trim().length>0).length;
+    const pct = Math.round(100*filled/Math.max(1,fields.length));
+    tag.textContent = pct===100 ? "Done" : (pct>=60 ? "Good" : "Start");
+  });
+}
+window.addEventListener("load", ()=>{ renderVocab(); load(); updateTags(); });
+document.addEventListener("input", updateTags);
 document.addEventListener("keydown", e=>{ if(e.key==="Escape"){ const open=$("details.ac[open]"); if(open) open.removeAttribute("open"); }});
 </script>
 </body>
