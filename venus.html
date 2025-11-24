@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy English Club - Venus Class</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Interact.js for Drag and Drop -->
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+
+    <style>
+        :root {
+            --brand-yellow: #FFD700;
+            --brand-pink: #FF69B4;
+            --venus-orange: #FF9F43;
+            --space-blue: #0f172a;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--space-blue);
+            overflow: hidden;
+            color: white;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        h1, h2, h3, .brand-font { font-family: 'Fredoka', sans-serif; }
+
+        #star-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        /* Animations */
+        @keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 80% { transform: scale(1.05); opacity: 1; } 100% { transform: scale(1); } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+        @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes swap { 0% { transform: translateX(0); } 50% { transform: translateX(100%); } 100% { transform: translateX(0); } }
+
+        .pop-in { animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .shake-anim { animation: shake 0.4s ease-in-out; }
+        .slide-in { animation: slideInRight 0.5s ease-out; }
+
+        .floating-element { animation: float 4s ease-in-out infinite; }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0px); } }
+
+        .glow-btn { animation: pulse-glow 2s infinite; }
+        @keyframes pulse-glow { 0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(255, 215, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); } }
+
+        .input-field { transition: all 0.3s; border: 3px solid transparent; }
+        .input-field:focus { outline: none; border-color: var(--brand-yellow); transform: scale(1.02); box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
+
+        .scene {
+            display: none;
+            position: absolute;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .scene.active { display: flex; }
+
+        .venus-gradient { background: radial-gradient(circle at 30% 30%, #ffd700, #ff9f43, #d35400); }
+
+        .loader-container { width: 100%; height: 8px; background: rgba(255,255,255,0.2); border-radius: 10px; overflow: hidden; margin-top: 15px; }
+        .loader-bar { height: 100%; background: linear-gradient(90deg, #FFD700, #FF69B4); width: 0%; transition: width 0.1s linear; }
+        
+        .quiz-option { transition: all 0.2s; }
+        .quiz-option:hover:not(:disabled) { background: rgba(255, 255, 255, 0.2); transform: translateY(-2px); }
+        .quiz-option:active:not(:disabled) { transform: translateY(0); }
+
+        .icon-context-box {
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem auto;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .lesson-card {
+            background: rgba(0,0,0,0.4);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 10px;
+        }
+
+        /* Sentence Builder Styles */
+        .word-tile {
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: transform 0.1s;
+            user-select: none;
+        }
+        .word-tile:hover { transform: scale(1.1); }
+        
+        .drop-zone-container {
+            min-height: 80px;
+            border: 2px dashed rgba(255,255,255,0.3);
+            border-radius: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 15px;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <canvas id="star-canvas"></canvas>
+
+    <!-- SCENE 1: SPLASH -->
+    <div id="scene-splash" class="scene active">
+        <div class="glass-panel p-8 rounded-3xl text-center max-w-md w-[90%] pop-in relative overflow-hidden">
+            <div class="absolute -top-10 -right-10 w-32 h-32 border-4 border-white/10 rounded-full"></div>
+            <div class="absolute -bottom-10 -left-10 w-24 h-24 border-4 border-white/10 rounded-full"></div>
+            <div class="mascot-container mb-6 inline-block">
+                <div class="w-24 h-24 rounded-full venus-gradient flex items-center justify-center shadow-lg mx-auto relative">
+                    <i class="fa-solid fa-face-smile-wink text-4xl text-white drop-shadow-md"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl text-yellow-300 font-black mb-2 drop-shadow-lg tracking-wide">Happy English<br/><span class="text-white">Club</span></h1>
+            <p class="text-blue-100 text-lg mb-8 font-semibold">Where Learning is an Adventure!</p>
+            <button onclick="goToLogin()" class="glow-btn bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white font-bold py-4 px-10 rounded-full text-xl shadow-lg transform transition hover:scale-105 w-full">
+                <i class="fa-solid fa-rocket mr-2"></i> Start Journey
+            </button>
+        </div>
+    </div>
+
+    <!-- SCENE 2: LOGIN -->
+    <div id="scene-login" class="scene">
+        <div class="glass-panel p-8 rounded-3xl text-center max-w-md w-[90%] relative">
+            <button onclick="goBack('scene-splash')" class="absolute top-4 left-4 text-white/50 hover:text-white transition"><i class="fa-solid fa-arrow-left text-xl"></i></button>
+            <div class="mb-4"><span class="bg-blue-600/80 text-blue-100 px-3 py-1 rounded-full text-sm font-bold border border-blue-400"><i class="fa-solid fa-shield-halved mr-1"></i> Security Check</span></div>
+            <h2 class="text-2xl text-white font-bold mb-6">Who is this Explorer?</h2>
+            <div class="relative w-full mb-6 group">
+                <i class="fa-solid fa-user-astronaut absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 group-hover:text-yellow-400 transition"></i>
+                <input type="text" id="username-input" placeholder="Type your name..." class="input-field w-full bg-white/10 text-white placeholder-gray-300 rounded-2xl py-4 pl-12 pr-4 text-xl font-bold text-center" autocomplete="off">
+            </div>
+            <button id="login-btn" onclick="processLogin()" class="bg-gray-500 cursor-not-allowed text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg w-full transition duration-300" disabled>Enter Venus Class</button>
+            <div id="loading-sim" class="hidden mt-6 text-left">
+                <p id="loading-text" class="text-sm font-bold text-yellow-300 mb-1">Scanning details...</p>
+                <div class="loader-container"><div id="progress-bar" class="loader-bar"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCENE 3: DASHBOARD -->
+    <div id="scene-dashboard" class="scene">
+        <div id="confetti-origin" style="position:absolute; top:50%; left:50%;"></div>
+        <div class="glass-panel p-6 rounded-3xl text-center max-w-4xl w-[95%] h-[90vh] flex flex-col relative overflow-hidden border-yellow-400/30">
+            <div class="flex justify-between items-center mb-6 bg-white/5 p-3 rounded-2xl border border-white/10">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full venus-gradient flex items-center justify-center shadow-md"><i class="fa-solid fa-star text-white text-sm"></i></div>
+                    <div class="text-left"><div class="text-xs text-gray-300 uppercase tracking-wider font-bold">Current Mission</div><div class="text-yellow-300 font-bold brand-font">Venus Class</div></div>
+                </div>
+                <div class="bg-black/30 px-4 py-2 rounded-xl flex items-center gap-2"><i class="fa-solid fa-gem text-pink-400"></i><span id="player-score" class="font-bold text-white">0 XP</span></div>
+            </div>
+            <div class="flex-grow flex flex-col justify-center items-center relative">
+                <div class="floating-element mb-6 relative">
+                    <div class="w-48 h-48 rounded-full border-4 border-yellow-400 bg-gradient-to-b from-blue-900 to-black flex flex-col items-center justify-center shadow-[0_0_50px_rgba(255,215,0,0.5)] relative overflow-hidden">
+                        <div class="absolute -top-10 -left-10 w-20 h-20 bg-white opacity-20 rotate-45 transform"></div>
+                        <i class="fa-solid fa-rocket text-5xl text-white mb-2 drop-shadow-lg"></i>
+                        <div class="text-yellow-400 text-xs uppercase tracking-widest font-bold mt-2">Captain</div>
+                        <div id="display-name" class="text-white text-xl font-black brand-font truncate max-w-[80%]">Student</div>
+                    </div>
+                    <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white text-xs font-bold px-4 py-1 rounded shadow-md border-2 border-red-400 whitespace-nowrap">OFFICIAL MEMBER</div>
+                </div>
+                <h1 class="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-pink-400 to-yellow-300 mb-4 text-center">Welcome to Venus!</h1>
+                
+                <div class="grid grid-cols-2 gap-4 w-full max-w-lg mt-6">
+                    <!-- PRACTICE MODE -->
+                    <button onclick="startPractice()" class="bg-gradient-to-br from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 border border-white/20 p-4 rounded-2xl flex flex-col items-center transition transform hover:scale-105 group shadow-lg">
+                        <div class="bg-white/20 p-3 rounded-full mb-2"><i class="fa-solid fa-gamepad text-2xl text-white"></i></div>
+                        <span class="text-sm font-bold text-white">Practice Game</span>
+                        <span class="text-xs text-blue-200 mt-1">Has Lives! ❤️</span>
+                    </button>
+                    <!-- TEST MODE -->
+                    <button onclick="startLesson()" class="bg-gradient-to-br from-yellow-500 to-orange-600 hover:from-yellow-400 hover:to-orange-500 border border-white/20 p-4 rounded-2xl flex flex-col items-center transition transform hover:scale-105 group shadow-lg">
+                        <div class="bg-white/20 p-3 rounded-full mb-2"><i class="fa-solid fa-clipboard-check text-2xl text-white"></i></div>
+                        <span class="text-sm font-bold text-white">Take Test</span>
+                        <span class="text-xs text-yellow-100 mt-1">Full Mission 🚀</span>
+                    </button>
+                    <!-- WORD LAB (SENTENCE BUILDER) -->
+                    <button onclick="startSentenceBuilder()" class="bg-gradient-to-br from-teal-500 to-emerald-600 hover:from-teal-400 hover:to-emerald-500 border border-white/20 p-4 rounded-2xl flex flex-col items-center transition transform hover:scale-105 group shadow-lg">
+                        <div class="bg-white/20 p-3 rounded-full mb-2"><i class="fa-solid fa-shapes text-2xl text-white"></i></div>
+                        <span class="text-sm font-bold text-white">Word Lab</span>
+                        <span class="text-xs text-teal-100 mt-1">Build Sentences</span>
+                    </button>
+                    <!-- READING (EXTERNAL) -->
+                    <button onclick="window.open('https://readalong.google.com/', '_blank')" class="bg-gradient-to-br from-indigo-500 to-violet-600 hover:from-indigo-400 hover:to-violet-500 border border-white/20 p-4 rounded-2xl flex flex-col items-center transition transform hover:scale-105 group shadow-lg">
+                        <div class="bg-white/20 p-3 rounded-full mb-2"><i class="fa-solid fa-book-open-reader text-2xl text-white"></i></div>
+                        <span class="text-sm font-bold text-white">Reading</span>
+                        <span class="text-xs text-indigo-100 mt-1">Read Along ↗</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCENE 5: LESSON (FLIGHT TRAINING) -->
+    <div id="scene-lesson" class="scene">
+        <div class="glass-panel p-6 rounded-3xl text-center max-w-3xl w-[95%] relative flex flex-col min-h-[500px]">
+            <div class="flex justify-between items-center mb-4 border-b border-white/10 pb-4">
+                <button onclick="switchScene('lesson', 'dashboard')" class="text-white/60 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+                <div class="text-yellow-300 font-bold brand-font text-lg">flight training</div>
+            </div>
+            
+            <div id="lesson-content" class="flex-grow flex flex-col justify-center items-center text-left">
+                <!-- Step 1: Singular -->
+                <div id="lesson-step-1" class="w-full slide-in">
+                    <h2 class="text-2xl font-bold text-white mb-6 text-center">Rule #1: The Rocket</h2>
+                    <div class="flex justify-center gap-8 mb-8">
+                        <div class="lesson-card w-1/2 flex flex-col items-center border-blue-400/50 bg-blue-900/20">
+                            <i class="fa-solid fa-rocket text-5xl text-blue-300 mb-4"></i>
+                            <div class="text-3xl font-black text-blue-300">ONE</div>
+                            <p class="mt-2 text-white">"There <b>IS</b> a rocket."</p>
+                        </div>
+                    </div>
+                    <button onclick="nextLessonStep(2)" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl transition">Got it!</button>
+                </div>
+
+                <!-- Step 2: Plural -->
+                <div id="lesson-step-2" class="w-full hidden slide-in">
+                    <h2 class="text-2xl font-bold text-white mb-6 text-center">Rule #2: The Stars</h2>
+                    <div class="flex justify-center gap-8 mb-8">
+                        <div class="lesson-card w-1/2 flex flex-col items-center border-pink-400/50 bg-pink-900/20">
+                            <div class="flex gap-2 mb-4">
+                                <i class="fa-solid fa-star text-3xl text-pink-300"></i><i class="fa-solid fa-star text-3xl text-pink-300"></i>
+                            </div>
+                            <div class="text-3xl font-black text-pink-300">MANY</div>
+                            <p class="mt-2 text-white">"There <b>ARE</b> stars."</p>
+                        </div>
+                    </div>
+                    <button onclick="nextLessonStep(3)" class="w-full bg-pink-600 hover:bg-pink-500 text-white font-bold py-3 rounded-xl transition">Next</button>
+                </div>
+
+                <!-- Step 3: Interrogative (New) -->
+                <div id="lesson-step-3" class="w-full hidden slide-in">
+                    <h2 class="text-2xl font-bold text-white mb-6 text-center">Rule #3: Asking Questions</h2>
+                    <div class="flex flex-col items-center mb-8">
+                        <div class="bg-white/10 p-4 rounded-xl flex gap-4 items-center mb-4">
+                            <div class="bg-blue-600 px-4 py-2 rounded font-bold">There</div>
+                            <div class="bg-yellow-600 px-4 py-2 rounded font-bold">is</div>
+                            <span class="text-white">a cat.</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-down-long text-3xl text-white/50 mb-4 animate-bounce"></i>
+                        <div class="bg-white/10 p-4 rounded-xl flex gap-4 items-center border-2 border-yellow-400">
+                            <div class="bg-yellow-600 px-4 py-2 rounded font-bold">Is</div>
+                            <div class="bg-blue-600 px-4 py-2 rounded font-bold">there</div>
+                            <span class="text-white">a cat?</span>
+                        </div>
+                    </div>
+                    <p class="text-center text-lg mb-6">To ask a question, we <b>swap</b> the first two words!</p>
+                    <button onclick="nextLessonStep(4)" class="w-full bg-yellow-600 hover:bg-yellow-500 text-white font-bold py-3 rounded-xl transition">I Understand</button>
+                </div>
+
+                <!-- Step 4: CCQ -->
+                <div id="lesson-step-4" class="w-full hidden slide-in text-center">
+                    <h2 class="text-2xl font-bold text-white mb-6">Check your Radar!</h2>
+                    <div class="icon-context-box"><i class="fa-solid fa-cat text-5xl text-yellow-300"></i></div>
+                    <p class="text-xl text-white mb-6">I see <b>ONE</b> cat.</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button onclick="checkLessonAnswer(true, this)" class="bg-white/10 border-2 border-white/20 hover:bg-white/20 text-white font-bold py-4 rounded-xl text-xl">There IS</button>
+                        <button onclick="checkLessonAnswer(false, this)" class="bg-white/10 border-2 border-white/20 hover:bg-white/20 text-white font-bold py-4 rounded-xl text-xl">There ARE</button>
+                    </div>
+                    <p id="lesson-feedback" class="mt-4 font-bold h-6"></p>
+                </div>
+
+                <!-- Step 5: Final Ready -->
+                <div id="lesson-step-5" class="w-full hidden slide-in text-center">
+                    <i class="fa-solid fa-medal text-6xl text-yellow-400 mb-6 animate-bounce"></i>
+                    <h2 class="text-3xl font-bold text-white mb-4">Training Complete!</h2>
+                    <p class="text-lg text-white/80 mb-8 max-w-md mx-auto">
+                        In the test mission, you need to answer ALL questions. <br/><br/>
+                        <span class="text-green-300 font-bold">Don't worry!</span> If you make a mistake, we will help you fix it at the end.
+                    </p>
+                    <button onclick="startTestMode()" class="glow-btn bg-gradient-to-r from-green-500 to-teal-600 text-white font-bold py-4 px-12 rounded-full text-2xl shadow-xl transform transition hover:scale-105">Start Test Mission</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCENE 6: SENTENCE BUILDER -->
+    <div id="scene-sentence" class="scene">
+        <div class="glass-panel p-6 rounded-3xl text-center max-w-3xl w-[95%] relative flex flex-col min-h-[500px]">
+            <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+                <button onclick="switchScene('sentence', 'dashboard')" class="text-white/60 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+                <div class="text-teal-300 font-bold brand-font text-lg">Word Lab</div>
+            </div>
+            
+            <div class="flex-grow flex flex-col justify-center">
+                <h2 class="text-2xl font-bold text-white mb-4">Build the Sentence</h2>
+                <div class="icon-context-box mb-4"><i id="sentence-icon" class="fa-solid fa-cat text-5xl text-white"></i></div>
+                
+                <!-- Drop Zone -->
+                <div id="drop-zone" class="drop-zone-container mb-8">
+                    <span class="text-white/30 italic text-sm pointer-events-none">Tap words to move them here</span>
+                </div>
+
+                <!-- Word Bank -->
+                <div id="word-bank" class="flex flex-wrap gap-3 justify-center mb-8">
+                    <!-- Words injected here -->
+                </div>
+                
+                <div id="sentence-feedback" class="h-8 mb-4 font-bold text-xl"></div>
+
+                <button onclick="checkSentence()" class="bg-gradient-to-r from-teal-500 to-green-600 text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg w-full max-w-xs mx-auto">Check System</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCENE 4: QUIZ (Shared for Test & Practice) -->
+    <div id="scene-quiz" class="scene">
+        <div class="glass-panel p-6 rounded-3xl text-center max-w-3xl w-[95%] relative flex flex-col min-h-[500px]">
+            <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+                <button onclick="switchScene('quiz', 'dashboard')" class="text-white/60 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+                <div class="flex gap-1 text-red-500 hidden" id="lives-container">
+                    <i class="fa-solid fa-heart"></i><i class="fa-solid fa-heart"></i><i class="fa-solid fa-heart"></i>
+                </div>
+                <div class="text-yellow-400 font-bold brand-font text-lg">
+                    Q <span id="q-current">1</span>/<span id="q-total">15</span>
+                </div>
+            </div>
+
+            <div id="quiz-content" class="flex-grow flex flex-col justify-center">
+                <div id="visual-context" class="mb-4"></div>
+                <div class="mb-8">
+                    <span id="mode-badge" class="bg-indigo-600 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block shadow-lg border border-indigo-400">Mission</span>
+                    <h2 id="question-text" class="text-2xl md:text-4xl font-black text-white mt-2 leading-relaxed drop-shadow-md">Loading...</h2>
+                </div>
+                <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            </div>
+            
+            <div id="quiz-result" class="hidden absolute inset-0 bg-slate-900/95 rounded-3xl z-20 flex flex-col items-center justify-center p-6 backdrop-blur-xl">
+                <!-- SUCCESS STATE -->
+                <div id="result-success" class="hidden flex-col items-center w-full">
+                    <div class="w-24 h-24 bg-yellow-400 rounded-full flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(255,215,0,0.4)]"><i class="fa-solid fa-trophy text-5xl text-yellow-900 animate-bounce"></i></div>
+                    <h2 class="text-4xl font-black text-white mb-2 brand-font">Mission Complete!</h2>
+                    <p class="text-blue-200 mb-8 text-lg">Data sent to Headquarters.</p>
+                    <div id="data-sending" class="hidden text-green-400 mb-4 font-mono text-sm"><i class="fa-solid fa-tower-broadcast animate-pulse mr-2"></i> Transmitting to Captain's Log...</div>
+                    <div class="flex items-end gap-2 mb-8"><span class="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-pink-500" id="final-score">0</span><span class="text-xl text-white/60 font-bold pb-2">XP</span></div>
+                    <button onclick="switchScene('quiz', 'dashboard')" class="glow-btn bg-white text-indigo-900 font-black py-4 px-12 rounded-full hover:bg-gray-100 transition transform hover:scale-105 shadow-xl">Return to Base</button>
+                </div>
+                
+                <!-- RETRY STATE -->
+                <div id="result-retry" class="hidden flex-col items-center w-full">
+                    <div class="w-24 h-24 bg-orange-500 rounded-full flex items-center justify-center mb-6"><i class="fa-solid fa-wrench text-5xl text-white animate-spin-slow"></i></div>
+                    <h2 class="text-3xl font-black text-white mb-2 brand-font">Mission Review</h2>
+                    <p class="text-white/80 mb-6 max-w-md text-center">We need to fix some parts of the ship before we return.</p>
+                    <div id="failed-list" class="bg-black/30 w-full rounded-xl p-4 mb-6 max-h-40 overflow-y-auto text-left text-sm text-red-300"></div>
+                    <button onclick="startRetry()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-10 rounded-full text-xl shadow-lg">Repair Ship (Retry)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Form for Data Submission -->
+    <div style="display:none;">
+        <iframe name="hidden_iframe" id="hidden_iframe"></iframe>
+        <form id="google-form" action="https://docs.google.com/forms/d/e/1FAIpQLSeVstxYs3B_SzhOsk-Lxe96ilZdPOokT2qiE0ucDQlNBB4sGg/formResponse" method="post" target="hidden_iframe">
+            <input type="text" name="entry.1714798495" id="form-name">
+            <input type="text" name="entry.1036145399" id="form-json">
+            <input type="hidden" name="fvv" value="1">
+            <input type="hidden" name="draftResponse" value="[]">
+            <input type="hidden" name="pageHistory" value="0">
+        </form>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('star-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let stars = [];
+        function resize() { width = window.innerWidth; height = window.innerHeight; canvas.width = width; canvas.height = height; initStars(); }
+        class Star {
+            constructor() { this.x = Math.random() * width; this.y = Math.random() * height; this.size = Math.random() * 2; this.speedX = (Math.random() - 0.5) * 0.5; this.speedY = (Math.random() - 0.5) * 0.5; this.opacity = Math.random(); this.fadeDir = 1; }
+            update() { this.x += this.speedX; this.y += this.speedY; if (this.x < 0) this.x = width; if (this.x > width) this.x = 0; if (this.y < 0) this.y = height; if (this.y > height) this.y = 0; this.opacity += 0.01 * this.fadeDir; if (this.opacity >= 1 || this.opacity <= 0.2) this.fadeDir *= -1; }
+            draw() { ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
+        }
+        function initStars() { stars = []; const starCount = Math.floor((width * height) / 5000); for (let i = 0; i < starCount; i++) stars.push(new Star()); }
+        function animateStars() { ctx.clearRect(0, 0, width, height); const gradient = ctx.createLinearGradient(0, 0, 0, height); gradient.addColorStop(0, "rgba(15, 23, 42, 0.4)"); gradient.addColorStop(1, "rgba(88, 28, 135, 0.4)"); ctx.fillStyle = gradient; ctx.fillRect(0, 0, width, height); stars.forEach(star => { star.update(); star.draw(); }); requestAnimationFrame(animateStars); }
+        window.addEventListener('resize', resize); resize(); animateStars();
+
+        const scenes = { splash: document.getElementById('scene-splash'), login: document.getElementById('scene-login'), dashboard: document.getElementById('scene-dashboard'), lesson: document.getElementById('scene-lesson'), quiz: document.getElementById('scene-quiz'), sentence: document.getElementById('scene-sentence') };
+        const usernameInput = document.getElementById('username-input'); const loginBtn = document.getElementById('login-btn'); const displayName = document.getElementById('display-name'); const loadingSim = document.getElementById('loading-sim'); const progressBar = document.getElementById('progress-bar'); const loadingText = document.getElementById('loading-text');
+
+        usernameInput.addEventListener('input', (e) => {
+            if (e.target.value.trim().length > 0) { loginBtn.classList.remove('bg-gray-500', 'cursor-not-allowed'); loginBtn.classList.add('bg-gradient-to-r', 'from-yellow-400', 'to-orange-500', 'hover:scale-105', 'shadow-[0_0_15px_rgba(255,215,0,0.5)]'); loginBtn.disabled = false; } 
+            else { loginBtn.classList.add('bg-gray-500', 'cursor-not-allowed'); loginBtn.classList.remove('bg-gradient-to-r', 'from-yellow-400', 'to-orange-500', 'hover:scale-105', 'shadow-[0_0_15px_rgba(255,215,0,0.5)]'); loginBtn.disabled = true; }
+        });
+        usernameInput.addEventListener('keypress', function (e) { if (e.key === 'Enter' && !loginBtn.disabled) processLogin(); });
+
+        function switchScene(fromId, toId) {
+            scenes[fromId].style.opacity = '0'; scenes[fromId].style.transition = 'opacity 0.5s';
+            setTimeout(() => { scenes[fromId].classList.remove('active'); scenes[toId].classList.add('active'); scenes[toId].style.opacity = '0'; void scenes[toId].offsetWidth; scenes[toId].style.transition = 'opacity 0.5s'; scenes[toId].style.opacity = '1'; }, 500);
+        }
+        function goToLogin() { switchScene('splash', 'login'); setTimeout(() => usernameInput.focus(), 600); }
+        function goBack(target) { if(target === 'scene-splash') switchScene('login', 'splash'); }
+        function processLogin() {
+            const name = usernameInput.value.trim(); if (!name) return;
+            usernameInput.disabled = true; loginBtn.classList.add('hidden'); loadingSim.classList.remove('hidden');
+            const phrases = ["Connecting...", "Verifying ID...", "Polishing Badge...", "Access Granted!"]; let progress = 0; let step = 0;
+            const interval = setInterval(() => { progress += Math.random() * 15; if (progress > 100) progress = 100; progressBar.style.width = `${progress}%`; if (progress > 25 && step === 0) { loadingText.innerText = phrases[1]; step++; } if (progress > 60 && step === 1) { loadingText.innerText = phrases[2]; step++; } if (progress >= 100) { loadingText.innerText = phrases[3]; loadingText.classList.add('text-green-400'); clearInterval(interval); setTimeout(() => completeLogin(name), 800); } }, 300);
+        }
+        function completeLogin(name) { displayName.innerText = name; switchScene('login', 'dashboard'); setTimeout(() => { triggerConfetti(); }, 600); }
+        function triggerConfetti() { const count = 200; const defaults = { origin: { y: 0.7 }, zIndex: 100 }; function fire(particleRatio, opts) { confetti(Object.assign({}, defaults, opts, { particleCount: Math.floor(count * particleRatio) })); } fire(0.25, { spread: 26, startVelocity: 55 }); fire(0.2, { spread: 60 }); fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 }); fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 }); fire(0.1, { spread: 120, startVelocity: 45 }); }
+
+        /* --- 3. LESSON LOGIC (UDL/Scaffolding) --- */
+        function startLesson() {
+            switchScene('dashboard', 'lesson');
+            document.getElementById('lesson-step-1').classList.remove('hidden');
+            document.getElementById('lesson-step-2').classList.add('hidden');
+            document.getElementById('lesson-step-3').classList.add('hidden');
+            document.getElementById('lesson-step-4').classList.add('hidden');
+            document.getElementById('lesson-step-5').classList.add('hidden');
+        }
+
+        function nextLessonStep(stepNum) {
+            document.getElementById(`lesson-step-${stepNum-1}`).classList.add('hidden');
+            document.getElementById(`lesson-step-${stepNum}`).classList.remove('hidden');
+        }
+
+        function checkLessonAnswer(isCorrect, btn) {
+            const feedback = document.getElementById('lesson-feedback');
+            if (isCorrect) {
+                btn.classList.add('bg-green-500', 'border-green-400');
+                feedback.innerText = "Correct! One cat = There IS.";
+                feedback.className = "mt-4 font-bold h-6 text-green-400";
+                setTimeout(() => nextLessonStep(5), 1500);
+            } else {
+                btn.classList.add('bg-red-500', 'border-red-400', 'shake-anim');
+                feedback.innerText = "Try again! It is only one cat.";
+                feedback.className = "mt-4 font-bold h-6 text-red-400";
+                setTimeout(() => { btn.classList.remove('bg-red-500', 'border-red-400', 'shake-anim'); }, 1000);
+            }
+        }
+
+        /* --- 4. SENTENCE BUILDER LOGIC --- */
+        const sentenceChallenges = [
+            { words: ["There", "is", "a", "cat"], target: "There is a cat" },
+            { words: ["Are", "there", "two", "dogs"], target: "Are there two dogs" },
+            { words: ["There", "are", "many", "stars"], target: "There are many stars" },
+            { words: ["Is", "there", "a", "rocket"], target: "Is there a rocket" }
+        ];
+        let currentSentenceIndex = 0;
+        let builtSentence = [];
+
+        function startSentenceBuilder() {
+            currentSentenceIndex = 0;
+            loadSentenceChallenge();
+            switchScene('dashboard', 'sentence');
+        }
+
+        function loadSentenceChallenge() {
+            builtSentence = [];
+            const challenge = sentenceChallenges[currentSentenceIndex];
+            const dropZone = document.getElementById('drop-zone');
+            const wordBank = document.getElementById('word-bank');
+            document.getElementById('sentence-feedback').innerText = "";
+            
+            dropZone.innerHTML = '<span class="text-white/30 italic text-sm pointer-events-none absolute" id="placeholder-text">Tap words to move them here</span>';
+            wordBank.innerHTML = '';
+            
+            // Shuffle words
+            let shuffled = [...challenge.words].sort(() => Math.random() - 0.5);
+            
+            shuffled.forEach(word => {
+                const el = document.createElement('div');
+                el.className = 'word-tile';
+                el.innerText = word;
+                el.onclick = () => toggleWordLocation(el, word);
+                wordBank.appendChild(el);
+            });
+        }
+
+        function toggleWordLocation(el, word) {
+            const dropZone = document.getElementById('drop-zone');
+            const wordBank = document.getElementById('word-bank');
+            const placeholder = document.getElementById('placeholder-text');
+
+            if (el.parentElement === wordBank) {
+                dropZone.appendChild(el);
+                builtSentence.push(word);
+                if(placeholder) placeholder.style.display = 'none';
+            } else {
+                wordBank.appendChild(el);
+                builtSentence = builtSentence.filter(w => w !== word); // Simple removal, logic can be complex if duplicate words exist but keeping simple for demo
+                if(dropZone.children.length <= (placeholder ? 1 : 0)) {
+                   if(placeholder) placeholder.style.display = 'block';
+                }
+            }
+        }
+
+        function checkSentence() {
+            const target = sentenceChallenges[currentSentenceIndex].target.replace(/\s/g, '');
+            const current = Array.from(document.getElementById('drop-zone').children).filter(c => c.tagName === 'DIV').map(c => c.innerText).join('');
+            
+            const feedback = document.getElementById('sentence-feedback');
+            
+            if (current === target) {
+                feedback.innerText = "Excellent!";
+                feedback.className = "h-8 mb-4 font-bold text-xl text-green-400";
+                triggerConfetti();
+                setTimeout(() => {
+                    currentSentenceIndex = (currentSentenceIndex + 1) % sentenceChallenges.length;
+                    loadSentenceChallenge();
+                }, 1500);
+            } else {
+                feedback.innerText = "Try again!";
+                feedback.className = "h-8 mb-4 font-bold text-xl text-red-400 shake-anim";
+            }
+        }
+
+
+        /* --- 5. QUIZ SYSTEM --- */
+        const allQuestions = [
+            { q: "___ a Castle in Kenham?", options: ["There isn't", "There is", "Are there"], ans: 0, icon: "fa-brands fa-fort-awesome" },
+            { q: "___ any restaurants in Kenham?", options: ["There are", "There is", "Is there"], ans: 0, icon: "fa-solid fa-utensils" },
+            { q: "___ a hospital in Kenham?", options: ["There is", "There are", "Are there"], ans: 0, icon: "fa-solid fa-hospital" },
+            { q: "___ a swimming pool in Kenham?", options: ["There isn't", "There aren't", "There is"], ans: 0, icon: "fa-solid fa-person-swimming" },
+            { q: "___ any cinemas in Kenham?", options: ["There are", "There is", "Is there"], ans: 0, icon: "fa-solid fa-film" },
+            { q: "___ a university in Kenham?", options: ["There isn't", "There is", "Are there"], ans: 0, icon: "fa-solid fa-graduation-cap" },
+            { q: "___ any big hotels in Kenham?", options: ["There aren't", "There isn't", "Is there"], ans: 0, icon: "fa-solid fa-hotel" },
+            { q: "___ any supermarkets in Kenham?", options: ["There are", "There is", "Are there"], ans: 0, icon: "fa-solid fa-cart-shopping" },
+            { q: "___ a worm in my apple!", options: ["There is", "There are", "Are there"], ans: 0, icon: "fa-solid fa-apple-whole" },
+            { q: "___ many cars in the car park.", options: ["There are", "There is", "Is there"], ans: 0, icon: "fa-solid fa-car-side" },
+            { q: "___ twelve months in a year.", options: ["There are", "Is there", "There is"], ans: 0, icon: "fa-solid fa-calendar-days" },
+            { q: "___ lots of natural disasters.", options: ["There are", "Is there", "There is"], ans: 0, icon: "fa-solid fa-volcano" },
+            { q: "___ a woman waiting at reception.", options: ["There is", "There are", "Are there"], ans: 0, icon: "fa-solid fa-user-clock" },
+            { q: "___ a good film on TV tonight.", options: ["There is", "There are", "Are there"], ans: 0, icon: "fa-solid fa-tv" },
+            { q: "___ six days in a week?", options: ["Are there", "Is there", "There are"], ans: 0, icon: "fa-solid fa-calendar-week" },
+            { q: "___ sixty minutes in an hour.", options: ["There are", "There is", "Is there"], ans: 0, icon: "fa-regular fa-clock" },
+            { q: "___ a lot of snow at the moment.", options: ["There is", "There are", "Are there"], ans: 0, icon: "fa-regular fa-snowflake" },
+            { q: "___ thirty sentences in that exercise.", options: ["There are", "There is", "Is there"], ans: 0, icon: "fa-solid fa-list-ol" },
+            { q: "___ an enormous spider on my bed!", options: ["There is", "There are", "Are there"], ans: 0, icon: "fa-solid fa-spider" },
+            { q: "___ anything in the fridge?", options: ["Is there", "Are there", "There is"], ans: 0, icon: "fa-solid fa-temperature-empty" },
+            { q: "___ many nice songs on the CD.", options: ["There are", "There is", "Is there"], ans: 0, icon: "fa-solid fa-compact-disc" },
+            { q: "___ enough flour to make pancakes?", options: ["Is there", "Are there", "There are"], ans: 0, icon: "fa-solid fa-cookie" },
+            { q: "___ many trees left in the park?", options: ["Are there", "Is there", "There is"], ans: 0, icon: "fa-solid fa-tree" },
+            { q: "___ plenty of music festivals.", options: ["There are", "There is", "Is there"], ans: 0, icon: "fa-solid fa-music" },
+            { q: "___ lots of fires in California.", options: ["There are", "There is", "Is there"], ans: 0, icon: "fa-solid fa-fire" },
+            { q: "___ five cats sitting on that gate.", options: ["There are", "There is", "Is there"], ans: 0, icon: "fa-solid fa-cat" },
+            { q: "___ interesting books at the library.", options: ["There are", "There is", "Is there"], ans: 0, icon: "fa-solid fa-book" },
+            { q: "___ an important letter for you.", options: ["There is", "There are", "Are there"], ans: 0, icon: "fa-solid fa-envelope-open-text" },
+            { q: "___ a big demonstration.", options: ["There is", "There are", "Are there"], ans: 0, icon: "fa-solid fa-bullhorn" },
+            { q: "___ fifty-two weeks in a year?", options: ["Are there", "Is there", "There is"], ans: 0, icon: "fa-solid fa-calendar-check" },
+            { q: "___ any mistakes in my exercise?", options: ["Are there", "Is there", "There is"], ans: 0, icon: "fa-solid fa-eraser" },
+            { q: "___ a film festival every year.", options: ["There is", "There are", "Are there"], ans: 0, icon: "fa-solid fa-ticket" },
+            { q: "___ many new apps on your phone?", options: ["Are there", "Is there", "There is"], ans: 0, icon: "fa-solid fa-mobile-screen-button" },
+            { q: "___ a post office near here?", options: ["Is there", "Are there", "There are"], ans: 0, icon: "fa-solid fa-envelopes-bulk" },
+            { q: "___ many migrants.", options: ["There are", "There is", "Is there"], ans: 0, icon: "fa-solid fa-person-walking-luggage" },
+            { q: "___ enough time to go to the baker?", options: ["Is there", "Are there", "There are"], ans: 0, icon: "fa-solid fa-bread-slice" },
+            { q: "___ lots of people in cinemas.", options: ["There are", "There is", "Is there"], ans: 0, icon: "fa-solid fa-people-group" },
+            { q: "___ a snake in the garden!", options: ["There is", "There are", "Are there"], ans: 0, icon: "fa-solid fa-staff-snake" },
+            { q: "___ any chocolate left?", options: ["Is there", "Are there", "There are"], ans: 0, icon: "fa-solid fa-cookie-bite" },
+            { q: "___ a bank here.", options: ["There is", "There are", "Is there"], ans: 0, icon: "fa-solid fa-piggy-bank" },
+            { q: "___ a bank here?", options: ["Is there", "Are there", "There is"], ans: 0, icon: "fa-solid fa-question" },
+            { q: "___ two parks.", options: ["There are", "There is", "Is there"], ans: 0, icon: "fa-solid fa-tree" },
+            { q: "___ two parks?", options: ["Are there", "Is there", "There are"], ans: 0, icon: "fa-solid fa-tree" },
+            { q: "___ a bank over there.", options: ["There is", "There are", "Is there"], ans: 0, icon: "fa-solid fa-building-columns" },
+            { q: "___ a café near here.", options: ["There isn't", "There aren't", "There are"], ans: 0, icon: "fa-solid fa-mug-hot" },
+            { q: "___ two stations in the town.", options: ["There aren't", "There isn't", "There is"], ans: 0, icon: "fa-solid fa-train" },
+            { q: "___ any shops in the street.", options: ["There aren't", "There isn't", "There is"], ans: 0, icon: "fa-solid fa-store" },
+            { q: "___ a hospital near your home?", options: ["Is there", "Are there", "There is"], ans: 0, icon: "fa-solid fa-truck-medical" },
+            { q: "___ two schools near my house.", options: ["There are", "There is", "Is there"], ans: 0, icon: "fa-solid fa-school" },
+            { q: "___ a cash machine over there.", options: ["There is", "There are", "Are there"], ans: 0, icon: "fa-solid fa-money-bill-1" },
+            { q: "___ three cafés in this street.", options: ["There are", "There is", "Is there"], ans: 0, icon: "fa-solid fa-coffee" },
+            { q: "___ a bus stop in front of my flat.", options: ["There is", "There are", "Are there"], ans: 0, icon: "fa-solid fa-bus-simple" },
+            { q: "___ a market in the square.", options: ["There is", "There are", "Are there"], ans: 0, icon: "fa-solid fa-shop" },
+            { q: "___ three hotels near the station.", options: ["There are", "There is", "Is there"], ans: 0, icon: "fa-solid fa-bed" },
+            { q: "___ two hospitals in our town.", options: ["There are", "There is", "Is there"], ans: 0, icon: "fa-solid fa-hospital-user" },
+            { q: "___ a chemist's next to the post office.", options: ["There is", "There are", "Are there"], ans: 0, icon: "fa-solid fa-prescription-bottle-medical" },
+            { q: "___ any shops in your street?", options: ["Are there", "Is there", "There is"], ans: 0, icon: "fa-solid fa-bag-shopping" },
+            { q: "___ any hotels near your home?", options: ["Are there", "Is there", "There are"], ans: 0, icon: "fa-solid fa-hotel" },
+            { q: "Excuse me. ___ a newsagent's here?", options: ["Is there", "Are there", "There is"], ans: 0, icon: "fa-solid fa-newspaper" },
+            { q: "No, ___ any newsagents here.", options: ["there aren't", "there isn't", "there is"], ans: 0, icon: "fa-regular fa-newspaper" },
+            { q: "Wait! ___ a petrol station in that street.", options: ["There is", "There are", "Are there"], ans: 0, icon: "fa-solid fa-gas-pump" }
+        ];
+
+        let sessionQuestions = [];
+        let currentQIndex = 0;
+        let score = 0;
+        let lives = 3;
+        let currentMode = 'test';
+        let failedQuestions = []; // Stores indices of failed questions
+        let isRetryMode = false;
+        let totalTestQuestions = 0; // Tracks total questions for first pass
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function startPractice() {
+            currentMode = 'practice';
+            isRetryMode = false;
+            setupQuiz(15);
+            document.getElementById('lives-container').classList.remove('hidden');
+            document.getElementById('mode-badge').innerText = "Practice Mission";
+            document.getElementById('mode-badge').className = "bg-purple-600 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block shadow-lg border border-purple-400";
+        }
+
+        function startTestMode() {
+            switchScene('lesson', 'quiz');
+            currentMode = 'test';
+            isRetryMode = false;
+            failedQuestions = []; // Reset failures
+            
+            // IMPORTANT: Set total questions for score reporting here
+            totalTestQuestions = allQuestions.length;
+            
+            setupQuiz(totalTestQuestions);
+            document.getElementById('lives-container').classList.add('hidden');
+            document.getElementById('mode-badge').innerText = "Official Test";
+            document.getElementById('mode-badge').className = "bg-yellow-600 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block shadow-lg border border-yellow-400";
+        }
+
+        function setupQuiz(count) {
+            currentQIndex = 0; score = 0; lives = 3;
+            document.getElementById('quiz-result').classList.add('hidden');
+            updateLivesUI();
+            
+            // If it's not retry mode, shuffle fresh questions
+            if (!isRetryMode) {
+                let tempQ = JSON.parse(JSON.stringify(allQuestions));
+                shuffleArray(tempQ);
+                // Assign an original index so we can track failures
+                tempQ.forEach((q, i) => q.originalIndex = i);
+
+                if (currentMode === 'test') {
+                    sessionQuestions = tempQ.map(q => randomizeOptions(q));
+                } else {
+                    sessionQuestions = tempQ.slice(0, count).map(q => randomizeOptions(q));
+                }
+            }
+            // If isRetryMode, sessionQuestions is already set to failedQuestions
+            
+            document.getElementById('q-total').innerText = sessionQuestions.length;
+            if (currentMode === 'practice' || isRetryMode) switchScene('dashboard', 'quiz');
+            loadQuestion();
+        }
+
+        function randomizeOptions(q) {
+            const correctAnswerText = q.options[q.ans];
+            shuffleArray(q.options);
+            q.ans = q.options.indexOf(correctAnswerText);
+            return q;
+        }
+
+        function loadQuestion() {
+            const qData = sessionQuestions[currentQIndex];
+            document.getElementById('q-current').innerText = currentQIndex + 1;
+            document.getElementById('question-text').innerText = qData.q;
+            
+            const visualContainer = document.getElementById('visual-context');
+            if (qData.icon) {
+                visualContainer.innerHTML = `<div class="icon-context-box pop-in"><i class="${qData.icon} text-6xl text-yellow-300 drop-shadow-[0_0_15px_rgba(255,215,0,0.6)]"></i></div>`;
+            } else { visualContainer.innerHTML = ''; }
+            
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            qData.options.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'quiz-option bg-white/10 border border-white/20 text-white font-bold py-6 px-8 rounded-2xl text-xl w-full text-left transition transform hover:scale-[1.02] flex items-center justify-between group';
+                btn.innerHTML = `<span class="w-6 h-6 rounded-full border-2 border-white/30 mr-4 group-hover:border-yellow-400 transition"></span>${opt}`;
+                btn.onclick = () => checkAnswer(index, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIndex, btnElement) {
+            const buttons = document.querySelectorAll('.quiz-option');
+            buttons.forEach(b => b.disabled = true);
+            const correctIndex = sessionQuestions[currentQIndex].ans;
+
+            if (selectedIndex === correctIndex) {
+                btnElement.classList.add('bg-green-500', 'border-green-400', 'shadow-[0_0_20px_rgba(74,222,128,0.5)]');
+                btnElement.querySelector('span').classList.add('bg-white', 'border-transparent');
+                
+                // Add score only if NOT in retry mode (This effectively tracks FIRST SCORE)
+                if (!isRetryMode) {
+                    score += 100;
+                }
+                
+                triggerConfetti();
+                setTimeout(nextQuestion, 1200);
+            } else {
+                btnElement.classList.add('bg-red-500', 'border-red-400', 'shake-anim');
+                const correctBtn = buttons[correctIndex];
+                correctBtn.classList.add('bg-green-500/50', 'border-green-400/50');
+                correctBtn.querySelector('span').classList.add('bg-white/50', 'border-transparent');
+
+                // Logic based on Mode
+                if (currentMode === 'practice') {
+                    lives--;
+                    updateLivesUI();
+                    if (lives <= 0) { setTimeout(() => endQuiz(false), 1200); return; }
+                } else if (currentMode === 'test' && !isRetryMode) {
+                    // In test mode, we record failure but don't stop
+                    failedQuestions.push(sessionQuestions[currentQIndex]);
+                }
+                setTimeout(nextQuestion, 2000);
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQIndex < sessionQuestions.length - 1) {
+                currentQIndex++;
+                loadQuestion();
+            } else {
+                endQuiz(true);
+            }
+        }
+
+        function updateLivesUI() {
+            const container = document.getElementById('lives-container');
+            container.innerHTML = '';
+            for(let i=0; i<3; i++) {
+                if (i < lives) container.innerHTML += '<i class="fa-solid fa-heart text-red-500 text-xl drop-shadow-md"></i>';
+                else container.innerHTML += '<i class="fa-regular fa-heart text-red-500/30 text-xl"></i>';
+            }
+        }
+
+        function endQuiz(won) {
+            const resultDiv = document.getElementById('quiz-result');
+            const resultSuccess = document.getElementById('result-success');
+            const resultRetry = document.getElementById('result-retry');
+            
+            resultDiv.classList.remove('hidden');
+            resultDiv.classList.add('pop-in');
+
+            // Scenario 1: Practice Failed
+            if (currentMode === 'practice' && !won) {
+                resultSuccess.classList.add('hidden');
+                resultRetry.classList.add('hidden');
+                // Custom Fail Screen (reusing structure for simplicity)
+                resultSuccess.innerHTML = `
+                    <div class="w-24 h-24 bg-red-600 rounded-full flex items-center justify-center mb-6"><i class="fa-solid fa-heart-crack text-5xl text-white"></i></div>
+                    <h2 class="text-3xl font-black text-white mb-2">Mission Failed</h2>
+                    <p class="text-white/80 mb-6">Out of lives!</p>
+                    <button onclick="switchScene('quiz', 'dashboard')" class="bg-white text-red-900 font-bold py-3 px-8 rounded-full">Return to Base</button>
+                `;
+                resultSuccess.classList.remove('hidden');
+                resultSuccess.className = "flex flex-col items-center w-full"; // restore flex
+                return;
+            }
+
+            // Scenario 2: Test Mode with Failures (Need Review)
+            if (currentMode === 'test' && failedQuestions.length > 0 && !isRetryMode) {
+                resultSuccess.classList.add('hidden');
+                resultRetry.classList.remove('hidden');
+                resultRetry.className = "flex flex-col items-center w-full"; // restore flex
+                
+                // Populate List
+                const list = document.getElementById('failed-list');
+                list.innerHTML = "";
+                failedQuestions.forEach((q, i) => {
+                    list.innerHTML += `<div class="mb-2 border-b border-white/10 pb-1"><span class="font-bold text-white">${i+1}.</span> ${q.q}</div>`;
+                });
+                return;
+            }
+
+            // Scenario 3: Success (Practice Won OR Test Won OR Retry Complete)
+            resultRetry.classList.add('hidden');
+            resultSuccess.classList.remove('hidden');
+            resultSuccess.className = "flex flex-col items-center w-full";
+            
+            // Update Global XP Display (Visual only)
+            document.getElementById('final-score').innerText = score; // Display XP
+            let currentXP = parseInt(document.getElementById('player-score').innerText) || 0;
+            document.getElementById('player-score').innerText = (currentXP + score) + " XP";
+
+            // If Test Mode (and not a retry loop or we want to send regardless), Simulate Data Send
+            // NOTE: Only send if it was the main test mode.
+            if (currentMode === 'test' && failedQuestions.length === 0) {
+                const sendDiv = document.getElementById('data-sending');
+                sendDiv.classList.remove('hidden');
+                
+                // Send ACTUAL First Score count (score/100) vs Total Questions
+                submitToGoogleSheet(score / 100, totalTestQuestions);
+            }
+        }
+
+        function submitToGoogleSheet(finalScore, totalQuestions) {
+            const form = document.getElementById('google-form');
+            const nameField = document.getElementById('form-name');
+            const jsonField = document.getElementById('form-json');
+            const sendDiv = document.getElementById('data-sending');
+            
+            // Get student name from the dashboard display
+            const studentName = document.getElementById('display-name').innerText;
+
+            const payload = {
+                student: studentName,
+                score: finalScore, // This is count correct (e.g. 12)
+                total: totalQuestions, // This is total (e.g. 60)
+                percent: Math.round((finalScore/totalQuestions)*100),
+                date: new Date().toISOString()
+            };
+
+            // Set form values
+            nameField.value = studentName;
+            jsonField.value = JSON.stringify(payload);
+
+            // Handle iframe load to show success message
+            const iframe = document.getElementById('hidden_iframe');
+            iframe.onload = () => {
+                sendDiv.innerHTML = '<i class="fa-solid fa-check text-green-400"></i> Data Sent to Headquarters!';
+            };
+
+            // Submit the form
+            form.submit();
+        }
+
+        function startRetry() {
+            isRetryMode = true;
+            sessionQuestions = JSON.parse(JSON.stringify(failedQuestions));
+            failedQuestions = []; // clear so if they fail again, they can re-retry or we can handle differently
+            setupQuiz(sessionQuestions.length);
+        }
+    </script>
+</body>
+</html>
