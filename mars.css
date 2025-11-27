@@ -1,0 +1,93 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 24px;
+}
+
+section {
+  margin-bottom: 30px;
+}
+
+h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px 15px;
+  font-size: 16px;
+  margin-top: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+select {
+  padding: 5px;
+  font-size: 16px;
+  margin: 0 10px;
+}
+
+.image-box {
+  display: inline-block;
+  text-align: center;
+  margin: 10px;
+}
+
+.image-box img {
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+}
+
+#vocab-feedback, #grammar-feedback, #writing-feedback, #listening-feedback {
+  margin-top: 10px;
+  font-weight: bold;
+  color: green;
+}
+
+#writing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#writing input {
+  padding: 10px;
+  font-size: 16px;
+  margin-top: 10px;
+  width: 70%;
+  text-align: center;
+}
+
+#listening-images img {
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  cursor: pointer;
+}
