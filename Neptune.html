@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Possessive Case - Grammar Game</title>
+    <style>
+        :root {
+            --primary: #4a90e2;
+            --secondary: #f5a623;
+            --success: #7ed321;
+            --error: #d0021b;
+            --bg: #f9f9f9;
+            --card-bg: #ffffff;
+            --font-main: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: var(--primary);
+        }
+
+        .rule-box {
+            background: #e3f2fd;
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .exercise-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        input[type="text"] {
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            padding: 8px;
+            font-family: inherit;
+            font-size: 16px;
+            width: 150px;
+            transition: border-color 0.3s;
+        }
+
+        input.correct {
+            border-color: var(--success);
+            background-color: #f0fff4;
+        }
+
+        input.incorrect {
+            border-color: var(--error);
+            background-color: #fff5f5;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .choice-btn {
+            background: #eee;
+            border: 2px solid #ccc;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .choice-btn.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .check-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+            font-weight: bold;
+            box-shadow: 0 4px 0 #5bb016;
+            transition: transform 0.1s;
+        }
+
+        .check-btn:active {
+            transform: translateY(4px);
+            box-shadow: none;
+        }
+
+        .emoji-icon {
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Grammar Time: Possessive Case</h1>
+
+    <div class="rule-box">
+        [cite_start]<h3>📚 The Rules [cite: 5, 8, 9]</h3>
+        <ul>
+            [cite_start]<li><strong>Singular ('s):</strong> Brad's book, The boy's hat. [cite: 11]</li>
+            [cite_start]<li><strong>Plural ending in -s ('):</strong> The girls' desks. [cite: 16]</li>
+            [cite_start]<li><strong>Irregular Plural ('s):</strong> The children's classroom. [cite: 20]</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>1. Who owns the item? (Look at the Maze) [cite_start][cite: 35]</h2>
+        <p><em>Use the logic from the maze on Page 2 to match items to owners.</em></p>
+        
+        <div class="exercise-row">
+            <span class="emoji-icon">👕</span> T-shirt is: 
+            <select id="ex1-1">
+                <option value="">Choose...</option>
+                <option value="brad">Brad's</option>
+                <option value="gina">Gina's</option>
+            </select>
+        </div>
+        <div class="exercise-row">
+            <span class="emoji-icon">🥣</span> Bowl is: 
+            <select id="ex1-2">
+                <option value="">Choose...</option>
+                <option value="buster">Buster's</option>
+                <option value="missy">Missy's</option>
+            </select>
+        </div>
+        <div class="exercise-row">
+            <span class="emoji-icon">🐭</span> Mouse is: 
+            <select id="ex1-3">
+                <option value="">Choose...</option>
+                <option value="missy">Missy's</option>
+                <option value="buster">Buster's</option>
+            </select>
+        </div>
+        <div class="exercise-row">
+            <span class="emoji-icon">✏️</span> Pencil case is: 
+            <select id="ex1-4">
+                <option value="">Choose...</option>
+                <option value="maddie">Maddie's</option>
+                <option value="william">William's</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>2. [cite_start]Read and Choose [cite: 58]</h2>
+        <div class="exercise-row" id="ex2-1-container">
+            1. The 
+            <div class="btn-group">
+                <div class="choice-btn" onclick="selectChoice('ex2-1', this, 'correct')">boy's</div>
+                <div class="choice-btn" onclick="selectChoice('ex2-1', this, 'incorrect')">boys</div>
+            </div>
+             T-shirts are blue. (One boy)
+        </div>
+        <div class="exercise-row" id="ex2-2-container">
+            2. The 
+            <div class="btn-group">
+                <div class="choice-btn" onclick="selectChoice('ex2-2', this, 'incorrect')">boy's</div>
+                <div class="choice-btn" onclick="selectChoice('ex2-2', this, 'correct')">boys'</div>
+            </div>
+             T-shirts are yellow. (Many boys)
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>3. [cite_start]Write <strong>'s</strong> or <strong>'</strong> [cite: 65]</h2>
+        
+        <div class="exercise-row">
+            1. [cite_start]The girls<input type="text" class="short-input" data-answer="'" style="width:40px"> bathroom. [cite: 66]
+        </div>
+        <div class="exercise-row">
+            2. [cite_start]He is the boy<input type="text" class="short-input" data-answer="'s" style="width:40px"> father. [cite: 66]
+        </div>
+        <div class="exercise-row">
+            3. [cite_start]Where are the children<input type="text" class="short-input" data-answer="'s" style="width:40px"> toys? [cite: 67]
+        </div>
+        <div class="exercise-row">
+            4. [cite_start]Is this the teachers<input type="text" class="short-input" data-answer="'" style="width:40px"> room? [cite: 67]
+        </div>
+        <div class="exercise-row">
+            5. [cite_start]The women<input type="text" class="short-input" data-answer="'s" style="width:40px"> hats. [cite: 69]
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>4. [cite_start]Rewrite the Sentences [cite: 222]</h2>
+        <p><em>Replace the pronoun with the name. Example: It's her book (Tina) -> It's Tina's book.</em></p>
+
+        <div class="exercise-row">
+            1. It's her book. (Tina) <br>
+            <input type="text" class="long-input" data-answer="It's Tina's book" style="width:100%">
+        </div>
+        <div class="exercise-row">
+            2. They're his trainers. (John) <br>
+            <input type="text" class="long-input" data-answer="They're John's trainers" style="width:100%">
+        </div>
+        <div class="exercise-row">
+            3. It's their bedroom. (the girls) <br>
+            <input type="text" class="long-input" data-answer="It's the girls' bedroom" style="width:100%">
+        </div>
+    </div>
+
+    <button class="check-btn" onclick="checkAll()">CHECK ANSWERS</button>
+</div>
+
+<script>
+    // Helper to handle clickable buttons
+    function selectChoice(groupId, element, status) {
+        // Clear previous selections in this group
+        const container = document.getElementById(groupId + '-container');
+        const buttons = container.getElementsByClassName('choice-btn');
+        for (let btn of buttons) {
+            btn.classList.remove('selected', 'correct-visual', 'incorrect-visual');
+            // Store status in dataset for checking later
+        }
+        
+        element.classList.add('selected');
+        element.dataset.status = status;
+    }
+
+    function checkAll() {
+        // 1. Check Dropdowns
+        const ex1Answers = {
+            'ex1-1': 'brad',
+            'ex1-2': 'buster',
+            'ex1-3': 'missy',
+            'ex1-4': 'maddie'
+        };
+
+        for (let [id, correctVal] of Object.entries(ex1Answers)) {
+            const el = document.getElementById(id);
+            if (el.value === correctVal) {
+                el.style.borderColor = 'var(--success)';
+                el.style.backgroundColor = '#f0fff4';
+            } else {
+                el.style.borderColor = 'var(--error)';
+                el.style.backgroundColor = '#fff5f5';
+            }
+        }
+
+        // 2. Check Clickable Choices
+        const choiceContainers = ['ex2-1-container', 'ex2-2-container'];
+        choiceContainers.forEach(id => {
+            const selectedBtn = document.querySelector(`#${id} .choice-btn.selected`);
+            if (selectedBtn) {
+                if (selectedBtn.dataset.status === 'correct') {
+                    selectedBtn.style.backgroundColor = 'var(--success)';
+                    selectedBtn.style.borderColor = 'var(--success)';
+                } else {
+                    selectedBtn.style.backgroundColor = 'var(--error)';
+                    selectedBtn.style.borderColor = 'var(--error)';
+                }
+            }
+        });
+
+        // 3. Check Text Inputs (Short and Long)
+        const inputs = document.querySelectorAll('input[type="text"]');
+        inputs.forEach(input => {
+            const userAnswer = input.value.trim().toLowerCase().replace(/[.]/g, ''); // remove periods for easier matching
+            const correctAnswer = input.dataset.answer.toLowerCase().replace(/[.]/g, '');
+            
+            // Simple validation
+            if (userAnswer === correctAnswer) {
+                input.className = 'correct';
+            } else {
+                input.className = 'incorrect';
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

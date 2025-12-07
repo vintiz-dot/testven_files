@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Un-Chronicles: Happy English Club</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Space+Mono&display=swap');
+
+        :root {
+            --bg-deep: #0f172a;
+            --glass-panel: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-cyan: #06b6d4;
+            --accent-purple: #8b5cf6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+            --danger: #ef4444;
+            --gold: #f59e0b;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-deep);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 40%);
+            color: var(--text-main);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Stars Animation */
+        .stars {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxMCIgY3k9IjEwIiByPSIxIiBmaWxsPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMSkiLz48L3N2Zz4=');
+            z-index: -1;
+            animation: drift 60s linear infinite;
+        }
+        @keyframes drift { from { background-position: 0 0; } to { background-position: 100px 200px; } }
+
+        /* Main Interface */
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background: var(--glass-panel);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Header / Progress */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 20px;
+        }
+        .brand {
+            font-family: 'Space Mono', monospace;
+            color: var(--accent-cyan);
+            font-weight: bold;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        .progress-dots {
+            display: flex;
+            gap: 8px;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--glass-border);
+            transition: all 0.3s ease;
+        }
+        .dot.active { background: var(--accent-cyan); box-shadow: 0 0 10px var(--accent-cyan); }
+
+        /* Content Sections */
+        .section {
+            display: none; /* Hidden by default */
+            animation: fadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .section.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 { font-size: 2.5rem; margin: 0 0 10px 0; background: linear-gradient(to right, #fff, #cbd5e1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        h2 { font-size: 1.5rem; margin-bottom: 15px; color: var(--accent-purple); }
+        p { line-height: 1.8; color: var(--text-muted); margin-bottom: 25px; }
+
+        /* Inquiry Cards */
+        .inquiry-card {
+            background: rgba(0,0,0,0.2);
+            border-left: 4px solid var(--accent-cyan);
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 0 12px 12px 0;
+        }
+
+        /* Writing Areas (The Rigor) */
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+        
+        textarea, input[type="text"], input[type="password"] {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 15px;
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 10px; /* Reduced to make room for help button */
+            resize: vertical;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+        
+        textarea:focus, input:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+        }
+        
+        textarea { min-height: 100px; }
+
+        /* Feedback Area for AI */
+        .ai-feedback-box {
+            font-size: 0.9rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+            min-height: 20px;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Interactive Elements */
+        .btn {
+            background: linear-gradient(135deg, var(--accent-purple), #6d28d9);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px -10px rgba(139, 92, 246, 0.5);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 15px 25px -10px rgba(139, 92, 246, 0.7); }
+        .btn-secondary { background: transparent; border: 1px solid var(--text-muted); box-shadow: none; margin-right: 10px;}
+        .btn-secondary:hover { background: rgba(255,255,255,0.05); }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--success), #059669);
+            box-shadow: 0 10px 20px -10px rgba(16, 185, 129, 0.5);
+        }
+        
+        .btn-ai-help {
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            font-size: 0.8rem;
+            padding: 5px 15px;
+            box-shadow: none;
+        }
+        .btn-ai-help:hover {
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        /* Loading Spinner */
+        .loader {
+            border: 4px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--accent-cyan);
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Copy Block */
+        .copy-block {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px dashed var(--text-muted);
+            margin: 20px 0;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-align: left;
+            white-space: pre-wrap;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="stars"></div>
+
+<div class="container">
+    <div class="header">
+        <div class="brand">Happy English Club // Sky 1</div>
+        <div class="progress-dots" id="progressDots">
+            <!-- Dynamically updated -->
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+
+    <form id="quizForm" onsubmit="return false;">
+        
+        <!-- SECTION 1: INTRO -->
+        <div class="section active" id="sec-1">
+            <h1>The "Un-" Logic Test</h1>
+            <p>Welcome, Sky 1 Student! Today we are learning about the prefix <strong>UN-</strong>. <br>The prefix <strong>un-</strong> is like a <strong>rewind button</strong>: it makes an action go backwards.</p>
+            
+            <div class="inquiry-card">
+                <strong>Your Goal:</strong> Show that you understand the <strong>order of events</strong> and the <strong>reasons</strong> why we do things.
+            </div>
+
+            <label>Enter your Name:</label>
+            <input type="text" id="studentName" placeholder="John Smith" required>
+
+            <label>Class Password (API Key):</label>
+            <input type="password" id="apiKey" placeholder="Ask Teacher Victor for the code..." required>
+            
+            <div style="text-align: right;">
+                <button class="btn" onclick="nextSection(1)">Start Challenge &rarr;</button>
+            </div>
+        </div>
+
+        <!-- SECTION 2: SEQUENCING (WRITING) -->
+        <div class="section" id="sec-2">
+            <h2>Phase 1: Time Order (What happened first?)</h2>
+            <p>To use the prefix <strong>un-</strong> (like <em>unwrapped</em> or <em>untied</em>), something must happen first. You must show the correct order.</p>
+            
+            <div class="inquiry-card">
+                <strong>Word: UNWRAPPED</strong><br>
+                <em>Question:</em> Before you can unwrap a gift today, what happened yesterday?
+            </div>
+
+            <label>Write a complete sentence describing the FIRST action (use the past tense):</label>
+            <textarea id="ans-seq-1" placeholder="Example: Yesterday, my mother wrapped the box carefully..."></textarea>
+            <div class="ai-feedback-box" id="fb-seq-1"></div>
+            <button class="btn btn-ai-help" onclick="getAIHelp('ans-seq-1', 'fb-seq-1', 'Check if this sentence correctly uses past tense and describes wrapping a gift.')">✨ Check my Grammar</button>
+
+            <div class="inquiry-card" style="margin-top: 20px;">
+                <strong>Word: UNTIED</strong><br>
+                <em>Question:</em> The boat floated away because the rope was untied. How was the rope BEFORE?
+            </div>
+            
+            <label>Write a complete sentence describing the rope before it was untied:</label>
+            <textarea id="ans-seq-2" placeholder="Start your sentence with: 'At first, the rope was...'"></textarea>
+            <div class="ai-feedback-box" id="fb-seq-2"></div>
+            <button class="btn btn-ai-help" onclick="getAIHelp('ans-seq-2', 'fb-seq-2', 'Check if this sentence correctly describes a rope being tied.')">✨ Check my Grammar</button>
+
+            <div style="text-align: right; margin-top: 20px;">
+                <button class="btn btn-secondary" onclick="prevSection(2)">&larr; Back</button>
+                <button class="btn" onclick="nextSection(2)">Next Phase &rarr;</button>
+            </div>
+        </div>
+
+        <!-- SECTION 3: CAUSALITY (WRITING) -->
+        <div class="section" id="sec-3">
+            <h2>Phase 2: Cause and Effect (The Reason)</h2>
+            <p>Show your thinking. We do things for a reason. Use the word <strong>BECAUSE</strong> in your answers.</p>
+
+            <div class="inquiry-card">
+                <strong>Word: UNPLUGGED</strong>
+            </div>
+            <label>Why would a student need to unplug a computer? Write a story about why.</label>
+            <textarea id="ans-cause-1" placeholder="I unplugged the computer because..."></textarea>
+            <div class="ai-feedback-box" id="fb-cause-1"></div>
+            <button class="btn btn-ai-help" onclick="getAIHelp('ans-cause-1', 'fb-cause-1', 'Check if this sentence uses BECAUSE to give a logical reason for unplugging something.')">✨ Check my Grammar</button>
+
+            <div class="inquiry-card" style="margin-top: 20px;">
+                <strong>Word: UNCOVERED</strong>
+            </div>
+            <label>Archaeologists uncover old things in the ground. Why do they do this? Explain the reason.</label>
+            <textarea id="ans-cause-2" placeholder="The team uncovered the old ruins because..."></textarea>
+            <div class="ai-feedback-box" id="fb-cause-2"></div>
+            <button class="btn btn-ai-help" onclick="getAIHelp('ans-cause-2', 'fb-cause-2', 'Check if this sentence uses BECAUSE to explain why archaeologists dig.')">✨ Check my Grammar</button>
+
+            <div style="text-align: right; margin-top: 20px;">
+                <button class="btn btn-secondary" onclick="prevSection(3)">&larr; Back</button>
+                <button class="btn" onclick="nextSection(3)">Next Phase &rarr;</button>
+            </div>
+        </div>
+
+        <!-- SECTION 4: THE UN-DO LAB (NEW AI FEATURE) -->
+        <div class="section" id="sec-4">
+            <h2>Phase 3: The Un-Do Lab 🧪</h2>
+            <p>Welcome to the Lab! Here we test if things are possible. Type ANY action, and the AI Computer will tell you if you can <strong>UN-DO</strong> it!</p>
+
+            <div class="inquiry-card" style="border-left-color: var(--gold);">
+                <strong>Experiment:</strong> Can I un-cook a pizza? Can I un-break a window? Ask the computer!
+            </div>
+
+            <label>Type an action here (e.g. "burn a piece of paper"):</label>
+            <input type="text" id="undo-input" placeholder="cook an egg">
+            
+            <div style="margin-top:10px;">
+                <button class="btn btn-ai-help" style="background:var(--gold); color:white; border:none;" onclick="runUndoLab()">✨ Analyze with AI</button>
+            </div>
+
+            <div id="undo-result" style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 10px; display:none;">
+                <!-- Result goes here -->
+            </div>
+
+            <div style="text-align: right; margin-top: 30px;">
+                <button class="btn btn-secondary" onclick="prevSection(4)">&larr; Back</button>
+                <button class="btn" onclick="nextSection(4)">Next Phase &rarr;</button>
+            </div>
+        </div>
+
+        <!-- SECTION 5: CRITICAL REASONING -->
+        <div class="section" id="sec-5">
+            <h2>Phase 4: Tricky Logic</h2>
+            <p>Not everything can be reversed! This is a test for your brain.</p>
+
+            <div class="inquiry-card">
+                <strong>The Idea:</strong> "If I can untie a shoe, I should be able to un-eat an apple."
+            </div>
+
+            <label>Is this idea true or false? Explain your thinking carefully. Why is eating different from tying?</label>
+            <textarea id="ans-crit-1" placeholder="This is false because..."></textarea>
+
+            <div style="text-align: right; margin-top: 20px;">
+                <button class="btn btn-secondary" onclick="prevSection(5)">&larr; Back</button>
+                <button class="btn btn-submit" onclick="generateAIQuestions()" id="aiBtn">Unlock Secret Level &rarr;</button>
+            </div>
+        </div>
+
+        <!-- SECTION 6: AI LOADING / ERROR -->
+        <div class="section" id="sec-6-loading">
+            <h2>Thinking...</h2>
+            <p>Teacher Victor's AI Assistant is reading your answers and creating a special challenge for you!</p>
+            <div class="loader"></div>
+            <p id="loading-status" style="font-size: 0.9rem; text-align: center;">Analyzing logic...</p>
+        </div>
+
+        <!-- SECTION 7: AI QUESTIONS -->
+        <div class="section" id="sec-7">
+            <h2>Phase 5: The Secret Challenge</h2>
+            <p>The AI has created 5 special questions just for you based on your answers!</p>
+            
+            <div id="ai-questions-container">
+                <!-- Injected via JS -->
+            </div>
+
+            <div style="text-align: right; margin-top: 20px;">
+                <button class="btn btn-submit" onclick="generateReport()">Finish & Generate Report &rarr;</button>
+            </div>
+        </div>
+
+        <!-- SECTION 8: SUBMISSION -->
+        <div class="section" id="sec-8">
+            <h2>Good Job!</h2>
+            <p>Excellent work, Sky 1 Student. Your answers (including the Secret Level) are ready in the report below.</p>
+            
+            <p><strong>How to Submit:</strong></p>
+            <ol style="color: var(--text-muted); line-height: 1.8; margin-bottom: 30px;">
+                <li>Check your report below.</li>
+                <li>Click <strong>"Copy to Clipboard"</strong> (this copies your answers).</li>
+                <li>Click <strong>"Submit to Teacher Victor"</strong> to open the website.</li>
+                <li>Paste (Ctrl+V) your report into the box on the website.</li>
+            </ol>
+
+            <div class="copy-block" id="finalReportDisplay">
+                [Report will appear here...]
+            </div>
+
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
+                <button class="btn" id="copyBtn" onclick="copyReport()">
+                    <span id="copyIcon">📋</span> Copy to Clipboard
+                </button>
+                
+                <a href="https://english.synergylifelineconsulting.com/" target="_blank" class="btn btn-submit">
+                    📤 Submit to Teacher Victor
+                </a>
+            </div>
+            
+            <div style="margin-top:20px; text-align: center;">
+                <button class="btn btn-secondary" onclick="document.location.reload()">Start Over</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    let currentSection = 1;
+    const totalSections = 8; 
+    let generatedQuestionTexts = [];
+
+    // --- NAVIGATION LOGIC ---
+
+    function updateProgress(num) {
+        const dots = document.querySelectorAll('.dot');
+        // Visual mapping: 1->1, 2->2, 3->3, 4->4, 5->5, 7->6(AI), 8->7(Done)
+        let visualIndex = 0;
+        if(num <= 5) visualIndex = num; 
+        else if(num === 7) visualIndex = 6;
+        else if(num === 8) visualIndex = 7;
+
+        dots.forEach((dot, index) => {
+            if (index < visualIndex) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        });
+    }
+
+    function nextSection(current) {
+        if (current === 1) {
+            const name = document.getElementById('studentName').value;
+            const key = document.getElementById('apiKey').value;
+            if (!name.trim()) { alert("Please type your name."); return; }
+            if (!key.trim()) { alert("Please enter the Class Password."); return; }
+        }
+
+        document.getElementById(`sec-${current}`).classList.remove('active');
+        let next = current + 1;
+        
+        // Skip AI loading screen if simply navigating
+        if(next === 6) return; 
+
+        document.getElementById(`sec-${next}`).classList.add('active');
+        currentSection = next;
+        updateProgress(currentSection);
+    }
+
+    function prevSection(current) {
+        document.getElementById(`sec-${current}`).classList.remove('active');
+        let prev = current - 1;
+        if(prev === 6) prev = 5; 
+        document.getElementById(`sec-${prev}`).classList.add('active');
+        currentSection = prev;
+        updateProgress(currentSection);
+    }
+
+    // --- GEMINI AI HELPERS ---
+
+    async function callGemini(prompt, apiKey) {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+        });
+        if (!response.ok) throw new Error("API Error");
+        const data = await response.json();
+        return data.candidates[0].content.parts[0].text;
+    }
+
+    // Feature 1: Grammar Check
+    async function getAIHelp(fieldId, feedbackId, instructions) {
+        const key = document.getElementById('apiKey').value;
+        const text = document.getElementById(fieldId).value;
+        const fbBox = document.getElementById(feedbackId);
+
+        if(!key) { alert("Please enter the Class Password in the first screen."); return; }
+        if(!text.trim()) { alert("Please write something first!"); return; }
+
+        fbBox.innerHTML = '<span class="loader" style="width:20px; height:20px; border-width:2px; margin:0;"></span> Checking...';
+
+        const prompt = `You are a friendly ESL teacher for Grade 3 kids. 
+        Task: ${instructions}
+        Student Sentence: "${text}"
+        
+        If the sentence is good, say "Great job! 🌟".
+        If there is a grammar mistake or it doesn't answer the prompt, give ONE simple hint (max 12 words).
+        Be encouraging.`;
+
+        try {
+            const reply = await callGemini(prompt, key);
+            fbBox.innerHTML = `💡 Teacher AI: ${reply}`;
+        } catch (e) {
+            fbBox.innerHTML = "⚠️ Error: Could not reach the AI teacher.";
+        }
+    }
+
+    // Feature 2: Un-Do Lab
+    async function runUndoLab() {
+        const key = document.getElementById('apiKey').value;
+        const input = document.getElementById('undo-input').value;
+        const resultBox = document.getElementById('undo-result');
+
+        if(!key) { alert("Please enter password first."); return; }
+        if(!input.trim()) { alert("Type an action first!"); return; }
+
+        resultBox.style.display = 'block';
+        resultBox.innerHTML = '<span class="loader" style="width:20px; height:20px; border-width:2px; margin:0;"></span> Analyzing physics...';
+
+        const prompt = `You are a "Logic Lab Computer" for kids.
+        The student asks if they can "un-${input}".
+        1. Decide if this is scientifically possible (reversible) or impossible (irreversible).
+        2. Answer YES or NO in bold.
+        3. Give a fun, simple scientific reason (1 sentence, Grade 3 level).
+        Example: "No! You cannot un-toast bread because the heat changed the bread forever."`;
+
+        try {
+            const reply = await callGemini(prompt, key);
+            resultBox.innerHTML = `🤖 <strong>Analysis for "un-${input}":</strong><br><br>${reply}`;
+        } catch (e) {
+            resultBox.innerHTML = "⚠️ System Error: Lab offline.";
+        }
+    }
+
+    // Feature 3: Adaptive Questions
+    async function generateAIQuestions() {
+        const key = document.getElementById('apiKey').value;
+        
+        // Answers context
+        const context = {
+            s1: document.getElementById('ans-seq-1').value,
+            s2: document.getElementById('ans-seq-2').value,
+            c1: document.getElementById('ans-cause-1').value,
+            c2: document.getElementById('ans-cause-2').value,
+            crit: document.getElementById('ans-crit-1').value
+        };
+
+        // UI Transition
+        document.getElementById('sec-5').classList.remove('active');
+        document.getElementById('sec-6-loading').classList.add('active');
+        currentSection = 6;
+
+        const systemPrompt = `You are "Teacher Victor", a friendly English teacher for Sky 1 (Grade 3-4). 
+        Student Answers Context:
+        1. Unwrapped: "${context.s1}"
+        2. Untied: "${context.s2}"
+        3. Unplugged: "${context.c1}"
+        4. Uncovered: "${context.c2}"
+        5. Un-eat Logic: "${context.crit}"
+
+        Generate 5 NEW, ADAPTIVE, INQUIRY-BASED questions to push their critical thinking about the prefix "un-".
+        Requirements:
+        - Simple English (Grade 3-4).
+        - Fun but logical.
+        - Return ONLY 5 questions separated by "|||". No numbering.`;
+
+        try {
+            const text = await callGemini(systemPrompt, key);
+            generatedQuestionTexts = text.split('|||').map(q => q.trim()).filter(q => q.length > 0);
+            
+            if (generatedQuestionTexts.length < 5) {
+                generatedQuestionTexts = ["Can you un-cook an egg?", "Can you un-say a word?", "Can you un-grow?", "Can you un-mix paint?", "Can you un-rain?"];
+            }
+
+            const container = document.getElementById('ai-questions-container');
+            container.innerHTML = '';
+            generatedQuestionTexts.slice(0, 5).forEach((q, idx) => {
+                container.innerHTML += `
+                    <div class="inquiry-card"><strong>Secret Question #${idx+1}:</strong><br>${q}</div>
+                    <label>Your Answer:</label>
+                    <textarea id="ai-ans-${idx}" placeholder="I think..."></textarea>
+                `;
+            });
+
+            document.getElementById('sec-6-loading').classList.remove('active');
+            document.getElementById('sec-7').classList.add('active');
+            currentSection = 7;
+            updateProgress(7);
+
+        } catch (error) {
+            console.error(error);
+            alert("AI Error. Skipping to report.");
+            generateReport(true);
+        }
+    }
+
+    // --- REPORT GENERATION ---
+
+    function generateReport(skipAI = false) {
+        const name = document.getElementById('studentName').value;
+        const s1 = document.getElementById('ans-seq-1').value;
+        const s2 = document.getElementById('ans-seq-2').value;
+        const c1 = document.getElementById('ans-cause-1').value;
+        const c2 = document.getElementById('ans-cause-2').value;
+        const undoInput = document.getElementById('undo-input').value;
+        const crit = document.getElementById('ans-crit-1').value;
+
+        let aiSection = "";
+        if (!skipAI && generatedQuestionTexts.length > 0) {
+            aiSection = "\nPHASE 5: SECRET AI CHALLENGE\n";
+            generatedQuestionTexts.slice(0, 5).forEach((q, idx) => {
+                const ans = document.getElementById(`ai-ans-${idx}`)?.value || "(No answer)";
+                aiSection += `${idx+1}. Q: ${q}\n   A: "${ans}"\n\n`;
+            });
+        }
+
+        const report = `
+📚 HAPPY ENGLISH CLUB - SKY 1 REPORT
+------------------------------------
+STUDENT: ${name}
+DATE: ${new Date().toLocaleDateString()}
+TOPIC: The Prefix 'Un-' (Logic & Critical Thinking)
+
+PHASE 1: TIME ORDER
+1. Unwrapped Story: "${s1}"
+2. Untied Story: "${s2}"
+
+PHASE 2: CAUSE AND EFFECT
+3. Unplugged Reason: "${c1}"
+4. Uncovered Reason: "${c2}"
+
+PHASE 3: THE UN-DO LAB
+5. Experiment: Can you un-${undoInput}? (Student tested this in the lab)
+
+PHASE 4: TRICKY LOGIC
+6. The 'Un-eat' Idea: "${crit}"
+${aiSection}
+------------------------------------
+End of Report.
+        `.trim();
+
+        document.getElementById('finalReportDisplay').innerText = report;
+        
+        document.getElementById('sec-7').classList.remove('active');
+        document.getElementById('sec-6-loading').classList.remove('active');
+        document.getElementById('sec-8').classList.add('active');
+        currentSection = 8;
+        updateProgress(8);
+    }
+
+    function copyReport() {
+        const reportText = document.getElementById('finalReportDisplay').innerText;
+        const textArea = document.createElement("textarea");
+        textArea.value = reportText;
+        textArea.style.position = "fixed";
+        textArea.style.left = "-9999px";
+        textArea.style.top = "0";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        
+        try {
+            if(document.execCommand('copy')) {
+                const btn = document.getElementById('copyBtn');
+                const oldHTML = btn.innerHTML;
+                btn.innerHTML = "✅ Copied!";
+                btn.style.background = "#10b981";
+                setTimeout(() => { btn.innerHTML = oldHTML; btn.style.background = ""; }, 3000);
+                alert("Copied! Now click 'Submit to Teacher Victor' and paste your answers.");
+            } else { throw new Error("Copy failed"); }
+        } catch (err) {
+            alert("Could not copy automatically. Please select text and copy manually.");
+        }
+        document.body.removeChild(textArea);
+    }
+</script>
+
+</body>
+</html>

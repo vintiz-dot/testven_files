@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Victor Moronu - Premium 2-Page Resume</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #0f172a; /* Deep Navy */
+            --accent-color: #c29f6d; /* Muted Gold */
+            --text-dark: #334155;
+            --text-light: #64748b;
+            --bg-sidebar: #1e293b;
+            --white: #ffffff;
+            --page-width: 210mm;
+            --page-height: 296mm; /* Slight reduction from 297 to prevent overflow issues */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background: #525659; /* Dark grey for browser view */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 0;
+            gap: 20px;
+        }
+
+        /* --- PAGE CONTAINER --- */
+        .page {
+            width: var(--page-width);
+            height: var(--page-height);
+            background: var(--white);
+            display: grid;
+            grid-template-columns: 32% 68%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            overflow: hidden; /* Ensures content stays strictly within A4 bounds */
+            position: relative;
+        }
+
+        /* --- SIDEBAR (Left Column) --- */
+        .sidebar {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 35px 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: top;
+            border: 3px solid var(--accent-color);
+            margin: 0 auto 10px auto;
+            display: block;
+        }
+
+        .sidebar-section h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--accent-color);
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+
+        /* Contact Info */
+        .contact-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-size: 0.9rem;
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #e2e8f0;
+        }
+
+        /* Lists in Sidebar */
+        .skill-list, .ref-list {
+            list-style: none;
+        }
+        .skill-list li {
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            line-height: 1.4;
+        }
+        .ref-list li {
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+        }
+
+        /* Education Blocks */
+        .edu-block {
+            margin-bottom: 15px;
+        }
+        .edu-date {
+            color: var(--accent-color);
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 2px;
+        }
+        .edu-degree {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--white);
+            line-height: 1.2;
+        }
+        .edu-school {
+            font-style: italic;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-top: 2px;
+        }
+
+        /* --- MAIN CONTENT (Right Column) --- */
+        .main-content {
+            padding: 40px 35px;
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.2rem;
+            line-height: 1;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        .header-title {
+            font-family: 'Lato', sans-serif;
+            font-size: 1.1rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        /* Summary Box */
+        .summary {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+            padding-left: 15px;
+            border-left: 4px solid var(--accent-color);
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        /* Section Headers */
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+            margin-bottom: 25px;
+            margin-top: 10px;
+        }
+
+        /* Job Items */
+        .job-item {
+            margin-bottom: 30px;
+        }
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+        }
+        .job-title {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: var(--primary-color);
+        }
+        .job-company {
+            font-size: 0.95rem;
+            font-style: italic;
+            color: var(--text-light);
+        }
+        .job-date {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-light);
+            white-space: nowrap;
+        }
+        .job-desc ul {
+            list-style: none;
+        }
+        .job-desc li {
+            position: relative;
+            padding-left: 18px;
+            margin-bottom: 6px;
+            font-size: 0.92rem;
+            line-height: 1.5;
+            color: #334155;
+        }
+        .job-desc li::before {
+            content: "•";
+            color: var(--accent-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+            line-height: 1.1rem;
+        }
+
+        /* Footer for pages */
+        .page-footer {
+            position: absolute;
+            bottom: 20px;
+            right: 35px;
+            font-size: 0.8rem;
+            color: #cbd5e1;
+        }
+
+        /* --- PRINT MEDIA QUERY --- */
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+                gap: 0;
+            }
+            .page {
+                box-shadow: none;
+                margin: 0;
+                page-break-after: always;
+            }
+            .page:last-child {
+                page-break-after: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PAGE 1 -->
+    <div class="page">
+        <!-- Sidebar Page 1 -->
+        <aside class="sidebar">
+            <img src="image.jpg" alt="Victor Moronu" class="profile-photo">
+            
+            <div class="sidebar-section">
+                <h3>Contact</h3>
+                <div class="contact-group">
+                    <div class="contact-item">VinHomes Smart City, Hanoi</div>
+                    <div class="contact-item">+84 98 893 0491</div>
+                    <div class="contact-item">vmoronu@gmail.com</div>
+                    <div class="contact-item">linkedin.com/in/victor-moronu</div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Education</h3>
+                
+                <div class="edu-block">
+                    <span class="edu-date">Expected Jan 2026</span>
+                    <div class="edu-degree">U.S. Teaching License</div>
+                    <div class="edu-school">Moreland University, USA</div>
+                </div>
+
+                <div class="edu-block">
+                    <span class="edu-date">2018</span>
+                    <div class="edu-degree">B.Eng Mechanical Engineering</div>
+                    <div class="edu-school">University of Nigeria</div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Certifications</h3>
+                <ul class="skill-list">
+                    <li>120-Hour TESOL/TEFL (World TESOL Academy)</li>
+                    <li>C2 Proficient English (IBMI Berlin)</li>
+                    <li>IELTS Band 8.5</li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>Languages</h3>
+                <ul class="skill-list">
+                    <li>English (Native/C2)</li>
+                    <li>Igbo (Native)</li>
+                    <li>Spanish (Basic)</li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content Page 1 -->
+        <main class="main-content">
+            <header>
+                <h1 class="header-name">Victor Moronu</h1>
+                <div class="header-title">STEM Educator & Mechanical Engineer</div>
+            </header>
+
+            <div class="summary">
+                Innovative <strong>STEM Educator</strong> with a Bachelor of Engineering and 3+ years of international teaching experience in Vietnam. Currently finalizing a <strong>U.S. Teaching License</strong> with a focus on Inclusive Pedagogy. Expert in bridging complex theoretical concepts with real-world application through <strong>Inquiry-Based Learning</strong>. Proven track record of raising assessment scores by 15% through data-driven instruction.
+            </div>
+
+            <h2 class="section-title">Leadership and Teaching Experience</h2>
+
+            <div class="job-item">
+                <div class="job-header">
+                    <div>
+                        <div class="job-title">Secondary School Science & Math Teacher</div>
+                        <div class="job-company">Victoria Thăng Long | Hanoi, Vietnam</div>
+                    </div>
+                    <div class="job-date">Sept 2024 – Present</div>
+                </div>
+                <div class="job-desc">
+                    <ul>
+                        <li>Orchestrate the delivery of an integrated Math and Science curriculum for <strong>Grades 6-8</strong>, utilizing IMYC-style 'Big Idea' thematic units to foster interdisciplinary understanding.</li>
+                        <li>Successfully led a <strong>'Bridge Building' engineering unit</strong> where students applied concepts of Forces and Statics to construct load-bearing models, increasing student engagement scores by <strong>20%</strong>.</li>
+                        <li>Implement differentiation strategies for mixed-ability classes, utilizing scaffolded worksheets and visual aids for EAL learners, resulting in a <strong>15% increase</strong> in termly assessment averages.</li>
+                        <li>Act as a Homeroom advisor, delivering pastoral care modules focused on resilience and emotional well-being.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="job-item">
+                <div class="job-header">
+                    <div>
+                        <div class="job-title">Academic Manager & Curriculum Lead</div>
+                        <div class="job-company">Happy English Club | Hanoi, Vietnam</div>
+                    </div>
+                    <div class="job-date">2022 – Present</div>
+                </div>
+                <div class="job-desc">
+                    <ul>
+                        <li>Manage a student-centered "Language Discovery and Inquiry-First" center.</li>
+                        <li>Pioneered a forward-thinking pedagogical framework fusing <strong>Universal Design for Learning (UDL)</strong>, <strong>Montessori principles</strong>, and <strong>Project-Based Learning (PBL)</strong>.</li>
+                        <li>Oversee the development and execution of the Math and English curriculum for Vietnamese students, transforming traditional lessons into student-centered inquiry projects.</li>
+                        <li>Implement UDL strategies to ensure curriculum accessibility for diverse learners, prioritizing student autonomy.</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div class="page">
+        <!-- Sidebar Page 2 -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3>Technical Skills</h3>
+                <ul class="skill-list">
+                    <li>Python Programming</li>
+                    <li>JavaScript</li>
+                    <li>GeoGebra & Desmos</li>
+                    <li>AI Prompting for EdTech</li>
+                    <li>Interactive Whiteboards</li>
+                    <li>MS Office Suite</li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Pedagogy</h3>
+                <ul class="skill-list">
+                    <li>Inquiry-Based Learning</li>
+                    <li>Project-Based Learning</li>
+                    <li>CLIL (Content & Language Integrated Learning)</li>
+                    <li>Differentiated Instruction</li>
+                    <li>Evidence-Based Practices</li>
+                    <li>Montessori Methods</li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Publications</h3>
+                <ul class="skill-list">
+                    <li style="font-style: italic;">"Synergy Ace the Quantitative Section of the SAT and GRE"</li>
+                    <li>A Step-by-Step Guide for students</li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content Page 2 -->
+        <main class="main-content">
+            <h2 class="section-title" style="margin-top: 0;">Experience Continued</h2>
+
+            <div class="job-item">
+                <div class="job-header">
+                    <div>
+                        <div class="job-title">Academic Manager & IB MYP Instructor</div>
+                        <div class="job-company">Boda Learning Center | Hanoi, Vietnam</div>
+                    </div>
+                    <div class="job-date">2022 – 2024</div>
+                </div>
+                <div class="job-desc">
+                    <ul>
+                        <li>Directed academic operations for a premium center strategically catering to high-performing <strong>international students</strong> (specifically Korean and Taiwanese expatriates).</li>
+                        <li>Delivered <strong>IB MYP Mathematics</strong> instruction, aligning strictly with IB assessment criteria (Knowing and Understanding, Investigating Patterns).</li>
+                        <li>Designed high-impact SAT Math prep courses leveraging engineering problem-solving techniques; improved average scores by <strong>100+ points</strong> for over 10 students.</li>
+                        <li>Managed a faculty of 5 instructors, overseeing professional development and ensuring consistent curriculum implementation.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="job-item">
+                <div class="job-header">
+                    <div>
+                        <div class="job-title">Primary School Math & Science Teacher</div>
+                        <div class="job-company">Hanoi Primary & High School System (Thang Long)</div>
+                    </div>
+                    <div class="job-date">Aug 2023 – June 2024</div>
+                </div>
+                <div class="job-desc">
+                    <ul>
+                        <li>Designed playful and concept-rich Math/Science lessons for Grades 1-4, improving class participation rates by <strong>20%</strong>.</li>
+                        <li>Created custom teaching materials blending <strong>Cambridge</strong> and <strong>McGraw-Hill</strong> curricula for comprehensive education.</li>
+                        <li>Simplified complex ideas through storytelling, visuals, and hands-on activities to accommodate various learning styles.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="job-item">
+                <div class="job-header">
+                    <div>
+                        <div class="job-title">SAT & GRE Quantitative Instructor</div>
+                        <div class="job-company">Synergy Lifeline Consulting</div>
+                    </div>
+                    <div class="job-date">2017 – 2021</div>
+                </div>
+                <div class="job-desc">
+                    <ul>
+                        <li>Tutored over <strong>500 students</strong> in SAT and GRE quantitative reasoning with a 90% success rate in achieving target scores.</li>
+                        <li>Authored the study guide <em>"Synergy Ace the Quantitative Section of the SAT and GRE"</em>.</li>
+                        <li>Developed individualized lesson plans based on student strengths and weaknesses in Algebra, Geometry, and Calculus.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 >Teaching Philosophy</h3>
+            <div class="summary" style="background: #fff; border: none; padding-left: 0;">
+                <p style="margin-bottom: 0px;">I believe that the most effective learning occurs when students can draw lines between abstract theory and their physical reality. As an engineer-turned-educator, my classroom is a laboratory where mathematical variables become bridge supports and scientific laws explain everyday phenomena.</p>
+                </div>
+
+        </main>
+    </div>
+
+</body>
+</html>
