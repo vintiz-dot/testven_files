@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy English Club - Mars Class</title>
+    <style>
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --accent: #FFE66D;
+            --dark: #2C3E50;
+            --light: #F7F9FC;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- UI COMPONENTS --- */
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            padding: 2rem;
+            max-width: 800px;
+            width: 90%;
+            text-align: center;
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        h1 { color: var(--primary); margin-bottom: 0.5rem; }
+        h2 { color: var(--dark); font-size: 1.2rem; font-weight: normal; margin-top: 0; }
+        .highlight { color: var(--secondary); font-weight: bold; }
+
+        input, select, button {
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 2px solid #ddd;
+            margin: 10px;
+            outline: none;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.1s;
+        }
+
+        button:active { transform: scale(0.95); }
+        button:disabled { background-color: #ccc; cursor: not-allowed; }
+
+        /* --- STAGE: DIALOGUE VISUALS --- */
+        .stage-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 100%;
+            height: 400px;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .avatar {
+            width: 150px;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            position: relative;
+        }
+
+        .avatar img { width: 100%; height: auto; }
+        .avatar-label { 
+            background: var(--dark); color: white; 
+            padding: 5px 15px; border-radius: 15px; 
+            margin-top: 10px; font-size: 0.9rem;
+        }
+
+        .item-display {
+            width: 250px;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            border-radius: 20px;
+            border: 4px dashed var(--secondary);
+            position: relative;
+            transition: all 0.5s;
+        }
+
+        /* Pure CSS Placeholder Icons (Fallback if AI image fails) */
+        .icon-placeholder { font-size: 80px; }
+        
+        /* The Color Filter Wrapper */
+        .tint-layer {
+            width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 16px;
+            transition: background-color 0.5s;
+        }
+
+        /* Speech Bubble */
+        .speech-bubble {
+            background: white;
+            border: 2px solid var(--dark);
+            border-radius: 15px;
+            padding: 15px;
+            position: absolute;
+            top: -60px;
+            width: 200px;
+            display: none;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+        .speech-bubble::after {
+            content: ''; position: absolute; bottom: -10px; left: 50%;
+            border-width: 10px 10px 0; border-style: solid;
+            border-color: var(--dark) transparent; display: block; width: 0;
+        }
+
+        /* --- CONTROLS --- */
+        .color-picker {
+            display: flex; gap: 10px; justify-content: center; margin-top: 20px;
+        }
+        .color-btn {
+            width: 50px; height: 50px; border-radius: 50%; border: 3px solid white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2); cursor: pointer;
+        }
+        
+        /* Hidden Sections */
+        .hidden { display: none !important; }
+
+        /* Animation */
+        @keyframes popIn {
+            0% { transform: scale(0); }
+            80% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .pop-in { animation: popIn 0.5s forwards; }
+
+    </style>
+</head>
+<body>
+
+    <div id="login-screen" class="card">
+        <h1>🔐 Teacher Access</h1>
+        <p>Happy English Club - Grading Console</p>
+        <input type="password" id="api-key" placeholder="Enter Google API Key">
+        <br>
+        <button onclick="app.login()">Enter Mars Class</button>
+        <p style="font-size: 0.8rem; color: #888;">Teacher: Victor | Center: Happy English Club</p>
+    </div>
+
+    <div id="setup-screen" class="card hidden">
+        <h1>👋 Welcome, Teacher Victor!</h1>
+        <p>Who is learning today?</p>
+        <input type="text" id="student-name" placeholder="Student Name">
+        <button onclick="app.startSession()">Start Lesson</button>
+    </div>
+
+    <div id="app-screen" class="hidden" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+        
+        <div class="card" style="padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
+            <div style="text-align: left;">
+                <h2 style="margin:0;">Happy English Club</h2>
+                <span style="font-size: 0.9rem; color: #888;">Mars Class</span>
+            </div>
+            <div style="text-align: right;">
+                <span id="display-student-name" class="highlight">Student</span>
+            </div>
+        </div>
+
+        <div class="stage-container">
+            
+            <div class="avatar">
+                <div id="robot-bubble" class="speech-bubble">Hello!</div>
+                <svg width="120" height="180" viewBox="0 0 100 150">
+                    <rect x="20" y="20" width="60" height="50" rx="10" fill="#2C3E50" />
+                    <circle cx="35" cy="45" r="5" fill="#4ECDC4" />
+                    <circle cx="65" cy="45" r="5" fill="#4ECDC4" />
+                    <rect x="40" y="60" width="20" height="5" fill="#FF6B6B" />
+                    <line x1="50" y1="20" x2="50" y2="5" stroke="#2C3E50" stroke-width="3" />
+                    <circle cx="50" cy="5" r="3" fill="#FF6B6B" />
+                    <rect x="30" y="75" width="40" height="60" rx="5" fill="#95A5A6" />
+                </svg>
+                <div class="avatar-label">Teacher Robot</div>
+            </div>
+
+            <div class="item-display" id="main-display">
+                <div id="item-tint" class="tint-layer">
+                    <span id="fallback-icon" class="icon-placeholder">👖</span>
+                    <img id="generated-image" style="display:none; max-width:90%; max-height:90%; border-radius:10px;">
+                </div>
+            </div>
+
+            <div class="avatar">
+                <div id="student-bubble" class="speech-bubble">My turn!</div>
+                <svg width="120" height="180" viewBox="0 0 100 150">
+                    <circle cx="50" cy="40" r="25" fill="#FFCC99" />
+                    <path d="M25,65 Q50,150 75,65" fill="#FF6B6B" />
+                    <circle cx="40" cy="35" r="3" fill="#333" />
+                    <circle cx="60" cy="35" r="3" fill="#333" />
+                    <path d="M40,50 Q50,55 60,50" stroke="#333" stroke-width="2" fill="none" />
+                </svg>
+                <div class="avatar-label" id="avatar-label-name">Student</div>
+            </div>
+
+        </div>
+
+        <div class="card">
+            <h2 id="instruction-text">Listen...</h2>
+            
+            <div id="controls-area">
+                <button id="next-btn" onclick="app.nextStep()">Start</button>
+            </div>
+
+            <div id="color-picker" class="color-picker hidden">
+                <div class="color-btn" style="background:red;" onclick="app.setColor('red')"></div>
+                <div class="color-btn" style="background:blue;" onclick="app.setColor('blue')"></div>
+                <div class="color-btn" style="background:green;" onclick="app.setColor('green')"></div>
+                <div class="color-btn" style="background:yellow;" onclick="app.setColor('yellow')"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- DATA & CONFIG ---
+        const ITEMS = [
+            { name: "Pants", type: "plural", phonetics: "Puh. Aaa. Nnn. Tss. Pants.", icon: "👖", prompt: "A cartoon pair of pants, white background, simple vector style" },
+            { name: "Shoes", type: "plural", phonetics: "Shhh. Oooh. Zzz. Shoes.", icon: "yw", prompt: "A cartoon pair of shoes, white background, simple vector style" },
+            { name: "Shorts", type: "plural", phonetics: "Shhh. Orrr. Tss. Shorts.", icon: "🩳", prompt: "Cartoon shorts, white background, simple vector style" },
+            { name: "Skirt", type: "singular", phonetics: "Skh. Errr. Tuh. Skirt.", icon: "👗", prompt: "A cartoon skirt, white background, simple vector style" },
+            { name: "Socks", type: "plural", phonetics: "Sss. Ock. Sss. Socks.", icon: "🧦", prompt: "A pair of cartoon socks, white background, simple vector style" },
+            { name: "Dress", type: "singular", phonetics: "Drrr. Eh. Sss. Dress.", icon: "👗", prompt: "A cartoon dress, white background, simple vector style" },
+            { name: "Hat", type: "singular", phonetics: "Hhh. Aaah. Tuh. Hat.", icon: "👒", prompt: "A cartoon hat, white background, simple vector style" },
+            { name: "Shirt", type: "singular", phonetics: "Shhh. Urrr. Tuh. Shirt.", icon: "👕", prompt: "A cartoon t-shirt, white background, simple vector style" }
+        ];
+
+        class ApiService {
+            constructor() {
+                this.apiKey = '';
+            }
+
+            setKey(key) { this.apiKey = key; }
+
+            // Uses Google Cloud TTS (Journey/Gemini voices)
+            async speak(text) {
+                if (!this.apiKey) return;
+                
+                // Using the "Journey" voice (F) for a friendly, teacher-like AI voice
+                const url = `https://texttospeech.googleapis.com/v1/text:synthesize?key=${this.apiKey}`;
+                
+                const body = {
+                    input: { text: text },
+                    voice: { languageCode: "en-US", name: "en-US-Journey-F" }, 
+                    audioConfig: { audioEncoding: "MP3", speakingRate: 0.90 } // Slightly slower for kids
+                };
+
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        body: JSON.stringify(body)
+                    });
+                    const data = await response.json();
+                    if (data.audioContent) {
+                        const audio = new Audio("data:audio/mp3;base64," + data.audioContent);
+                        return new Promise(resolve => {
+                            audio.onended = resolve;
+                            audio.play();
+                        });
+                    }
+                } catch (e) {
+                    console.error("TTS Error:", e);
+                    // Fallback to browser voice if API fails
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.rate = 0.8;
+                    window.speechSynthesis.speak(utterance);
+                }
+            }
+
+            // Attempt to generate image (Fallback to icon if fails)
+            async generateImage(prompt) {
+                // NOTE: Client-side image generation often faces CORS issues with strict endpoints.
+                // We attempt to use the Generative Language API. If this fails, the app uses CSS icons.
+                // This is a placeholder logic for the structure.
+                return null; 
+            }
+        }
+
+        class App {
+            constructor() {
+                this.api = new ApiService();
+                this.studentName = "";
+                this.currentItemIndex = 0;
+                this.currentStep = 0; // 0:Intro, 1:Phonics, 2:MyColor, 3:YourColor, 4:Dialogue
+                this.currentColor = "";
+                this.isProcessing = false;
+            }
+
+            login() {
+                const key = document.getElementById('api-key').value;
+                if(key.length > 10) {
+                    this.api.setKey(key);
+                    document.getElementById('login-screen').classList.add('hidden');
+                    document.getElementById('setup-screen').classList.remove('hidden');
+                } else {
+                    alert("Please enter a valid API Key");
+                }
+            }
+
+            startSession() {
+                this.studentName = document.getElementById('student-name').value || "Student";
+                document.getElementById('display-student-name').innerText = this.studentName;
+                document.getElementById('avatar-label-name').innerText = this.studentName;
+                document.getElementById('setup-screen').classList.add('hidden');
+                document.getElementById('app-screen').classList.remove('hidden');
+                
+                // Start background generation loop (simulated)
+                this.startLevel();
+            }
+
+            async startLevel() {
+                this.currentStep = 1; // Phonics
+                const item = ITEMS[this.currentItemIndex];
+                
+                // Reset Visuals
+                this.updateDisplay(item.icon, "white");
+                this.toggleUI('next-btn', true);
+                this.toggleUI('color-picker', false);
+                this.setBubble('robot', '');
+                this.setBubble('student', '');
+
+                document.getElementById('instruction-text').innerText = `Lesson ${this.currentItemIndex + 1}: ${item.name}`;
+            }
+
+            async nextStep() {
+                if(this.isProcessing) return;
+                this.isProcessing = true;
+                
+                const item = ITEMS[this.currentItemIndex];
+
+                // --- STEP 1: PHONICS LAB ---
+                if (this.currentStep === 1) {
+                    this.toggleUI('next-btn', false); // Hide button while talking
+                    
+                    // Robot Speaks
+                    this.setBubble('robot', item.name);
+                    await this.api.speak(`Listen and repeat. ${item.name}.`);
+                    
+                    document.getElementById('instruction-text').innerText = "Phonics Time!";
+                    this.setBubble('robot', item.phonetics);
+                    await this.api.speak(item.phonetics);
+                    
+                    this.setBubble('robot', item.name);
+                    await this.api.speak(item.name);
+
+                    this.currentStep++;
+                    this.toggleUI('next-btn', true, "Pick a Color");
+                    document.getElementById('instruction-text').innerText = "Click 'Pick a Color'";
+                }
+
+                // --- STEP 2: MY ITEM (Coloring) ---
+                else if (this.currentStep === 2) {
+                    this.toggleUI('next-btn', false);
+                    this.toggleUI('color-picker', true);
+                    
+                    // Grammar Logic
+                    const prefix = item.type === 'plural' ? "These are" : "This is";
+                    
+                    this.setBubble('robot', `${prefix} my ${item.name.toLowerCase()}.`);
+                    await this.api.speak(`${prefix} my ${item.name.toLowerCase()}.`);
+                    
+                    await this.api.speak(`What color is my ${item.name.toLowerCase()}? Choose a color.`);
+                    document.getElementById('instruction-text').innerText = "Choose a color for the Teacher";
+                    
+                    // Waits for user to click a color button (handled by setColor)
+                }
+
+                // --- STEP 4: DIALOGUE ---
+                else if (this.currentStep === 4) {
+                    this.toggleUI('next-btn', false);
+                    
+                    // Student "Talks" (Robot prompts the student)
+                    document.getElementById('instruction-text').innerText = "Student's Turn!";
+                    this.setBubble('student', "...");
+                    
+                    const possessive = item.type === 'plural' ? "Your ... are" : "Your ... is";
+                    const sentence = `${possessive} ${this.currentColor}.`;
+                    
+                    await this.api.speak(`Now ${this.studentName}, you say. ${sentence}`);
+                    
+                    // Show text for student to read
+                    this.setBubble('student', sentence);
+                    document.getElementById('instruction-text').innerText = `Say: "${sentence}"`;
+                    
+                    // Wait 3 seconds for kid to speak (simulated interaction)
+                    await new Promise(r => setTimeout(r, 4000));
+                    
+                    // Robot Responds
+                    this.setBubble('robot', "Great job!");
+                    await this.api.speak(`Good job ${this.studentName}!`);
+
+                    // Next Level Logic
+                    this.currentItemIndex++;
+                    if(this.currentItemIndex < ITEMS.length) {
+                        this.currentStep = 1;
+                        this.toggleUI('next-btn', true, "Next Item");
+                        this.startLevel();
+                    } else {
+                        document.getElementById('instruction-text').innerText = "You finished all items!";
+                        this.setBubble('robot', "Goodbye!");
+                        await this.api.speak("We are finished. Goodbye Mars Class!");
+                    }
+                }
+                
+                this.isProcessing = false;
+            }
+
+            async setColor(color) {
+                this.currentColor = color;
+                const item = ITEMS[this.currentItemIndex];
+                
+                // Visual Update
+                this.updateDisplay(item.icon, color);
+                this.toggleUI('color-picker', false);
+
+                // Grammar Logic
+                const verb = item.type === 'plural' ? "are" : "is";
+                
+                // Robot confirms color
+                const sentence = `My ${item.name.toLowerCase()} ${verb} ${color}.`;
+                this.setBubble('robot', sentence);
+                await this.api.speak(sentence);
+
+                // Move to Dialogue Phase
+                this.currentStep = 4;
+                this.toggleUI('next-btn', true, "Start Dialogue");
+                document.getElementById('instruction-text').innerText = "Ready to talk?";
+            }
+
+            updateDisplay(icon, color) {
+                const tintLayer = document.getElementById('item-tint');
+                const fallback = document.getElementById('fallback-icon');
+                
+                fallback.innerText = icon;
+                
+                // CSS Filtering for Colors
+                if(color === 'white') tintLayer.style.backgroundColor = 'transparent';
+                else if(color === 'red') tintLayer.style.backgroundColor = 'rgba(255, 0, 0, 0.3)';
+                else if(color === 'blue') tintLayer.style.backgroundColor = 'rgba(0, 0, 255, 0.3)';
+                else if(color === 'green') tintLayer.style.backgroundColor = 'rgba(0, 255, 0, 0.3)';
+                else if(color === 'yellow') tintLayer.style.backgroundColor = 'rgba(255, 255, 0, 0.3)';
+                
+                // Animation trigger
+                const display = document.getElementById('main-display');
+                display.classList.remove('pop-in');
+                void display.offsetWidth; // trigger reflow
+                display.classList.add('pop-in');
+            }
+
+            setBubble(who, text) {
+                const bubble = document.getElementById(`${who}-bubble`);
+                if(text) {
+                    bubble.innerText = text;
+                    bubble.style.display = 'block';
+                } else {
+                    bubble.style.display = 'none';
+                }
+            }
+
+            toggleUI(id, show, text=null) {
+                const el = document.getElementById(id);
+                if(show) el.classList.remove('hidden');
+                else el.classList.add('hidden');
+                if(text) el.innerText = text;
+            }
+        }
+
+        // Init
+        const app = new App();
+
+    </script>
+</body>
+</html>

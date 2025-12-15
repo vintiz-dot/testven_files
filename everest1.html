@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Victor Moronu - Primary STEM Educator</title>
+    <style>
+        :root {
+            /* Bach Duong School Brand Colors */
+            --primary-blue: #191970;   /* Academic Authority */
+            --accent-orange: #ff7f00;  /* Aries Energy & Creativity */
+            --accent-teal: #019583;    /* Growth & STEM */
+            --bg-grey: #f4f4f4;
+            --text-dark: #333;
+            --text-light: #fff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-grey);
+            color: var(--text-dark);
+        }
+
+      .resume-container {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            max-width: 1000px;
+            margin: 40px auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        /* --- LEFT SIDEBAR --- */
+      .sidebar {
+            background-color: var(--primary-blue);
+            color: var(--text-light);
+            padding: 30px;
+        }
+
+      .profile-img-placeholder {
+            width: 150px;
+            height: 150px;
+            background-color: var(--text-light);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-blue);
+            font-weight: bold;
+            font-size: 2rem;
+            border: 4px solid var(--accent-orange);
+        }
+
+      .sidebar-section {
+            margin-bottom: 30px;
+        }
+
+      .sidebar-title {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 2px solid var(--accent-teal);
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            color: var(--accent-orange);
+        }
+
+      .contact-info div {
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+        }
+        
+      .contact-icon {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Skills Styling */
+      .skill-category {
+            font-weight: bold;
+            color: var(--accent-teal);
+            margin-bottom: 5px;
+            display: block;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            margin-top: 15px;
+        }
+
+      .skill-tag {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 6px;
+            margin-right: 4px;
+            font-size: 0.85rem;
+            border: 1px solid var(--accent-teal);
+        }
+
+      .education-item {
+            margin-bottom: 20px;
+        }
+        
+      .degree {
+            font-weight: bold;
+            color: var(--text-light);
+            display: block;
+            font-size: 1.05rem;
+        }
+        
+      .school {
+            font-size: 0.95rem;
+            color: var(--accent-orange);
+        }
+        
+      .license-box {
+            background: rgba(1, 149, 131, 0.2);
+            padding: 15px;
+            border-left: 4px solid var(--accent-orange);
+            margin-bottom: 20px;
+        }
+
+        /* --- RIGHT MAIN CONTENT --- */
+      .main-content {
+            padding: 40px;
+        }
+
+      .header {
+            margin-bottom: 30px;
+            border-bottom: 4px solid var(--primary-blue);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            color: var(--primary-blue);
+            line-height: 1.1;
+            margin-bottom: 5px;
+        }
+
+      .job-title {
+            font-size: 1.4rem;
+            color: var(--accent-orange);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+      .summary {
+            margin-bottom: 30px;
+            font-style: italic;
+            background: #f9fdfc;
+            padding: 20px;
+            border-radius: 5px;
+            border-left: 5px solid var(--accent-teal);
+        }
+
+      .section-title {
+            font-size: 1.6rem;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+      .experience-item {
+            margin-bottom: 30px;
+        }
+
+      .exp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 5px;
+        }
+
+      .exp-role {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+
+      .exp-company {
+            color: var(--accent-teal);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+      .exp-date {
+            font-size: 0.95rem;
+            color: #666;
+            font-weight: 600;
+        }
+
+      .exp-list {
+            list-style-type: none;
+            margin-top: 12px;
+        }
+
+      .exp-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+      .exp-list li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: var(--accent-orange);
+            font-size: 0.8rem;
+            top: 4px;
+        }
+
+        @media (max-width: 768px) {
+          .resume-container {
+                grid-template-columns: 1fr;
+            }
+          .sidebar {
+                text-align: center;
+            }
+          .header {
+                text-align: center;
+            }
+          .exp-header {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="resume-container">
+    <aside class="sidebar">
+        <div class="profile-img-placeholder">
+            VM
+        </div>
+
+        <div class="sidebar-section">
+            <h3 class="sidebar-title">Contact</h3>
+            <div class="contact-info">
+                <div><span class="contact-icon">📍</span> VinHomes Smart City, Hanoi</div>
+                <div><span class="contact-icon">📞</span> +84 98 893 0491</div>
+                <div><span class="contact-icon">✉️</span> vmoronu@gmail.com</div>
+                <div><span class="contact-icon">🔗</span> <a href="[https://linkedin.com/in/victor-moronu](https://linkedin.com/in/victor-moronu)" style="color:white;text-decoration:none;">[linkedin.com/in/victor-moronu](https://linkedin.com/in/victor-moronu)</a></div>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <h3 class="sidebar-title">Licensure</h3>
+            <div class="license-box">
+                <span class="degree">U.S. Teaching License</span>
+                <span class="school">Moreland University, USA</span>
+                <div style="font-size: 0.9rem; margin-top:5px; color: #eee;">Expected Completion: <strong>Jan 2026</strong></div>
+                <div style="font-size: 0.85rem; margin-top:5px; font-style:italic;">Focus: Clinical Practice, Student Assessment & Inclusive Pedagogy</div>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <h3 class="sidebar-title">Education</h3>
+            <div class="education-item">
+                <span class="degree">B.Eng Mechanical Engineering</span>
+                <span class="school">University of Nigeria (2018)</span>
+                <div style="font-size: 0.85rem; margin-top:5px;">Applied Math & Mechanics</div>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <h3 class="sidebar-title">Expertise</h3>
+            
+            <span class="skill-category">Pedagogy</span>
+            <span class="skill-tag">Inquiry-Based Learning</span>
+            <span class="skill-tag">Project-Based Learning (PBL)</span>
+            <span class="skill-tag">CLIL & ESL Support</span>
+            <span class="skill-tag">Montessori Methods</span>
+            <span class="skill-tag">Differentiated Instruction</span>
+            <span class="skill-tag">Evidence-Based Practices</span>
+
+            <span class="skill-category">Technical & STEM</span>
+            <span class="skill-tag">Python Programming</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">AI Prompting for EdTech</span>
+            <span class="skill-tag">GeoGebra & Desmos</span>
+            <span class="skill-tag">Interactive Whiteboards</span>
+            <span class="skill-tag">MS Office Suite</span>
+        </div>
+
+        <div class="sidebar-section">
+            <h3 class="sidebar-title">Certifications</h3>
+            <div style="font-size: 0.9rem; margin-bottom: 8px;">• 120-Hour TESOL/TEFL</div>
+            <div style="font-size: 0.9rem;">• IELTS Band 8.5 (C2 Proficient)</div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="header">
+            <h1>VICTOR MORONU</h1>
+            <div class="job-title">PRIMARY STEM & MATHEMATICS EDUCATOR</div>
+        </header>
+
+        <section class="summary">
+            <p>
+                Innovative <strong>STEM Educator</strong> and former Mechanical Engineer with 3+ years of experience in Vietnam. I specialize in bridging complex theoretical concepts with real-world application through <strong>Inquiry-Based Learning</strong>. Committed to the <strong>"Happy School"</strong> philosophy, I combine engineering precision with holistic student care to build confidence in young learners. Currently finalizing a <strong>U.S. Teaching License</strong> with a focus on inclusive pedagogy and assessment.
+            </p>
+        </section>
+
+        <section class="experience">
+            <h2 class="section-title">Professional Experience</h2>
+
+            <div class="experience-item">
+                <div class="exp-header">
+                    <span class="exp-role">Primary School Math & Science Teacher</span>
+                    <span class="exp-date">Aug 2023 – June 2024</span>
+                </div>
+                <div class="exp-company">Hanoi Primary & High School System (Thang Long)</div>
+                <ul class="exp-list">
+                    <li>Designed playful, concept-rich Math lessons for <strong>Grades 1-4</strong>, increasing class participation by <strong>20%</strong>.</li>
+                    <li>Created custom teaching materials blending <strong>Cambridge International</strong> standards with local curricula.</li>
+                    <li>Simplified complex ideas through storytelling, visual aids, and hands-on <strong>STEM activities</strong> to accommodate diverse learning styles.</li>
+                    <li>Implemented a "Happy Classroom" environment focusing on emotional well-being and safety.</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div class="exp-header">
+                    <span class="exp-role">Secondary School Science & Math Teacher</span>
+                    <span class="exp-date">Sept 2024 – Present</span>
+                </div>
+                <div class="exp-company">Victoria Thang Long School</div>
+                <ul class="exp-list">
+                    <li>Orchestrated an integrated Math/Science curriculum using IMYC-style 'Big Idea' thematic units.</li>
+                    <li>Led a <strong>'Bridge Building' engineering unit</strong> applying Forces and Statics, increasing student engagement by 20%.</li>
+                    <li>Utilized data-driven <strong>differentiation strategies</strong> for mixed-ability classes, resulting in a <strong>15% increase</strong> in assessment averages.</li>
+                    <li>Served as Homeroom Advisor, delivering pastoral care modules on resilience and emotional health.</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div class="exp-header">
+                    <span class="exp-role">Academic Manager & Curriculum Lead</span>
+                    <span class="exp-date">2022 – Present</span>
+                </div>
+                <div class="exp-company">Happy English Club</div>
+                <ul class="exp-list">
+                    <li>Pioneered a pedagogical framework fusing <strong>Montessori principles</strong> with Project-Based Learning (PBL).</li>
+                    <li>Designed "Math Discovery" corners encouraging self-directed learning and autonomy.</li>
+                    <li>Implemented <strong>Universal Design for Learning (UDL)</strong> strategies to ensure accessibility for all students.</li>
+                </ul>
+            </div>
+            
+             <div class="experience-item">
+                <div class="exp-header">
+                    <span class="exp-role">Academic Manager & IB MYP Instructor</span>
+                    <span class="exp-date">2022 – 2024</span>
+                </div>
+                <div class="exp-company">Boda Learning Center</div>
+                <ul class="exp-list">
+                    <li>Delivered rigorous IB MYP instruction aligning with international assessment criteria.</li>
+                    <li>Designed high-impact SAT Math prep courses using engineering problem-solving techniques, improving scores by 100+ points.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+</div>
+
+</body>
+</html>

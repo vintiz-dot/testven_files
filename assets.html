@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Asset Generator</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; text-align: center; }
+        .grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px; }
+        .card { border: 1px solid #ccc; padding: 10px; border-radius: 10px; width: 200px; }
+        img { width: 100%; height: auto; border: 1px solid #eee; margin-bottom: 10px; }
+        button { padding: 10px 20px; font-size: 1.2rem; background: #2196F3; color: white; border: none; cursor: pointer; border-radius: 5px; }
+        input { padding: 10px; font-size: 1rem; width: 300px; }
+    </style>
+</head>
+<body>
+    <h1>🛠️ Asset Generator</h1>
+    <p>1. Enter API Key. 2. Click Generate. 3. Right-click images to "Save As..." inside an <b>images</b> folder.</p>
+    
+    <input type="password" id="api-key" placeholder="Paste Gemini API Key Here">
+    <button onclick="generateAll()">Generate All Assets</button>
+    
+    <div id="status" style="margin: 20px; color: #666;"></div>
+    <div class="grid" id="output"></div>
+
+    <script>
+        const ITEMS = [
+            "pants", "dress", "shirt", "socks", "shoes", "hat", "skirt", "shorts"
+        ];
+
+        async function generateAll() {
+            const key = document.getElementById('api-key').value;
+            if(!key) return alert("Need API Key");
+            
+            const out = document.getElementById('output');
+            out.innerHTML = "";
+            
+            for(const item of ITEMS) {
+                document.getElementById('status').innerText = `Generating ${item}...`;
+                
+                // Prompt designed for CSS Tinting (White base)
+                const prompt = `cartoon ${item}, white color, children's vector art, simple thick outlines, flat style, isolated on white background`;
+                
+                try {
+                    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image-preview:generateContent?key=${key}`;
+                    const response = await fetch(url, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: prompt }] }],
+                            generationConfig: { responseMimeType: "image/jpeg" }
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    if(data.candidates?.[0]?.content?.parts) {
+                        const part = data.candidates[0].content.parts.find(p => p.inlineData);
+                        if(part) {
+                            const img = document.createElement('div');
+                            img.className = 'card';
+                            img.innerHTML = `
+                                <img src="data:${part.inlineData.mimeType};base64,${part.inlineData.data}">
+                                <div><b>${item}.png</b></div>
+                            `;
+                            out.appendChild(img);
+                        }
+                    }
+                } catch(e) {
+                    console.error(e);
+                    const err = document.createElement('div');
+                    err.innerText = `Error generating ${item}`;
+                    out.appendChild(err);
+                }
+            }
+            document.getElementById('status').innerText = "Done! Please save images now.";
+        }
+    </script>
+</body>
+</html>
