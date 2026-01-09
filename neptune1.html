@@ -566,7 +566,9 @@
             testQuestions: [],
             testIndex: 0,
             testScore: 0,
-            testHistory: []
+            testScore: 0,
+            testHistory: [],
+            practiceQuestions: []
         };
 
         // --- Init ---
@@ -594,6 +596,9 @@
 
                 if (screenId === 'practice') {
                     state.mode = 'practice';
+                    // Randomize Practice Questions on fresh entry
+                    state.practiceQuestions = [...QUESTION_BANK].sort(() => 0.5 - Math.random());
+                    state.practiceIndex = 0;
                     loadPracticeQuestion();
                 }
 
@@ -623,8 +628,13 @@
 
         // --- Practice Logic ---
         function loadPracticeQuestion() {
-            // Pick random or sequential. Let's do sequential looping for practice
-            const q = QUESTION_BANK[state.practiceIndex % QUESTION_BANK.length];
+            // Check for completion
+            if (state.practiceIndex >= state.practiceQuestions.length) {
+                showPracticeComplete();
+                return;
+            }
+
+            const q = state.practiceQuestions[state.practiceIndex];
 
             document.getElementById('question-text').innerText = q.text;
             document.getElementById('q-tag').innerText = q.tag;
@@ -639,6 +649,13 @@
 
             const optionsContainer = document.getElementById('options-container');
             optionsContainer.innerHTML = '';
+            // Reset content wrapper if it was hidden by completion screen
+            document.querySelector('#screen-practice .glass-card').style.display = 'flex';
+            // Note: The previous implementation didn't hide the card, but showPracticeComplete might replace content.
+            // Let's ensure showPracticeComplete clears content or replaces it safely.
+
+            // Actually, let's just clear options and text if we reuse the same container.
+            // But wait, the container structure needs to be maintained.
 
             q.options.forEach(opt => {
                 const btn = document.createElement('button');
@@ -650,9 +667,41 @@
 
             document.getElementById('feedback-overlay').classList.add('hidden');
 
-            // Update Practice Bar
+            // Update Practice Bar (Finite)
             const progress = document.getElementById('practice-progress');
-            if (progress) progress.style.width = `${((state.practiceIndex % 10) / 10) * 100}%`;
+            if (progress) {
+                const pct = ((state.practiceIndex) / state.practiceQuestions.length) * 100;
+                progress.style.width = `${pct}%`;
+            }
+        }
+
+        function showPracticeComplete() {
+            const container = document.getElementById('options-container');
+            const qText = document.getElementById('question-text');
+            const qTag = document.getElementById('q-tag');
+
+            // Clear current question UI
+            container.innerHTML = '';
+            qTag.innerText = "Mission Complete";
+            qTag.className = "px-4 py-1.5 rounded-full bg-green-100 text-green-700 text-sm font-bold uppercase tracking-wider border border-green-200";
+
+            qText.innerText = "All Practice Questions Completed!";
+
+            // Add Test Button
+            const btn = document.createElement('button');
+            btn.className = "mt-8 bg-gradient-to-r from-orange-500 to-red-600 text-white text-2xl font-bold px-10 py-5 rounded-2xl shadow-xl hover:scale-105 transition-transform animate-bounce";
+            btn.innerHTML = 'Take the Test 🚀';
+            btn.onclick = () => startTest();
+
+            const wrapper = document.createElement('div');
+            wrapper.className = "col-span-1 sm:col-span-3 flex justify-center";
+            wrapper.appendChild(btn);
+
+            container.appendChild(wrapper);
+
+            // Full Progress Bar
+            document.getElementById('practice-progress').style.width = '100%';
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
         }
 
         function checkPracticeAnswer(selected, correct, hint) {
