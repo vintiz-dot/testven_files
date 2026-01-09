@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Victor Moronu - Everest Elementary CV</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=Roboto:wght@300;400;500;700&display=swap');
+
+        :root {
+            --primary: #800020; /* Deep Burgundy for Everest */
+            --dark: #1a1a1a;
+            --grey: #f0f0f0;
+            --white: #ffffff;
+        }
+
+        body {
+            background-color: #555;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 40px 0;
+            color: var(--dark);
+        }
+
+        .cv-paper {
+            width: 850px;
+            background-color: var(--white);
+            margin: 0 auto;
+            min-height: 1100px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* --- Header --- */
+        .header-section {
+            background-color: var(--primary);
+            color: white;
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-text h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3em;
+            text-transform: uppercase;
+            margin: 0;
+            letter-spacing: 2px;
+            line-height: 1;
+        }
+
+        .header-text h2 {
+            font-weight: 300;
+            font-size: 1.1em;
+            margin: 10px 0 0 0;
+            color: #ddd;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .profile-img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 4px solid rgba(255,255,255,0.3);
+            object-fit: cover;
+            background-color: #eee;
+        }
+
+        .contact-strip {
+            background-color: #222;
+            color: white;
+            padding: 10px 40px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        /* --- Layout --- */
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 300px; /* Main content left, Sidebar right */
+        }
+
+        .main-column {
+            padding: 40px;
+            border-right: 1px solid #eee;
+        }
+
+        .side-column {
+            padding: 40px 30px;
+            background-color: #f9f9f9;
+        }
+
+        /* --- Components --- */
+        .section-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.4em;
+            color: var(--primary);
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 5px;
+            margin-bottom: 25px;
+            margin-top: 10px;
+        }
+
+        .summary-box {
+            font-size: 1em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .job-entry {
+            margin-bottom: 30px;
+            page-break-inside: avoid;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 5px;
+        }
+
+        .job-title {
+            font-weight: 700;
+            font-size: 1.1em;
+            color: #000;
+        }
+
+        .job-date {
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        .job-company {
+            display: block;
+            font-style: italic;
+            color: #555;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        .achievements {
+            padding-left: 18px;
+            margin-top: 5px;
+        }
+
+        .achievements li {
+            margin-bottom: 6px;
+            line-height: 1.5;
+            font-size: 0.95em;
+        }
+
+        /* Sidebar specifics */
+        .side-group {
+            margin-bottom: 30px;
+        }
+
+        .stat-item {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+
+        .stat-item strong {
+            display: block;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1em;
+        }
+
+        .tech-tags span {
+            display: inline-block;
+            background: #fff;
+            border: 1px solid #ccc;
+            padding: 3px 8px;
+            margin: 2px;
+            font-size: 0.85em;
+            border-radius: 3px;
+        }
+
+        .pub-box {
+            background-color: white;
+            padding: 15px;
+            border-left: 3px solid var(--primary);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+<div class="cv-paper">
+    
+    <header class="header-section">
+        <div class="header-text">
+            <h1>VICTOR MORONU</h1>
+            <h2>Elementary Science & Math Educator</h2>
+        </div>
+        <!-- Ensure the image file 'image_ba6055.png' is in the same folder as this HTML file -->
+        <img src="image_ba6055.png" alt="Victor Moronu" class="profile-img">
+    </header>
+
+    <div class="contact-strip">
+        <span>Hanoi, Vietnam</span>
+        <span>+84 98 893 0491</span>
+        <span>vmoronu@gmail.com</span>
+        <span>linkedin.com/in/victor-moronu</span>
+    </div>
+
+    <div class="grid-container">
+        <!-- MAIN CONTENT (Experience) -->
+        <div class="main-column">
+            <h3 class="section-title">Professional Summary</h3>
+            <div class="summary-box">
+                Passionate Elementary STEM Educator with a B.Eng in Mechanical Engineering and U.S. Teaching Licensure (In Progress). I specialize in transforming abstract concepts into playful, hands-on learning experiences for young learners. With a background in Montessori-inspired curriculum design and Primary School teaching (Grades 1-4), I excel at creating student-centered environments where curiosity leads to mastery.
+            </div>
+
+            <h3 class="section-title">Teaching Experience</h3>
+
+            <!-- Job 1: Primary Focus (Moved to Top for Relevance) -->
+            <div class="job-entry">
+                <div class="job-header">
+                    <span class="job-title">Primary School Math & Science Teacher</span>
+                    <span class="job-date">Aug 2023 - June 2024</span>
+                </div>
+                <span class="job-company">Hanoi Primary & High School System (Thang Long)</span>
+                <ul class="achievements">
+                    <li><strong>Engagement:</strong> Designed playful and concept-rich Math/Science lessons for Grades 1-4, improving class participation rates by 20% through gamification and active recall.</li>
+                    <li><strong>Curriculum Design:</strong> Created custom teaching materials blending Cambridge and McGraw-Hill curricula to suit the specific needs of Vietnamese bilingual students.</li>
+                    <li><strong>Differentiation:</strong> Simplified complex ideas through storytelling, visual arts, and hands-on activities to accommodate various learning styles and lower-level English proficiency.</li>
+                </ul>
+            </div>
+
+            <!-- Job 2: Curriculum & Montessori Focus -->
+            <div class="job-entry">
+                <div class="job-header">
+                    <span class="job-title">Academic Manager & Curriculum Lead</span>
+                    <span class="job-date">2022 - Present</span>
+                </div>
+                <span class="job-company">Happy English Club | Hanoi, Vietnam</span>
+                <ul class="achievements">
+                    <li><strong>Student-Centered Learning:</strong> Pioneered a pedagogical framework fusing <strong>Montessori principles</strong> with Project-Based Learning (PBL), fostering a "Language Discovery" environment perfect for elementary development.</li>
+                    <li><strong>Universal Design:</strong> Implement UDL strategies to ensure all curricular materials are accessible to neurodiverse learners.</li>
+                    <li><strong>Overseeing Quality:</strong> Collaborate with teachers to ensure lesson plans are engaging, age-appropriate, and aligned with student progress goals.</li>
+                </ul>
+            </div>
+
+            <!-- Job 3: Secondary Experience -->
+            <div class="job-entry">
+                <div class="job-header">
+                    <span class="job-title">Secondary School Science & Math Teacher</span>
+                    <span class="job-date">Sept 2024 - Present</span>
+                </div>
+                <span class="job-company">Victoria Thăng Long | Hanoi, Vietnam</span>
+                <ul class="achievements">
+                    <li><strong>Project-Based Learning:</strong> Led a 'Bridge Building' engineering unit. Students acted as junior civil engineers, applying concepts of Forces to build models—a perfect example of making math "real."</li>
+                    <li><strong>Pastoral Care:</strong> Served as Homeroom Advisor, creating a supportive environment that prioritizes emotional well-being alongside academic rigor.</li>
+                </ul>
+            </div>
+
+            <!-- Job 4: Test Prep -->
+            <div class="job-entry">
+                <div class="job-header">
+                    <span class="job-title">Academic Manager & IB MYP Instructor</span>
+                    <span class="job-date">2022 - 2024</span>
+                </div>
+                <span class="job-company">Boda Learning Center | Hanoi, Vietnam</span>
+                <ul class="achievements">
+                    <li>Delivered Math instruction aligned with IB MYP criteria.</li>
+                    <li>Designed high-impact lesson plans that improved student performance by identifying and closing foundational gaps.</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- SIDEBAR (Skills/Ed) -->
+        <div class="side-column">
+            
+            <div class="side-group">
+                <h3 class="section-title">Education</h3>
+                <div class="stat-item">
+                    <strong>U.S. Teaching License</strong>
+                    Moreland University, USA
+                    <br><em>Expected Jan 2026</em>
+                    <br><span style="font-size:0.9em; color:#666;">Focus: Elementary & Secondary</span>
+                </div>
+                <div class="stat-item">
+                    <strong>B.Eng Mechanical Engineering</strong>
+                    University of Nigeria
+                    <br><em>2018</em>
+                </div>
+            </div>
+
+            <div class="side-group">
+                <h3 class="section-title">Certifications</h3>
+                <div class="stat-item">
+                    <strong>120-Hour TESOL/TEFL</strong>
+                    World TESOL Academy
+                </div>
+                <div class="stat-item">
+                    <strong>C2 Proficient English</strong>
+                    IBMI Berlin
+                </div>
+            </div>
+
+            <div class="side-group">
+                <h3 class="section-title">Elementary Skills</h3>
+                <div class="tech-tags">
+                    <span>Storytelling in Math</span>
+                    <span>Gamification</span>
+                    <span>Montessori Methods</span>
+                    <span>Classroom Management</span>
+                    <span>Differentiation</span>
+                    <span>Cambridge Primary</span>
+                </div>
+            </div>
+
+            <div class="side-group">
+                <h3 class="section-title">Technical Skills</h3>
+                <div class="tech-tags">
+                    <span>Interactive Whiteboards</span>
+                    <span>GeoGebra</span>
+                    <span>Python</span>
+                    <span>MS Office Suite</span>
+                    <span>AI for Education</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
