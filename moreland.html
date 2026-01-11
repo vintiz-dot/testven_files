@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data-Driven Instruction: From Percents to Inequalities</title>
+
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+    <!-- Babel -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            overflow: hidden;
+        }
+
+        /* Smooth transitions for slides */
+        .slide-enter {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .slide-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 500ms ease-out, transform 500ms ease-out;
+        }
+
+        .slide-exit {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-exit-active {
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 300ms ease-in, transform 300ms ease-in;
+        }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- Data Components ---
+
+        const ChartBar = ({ label, value, color, delay }) => {
+            const [height, setHeight] = useState(0);
+
+            useEffect(() => {
+                const timer = setTimeout(() => setHeight(value), delay);
+                return () => clearTimeout(timer);
+            }, [value, delay]);
+
+            return (
+                <div className="flex flex-col items-center gap-2 w-1/4">
+                    <div className="relative w-full h-48 bg-slate-800 rounded-lg overflow-hidden flex items-end">
+                        <div
+                            className={`w-full ${color} transition-all duration-1000 ease-out`}
+                            style={{ height: `${height}%` }}
+                        >
+                            <span className="absolute bottom-2 inset-x-0 text-center text-white font-bold text-shadow">
+                                {height}%
+                            </span>
+                        </div>
+                    </div>
+                    <span className="text-sm font-medium text-slate-300 text-center">{label}</span>
+                </div>
+            );
+        };
+
+        const BulletPoint = ({ text, delay }) => {
+            const [visible, setVisible] = useState(false);
+            useEffect(() => {
+                const timer = setTimeout(() => setVisible(true), delay);
+                return () => clearTimeout(timer);
+            }, [delay]);
+
+            return (
+                <div className={`flex items-start gap-3 transition-all duration-500 ${visible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}`}>
+                    <div className="mt-1.5 w-2 h-2 rounded-full bg-blue-400 shrink-0" />
+                    <p className="text-lg text-slate-200 leading-relaxed">{text}</p>
+                </div>
+            );
+        };
+
+        // --- Slides ---
+
+        const slides = [
+            // Slide 1: Title
+            {
+                id: 1,
+                render: () => (
+                    <div className="flex flex-col items-center justify-center h-full text-center space-y-8">
+                        <div className="inline-block px-4 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-semibold tracking-wider uppercase mb-4">
+                            Clinical Practice Reflection
+                        </div>
+                        <h1 className="text-6xl md:text-7xl font-extrabold tracking-tight text-white">
+                            Data-Driven <span className="gradient-text">Instruction</span>
+                        </h1>
+                        <p className="text-2xl text-slate-400 font-light">
+                            From Percents to Inequalities: A 7-Week Analysis
+                        </p>
+                        <div className="mt-12 p-6 glass-card rounded-xl">
+                            <p className="text-lg font-medium text-slate-200">Candidate: Victor Moronu</p>
+                            <p className="text-slate-400">Grade 7 Mathematics • Secondary Math</p>
+                        </div>
+                    </div>
+                )
+            },
+            // Slide 2: Context
+            {
+                id: 2,
+                title: "Classroom Context & Goals",
+                render: () => (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 h-full items-center">
+                        <div className="space-y-6">
+                            <h3 className="text-2xl font-semibold text-white border-b border-slate-700 pb-2">The Focus Students</h3>
+                            <div className="space-y-4">
+                                <div className="glass-card p-4 rounded-lg border-l-4 border-green-500">
+                                    <strong className="text-green-400 block">Student T (Meeting Standards)</strong>
+                                    <span className="text-slate-300 text-sm">High procedural fluency, needs conceptual challenge.</span>
+                                    <a href="student%20t_compressed.pdf" target="_blank" className="text-xs text-blue-400 underline mt-2 block hover:text-blue-300 transition-colors">📄 View Work Sample</a>
+                                </div>
+                                <div className="glass-card p-4 rounded-lg border-l-4 border-yellow-500">
+                                    <strong className="text-yellow-400 block">Student K (ELL/MLL)</strong>
+                                    <span className="text-slate-300 text-sm">Strong calculation skills, language barrier in word problems.</span>
+                                    <a href="student%20k_compressed.pdf" target="_blank" className="text-xs text-blue-400 underline mt-2 block hover:text-blue-300 transition-colors">📄 View Work Sample</a>
+                                </div>
+                                <div className="glass-card p-4 rounded-lg border-l-4 border-red-500">
+                                    <strong className="text-red-400 block">Student Q (Special Learning Need)</strong>
+                                    <span className="text-slate-300 text-sm">Reading disability impacts multi-step problem solving.</span>
+                                    <a href="student%20q_compressed.pdf" target="_blank" className="text-xs text-blue-400 underline mt-2 block hover:text-blue-300 transition-colors">📄 View Work Sample</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="space-y-6">
+                            <h3 className="text-2xl font-semibold text-white border-b border-slate-700 pb-2">Learning Goals (M8U2 - M8U9)</h3>
+                            <div className="space-y-4">
+                                <BulletPoint delay={200} text="Content: Solve multi-step real-world problems (Percents & Inequalities)." />
+                                <BulletPoint delay={400} text="Vocabulary: Use academic language (Isolate, Variable, Coefficient)." />
+                                <BulletPoint delay={600} text="Collaboration: Discuss math strategies productively in small groups." />
+                            </div>
+                        </div>
+                    </div>
+                )
+            },
+            // Slide 3: Baseline Data
+            {
+                id: 3,
+                title: "Baseline Data (M8U2 - Percents)",
+                render: () => (
+                    <div className="flex flex-col h-full justify-center space-y-12">
+                        <div className="flex justify-center gap-8 items-end h-64">
+                            <ChartBar label="Student Q (SLN)" value={60} color="bg-red-500" delay={200} />
+                            <ChartBar label="Student K (ELL)" value={20} color="bg-yellow-500" delay={400} />
+                            <ChartBar label="Student T (Meeting)" value={85} color="bg-green-500" delay={600} />
+                        </div>
+                        <div className="glass-card p-6 rounded-xl">
+                            <h4 className="text-xl font-bold text-white mb-2">Initial Analysis</h4>
+                            <p className="text-slate-300">
+                                The baseline revealed a significant gap between calculation ability and reading comprehension.
+                                <strong className="text-white"> Student Q</strong> and <strong className="text-white">Student K</strong> could solve basic equations but failed when questions were embedded in text (Word Problems).
+                            </p>
+                        </div>
+                    </div>
+                )
+            },
+            // Slide 4: Interventions
+            {
+                id: 4,
+                title: "Instructional Interventions",
+                render: () => (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-full items-center">
+                        <div className="glass-card p-6 rounded-xl h-64 flex flex-col justify-center items-center text-center space-y-4 hover:bg-slate-800 transition-colors">
+                            <div className="p-4 bg-blue-500/20 rounded-full text-blue-400">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                            </div>
+                            <h3 className="text-xl font-bold text-white">Math Talks</h3>
+                            <p className="text-slate-400 text-sm">Verbalizing vocabulary (e.g., "Principal", "Isolate") to build Tier 3 academic language.</p>
+                        </div>
+                        <div className="glass-card p-6 rounded-xl h-64 flex flex-col justify-center items-center text-center space-y-4 hover:bg-slate-800 transition-colors">
+                            <div className="p-4 bg-purple-500/20 rounded-full text-purple-400">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                            </div>
+                            <h3 className="text-xl font-bold text-white">Visual Anchors</h3>
+                            <p className="text-slate-400 text-sm">Using Bar Diagrams for Percents and Algebra Tiles for Inequalities to bypass literacy barriers.</p>
+                        </div>
+                        <div className="glass-card p-6 rounded-xl h-64 flex flex-col justify-center items-center text-center space-y-4 hover:bg-slate-800 transition-colors">
+                            <div className="p-4 bg-pink-500/20 rounded-full text-pink-400">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            </div>
+                            <h3 className="text-xl font-bold text-white">Differentiation</h3>
+                            <p className="text-slate-400 text-sm">Tiered handouts: Bullet points for SLN students and "Banker's Dilemma" extensions for advanced learners.</p>
+                        </div>
+                    </div>
+                )
+            },
+            // Slide 5: Mid-Point Data
+            {
+                id: 5,
+                title: "Mid-Point Progress (M8U6)",
+                render: () => (
+                    <div className="flex flex-col h-full justify-center space-y-12">
+                        <div className="flex justify-center gap-8 items-end h-64">
+                            <div className="flex flex-col items-center w-1/4">
+                                <div className="text-green-400 text-sm mb-2">+7%</div>
+                                <ChartBar label="Student Q (SLN)" value={67} color="bg-red-400" delay={100} />
+                            </div>
+                            <div className="flex flex-col items-center w-1/4">
+                                <div className="text-green-400 text-sm mb-2">+67%</div>
+                                <ChartBar label="Student K (ELL)" value={87} color="bg-yellow-400" delay={300} />
+                            </div>
+                            <div className="flex flex-col items-center w-1/4">
+                                <div className="text-green-400 text-sm mb-2">+8%</div>
+                                <ChartBar label="Student T (Meeting)" value={93} color="bg-green-400" delay={500} />
+                            </div>
+                        </div>
+                        <div className="glass-card p-6 rounded-xl border-l-4 border-blue-500">
+                            <h4 className="text-xl font-bold text-white mb-2">Mid-Point Pivot</h4>
+                            <p className="text-slate-300">
+                                Huge growth for the ELL student due to visual aids. However, Student Q began to plateau on multi-step problems, often adding numbers instead of subtracting due to cognitive load.
+                            </p>
+                        </div>
+                    </div>
+                )
+            },
+            // Slide 6: Final Data
+            {
+                id: 6,
+                title: "Final Data Analysis (M8U9)",
+                render: () => (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 h-full items-center">
+                        <div className="space-y-6">
+                            <div className="p-4 bg-slate-800/50 rounded-lg">
+                                <div className="flex items-center justify-between">
+                                    <span className="text-yellow-400 font-bold">Student K (ELL)</span>
+                                    <span className="text-white text-xl">85% Mastery</span>
+                                </div>
+                                <a href="student%20k_compressed.pdf" target="_blank" className="text-xs text-blue-400 underline mt-1 block hover:text-blue-300">📄 View Work Sample</a>
+                            </div>
+                            <div className="p-4 bg-slate-800/50 rounded-lg">
+                                <div className="flex items-center justify-between">
+                                    <span className="text-green-400 font-bold">Student T (Meeting)</span>
+                                    <span className="text-white text-xl">95% Mastery</span>
+                                </div>
+                                <a href="student%20t_compressed.pdf" target="_blank" className="text-xs text-blue-400 underline mt-1 block hover:text-blue-300">📄 View Work Sample</a>
+                            </div>
+                            <div className="p-4 bg-slate-800/50 rounded-lg border border-red-500/30">
+                                <div className="flex items-center justify-between">
+                                    <span className="text-red-400 font-bold">Student Q (SLN)</span>
+                                    <span className="text-white text-xl">60% (Regression)</span>
+                                </div>
+                                <a href="student%20q_compressed.pdf" target="_blank" className="text-xs text-blue-400 underline mt-1 block hover:text-blue-300">📄 View Work Sample</a>
+                            </div>
+                        </div>
+                        <div className="glass-card p-6 rounded-xl">
+                            <h4 className="text-xl font-bold text-white mb-4">The "Literacy Trap"</h4>
+                            <p className="text-slate-300 mb-4">
+                                While Student T & K thrived, Student Q's regression (from 67% to 60%) was not due to math skills, but <strong>transcription errors</strong>.
+                            </p>
+                            <div className="bg-slate-900 p-4 rounded text-sm font-mono text-slate-400">
+                                <span className="text-red-400">Error:</span> Wrote "148.25" instead of "348.25".<br />
+                                <span className="text-red-400">Error:</span> Copied text without creating equation.
+                            </div>
+                            <p className="text-slate-300 mt-4 text-sm italic">
+                                Insight: Validity of assessment is compromised by reading barriers.
+                            </p>
+                        </div>
+                    </div>
+                )
+            },
+            // Slide 7: Future System
+            {
+                id: 7,
+                title: "Future Assessment System Design",
+                render: () => (
+                    <div className="space-y-8 h-full flex flex-col justify-center">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="glass-card p-6 rounded-xl">
+                                <h3 className="text-lg font-bold text-blue-400 mb-2">Formative (Daily)</h3>
+                                <p className="text-slate-300">"Exit Tickets" using pure math (no words) to isolate skill mastery from reading ability.</p>
+                            </div>
+                            <div className="glass-card p-6 rounded-xl">
+                                <h3 className="text-lg font-bold text-purple-400 mb-2">Summative (Unit)</h3>
+                                <p className="text-slate-300">Tiered Assessments:
+                                    <ul className="list-disc ml-5 mt-2 text-slate-400 text-sm">
+                                        <li><strong>Tier 1:</strong> Standard Word Problems</li>
+                                        <li><strong>Tier 2 (SLN/ELL):</strong> Highlighted keywords & removed "distractor" info.</li>
+                                    </ul>
+                                </p>
+                            </div>
+                        </div>
+                        <div className="glass-card p-6 rounded-xl border-t border-green-500/50">
+                            <h3 className="text-lg font-bold text-green-400 mb-2">Self-Regulation</h3>
+                            <p className="text-slate-300">Students will rate confidence (1-4) on each problem <em>before</em> solving. This builds metacognition and flags anxiety early.</p>
+                        </div>
+                    </div>
+                )
+            },
+            // Slide 8: Conclusion
+            {
+                id: 8,
+                render: () => (
+                    <div className="flex flex-col items-center justify-center h-full text-center space-y-8">
+                        <h2 className="text-4xl font-bold text-white">Final Reflection</h2>
+                        <blockquote className="text-2xl font-light italic text-slate-300 max-w-3xl border-l-4 border-blue-500 pl-6">
+                            "Data doesn't just grade the student; it grades the teacher. The regression of my SLN student taught me that equity isn't about easier problems—it's about removing the barriers that hide their true potential."
+                        </blockquote>
+                        <div className="pt-12">
+                            <button onClick={() => window.location.reload()} className="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-full font-semibold transition-all shadow-lg shadow-blue-500/30">
+                                Replay Presentation
+                            </button>
+                        </div>
+                    </div>
+                )
+            }
+        ];
+
+        // --- Main App ---
+
+        const App = () => {
+            const [currentSlide, setCurrentSlide] = useState(0);
+
+            const nextSlide = () => {
+                if (currentSlide < slides.length - 1) setCurrentSlide(curr => curr + 1);
+            };
+
+            const prevSlide = () => {
+                if (currentSlide > 0) setCurrentSlide(curr => curr - 1);
+            };
+
+            // Keyboard navigation
+            useEffect(() => {
+                const handleKeyDown = (e) => {
+                    if (e.key === 'ArrowRight' || e.key === 'Space') nextSlide();
+                    if (e.key === 'ArrowLeft') prevSlide();
+                };
+                window.addEventListener('keydown', handleKeyDown);
+                return () => window.removeEventListener('keydown', handleKeyDown);
+            }, [currentSlide]);
+
+            const CurrentSlideRender = slides[currentSlide].render;
+
+            return (
+                <div className="relative w-screen h-screen flex flex-col">
+
+                    {/* Header / Progress */}
+                    <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-center z-10">
+                        <div className="text-slate-500 font-mono text-sm">
+                            SLIDE {currentSlide + 1} / {slides.length}
+                        </div>
+                        <div className="flex gap-1">
+                            {slides.map((_, idx) => (
+                                <div
+                                    key={idx}
+                                    className={`h-1 w-8 rounded-full transition-colors ${idx <= currentSlide ? 'bg-blue-500' : 'bg-slate-700'}`}
+                                />
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Main Content Area */}
+                    <div className="flex-1 flex items-center justify-center p-8 md:p-16">
+                        <div className="w-full max-w-6xl h-full flex flex-col">
+                            {slides[currentSlide].title && (
+                                <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 tracking-tight">
+                                    {slides[currentSlide].title}
+                                </h2>
+                            )}
+                            <div className="flex-1 relative">
+                                <CurrentSlideRender />
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Navigation Controls */}
+                    <div className="absolute bottom-8 right-8 flex gap-4 z-10">
+                        <button
+                            onClick={prevSlide}
+                            disabled={currentSlide === 0}
+                            className={`p-4 rounded-full glass-card hover:bg-slate-700 transition-all ${currentSlide === 0 ? 'opacity-50 cursor-not-allowed' : 'opacity-100'}`}
+                        >
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        </button>
+                        <button
+                            onClick={nextSlide}
+                            disabled={currentSlide === slides.length - 1}
+                            className={`p-4 rounded-full glass-card hover:bg-slate-700 transition-all ${currentSlide === slides.length - 1 ? 'opacity-50 cursor-not-allowed' : 'opacity-100'}`}
+                        >
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </button>
+                    </div>
+
+                    {/* Background Ambient Effect */}
+                    <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[120px] pointer-events-none" />
+                    <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[120px] pointer-events-none" />
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>
