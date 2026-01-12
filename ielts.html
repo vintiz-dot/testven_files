@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speaking Lab | Unit 09 (2-Hour Intensive)</title>
+    <!-- Import Premium Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        :root {
+            --primary: #2563EB;
+            --primary-light: #EFF6FF;
+            --secondary: #1E40AF;
+            --accent: #F59E0B;
+            --bg: #F8FAFC;
+            --surface: #FFFFFF;
+            --text: #0F172A;
+            --text-light: #64748B;
+            --radius: 16px;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+            --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        * { box-sizing: border-box; font-family: 'Inter', system-ui, -apple-system, sans-serif; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        body { margin: 0; padding: 0; background: var(--bg); color: var(--text); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+
+        /* Header */
+        header {
+            background: var(--surface);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #E2E8F0;
+            z-index: 10;
+        }
+
+        .logo { font-weight: 800; font-size: 1.25rem; color: var(--primary); letter-spacing: -0.5px; display: flex; align-items: center; gap: 0.5rem; }
+        .mode-badge { background: var(--primary-light); color: var(--primary); padding: 0.35rem 1rem; border-radius: 99px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* Main Container */
+        main { flex: 1; padding: 2rem; max-width: 1000px; margin: 0 auto; width: 100%; overflow-y: auto; scroll-behavior: smooth; }
+
+        /* Cards */
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 3rem;
+            box-shadow: var(--shadow);
+            display: none; /* Hidden by default */
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .card.active { display: block; }
+
+        h1 { font-size: 2rem; margin: 0 0 0.5rem 0; letter-spacing: -1px; color: var(--text); display: flex; align-items: center; gap: 10px;}
+        h2 { font-size: 1rem; color: var(--text-light); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.5rem; }
+        p { line-height: 1.7; margin-bottom: 1.5rem; color: #334155; font-size: 1.05rem; }
+
+        /* Time Badge */
+        .time-badge { margin-left: auto; background: #F1F5F9; color: var(--text-light); padding: 4px 12px; border-radius: 12px; font-size: 0.8rem; }
+
+        /* Interactive Grid with Icons */
+        .grid-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        
+        .option-btn {
+            background: var(--surface); 
+            border: 2px solid #E2E8F0; 
+            padding: 2rem 1.5rem;
+            border-radius: var(--radius); 
+            cursor: pointer; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 1rem;
+            height: 100%;
+        }
+
+        .option-btn i { font-size: 3rem; color: var(--primary); opacity: 0.8; }
+        .option-btn span { font-weight: 600; font-size: 1rem; }
+
+        .option-btn:hover { border-color: var(--primary); transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+        .option-btn:hover i { transform: scale(1.1); opacity: 1; }
+        .option-btn.selected { background: var(--primary); border-color: var(--primary); color: white; }
+        .option-btn.selected i { color: white; }
+
+        /* Scaffolding Toggle */
+        .scaffold-wrapper { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #F1F5F9; }
+        .scaffold-btn {
+            background: none; border: none; color: var(--text-light);
+            cursor: pointer; display: flex; align-items: center; gap: 0.75rem; font-size: 0.95rem; font-weight: 500;
+        }
+        .scaffold-btn:hover { color: var(--primary); }
+        .scaffold-content {
+            background: #FFFBEB; border-left: 4px solid var(--accent);
+            padding: 1.5rem; margin-top: 1rem; border-radius: 0 12px 12px 0; display: none;
+        }
+
+        /* Debate Section */
+        .timer-display { font-size: 5rem; font-weight: 800; text-align: center; color: var(--text); margin: 1rem 0; font-feature-settings: "tnum"; letter-spacing: -2px; }
+        .role-card { 
+            background: #F8FAFC; border: 1px solid #E2E8F0; padding: 1.5rem; 
+            border-radius: var(--radius); margin-bottom: 1.5rem; 
+            display: flex; gap: 1rem; align-items: center;
+        }
+        .role-icon { font-size: 2rem; color: var(--primary); background: white; padding: 0.75rem; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        
+        /* Navigation */
+        .nav-bar {
+            background: var(--surface);
+            padding: 1.5rem 2rem;
+            display: flex; justify-content: space-between; 
+            border-top: 1px solid #E2E8F0;
+        }
+        .nav-btn {
+            background: var(--text); color: white; border: none; padding: 1rem 2.5rem;
+            border-radius: 12px; font-weight: 600; cursor: pointer; letter-spacing: 0.5px;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .nav-btn:hover { background: var(--primary); transform: translateY(-2px); }
+        .nav-btn.secondary { background: white; color: var(--text); border: 1px solid #E2E8F0; }
+        .nav-btn.secondary:hover { background: #F8FAFC; border-color: var(--text-light); }
+
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Utility */
+        .hidden { display: none; }
+        .tag { background: #E0E7FF; color: var(--primary); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: 700; margin-right: 0.5rem; }
+
+        /* Phase 4 Pronunciation */
+        .stress-box {
+            display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 1.5rem; margin: 1rem 0;
+            padding: 1.5rem; background: #EEF2FF; border-radius: 12px;
+        }
+        .stress-dot { border-radius: 50%; background: var(--primary); }
+        .stress-dot.big { width: 24px; height: 24px; }
+        .stress-dot.small { width: 12px; height: 12px; opacity: 0.6; }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <i class="ph ph-wave-sine" style="font-size: 1.5rem;"></i>
+        Speaking Lab | 120 Min
+    </div>
+    <div class="mode-badge">Phase <span id="header-phase">1</span>/10</div>
+</header>
+
+<main>
+    <!-- PHASE 1: HOOK (10 mins) -->
+    <div class="card active" id="step-1">
+        <h1>01. The Inquiry <span class="time-badge">10 Mins</span></h1>
+        <h2><i class="ph ph-globe"></i> Global Context: Personal Expression</h2>
+        <p><strong>Step 1:</strong> Look at the icons below. They represent different ways to learn.</p>
+        <p><strong>Step 2:</strong> In pairs, discuss which method is most effective for <em>you</em> and why. Rank them from 1 (Best) to 4 (Worst).</p>
+        
+        <div class="grid-options">
+            <div class="option-btn">
+                <i class="ph ph-chalkboard-teacher"></i>
+                <span>Classroom Learning</span>
+            </div>
+            <div class="option-btn">
+                <i class="ph ph-monitor-play"></i>
+                <span>Online Videos</span>
+            </div>
+            <div class="option-btn">
+                <i class="ph ph-chats-circle"></i>
+                <span>Native Speakers</span>
+            </div>
+            <div class="option-btn">
+                <i class="ph ph-device-mobile-camera"></i>
+                <span>Language Apps</span>
+            </div>
+        </div>
+
+        <div class="scaffold-wrapper">
+            <button class="scaffold-btn" onclick="toggleScaffold('scaffold-1')">
+                <i class="ph ph-lightbulb"></i> Need a hint? (Click for Scaffolding)
+            </button>
+            <div id="scaffold-1" class="scaffold-content">
+                <strong>Sentence Starters:</strong><br><br>
+                <i class="ph ph-quotes"></i> "I believe that <strong>[Method]</strong> is the most effective because..."<br>
+                <i class="ph ph-quotes"></i> "Unlike classroom learning, online learning allows me to..."
+            </div>
+        </div>
+    </div>
+
+    <!-- PHASE 2: VOCAB ACTIVATION (10 mins) -->
+    <div class="card" id="step-2">
+        <h1>02. Vocab Storm <span class="time-badge">10 Mins</span></h1>
+        <h2><i class="ph ph-lightning"></i> Activation Strategy</h2>
+        <p>Before we learn new words, what do you already know?</p>
+        <p><strong>Task:</strong> In pairs, write down 3 words associated with each concept below.</p>
+        
+        <div class="grid-options" style="grid-template-columns: 1fr 1fr;">
+            <div class="role-card" style="flex-direction: column; text-align: center;">
+                <i class="ph ph-student role-icon"></i>
+                <strong>Traditional School</strong>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem; color: #64748B;">(e.g., Uniforms, Textbooks...)</p>
+            </div>
+            <div class="role-card" style="flex-direction: column; text-align: center;">
+                <i class="ph ph-wifi-high role-icon"></i>
+                <strong>Future Learning</strong>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem; color: #64748B;">(e.g., AI, Virtual Reality...)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PHASE 3: GRAMMAR DISCOVERY (15 mins) -->
+    <div class="card" id="step-3">
+        <h1>03. Pattern Detective <span class="time-badge">15 Mins</span></h1>
+        <h2><i class="ph ph-magnifying-glass"></i> Inductive Grammar: "Going to"</h2>
+        <p>Look at the examples below. Work with your partner to find the rule. <strong>Do NOT ask the teacher yet.</strong></p>
+        
+        <div class="grid-options" style="grid-template-columns: 1fr;">
+            <div class="role-card">
+                <i class="ph ph-check-circle role-icon" style="color: #10B981;"></i>
+                <div><strong>Statement:</strong> "I <em>am going to</em> study in the UK next year."</div>
+            </div>
+            <div class="role-card">
+                <i class="ph ph-check-circle role-icon" style="color: #10B981;"></i>
+                <div><strong>Negative:</strong> "She <em>is not going to</em> buy a new phone."</div>
+            </div>
+            <div class="role-card">
+                <i class="ph ph-question role-icon" style="color: #F59E0B;"></i>
+                <div><strong>Question:</strong> "<em>Are</em> you <em>going to</em> join the debate?"</div>
+            </div>
+        </div>
+
+        <p style="text-align: center; margin-top: 2rem;"><strong>Discovery Question:</strong> When do we use "going to"?</p>
+        
+        <div class="grid-options" id="grammar-quiz">
+            <div class="option-btn" onclick="selectGrammar(this, false)">
+                <i class="ph ph-repeat"></i>
+                <span>For daily habits</span>
+            </div>
+            <div class="option-btn" onclick="selectGrammar(this, true)">
+                <i class="ph ph-calendar-check"></i>
+                <span>For future plans & intentions</span>
+            </div>
+        </div>
+        <p id="grammar-feedback" style="text-align: center; font-weight: 700; color: var(--primary); min-height: 24px;"></p>
+    </div>
+
+    <!-- PHASE 4: PRONUNCIATION LAB (10 mins) -->
+    <div class="card" id="step-4">
+        <h1>04. Sound Lab <span class="time-badge">10 Mins</span></h1>
+        <h2><i class="ph ph-speaker-high"></i> Natural Speech: "Gonna"</h2>
+        <p>In spoken English, "going to" often becomes "gonna". Listen to the stress pattern.</p>
+        
+        <div class="stress-box">
+            <span>I'm</span>
+            <span style="font-weight: 800; color: var(--primary);">GON</span>
+            <span>na</span>
+            <div class="stress-dot small"></div>
+            <div class="stress-dot big"></div>
+            <div class="stress-dot small"></div>
+        </div>
+        
+        <p><strong>Practice:</strong> Turn to your partner. Say these 3 times fast:</p>
+        <ul style="list-style: none; padding: 0; text-align: center;">
+            <li style="margin-bottom: 10px; font-size: 1.1rem;">"I'm gonna study."</li>
+            <li style="margin-bottom: 10px; font-size: 1.1rem;">"He's gonna win."</li>
+            <li style="margin-bottom: 10px; font-size: 1.1rem;">"We're gonna learn."</li>
+        </ul>
+    </div>
+
+    <!-- PHASE 5: COLLOCATION CHALLENGE (10 mins) -->
+    <div class="card" id="step-5">
+        <h1>05. Word Match <span class="time-badge">10 Mins</span></h1>
+        <h2><i class="ph ph-puzzle-piece"></i> Collocations (Ex 15)</h2>
+        
+        <div style="text-align: center; margin: 3rem 0;">
+            <p style="color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;">Current Phrase</p>
+            <h3 id="collocation-prompt" style="font-size: 2.5rem; margin: 0;">___ a conversation</h3>
+        </div>
+        
+        <div class="grid-options" style="grid-template-columns: repeat(3, 1fr);">
+            <button class="option-btn" id="btn-a" onclick="checkCollocation('A')">A. Make</button>
+            <button class="option-btn" id="btn-b" onclick="checkCollocation('B')">B. Do</button>
+            <button class="option-btn" id="btn-c" onclick="checkCollocation('C')">C. Hold</button>
+        </div>
+        <p id="vocab-score" style="text-align: center; font-weight: 600; color: var(--text-light);">Score: 0/5</p>
+    </div>
+
+    <!-- PHASE 6: FLUENCY CHECK (15 mins) -->
+    <div class="card" id="step-6">
+        <h1>06. Mini-Talk <span class="time-badge">15 Mins</span></h1>
+        <h2><i class="ph ph-timer"></i> 1-Minute Challenge</h2>
+        <p><strong>Topic:</strong> What are you going to do to improve your English next month?</p>
+        <p><strong>Rules:</strong></p>
+        <ol style="line-height: 1.8;">
+            <li>Use "Going to" / "Gonna" at least 3 times.</li>
+            <li>Use one collocation (e.g., "Make an effort").</li>
+            <li>Talk for 1 full minute.</li>
+        </ol>
+        <div style="text-align: center; margin-top: 2rem;">
+            <button class="nav-btn" onclick="alert('Ready? Go!')" style="display: inline-flex;"><i class="ph ph-play"></i> Start 1 Min Timer</button>
+        </div>
+    </div>
+
+    <!-- PHASE 7: CRITICAL THINKING (10 mins) -->
+    <div class="card" id="step-7">
+        <h1>07. Critical Thinking <span class="time-badge">10 Mins</span></h1>
+        <h2><i class="ph ph-scales"></i> Building Arguments</h2>
+        <p>Prepare for the debate. List 2 Pros (Good points) and 2 Cons (Bad points) for the motion:</p>
+        <div style="background: #EEF2FF; padding: 1rem; border-radius: 8px; text-align: center; font-weight: bold; color: var(--primary);">
+            "Online Learning will replace Teachers."
+        </div>
+        <div class="grid-options" style="margin-top: 1rem;">
+            <div class="role-card" style="flex-direction: column;">
+                <strong>PROS (For)</strong>
+                <span style="font-size: 0.8rem;">Cheaper? Faster?</span>
+            </div>
+            <div class="role-card" style="flex-direction: column;">
+                <strong>CONS (Against)</strong>
+                <span style="font-size: 0.8rem;">No connection? Boring?</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PHASE 8: DEBATE STRATEGY (10 mins) -->
+    <div class="card" id="step-8">
+        <h1>08. War Room <span class="time-badge">10 Mins</span></h1>
+        <h2><i class="ph ph-strategy"></i> Strategy & Roles</h2>
+        <p>Get into your teams. Assign roles now.</p>
+        <div class="grid-options">
+            <div class="option-btn">
+                <i class="ph ph-crown"></i>
+                <span>Prime Minister</span>
+                <span style="font-size: 0.8rem; font-weight: 400;">Introduce the main argument.</span>
+            </div>
+            <div class="option-btn">
+                <i class="ph ph-sword"></i>
+                <span>Whip</span>
+                <span style="font-size: 0.8rem; font-weight: 400;">Attack the opponent's ideas.</span>
+            </div>
+            <div class="option-btn">
+                <i class="ph ph-shield-check"></i>
+                <span>Summary</span>
+                <span style="font-size: 0.8rem; font-weight: 400;">Conclude why you won.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PHASE 9: THE DEBATE (25 mins) -->
+    <div class="card" id="step-9">
+        <h1>09. The Debate <span class="time-badge">25 Mins</span></h1>
+        <h2><i class="ph ph-microphone-stage"></i> Live Motion</h2>
+        
+        <div id="debate-setup" class="debate-phase active">
+            <div class="grid-options">
+                <div class="role-card" style="flex-direction: column; text-align: center; align-items: center;">
+                    <i class="ph ph-thumbs-up role-icon"></i>
+                    <h3>Proposition</h3>
+                    <p>Argue <strong>FOR</strong> Technology.</p>
+                </div>
+                <div class="role-card" style="flex-direction: column; text-align: center; align-items: center;">
+                    <i class="ph ph-thumbs-down role-icon" style="color: #EF4444;"></i>
+                    <h3>Opposition</h3>
+                    <p>Argue <strong>FOR</strong> Teachers.</p>
+                </div>
+            </div>
+            <button class="nav-btn" style="width: 100%; justify-content: center;" onclick="startDebate()">
+                <i class="ph ph-play-circle" style="font-size: 1.5rem;"></i> Start Debate
+            </button>
+        </div>
+
+        <div id="debate-live" class="debate-phase hidden">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <span class="tag" id="current-role-tag">CURRENT SPEAKER</span>
+                <h3 id="current-speaker" style="font-size: 1.5rem; margin-top: 0.5rem;">Prime Minister (Pro)</h3>
+            </div>
+            <div class="timer-display" id="timer">02:00</div>
+            <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+                <button class="nav-btn secondary" onclick="resetTimer()"><i class="ph ph-arrow-counter-clockwise"></i> Reset</button>
+                <button class="nav-btn" onclick="toggleTimer()"><i class="ph ph-timer"></i> Start/Stop</button>
+                <button class="nav-btn secondary" onclick="nextSpeaker()">Next <i class="ph ph-caret-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PHASE 10: REFLECTION (5 mins) -->
+    <div class="card" id="step-10">
+        <h1>10. Reflection <span class="time-badge">5 Mins</span></h1>
+        <h2><i class="ph ph-check-square"></i> Self-Assessment</h2>
+        <p>Think about today's lesson. Rate yourself:</p>
+        
+        <div class="role-card" style="justify-content: space-between;">
+            <span>Did I use "Going to"?</span>
+            <div>⭐⭐⭐</div>
+        </div>
+        <div class="role-card" style="justify-content: space-between;">
+            <span>Did I speak clearly?</span>
+            <div>⭐⭐⭐</div>
+        </div>
+        <div class="role-card" style="justify-content: space-between;">
+            <span>Did I support my team?</span>
+            <div>⭐⭐⭐</div>
+        </div>
+        <h3 style="text-align: center; margin-top: 2rem;">Well Done! Class Dismissed.</h3>
+    </div>
+</main>
+
+<div class="nav-bar">
+    <button class="nav-btn secondary" id="prev-btn" onclick="changeStep(-1)">
+        <i class="ph ph-arrow-left"></i> Back
+    </button>
+    <div style="display: flex; gap: 0.5rem;">
+        <span style="align-self: center; font-size: 0.9rem; color: var(--text-light); margin-right: 1rem;" id="step-indicator">Phase 1 of 10</span>
+        <button class="nav-btn" id="next-btn" onclick="changeStep(1)">
+            Next Phase <i class="ph ph-arrow-right"></i>
+        </button>
+    </div>
+</div>
+
+<script>
+    let currentStep = 1;
+    const totalSteps = 10;
+
+    // Collocation Game Data
+    const vocabData = [
+        { prompt: "___ a conversation", correct: "C", a: "Make", b: "Do", c: "Hold" },
+        { prompt: "___ an advantage", correct: "B", a: "Make", b: "Have", c: "Do" },
+        { prompt: "___ progress", correct: "A", a: "Make", b: "Do", c: "Have" },
+        { prompt: "___ advice", correct: "B", a: "Do", b: "Take", c: "Speak" },
+        { prompt: "___ an effort", correct: "A", a: "Make", b: "Give", c: "Take" }
+    ];
+    let vocabIndex = 0;
+    let score = 0;
+
+    // Navigation Logic
+    function changeStep(dir) {
+        document.getElementById(`step-${currentStep}`).classList.remove('active');
+        currentStep += dir;
+        if(currentStep < 1) currentStep = 1;
+        if(currentStep > totalSteps) currentStep = totalSteps;
+        document.getElementById(`step-${currentStep}`).classList.add('active');
+        
+        // UI Updates
+        document.getElementById('prev-btn').style.visibility = currentStep === 1 ? 'hidden' : 'visible';
+        document.getElementById('next-btn').innerHTML = currentStep === totalSteps ? 'Finish <i class="ph ph-check"></i>' : 'Next <i class="ph ph-arrow-right"></i>';
+        document.getElementById('step-indicator').innerText = `Phase ${currentStep} of ${totalSteps}`;
+        document.getElementById('header-phase').innerText = currentStep;
+    }
+
+    // Scaffolding Logic
+    function toggleScaffold(id) {
+        const el = document.getElementById(id);
+        const isHidden = el.style.display === '' || el.style.display === 'none';
+        el.style.display = isHidden ? 'block' : 'none';
+    }
+
+    // Grammar Logic
+    function selectGrammar(btn, isCorrect) {
+        const feedback = document.getElementById('grammar-feedback');
+        // Reset all buttons
+        document.querySelectorAll('#grammar-quiz .option-btn').forEach(b => {
+            b.style.background = 'var(--surface)';
+            b.style.color = 'var(--text)';
+            b.querySelector('i').style.color = 'var(--primary)';
+        });
+
+        if(isCorrect) {
+            btn.style.background = '#10B981'; // Green
+            btn.style.borderColor = '#10B981';
+            btn.style.color = 'white';
+            btn.querySelector('i').style.color = 'white';
+            feedback.innerText = "✅ Correct! 'Going to' implies a plan or intention.";
+        } else {
+            btn.style.background = '#EF4444'; // Red
+            btn.style.borderColor = '#EF4444';
+            btn.style.color = 'white';
+            btn.querySelector('i').style.color = 'white';
+            feedback.innerText = "❌ Try again. Think about the future context.";
+        }
+    }
+
+    // Vocabulary Logic
+    function loadVocab() {
+        if(vocabIndex >= vocabData.length) {
+            document.getElementById('collocation-prompt').innerText = "Complete!";
+            document.getElementById('collocation-prompt').style.fontSize = "1.5rem";
+            document.querySelectorAll('#step-5 .grid-options button').forEach(b => b.disabled = true);
+            return;
+        }
+        const data = vocabData[vocabIndex];
+        document.getElementById('collocation-prompt').innerText = data.prompt;
+        document.getElementById('btn-a').innerText = "A. " + data.a;
+        document.getElementById('btn-b').innerText = "B. " + data.b;
+        document.getElementById('btn-c').innerText = "C. " + data.c;
+    }
+
+    function checkCollocation(answer) {
+        if(answer === vocabData[vocabIndex].correct) {
+            score++;
+            document.getElementById('vocab-score').innerText = `Score: ${score}/5`;
+        }
+        vocabIndex++;
+        loadVocab();
+    }
+    
+    // Debate Timer Logic
+    let timerInterval;
+    let timeRemaining = 120; // 2 minutes
+    let isRunning = false;
+    const speakers = [
+        "Prime Minister (Pro)", 
+        "Leader of Opposition (Con)", 
+        "Deputy PM (Pro)", 
+        "Deputy LO (Con)", 
+        "Whip (Pro)", 
+        "Whip (Con)"
+    ];
+    let speakerIndex = 0;
+
+    function startDebate() {
+        document.getElementById('debate-setup').classList.remove('active');
+        document.getElementById('debate-setup').classList.add('hidden');
+        document.getElementById('debate-live').classList.remove('hidden');
+        document.getElementById('debate-live').classList.add('active');
+    }
+
+    function toggleTimer() {
+        if(isRunning) {
+            clearInterval(timerInterval);
+            isRunning = false;
+        } else {
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                updateTimerDisplay();
+                if(timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    // Play sound or alert
+                }
+            }, 1000);
+            isRunning = true;
+        }
+    }
+
+    function resetTimer() {
+        clearInterval(timerInterval);
+        isRunning = false;
+        timeRemaining = 120;
+        updateTimerDisplay();
+    }
+
+    function updateTimerDisplay() {
+        const m = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+        const s = (timeRemaining % 60).toString().padStart(2, '0');
+        document.getElementById('timer').innerText = `${m}:${s}`;
+    }
+
+    function nextSpeaker() {
+        speakerIndex = (speakerIndex + 1) % speakers.length;
+        document.getElementById('current-speaker').innerText = speakers[speakerIndex];
+        resetTimer();
+    }
+
+    // Init
+    loadVocab();
+    document.getElementById('prev-btn').style.visibility = 'hidden';
+
+</script>
+</body>
+</html>

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leadership Project: Free Reading Book Club</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* Slate 900 */
+            color: #f8fafc;
+            overflow: hidden;
+        }
+        
+        .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .slide-enter {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .slide-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom scrollbar for reflection content */
+        .custom-scroll::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- Icon Components (Inlined to prevent CDN errors) ---
+        
+        const Icon = ({ size = 24, className = "", children }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                {children}
+            </svg>
+        );
+
+        const BookOpen = (props) => (
+            <Icon {...props}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></Icon>
+        );
+        const Users = (props) => (
+            <Icon {...props}><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></Icon>
+        );
+        const Globe = (props) => (
+            <Icon {...props}><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></Icon>
+        );
+        const Target = (props) => (
+            <Icon {...props}><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></Icon>
+        );
+        const ChevronRight = (props) => (
+            <Icon {...props}><path d="m9 18 6-6-6-6"/></Icon>
+        );
+        const ChevronLeft = (props) => (
+            <Icon {...props}><path d="m15 18-6-6 6-6"/></Icon>
+        );
+        const Award = (props) => (
+            <Icon {...props}><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></Icon>
+        );
+        const School = (props) => (
+            <Icon {...props}><path d="M14 22v-4a2 2 0 1 0-4 0v4"/><path d="m18 10 4 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8l4-2"/><path d="M18 5v17"/><path d="m4 6 8-4 8 4"/><path d="M6 5v17"/><circle cx="12" cy="9" r="2"/></Icon>
+        );
+        const Heart = (props) => (
+            <Icon {...props}><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></Icon>
+        );
+        const Lightbulb = (props) => (
+            <Icon {...props}><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-1 1.5-2.4 1.5-3.8 0-3.3-2.7-6-6-6S6 4.7 6 8c0 1.4.5 2.8 1.5 3.8.8.8 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></Icon>
+        );
+
+
+        // --- Data & Content ---
+
+        const slides = [
+            {
+                id: 'intro',
+                type: 'intro',
+                title: "Free Reading Book Club",
+                subtitle: "Cultivating Global Literacy & Student Leadership",
+                presenter: "Unit 6 Leadership Project",
+                icon: <BookOpen size={64} className="text-teal-400" />
+            },
+            {
+                id: 'purpose',
+                type: 'standard',
+                title: "Purpose & Vision",
+                icon: <Target size={32} className="text-teal-400" />,
+                content: (
+                    <div className="space-y-6">
+                        <p className="text-xl leading-relaxed text-slate-300">
+                            To establish a voluntary environment for reading comprehension free from the pressure of grades, fostering a genuine love for literacy.
+                        </p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                            <div className="glass-panel p-6 rounded-xl border-l-4 border-teal-500">
+                                <h3 className="text-lg font-bold text-teal-300 mb-2">The Problem</h3>
+                                <p className="text-sm text-slate-400">Students view reading as a test mechanism, creating high anxiety and low engagement.</p>
+                            </div>
+                            <div className="glass-panel p-6 rounded-xl border-l-4 border-indigo-500">
+                                <h3 className="text-lg font-bold text-indigo-300 mb-2">The Solution</h3>
+                                <p className="text-sm text-slate-400">A "Meaning-Making" focus where comprehension is discussed, not graded.</p>
+                            </div>
+                        </div>
+                    </div>
+                )
+            },
+            {
+                id: 'alignment',
+                type: 'standard',
+                title: "School Culture Alignment",
+                icon: <School size={32} className="text-indigo-400" />,
+                content: (
+                    <div className="space-y-8">
+                        <div className="bg-slate-800/50 p-6 rounded-lg border border-slate-700">
+                            <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                                <Award className="text-yellow-500" size={24}/> Supporting the Mission
+                            </h3>
+                            <ul className="space-y-4 text-slate-300">
+                                <li className="flex items-start gap-3">
+                                    <span className="mt-1.5 w-2 h-2 rounded-full bg-teal-400 block shrink-0"></span>
+                                    <span><strong>Lifelong Learners:</strong> Shifting reading from an academic obligation to a personal habit.</span>
+                                </li>
+                                <li className="flex items-start gap-3">
+                                    <span className="mt-1.5 w-2 h-2 rounded-full bg-teal-400 block shrink-0"></span>
+                                    <span><strong>Effective Communicators:</strong> Creating safe spaces for expressing ideas without fear of error correction.</span>
+                                </li>
+                                <li className="flex items-start gap-3">
+                                    <span className="mt-1.5 w-2 h-2 rounded-full bg-teal-400 block shrink-0"></span>
+                                    <span><strong>Intercultural Awareness:</strong> Using diverse texts to broaden student perspectives.</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="text-sm text-slate-500 italic border-l-2 border-slate-600 pl-4">
+                            "Aligned with school goals to improve student autonomy and global mindset."
+                        </div>
+                    </div>
+                )
+            },
+            {
+                id: 'curricular',
+                type: 'standard',
+                title: "Cross-Curricular & Global Themes",
+                icon: <Globe size={32} className="text-blue-400" />,
+                content: (
+                    <div className="space-y-6">
+                        <p className="text-slate-300">
+                            We moved beyond fiction to include texts that build background knowledge across disciplines, directly addressing the <strong>Cross-Curricular</strong> requirement.
+                        </p>
+                        <div className="grid grid-cols-3 gap-4">
+                            <div className="glass-panel p-4 rounded-lg text-center hover:bg-white/5 transition-colors">
+                                <div className="text-emerald-400 font-bold text-lg mb-1">Science</div>
+                                <div className="text-xs text-slate-400">Environmental issues & Technology articles</div>
+                            </div>
+                            <div className="glass-panel p-4 rounded-lg text-center hover:bg-white/5 transition-colors">
+                                <div className="text-orange-400 font-bold text-lg mb-1">History</div>
+                                <div className="text-xs text-slate-400">Biographies of global leaders & historical events</div>
+                            </div>
+                            <div className="glass-panel p-4 rounded-lg text-center hover:bg-white/5 transition-colors">
+                                <div className="text-purple-400 font-bold text-lg mb-1">Culture</div>
+                                <div className="text-xs text-slate-400">Folktales & modern life in target-language countries</div>
+                            </div>
+                        </div>
+                         <div className="mt-4 p-4 bg-blue-900/20 rounded border border-blue-500/30">
+                            <h4 className="text-blue-300 font-semibold text-sm mb-1">Global Leadership</h4>
+                            <p className="text-xs text-slate-400">
+                                Students select texts based on global issues they care about, taking ownership of their learning path.
+                            </p>
+                        </div>
+                    </div>
+                )
+            },
+            {
+                id: 'community',
+                type: 'standard',
+                title: "Building a Learning Community",
+                icon: <Users size={32} className="text-pink-400" />,
+                content: (
+                    <div className="grid grid-cols-2 gap-8 h-full">
+                        <div className="space-y-4">
+                            <div className="glass-panel p-5 rounded-xl">
+                                <h3 className="text-pink-300 font-bold mb-2 flex items-center gap-2">
+                                    <Users size={18}/> Students & Faculty
+                                </h3>
+                                <p className="text-sm text-slate-300">Teachers model reading alongside students, breaking down hierarchy. Students lead discussion topics.</p>
+                            </div>
+                            <div className="glass-panel p-5 rounded-xl">
+                                <h3 className="text-purple-300 font-bold mb-2 flex items-center gap-2">
+                                    <Heart size={18}/> Parents & Families
+                                </h3>
+                                <p className="text-sm text-slate-300">"Family Reading Days" provide parents with practical strategies to support literacy at home.</p>
+                            </div>
+                        </div>
+                        <div className="flex flex-col justify-center space-y-4">
+                            <div className="glass-panel p-5 rounded-xl border-t-4 border-yellow-500">
+                                <h3 className="text-yellow-400 font-bold mb-2">Community Partners</h3>
+                                <p className="text-sm text-slate-300">Inviting local librarians and authors to guest read connects the classroom to the real world.</p>
+                            </div>
+                        </div>
+                    </div>
+                )
+            },
+            {
+                id: 'impact',
+                type: 'standard',
+                title: "Evidence of Impact",
+                icon: <Lightbulb size={32} className="text-yellow-400" />,
+                content: (
+                    <div className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                             <div className="bg-slate-800 p-4 rounded text-center">
+                                <div className="text-3xl font-bold text-teal-400 mb-1">↑</div>
+                                <div className="text-sm font-semibold text-white">Stamina</div>
+                                <div className="text-xs text-slate-400 mt-2">Students reading longer without fatigue</div>
+                             </div>
+                             <div className="bg-slate-800 p-4 rounded text-center">
+                                <div className="text-3xl font-bold text-indigo-400 mb-1">☺</div>
+                                <div className="text-sm font-semibold text-white">Confidence</div>
+                                <div className="text-xs text-slate-400 mt-2">Increased voluntary participation in discussions</div>
+                             </div>
+                             <div className="bg-slate-800 p-4 rounded text-center">
+                                <div className="text-3xl font-bold text-pink-400 mb-1">♥</div>
+                                <div className="text-sm font-semibold text-white">Culture</div>
+                                <div className="text-xs text-slate-400 mt-2">Shift from "studying" to "enjoying"</div>
+                             </div>
+                        </div>
+                        <div className="glass-panel p-5 rounded-xl">
+                            <h3 className="text-white font-bold mb-2 border-b border-slate-600 pb-2">Qualitative Feedback</h3>
+                            <p className="text-sm text-slate-300 italic">"I usually hate reading in class because I'm scared to make a mistake. Here, I just wanted to know what happened to the character." — Student Participant</p>
+                        </div>
+                    </div>
+                )
+            },
+            {
+                id: 'reflection',
+                type: 'reflection',
+                title: "InTASC Standard 10 Reflection",
+                subtitle: "Leadership & Collaboration Analysis",
+                content: null // Handled by specific component
+            }
+        ];
+
+        // --- Components ---
+
+        const IntroSlide = ({ slide }) => (
+            <div className="flex flex-col items-center justify-center h-full text-center slide-enter-active">
+                <div className="mb-8 p-6 bg-teal-500/10 rounded-full border border-teal-500/30 shadow-[0_0_30px_rgba(20,184,166,0.2)]">
+                    {slide.icon}
+                </div>
+                <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 serif tracking-tight">
+                    {slide.title}
+                </h1>
+                <h2 className="text-xl md:text-2xl text-teal-200 font-light mb-12 max-w-2xl">
+                    {slide.subtitle}
+                </h2>
+                <div className="text-slate-400 text-sm tracking-widest uppercase border-t border-slate-700 pt-8 mt-8 w-32">
+                    {slide.presenter}
+                </div>
+            </div>
+        );
+
+        const StandardSlide = ({ slide }) => (
+            <div className="h-full flex flex-col slide-enter-active">
+                <div className="flex items-center gap-4 mb-8 border-b border-slate-700 pb-4">
+                    <div className="p-3 bg-slate-800 rounded-lg shadow-lg">
+                        {slide.icon}
+                    </div>
+                    <h2 className="text-3xl font-bold text-white serif">{slide.title}</h2>
+                </div>
+                <div className="flex-grow overflow-y-auto custom-scroll pr-2">
+                    {slide.content}
+                </div>
+            </div>
+        );
+
+        const ReflectionSection = () => {
+            const [activeTab, setActiveTab] = useState(0);
+            
+            const tabs = [
+                {
+                    title: "Student Learning",
+                    content: (
+                        <div className="space-y-4 animate-fadeIn">
+                            <h3 className="text-xl font-bold text-teal-300">Taking Responsibility for Student Learning</h3>
+                            <p className="text-slate-300 leading-relaxed">
+                                I demonstrated leadership by identifying a critical gap: students were proficient in grammar but lacked reading stamina and cultural context. By developing this cross-curricular proposal, I took direct responsibility for their holistic learning beyond the textbook.
+                            </p>
+                            <p className="text-slate-300 leading-relaxed">
+                                The inclusion of science and history texts was intentional to support <strong>content-based instruction</strong>. Evidence of impact is seen in students voluntarily choosing complex texts because the topic interested them, thereby acquiring vocabulary in context rather than through rote memorization.
+                            </p>
+                        </div>
+                    )
+                },
+                {
+                    title: "School-Wide Efforts",
+                    content: (
+                        <div className="space-y-4 animate-fadeIn">
+                            <h3 className="text-xl font-bold text-indigo-300">Alignment with Mission</h3>
+                            <p className="text-slate-300 leading-relaxed">
+                                This project was not an isolated silo; it was explicitly designed to operationalize the school's mission of creating "Effective Communicators." I improved the initial proposal by incorporating feedback from administration regarding space usage, demonstrating flexibility and alignment with school-wide logistical goals.
+                            </p>
+                            <div className="bg-indigo-900/30 p-4 rounded border-l-4 border-indigo-500">
+                                <p className="text-sm italic text-indigo-200">"Leadership is shown not just in starting a project, but in weaving it into the existing fabric of the school culture."</p>
+                            </div>
+                        </div>
+                    )
+                },
+                {
+                    title: "Cohort Collaboration",
+                    content: (
+                        <div className="space-y-4 animate-fadeIn">
+                            <h3 className="text-xl font-bold text-purple-300">Peer Review & Growth</h3>
+                            <p className="text-slate-300 leading-relaxed">
+                                Before implementation, I shared my proposal with my professional cohort (Unit 4). Their feedback highlighted the need to make the "optional activities" truly low-stakes to avoid student burnout.
+                            </p>
+                            <p className="text-slate-300 leading-relaxed">
+                                acting on this, I adjusted the reading logs to be simpler (emojis vs. written summaries). This collaboration was crucial to the project's success and demonstrates my ability to lead through listening and adaptation.
+                            </p>
+                        </div>
+                    )
+                },
+                {
+                    title: "Community Impact",
+                    content: (
+                        <div className="space-y-4 animate-fadeIn">
+                            <h3 className="text-xl font-bold text-pink-300">Building a Learning Community</h3>
+                            <p className="text-slate-300 leading-relaxed">
+                                The project extended the classroom into the home. By creating "Family Reading Days," I engaged parents as active partners.
+                            </p>
+                            <ul className="list-disc list-inside text-slate-300 space-y-2">
+                                <li><strong>Faculty:</strong> Gained insight into student interests.</li>
+                                <li><strong>Parents:</strong> Felt more connected to the school curriculum.</li>
+                                <li><strong>Students:</strong> Saw reading as a shared community value, not just a solo task.</li>
+                            </ul>
+                        </div>
+                    )
+                }
+            ];
+
+            return (
+                <div className="h-full flex flex-col slide-enter-active">
+                    <div className="mb-6">
+                         <h2 className="text-3xl font-bold text-white serif mb-2">InTASC Standard 10 Reflection</h2>
+                         <p className="text-slate-400">Analysis of Impact & Leadership Competency</p>
+                    </div>
+                    
+                    <div className="flex flex-col md:flex-row gap-6 h-full">
+                        {/* Tabs */}
+                        <div className="md:w-1/3 flex flex-col gap-2">
+                            {tabs.map((tab, idx) => (
+                                <button
+                                    key={idx}
+                                    onClick={() => setActiveTab(idx)}
+                                    className={`p-4 text-left rounded-lg transition-all duration-300 flex items-center justify-between group ${
+                                        activeTab === idx 
+                                        ? 'bg-teal-600 text-white shadow-lg translate-x-2' 
+                                        : 'bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white'
+                                    }`}
+                                >
+                                    <span className="font-semibold">{tab.title}</span>
+                                    {activeTab === idx && <ChevronRight size={16} />}
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* Content Area */}
+                        <div className="md:w-2/3 bg-slate-800/50 rounded-xl p-6 border border-slate-700 overflow-y-auto custom-scroll shadow-inner relative">
+                            {tabs[activeTab].content}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // --- Main App ---
+
+        const App = () => {
+            const [currentSlide, setCurrentSlide] = useState(0);
+
+            const nextSlide = () => {
+                if (currentSlide < slides.length - 1) setCurrentSlide(curr => curr + 1);
+            };
+
+            const prevSlide = () => {
+                if (currentSlide > 0) setCurrentSlide(curr => curr - 1);
+            };
+            
+            // Keyboard navigation
+            useEffect(() => {
+                const handleKeyDown = (e) => {
+                    if (e.key === 'ArrowRight') nextSlide();
+                    if (e.key === 'ArrowLeft') prevSlide();
+                };
+                window.addEventListener('keydown', handleKeyDown);
+                return () => window.removeEventListener('keydown', handleKeyDown);
+            }, [currentSlide]);
+
+            const progress = ((currentSlide + 1) / slides.length) * 100;
+
+            return (
+                <div className="min-h-screen flex items-center justify-center p-4 md:p-8 bg-gradient-to-br from-slate-900 via-slate-900 to-teal-950">
+                    
+                    {/* Main Slide Container */}
+                    <div className="w-full max-w-5xl aspect-video md:aspect-[16/9] bg-slate-900 rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] border border-slate-700/50 overflow-hidden relative flex flex-col">
+                        
+                        {/* Top Bar / Decor */}
+                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-500 via-indigo-500 to-purple-500 z-20"></div>
+
+                        {/* Slide Content Area */}
+                        <div className="flex-grow p-8 md:p-12 relative z-10">
+                            {slides[currentSlide].type === 'intro' && <IntroSlide slide={slides[currentSlide]} />}
+                            {slides[currentSlide].type === 'standard' && <StandardSlide slide={slides[currentSlide]} />}
+                            {slides[currentSlide].type === 'reflection' && <ReflectionSection />}
+                        </div>
+
+                        {/* Bottom Navigation Bar */}
+                        <div className="h-16 bg-slate-950/50 border-t border-slate-800 backdrop-blur flex items-center justify-between px-8 z-20">
+                            
+                            <div className="text-slate-500 text-xs font-mono">
+                                SLIDE {currentSlide + 1} / {slides.length}
+                            </div>
+
+                            <div className="flex items-center gap-4">
+                                <button 
+                                    onClick={prevSlide}
+                                    disabled={currentSlide === 0}
+                                    className={`p-2 rounded-full transition-all ${currentSlide === 0 ? 'text-slate-700 cursor-not-allowed' : 'text-teal-400 hover:bg-teal-900/30 hover:scale-110'}`}
+                                >
+                                    <ChevronLeft size={24} />
+                                </button>
+                                
+                                <div className="w-32 h-1 bg-slate-800 rounded-full overflow-hidden">
+                                    <div 
+                                        className="h-full bg-teal-500 transition-all duration-500 ease-out"
+                                        style={{ width: `${progress}%` }}
+                                    ></div>
+                                </div>
+
+                                <button 
+                                    onClick={nextSlide}
+                                    disabled={currentSlide === slides.length - 1}
+                                    className={`p-2 rounded-full transition-all ${currentSlide === slides.length - 1 ? 'text-slate-700 cursor-not-allowed' : 'text-teal-400 hover:bg-teal-900/30 hover:scale-110'}`}
+                                >
+                                    <ChevronRight size={24} />
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Background Elements */}
+                        <div className="absolute top-[-10%] right-[-10%] w-96 h-96 bg-teal-600/10 rounded-full blur-3xl pointer-events-none"></div>
+                        <div className="absolute bottom-[-10%] left-[-10%] w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
