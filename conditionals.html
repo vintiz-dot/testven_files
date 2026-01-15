@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sky 1 - Hanoi English Club</title>
+
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function () {
+            emailjs.init("GpWE40ze9vHUQ60Qk");
+        })();
+    </script>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Quicksand:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #E0F2FE;
+            /* Sky blue light */
+            background-image:
+                radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 0) 0, hsla(253, 16%, 7%, 0) 50%),
+                radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 0) 0, hsla(225, 39%, 30%, 0) 50%),
+                radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 0) 0, hsla(339, 49%, 30%, 0) 50%);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-premium {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-premium:active {
+            transform: scale(0.95);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #93C5FD;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #60A5FA;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cloud-bg {
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M25 60 C 20 60 15 55 15 50 C 15 45 20 40 25 40 C 25 30 35 20 50 20 C 65 20 75 30 75 40 C 80 40 85 45 85 50 C 85 55 80 60 75 60 Z' fill='%23ffffff' fill-opacity='0.4' /%3E%3C/svg%3E");
+            background-size: 200px 200px;
+            animation: float 60s linear infinite;
+        }
+
+        @keyframes float {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: 200px 100px;
+            }
+        }
+
+        /* Animation for Scramble */
+        @keyframes pop {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .animate-pop {
+            animation: pop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+    </style>
+</head>
+
+<body class="overflow-x-hidden min-h-screen relative">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // --- ICONS ---
+        const Icons = {
+            Cloud: (props) => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+                    <path d="M17.5 19c0-1.7-1.3-3-3-3h-1.1c-.2-3.3-2.9-6-6.4-6-3.3 0-6.3 2.5-6.4 5.9C.6 15.5 0 16 0 17c0 2.2 1.8 4 4 4h13.5c2.5 0 4.5-2 4.5-4.5S20 12 17.5 12z" />
+                </svg>
+            ),
+            Star: (props) => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                </svg>
+            ),
+            ArrowRight: (props) => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+                    <line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            ),
+            Check: (props) => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            ),
+            X: (props) => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+                    <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            ),
+            RefreshCw: (props) => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+                    <polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                </svg>
+            ),
+            Trophy: (props) => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+                    <path d="M8 21h8M12 17v4M7 4h10c.66 0 1.33.15 1.83.45C19.68 5.01 20 5.86 20 6.83c0 3.33-2.6 6.06-5.91 6.16-1.37.04-2.68-.42-3.69-1.25l-.4-.34-.4.34c-1.01.83-2.32 1.29-3.69 1.25C2.6 12.89 0 10.16 0 6.83c0-.97.32-1.82 1.17-2.38C1.67 4.15 2.34 4 3 4h4z" />
+                </svg>
+            ),
+            BookOpen: (props) => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                </svg>
+            ),
+            PenTool: (props) => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+                    <path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle>
+                </svg>
+            ),
+            Layout: (props) => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line>
+                </svg>
+            ),
+            ChevronRight: (props) => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            )
+        };
+
+        const { Star, Cloud, ArrowRight, Check, X, RefreshCw, Trophy, BookOpen, PenTool, Layout, ChevronRight } = Icons;
+
+        // --- DATA ---
+        const QUIZ_DATA = {
+            modules: [
+                {
+                    id: "form",
+                    title: "Module 1: First Conditional Forms",
+                    icon: "PenTool",
+                    description: "Put the verbs into the correct form.",
+                    questions: [
+                        { id: "f1", type: "fill_double", text: "If I (go) out tonight, I (go) to the cinema.", pre: "If I", mid: "out tonight, I", post: "to the cinema.", verbs: ["(go)", "(go)"], answers: [["go"], ["will go", "'ll go"]] },
+                        { id: "f2", type: "fill_double", text: "If you (get) back late, I (be) angry.", pre: "If you", mid: "back late, I", post: "angry.", verbs: ["(get)", "(be)"], answers: [["get"], ["will be", "'ll be"]] },
+                        { id: "f3", type: "fill_double", text: "If we (not/see) each other tomorrow, we (see) each other next week.", pre: "If we", mid: "each other tomorrow, we", post: "each other next week.", verbs: ["(not/see)", "(see)"], answers: [["don't see", "do not see"], ["will see", "'ll see"]] },
+                        { id: "f4", type: "fill_double", text: "If he (come), I (be) surprised.", pre: "If he", mid: ", I", post: "surprised.", verbs: ["(come)", "(be)"], answers: [["comes"], ["will be", "'ll be"]] },
+                        { id: "f5", type: "fill_double", text: "If we (wait) here, we (be) late.", pre: "If we", mid: "here, we", post: "late.", verbs: ["(wait)", "(be)"], answers: [["wait"], ["will be", "'ll be"]] },
+                        { id: "f6", type: "fill_double", text: "If we (go) on holiday this summer, we (go) to Spain.", pre: "If we", mid: "on holiday this summer, we", post: "to Spain.", verbs: ["(go)", "(go)"], answers: [["go"], ["will go", "'ll go"]] },
+                        { id: "f7", type: "fill_double", text: "If the weather (not/improve), we (not/have) a picnic.", pre: "If the weather", mid: ", we", post: "a picnic.", verbs: ["(not/improve)", "(not/have)"], answers: [["doesn't improve", "does not improve"], ["won't have", "will not have"]] },
+                        { id: "f8", type: "fill_double", text: "If I (not/go) to bed early, I (be) tired tomorrow.", pre: "If I", mid: "to bed early, I", post: "tired tomorrow.", verbs: ["(not/go)", "(be)"], answers: [["don't go", "do not go"], ["will be", "'ll be"]] },
+                        { id: "f9", type: "fill_double", text: "If we (eat) all this cake, we (feel) sick.", pre: "If we", mid: "all this cake, we", post: "sick.", verbs: ["(eat)", "(feel)"], answers: [["eat"], ["will feel", "'ll feel"]] },
+                        { id: "f10", type: "fill_double", text: "If you (not/want) to go out, I (cook) dinner at home.", pre: "If you", mid: "to go out, I", post: "dinner at home.", verbs: ["(not/want)", "(cook)"], answers: [["don't want", "do not want"], ["will cook", "'ll cook"]] },
+                        { id: "f11", type: "fill_double", text: "I (come) early if you (want).", pre: "I", mid: "early if you", post: ".", verbs: ["(come)", "(want)"], answers: [["will come", "'ll come"], ["want"]] },
+                        { id: "f12", type: "fill_double", text: "They (go) to the party if they (be) invited.", pre: "They", mid: "to the party if they", post: "invited.", verbs: ["(go)", "(be)"], answers: [["will go", "'ll go"], ["are"]] },
+                        { id: "f13", type: "fill_double", text: "She (stay) in London if she (get) a job.", pre: "She", mid: "in London if she", post: "a job.", verbs: ["(stay)", "(get)"], answers: [["will stay", "'ll stay"], ["gets"]] },
+                        { id: "f14", type: "fill_double", text: "He (not/get) a better job if he (not/pass) that exam.", pre: "He", mid: "a better job if he", post: "that exam.", verbs: ["(not/get)", "(not/pass)"], answers: [["won't get", "will not get"], ["doesn't pass", "does not pass"]] },
+                        { id: "f15", type: "fill_double", text: "I (buy) a new dress if I (have) enough money.", pre: "I", mid: "a new dress if I", post: "enough money.", verbs: ["(buy)", "(have)"], answers: [["will buy", "'ll buy"], ["have"]] },
+                        { id: "f16", type: "fill_double", text: "She (cook) dinner if you (go) to the supermarket.", pre: "She", mid: "dinner if you", post: "to the supermarket.", verbs: ["(cook)", "(go)"], answers: [["will cook", "'ll cook"], ["go"]] },
+                        { id: "f17", type: "fill_double", text: "They (go) on holiday if they (have) time.", pre: "They", mid: "on holiday if they", post: "time.", verbs: ["(go)", "(have)"], answers: [["will go", "'ll go"], ["have"]] },
+                        { id: "f18", type: "fill_double", text: "We (be) late if we (not/hurry).", pre: "We", mid: "late if we", post: ".", verbs: ["(be)", "(not/hurry)"], answers: [["will be", "'ll be"], ["don't hurry", "do not hurry"]] },
+                        { id: "f19", type: "fill_double", text: "She (take) a taxi if it (rain).", pre: "She", mid: "a taxi if it", post: ".", verbs: ["(take)", "(rain)"], answers: [["will take", "'ll take"], ["rains"]] },
+                        { id: "f20", type: "fill_double", text: "I (not/go) if you (not/come) with me.", pre: "I", mid: "if you", post: "with me.", verbs: ["(not/go)", "(not/come)"], answers: [["won't go", "will not go"], ["don't come", "do not come"]] }
+                    ]
+                },
+                {
+                    id: "exercises",
+                    title: "Module 2: First Conditional Practice",
+                    icon: "BookOpen",
+                    description: "Exercises, Corrections & Multiple Choice.",
+                    questions: [
+                        // EXERCISE 1 (Single verb fill)
+                        { id: "e1_1", type: "fill_single", text: "If she (to come) back late, our mother (to be) angry.", segment: "If she _____ back late, our mother will be angry.", verb: "(to come)", answer: ["comes"] },
+                        { id: "e1_2", type: "fill_single", text: "We (to help) her as soon as she (to ask) us.", segment: "We will help her as soon as she _____ us.", verb: "(to ask)", answer: ["asks"] },
+                        { id: "e1_3", type: "fill_single", text: "If it (to rain), we (to stay) at home.", segment: "If it _____, we will stay at home.", verb: "(to rain)", answer: ["rains"] },
+                        { id: "e1_4", type: "fill_single", text: "If my sister (to practice) every day, she (to become) a champion.", segment: "If my sister _____ every day, she will become a champion.", verb: "(to practice)", answer: ["practices"] },
+                        { id: "e1_5", type: "fill_single", text: "If John (not to keep) his word, his father (to be angry) with him.", segment: "If John _____ his word, his father will be angry with him.", verb: "(not to keep)", answer: ["doesn't keep", "does not keep"] },
+                        // EXERCISE 2
+                        { id: "e2_1", type: "fill_single", text: "If you (send) this letter now, she (receive) it tomorrow.", segment: "If you send this letter now, she _____ it tomorrow.", verb: "(receive)", answer: ["will receive", "'ll receive"] },
+                        { id: "e2_2", type: "fill_single", text: "If I (do) this test, I (improve) my English.", segment: "If I do this test, I _____ my English.", verb: "(improve)", answer: ["will improve", "'ll improve"] },
+                        { id: "e2_3", type: "fill_single", text: "If I (find) your ring, I (give) it back to you.", segment: "If I find your ring, I _____ it back to you.", verb: "(give)", answer: ["will give", "'ll give"] },
+                        // EXERCISE 4 (Correction)
+                        { id: "e4_1", type: "rewrite", text: "If I am telling my best friend my secret, she won't tell anyone else.", answer: "If I tell my best friend my secret, she won't tell anyone else." },
+                        { id: "e4_2", type: "rewrite", text: "She take the dog for a walk if she gets home early.", answer: "She will take the dog for a walk if she gets home early." },
+                        { id: "e4_3", type: "rewrite", text: "They will go to the beach on Saturday if it not rain.", answer: "They will go to the beach on Saturday if it does not rain." },
+                        // EXERCISE 5 (Choice)
+                        { id: "e5_1", type: "choice", text: "We will call you as soon as we (will arrive / arrive) there.", options: ["will arrive", "arrive"], answer: "arrive" },
+                        { id: "e5_2", type: "choice", text: "Before it (will get / gets) dark, I will take the dog out.", options: ["will get", "gets"], answer: "gets" },
+                        { id: "e5_3", type: "choice", text: "I (won't put / don't put) the DVD on before you arrive.", options: ["won't put", "don't put"], answer: "won't put" },
+                    ]
+                },
+                {
+                    id: "zero",
+                    title: "Module 3: Zero Conditional",
+                    icon: "Layout",
+                    description: "Make phrases & Match columns.",
+                    questions: [
+                        // PART 1: Scramble
+                        { id: "z1", type: "scramble", text: "People/not exercise / they/ get fat.", words: ["If", "people", "don't", "exercise", ",", "they", "get", "fat", "."], answer: "If people don't exercise, they get fat." },
+                        { id: "z2", type: "scramble", text: "Pedro / get sick / the weather / change a lot", words: ["Pedro", "gets", "sick", "if", "the", "weather", "changes", "a", "lot", "."], answer: "Pedro gets sick if the weather changes a lot." },
+                        { id: "z3", type: "scramble", text: "I / wake up late / I / be late for school", words: ["If", "I", "wake", "up", "late", ",", "I", "am", "late", "for", "school", "."], answer: "If I wake up late, I am late for school." },
+                        { id: "z4", type: "scramble", text: "You/ can not win the lottery / not bet.", words: ["You", "can't", "win", "the", "lottery", "if", "you", "don't", "bet", "."], answer: "You can't win the lottery if you don't bet." },
+                        // PART 2: Matching
+                        {
+                            id: "z_match", type: "matching", pairs: [
+                                { left: "If children don't eat well,", right: "they get sick." },
+                                { left: "If water reaches 100°C,", right: "it boils." },
+                                { left: "Mark gets really angry,", right: "if someone interrupts him." },
+                                { left: "I always wake up early,", right: "if I go to bed early." },
+                                { left: "My brother cooks very well,", right: "if he wants to impress a girl." },
+                                { left: "If I need to save money,", right: "I stop buying clothes." },
+                                { left: "If nobody gives me a ride,", right: "I take a taxi." },
+                                { left: "If Janice is out of the office,", right: "I take his calls and write messages." },
+                                { left: "If you press the red button,", right: "you turn off the Wi-Fi." },
+                                { left: "The roads get really crowded,", right: "if there's an extended holiday." }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+
+        // --- COMPONENTS ---
+
+        const WelcomeScreen = ({ onStart }) => (
+            <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center space-y-8 fade-in">
+                <div className="bg-white/80 p-8 rounded-3xl shadow-2xl max-w-lg w-full backdrop-blur-md border-4 border-white/50">
+                    <div className="flex justify-center mb-4 text-blue-500 animate-bounce">
+                        <Cloud size={80} fill="#E0F2FE" />
+                    </div>
+                    <h1 className="text-5xl font-extrabold text-blue-600 mb-2 font-quicksand drop-shadow-sm">Sky 1</h1>
+                    <div className="flex items-center justify-center space-x-2 text-gray-500 mb-6">
+                        <span className="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold tracking-wider">HANOI ENGLISH CLUB</span>
+                    </div>
+                    <h2 className="text-2xl font-bold text-gray-700 mb-8">Welcome, Students!</h2>
+                    <div className="flex flex-col space-y-2 mb-8">
+                        <p className="text-gray-600 text-lg">Your Teacher: <span className="font-bold text-blue-600">Victor</span></p>
+                        <p className="text-gray-500 text-sm">Target: Grade 3 (8-11 Years)</p>
+                    </div>
+                    <button
+                        onClick={onStart}
+                        className="btn-premium w-full bg-gradient-to-r from-blue-400 to-blue-600 text-white text-2xl font-bold py-4 rounded-2xl shadow-lg hover:shadow-2xl hover:scale-105 transform transition flex items-center justify-center gap-3"
+                    >
+                        Start Your Mission <ArrowRight size={28} />
+                    </button>
+                </div>
+            </div>
+        );
+
+        const ModuleSelect = ({ onSelect }) => (
+            <div className="max-w-6xl mx-auto p-6 min-h-screen flex flex-col justify-center fade-in">
+                <h2 className="text-4xl font-extrabold text-blue-800 text-center mb-10 drop-shadow-sm">Select Your Mission</h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {QUIZ_DATA.modules.map((m) => (
+                        <div key={m.id}
+                            onClick={() => onSelect(m)}
+                            className="bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl hover:-translate-y-2 transition cursor-pointer border-4 border-transparent hover:border-blue-300 group">
+                            <div className="h-40 bg-blue-50 rounded-2xl mb-6 flex items-center justify-center group-hover:bg-blue-100 transition">
+                                {m.icon === 'PenTool' && <PenTool size={64} className="text-blue-500" />}
+                                {m.icon === 'BookOpen' && <BookOpen size={64} className="text-green-500" />}
+                                {m.icon === 'Layout' && <Layout size={64} className="text-purple-500" />}
+                            </div>
+                            <h3 className="text-2xl font-bold text-gray-800 mb-2 group-hover:text-blue-600">{m.title}</h3>
+                            <p className="text-gray-500">{m.description}</p>
+                            <div className="mt-6 flex justify-between items-center text-sm font-semibold text-gray-400 group-hover:text-blue-400">
+                                <span>{m.questions.length} Questions</span>
+                                <ArrowRight size={20} />
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+
+        // --- QUESTION TYPES ---
+
+        const FillDouble = ({ q, onAnswer }) => {
+            const [v1, setV1] = useState("");
+            const [v2, setV2] = useState("");
+            const [submitted, setSubmitted] = useState(false);
+
+            const check = () => {
+                setSubmitted(true);
+                const isCorrect1 = q.answers[0].includes(v1.trim().toLowerCase());
+                const isCorrect2 = q.answers[1].includes(v2.trim().toLowerCase());
+
+                // Pass back answer data
+                onAnswer(isCorrect1 && isCorrect2, {
+                    type: "fill_double",
+                    verb1: v1,
+                    verb2: v2
+                });
+            };
+
+            const isCorrect1 = submitted && q.answers[0].includes(v1.trim().toLowerCase());
+            const isCorrect2 = submitted && q.answers[1].includes(v2.trim().toLowerCase());
+
+            return (
+                <div className="text-2xl leading-loose text-gray-800 font-medium">
+                    {q.pre}
+                    <input
+                        className={`mx-2 p-2 w-32 md:w-48 text-center border-b-4 bg-transparent outline-none transition
+                            ${submitted
+                                ? (isCorrect1 ? 'border-green-500 text-green-600 font-bold' : 'border-red-500 text-red-500 bg-red-50')
+                                : 'border-gray-300 focus:border-blue-400'}`}
+                        value={v1}
+                        onChange={(e) => setV1(e.target.value)}
+                        disabled={submitted}
+                        placeholder={q.verbs[0]}
+                        autoFocus
+                    />
+                    {q.mid}
+                    <input
+                        className={`mx-2 p-2 w-32 md:w-48 text-center border-b-4 bg-transparent outline-none transition
+                            ${submitted
+                                ? (isCorrect2 ? 'border-green-500 text-green-600 font-bold' : 'border-red-500 text-red-500 bg-red-50')
+                                : 'border-gray-300 focus:border-blue-400'}`}
+                        value={v2}
+                        onChange={(e) => setV2(e.target.value)}
+                        disabled={submitted}
+                        placeholder={q.verbs[1]}
+                    />
+                    {q.post}
+                    {!submitted && (
+                        <button onClick={check} className="block mt-8 w-full btn-premium bg-blue-500 text-white py-3 rounded-xl font-bold shadow-lg">Check Answer</button>
+                    )}
+                    {submitted && (
+                        <div className="mt-4 text-base text-gray-500">
+                            Correct answers: <span className="font-bold text-green-600">{q.answers[0][0]}</span> and <span className="font-bold text-green-600">{q.answers[1][0]}</span>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const FillSingle = ({ q, onAnswer }) => {
+            const [val, setVal] = useState("");
+            const [submitted, setSubmitted] = useState(false);
+
+            const parts = q.segment.split("_____");
+
+            const check = () => {
+                setSubmitted(true);
+                const isCorrect = q.answer.includes(val.trim().toLowerCase());
+                onAnswer(isCorrect, { type: "fill_single", value: val });
+            };
+
+            return (
+                <div className="text-2xl leading-loose text-gray-800 font-medium">
+                    <div className="mb-4 text-gray-500 text-lg italic">Verb: {q.verb}</div>
+                    {parts[0]}
+                    <input
+                        className={`mx-2 p-2 w-48 text-center border-b-4 bg-transparent outline-none transition
+                            ${submitted
+                                ? (q.answer.includes(val.trim().toLowerCase()) ? 'border-green-500 text-green-600 font-bold' : 'border-red-500 text-red-500 bg-red-50')
+                                : 'border-gray-300 focus:border-blue-400'}`}
+                        value={val}
+                        onChange={(e) => setVal(e.target.value)}
+                        disabled={submitted}
+                    />
+                    {parts[1]}
+                    {!submitted && (
+                        <button onClick={check} className="block mt-8 w-full btn-premium bg-blue-500 text-white py-3 rounded-xl font-bold shadow-lg">Check</button>
+                    )}
+                </div>
+            );
+        };
+
+        const Choice = ({ q, onAnswer }) => {
+            const [selected, setSelected] = useState(null);
+            const [submitted, setSubmitted] = useState(false);
+
+            const check = (opt) => {
+                if (submitted) return;
+                setSelected(opt);
+                setSubmitted(true);
+                onAnswer(opt === q.answer, { type: "choice", value: opt });
+            };
+
+            const parts = q.text.split(/(\(.*\))/);
+
+            return (
+                <div className="flex flex-col items-center">
+                    <h3 className="text-2xl font-bold text-gray-700 mb-8">{q.text}</h3>
+                    <div className="grid grid-cols-2 gap-4 w-full">
+                        {q.options.map((opt) => (
+                            <button
+                                key={opt}
+                                onClick={() => check(opt)}
+                                disabled={submitted}
+                                className={`p-6 rounded-2xl text-xl font-bold shadow-md border-2 transition transform hover:scale-105
+                                    ${submitted
+                                        ? (opt === q.answer ? 'bg-green-100 border-green-500 text-green-700' : (selected === opt ? 'bg-red-100 border-red-500 text-red-700' : 'bg-gray-50 border-gray-200 opacity-50'))
+                                        : 'bg-white border-gray-200 text-blue-600 hover:border-blue-400'
+                                    }`}
+                            >
+                                {opt}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        const Rewrite = ({ q, onAnswer }) => {
+            const [val, setVal] = useState(""); // Initialize empty
+            const [submitted, setSubmitted] = useState(false);
+
+            const check = () => {
+                setSubmitted(true);
+                // Basic normalization for grade 3: ignore punctuation at end, case insensitive
+                const cleanUser = val.trim().toLowerCase().replace(/[.,!]$/, '');
+                const cleanAns = q.answer.trim().toLowerCase().replace(/[.,!]$/, '');
+                onAnswer(cleanUser === cleanAns, { type: "rewrite", value: val });
+            };
+
+            return (
+                <div className="w-full">
+                    <div className="bg-red-50 p-4 rounded-xl border border-red-200 text-red-600 font-mono mb-4 text-lg">
+                        <span className="font-bold block text-xs uppercase tracking-wide mb-1 text-red-400">Incorrect:</span>
+                        {q.text}
+                    </div>
+                    <textarea
+                        className={`w-full p-4 text-xl rounded-xl border-2 outline-none transition h-32 resize-none
+                            ${submitted
+                                ? (val.trim().toLowerCase().replace(/[.,!]$/, '') === q.answer.trim().toLowerCase().replace(/[.,!]$/, '') ? 'border-green-500 bg-green-50 text-green-800' : 'border-red-500 bg-red-50')
+                                : 'border-gray-300 focus:border-blue-400'
+                            }`}
+                        placeholder="Type the correct sentence here..."
+                        value={val}
+                        onChange={(e) => setVal(e.target.value)}
+                        disabled={submitted}
+                    />
+                    {!submitted && (
+                        <button onClick={check} className="mt-4 w-full btn-premium bg-blue-500 text-white py-3 rounded-xl font-bold shadow-lg">Fix It!</button>
+                    )}
+                    {submitted && (
+                        <div className="mt-4 p-4 bg-green-50 rounded-xl border border-green-200 text-green-700">
+                            <span className="font-bold">Correct answer:</span> {q.answer}
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const Scramble = ({ q, onAnswer }) => {
+            const [pool, setPool] = useState([...q.words].sort(() => Math.random() - 0.5));
+            const [formed, setFormed] = useState([]);
+            const [submitted, setSubmitted] = useState(false);
+
+            const addWord = (word, idx) => {
+                if (submitted) return;
+                const newPool = [...pool];
+                newPool.splice(idx, 1);
+                setPool(newPool);
+                setFormed([...formed, word]);
+            };
+
+            const removeWord = (word, idx) => {
+                if (submitted) return;
+                const newFormed = [...formed];
+                newFormed.splice(idx, 1);
+                setFormed(newFormed);
+                setPool([...pool, word]);
+            };
+
+            const check = () => {
+                setSubmitted(true);
+                const raw = formed.join(" ");
+                const clean = raw.replace(/\s+([.,!])/g, '$1');
+
+                // Compare with answer
+                onAnswer(clean === q.answer, { type: "scramble", value: clean });
+            };
+
+            const reset = () => {
+                setFormed([]);
+                setPool([...q.words].sort(() => Math.random() - 0.5));
+                setSubmitted(false);
+            };
+
+            return (
+                <div className="w-full">
+                    <h4 className="text-gray-500 text-sm font-bold uppercase mb-2">Original Idea:</h4>
+                    <div className="bg-blue-50 p-4 rounded-xl mb-6 text-blue-800 font-medium">
+                        {q.text}
+                    </div>
+
+                    {/* Build Area */}
+                    <div className="min-h-[80px] bg-white border-b-4 border-gray-200 rounded-xl p-4 flex flex-wrap gap-2 mb-6 shadow-inner items-center">
+                        {formed.length === 0 && <span className="text-gray-300 italic">Tap words to build sentence...</span>}
+                        {formed.map((w, i) => (
+                            <button key={i} onClick={() => removeWord(w, i)} disabled={submitted}
+                                className="bg-blue-500 text-white px-3 py-2 rounded-lg font-bold shadow hover:bg-red-400 transition animate-pop">
+                                {w}
+                            </button>
+                        ))}
+                    </div>
+
+                    {/* Pool Area */}
+                    <div className="flex flex-wrap gap-3 justify-center mb-6">
+                        {pool.map((w, i) => (
+                            <button key={i} onClick={() => addWord(w, i)} disabled={submitted}
+                                className="bg-white border-2 border-blue-200 text-blue-600 px-4 py-2 rounded-lg font-bold shadow-sm hover:border-blue-500 hover:-translate-y-1 transition">
+                                {w}
+                            </button>
+                        ))}
+                    </div>
+
+                    <div className="flex gap-4">
+                        {!submitted && <button onClick={reset} className="flex-1 bg-gray-200 text-gray-600 py-3 rounded-xl font-bold hover:bg-gray-300"><RefreshCw size={20} className="inline mr-2" /> Reset</button>}
+                        {!submitted && <button onClick={check} className="flex-[2] bg-green-500 text-white py-3 rounded-xl font-bold shadow-lg hover:bg-green-600">Check</button>}
+                    </div>
+
+                    {submitted && (
+                        <div className={`mt-4 text-center font-bold text-lg ${formed.join(" ").replace(/\s+([.,!])/g, '$1') === q.answer ? 'text-green-600' : 'text-red-500'}`}>
+                            {formed.join(" ").replace(/\s+([.,!])/g, '$1') === q.answer ? 'Perfect!' : `Correct: ${q.answer}`}
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const Matching = ({ q, onAnswer }) => {
+            const [leftSel, setLeftSel] = useState(null);
+            const [matches, setMatches] = useState({}); // { leftText: rightText }
+            const [wrongs, setWrongs] = useState([]);
+            const [completed, setCompleted] = useState(false);
+
+            // Randomize right side on mount
+            const [rightSide, setRightSide] = useState([]);
+
+            useEffect(() => {
+                setRightSide([...q.pairs].sort(() => Math.random() - 0.5));
+            }, [q]);
+
+            const handleLeft = (txt) => {
+                if (matches[txt]) return; // already matched
+                setLeftSel(txt);
+            };
+
+            const handleRight = (rTxt) => {
+                if (!leftSel) return;
+
+                // Check valid
+                const correctPair = q.pairs.find(p => p.left === leftSel);
+                if (correctPair.right === rTxt) {
+                    const newMatches = { ...matches, [leftSel]: rTxt };
+                    setMatches(newMatches);
+                    setLeftSel(null);
+
+                    // Check completion
+                    if (Object.keys(newMatches).length === q.pairs.length) {
+                        setCompleted(true);
+                        // Send the full match object as the "user answer"
+                        onAnswer(true, { type: "matching", value: newMatches });
+                    }
+                } else {
+                    // Wrong
+                    const id = `${leftSel}-${rTxt}`;
+                    setWrongs([...wrongs, id]);
+                    setTimeout(() => setWrongs(prev => prev.filter(w => w !== id)), 500);
+                    setLeftSel(null);
+                }
+            };
+
+            return (
+                <div className="w-full flex gap-4 text-sm md:text-base">
+                    <div className="flex-1 space-y-2">
+                        {q.pairs.map(p => (
+                            <button
+                                key={p.left}
+                                onClick={() => handleLeft(p.left)}
+                                disabled={matches[p.left]}
+                                className={`w-full text-left p-3 rounded-lg border-2 transition
+                                    ${matches[p.left] ? 'bg-green-100 border-green-400 opacity-50' :
+                                        leftSel === p.left ? 'bg-blue-100 border-blue-500 ring-2 ring-blue-200' : 'bg-white border-gray-200 hover:border-blue-300'}
+                                `}
+                            >
+                                {p.left}
+                            </button>
+                        ))}
+                    </div>
+                    <div className="flex-1 space-y-2">
+                        {rightSide.map(p => {
+                            const isMatched = Object.values(matches).includes(p.right);
+                            return (
+                                <button
+                                    key={p.right}
+                                    onClick={() => handleRight(p.right)}
+                                    disabled={isMatched}
+                                    className={`w-full text-left p-3 rounded-lg border-2 transition
+                                        ${isMatched ? 'bg-green-100 border-green-400 opacity-50' : 'bg-white border-gray-200 hover:border-blue-300'}
+                                    `}
+                                >
+                                    {p.right}
+                                </button>
+                            );
+                        })}
+                    </div>
+                </div>
+            );
+        };
+
+
+        const QuizEngine = ({ module, onComplete, onExit }) => {
+            const [idx, setIdx] = useState(0);
+            const [score, setScore] = useState(0);
+            const [showFeedback, setShowFeedback] = useState(null); // 'correct' | 'incorrect'
+            const [student_answer, setStudentAnswer] = useState({});
+
+            const q = module.questions[idx];
+
+            const handleAnswer = (isCorrect, userAnswerData) => {
+                setShowFeedback(isCorrect ? 'correct' : 'incorrect');
+
+                // Collect student answer
+                setStudentAnswer(prev => ({
+                    ...prev,
+                    [q.id]: {
+                        questionId: q.id,
+                        questionText: q.text,
+                        isCorrect: isCorrect,
+                        userResponse: userAnswerData,
+                        timestamp: new Date().toISOString()
+                    }
+                }));
+
+                if (isCorrect) {
+                    setScore(s => s + 1);
+                    confetti({
+                        particleCount: 50,
+                        spread: 60,
+                        origin: { y: 0.7 },
+                        colors: ['#60A5FA', '#34D399', '#FBBF24']
+                    });
+                }
+            };
+
+            const next = () => {
+                setShowFeedback(null);
+                if (idx + 1 < module.questions.length) {
+                    setIdx(idx + 1);
+                } else {
+                    console.log("Mission Complete. Collected Answers:", student_answer);
+                    onComplete(score + (showFeedback === 'correct' ? 0 : 0), module.questions.length, student_answer);
+                }
+            };
+
+            // Progress
+            const progress = ((idx) / module.questions.length) * 100;
+
+            return (
+                <div className="max-w-4xl mx-auto p-4 min-h-screen flex flex-col justify-center">
+                    {/* Header */}
+                    <div className="flex justify-between items-center mb-6">
+                        <button onClick={onExit} className="text-gray-500 hover:text-red-500 font-bold flex items-center gap-2"><X size={20} /> Quit</button>
+                        <div className="bg-white px-4 py-2 rounded-full shadow text-blue-600 font-bold">
+                            Score: {score}
+                        </div>
+                    </div>
+
+                    {/* Progress Bar */}
+                    <div className="w-full bg-white rounded-full h-4 mb-8 shadow-inner overflow-hidden">
+                        <div className="bg-blue-500 h-full transition-all duration-500 ease-out" style={{ width: `${progress}%` }}></div>
+                    </div>
+
+                    {/* Question Card */}
+                    <div className="bg-white rounded-[2rem] shadow-2xl p-6 md:p-12 relative overflow-hidden fade-in min-h-[400px] flex flex-col justify-center">
+                        <div className="absolute top-0 right-0 p-4 opacity-10">
+                            <Cloud size={100} />
+                        </div>
+
+                        <h3 className="text-gray-400 text-sm font-bold uppercase tracking-widest mb-4">Question {idx + 1} of {module.questions.length}</h3>
+
+                        {/* KEY FIX: Passing key={q.id} forces React to destroy and recreate the component when the question changes, effectively resetting its internal state. */}
+                        {q.type === 'fill_double' && <FillDouble key={q.id} q={q} onAnswer={handleAnswer} />}
+                        {q.type === 'fill_single' && <FillSingle key={q.id} q={q} onAnswer={handleAnswer} />}
+                        {q.type === 'choice' && <Choice key={q.id} q={q} onAnswer={handleAnswer} />}
+                        {q.type === 'rewrite' && <Rewrite key={q.id} q={q} onAnswer={handleAnswer} />}
+                        {q.type === 'scramble' && <Scramble key={q.id} q={q} onAnswer={handleAnswer} />}
+                        {q.type === 'matching' && <Matching key={q.id} q={q} onAnswer={handleAnswer} />}
+
+                    </div>
+
+                    {/* Next Button Logic */}
+                    {showFeedback && (
+                        <div className="fixed bottom-0 left-0 w-full p-4 bg-white/90 backdrop-blur border-t border-gray-200 flex justify-center items-center z-50 animate-slideUp">
+                            <div className="max-w-xl w-full flex justify-between items-center">
+                                <div className={`text-xl font-bold flex items-center gap-2 ${showFeedback === 'correct' ? 'text-green-600' : 'text-orange-500'}`}>
+                                    {showFeedback === 'correct' ? <Check size={32} /> : <div className="text-lg">Nice try! Keep going.</div>}
+                                    {showFeedback === 'correct' ? "Excellent!" : ""}
+                                </div>
+                                <button onClick={next} className="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:scale-105 transition flex items-center gap-2">
+                                    Next Question <ChevronRight />
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const ResultScreen = ({ score, total, studentAnswer, onHome }) => {
+            const percentage = (score / total) * 100;
+            const [studentName, setStudentName] = useState("");
+            const [emailStatus, setEmailStatus] = useState("");
+            const [isSending, setIsSending] = useState(false);
+
+            let stars = 0;
+            if (percentage > 80) stars = 3;
+            else if (percentage > 50) stars = 2;
+            else stars = 1;
+
+            useEffect(() => {
+                confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 } });
+            }, []);
+
+            const sendEmail = async () => {
+                if (!studentName.trim()) {
+                    setEmailStatus("Please enter your name!");
+                    return;
+                }
+
+                setIsSending(true);
+                setEmailStatus("Sending...");
+
+                let msg = `Test Results for ${studentName}\n`;
+                msg += `Score: ${score} / ${total}\n\n`;
+
+                // Format the collected answers for the email
+                Object.values(studentAnswer).forEach((ans, index) => {
+                    msg += `${index + 1}. ${ans.questionText}\n`;
+                    msg += `   Result: ${ans.isCorrect ? 'Correct ✅' : 'Wrong ❌'}\n`;
+                    if (ans.userResponse.type === "fill_double") {
+                        msg += `   Your Answer: ${ans.userResponse.verb1}, ${ans.userResponse.verb2}\n`;
+                    } else if (ans.userResponse.type === "matching") {
+                        msg += `   Your Matches: ${JSON.stringify(ans.userResponse.value)}\n`;
+                    } else {
+                        msg += `   Your Answer: ${ans.userResponse.value}\n`;
+                    }
+                    msg += "\n";
+                });
+
+                const params = {
+                    name: studentName,
+                    time: new Date().toLocaleString(),
+                    message: msg
+                };
+
+                try {
+                    await emailjs.send('service_m0h97uh', 'template_rzjx94s', params);
+                    setEmailStatus("Results Sent Successfully! 🚀");
+                    setIsSending(false);
+                    confetti({ particleCount: 50, spread: 60 });
+                } catch (error) {
+                    console.error('Email error:', error);
+                    setEmailStatus("Failed to send. Try again.");
+                    setIsSending(false);
+                }
+            };
+
+            return (
+                <div className="min-h-screen flex flex-col items-center justify-center p-4 fade-in text-center">
+                    <div className="bg-white p-10 rounded-3xl shadow-2xl max-w-lg w-full relative">
+                        <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-yellow-400 p-4 rounded-full border-4 border-white shadow-xl">
+                            <Trophy size={48} className="text-white" />
+                        </div>
+                        <h2 className="mt-8 text-4xl font-bold text-gray-800 mb-2">Mission Complete!</h2>
+                        <p className="text-gray-500 mb-8">Great job on your English practice.</p>
+
+                        <div className="flex justify-center gap-2 mb-8">
+                            {[1, 2, 3].map(s => (
+                                <Star key={s} size={48} className={s <= stars ? "text-yellow-400 fill-current" : "text-gray-200"} />
+                            ))}
+                        </div>
+
+                        <div className="bg-blue-50 rounded-xl p-6 mb-8">
+                            <div className="text-sm text-gray-500 uppercase font-bold tracking-widest">Final Score</div>
+                            <div className="text-5xl font-extrabold text-blue-600">{score} / {total}</div>
+                        </div>
+
+                        {/* Email Submission Section */}
+                        <div className="bg-gray-50 p-6 rounded-2xl mb-8 border border-gray-200">
+                            <h3 className="text-lg font-bold text-gray-700 mb-4">Submit Your Results 📧</h3>
+                            <div className="flex flex-col gap-3">
+                                <input
+                                    type="text"
+                                    placeholder="Enter Your Name"
+                                    value={studentName}
+                                    onChange={(e) => setStudentName(e.target.value)}
+                                    className="p-3 rounded-xl border border-gray-300 focus:border-blue-500 focus:outline-none transition w-full"
+                                    disabled={isSending || emailStatus.includes("Successfully")}
+                                />
+                                <button
+                                    onClick={sendEmail}
+                                    disabled={isSending || emailStatus.includes("Successfully")}
+                                    className={`bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl transition flex justify-center items-center gap-2 ${isSending ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                >
+                                    <span>{isSending ? 'Sending...' : 'Send to Teacher'}</span>
+                                    {!isSending && <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>}
+                                </button>
+                                {emailStatus && <p className={`text-sm font-bold mt-2 ${emailStatus.includes('Successfully') ? 'text-green-500' : 'text-orange-500'}`}>{emailStatus}</p>}
+                            </div>
+                        </div>
+
+                        <button onClick={onHome} className="w-full btn-premium bg-gray-800 text-white py-4 rounded-xl font-bold shadow-lg flex justify-center items-center gap-2">
+                            <RefreshCw size={20} /> Play Again
+                        </button>
+                    </div>
+                </div>
+            );
+        };
+
+        // --- APP ---
+
+        const App = () => {
+            const [screen, setScreen] = useState('welcome'); // welcome, select, quiz, result
+            const [currentModule, setCurrentModule] = useState(null);
+            const [resultData, setResultData] = useState({ score: 0, total: 0, studentAnswer: {} });
+
+            return (
+                <div className="relative z-10">
+                    <div className="fixed inset-0 cloud-bg pointer-events-none -z-10"></div>
+
+                    {screen === 'welcome' && <WelcomeScreen onStart={() => setScreen('select')} />}
+
+                    {screen === 'select' && <ModuleSelect onSelect={(m) => { setCurrentModule(m); setScreen('quiz'); }} />}
+
+                    {screen === 'quiz' && currentModule && (
+                        <QuizEngine
+                            module={currentModule}
+                            onExit={() => setScreen('select')}
+                            onComplete={(s, t, collectedAnswers) => {
+                                console.log("Final collected student answers:", collectedAnswers); // Log to console for verifying data collection
+                                setResultData({ score: s, total: t, studentAnswer: collectedAnswers });
+                                setScreen('result');
+                            }}
+                        />
+                    )}
+
+                    {screen === 'result' && (
+                        <ResultScreen
+                            score={resultData.score}
+                            total={resultData.total}
+                            studentAnswer={resultData.studentAnswer}
+                            onHome={() => setScreen('select')}
+                        />
+                    )}
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>
