@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Victor Moronu - Primary ESL & STEAM Educator</title>
+    <style>
+        /* JIS Brand Identity Integration */
+        :root {
+            --jis-navy: #050176;
+            --jis-red: #b21f1c;
+            --jis-purple: #470d7d;
+            --jis-text: #333333;
+            --bg-color: #ffffff;
+            --section-bg: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica', sans-serif;
+            line-height: 1.6;
+            color: var(--jis-text);
+            margin: 0;
+            padding: 0;
+            background-color: #e9ecef;
+        }
+
+        .resume-container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: var(--bg-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: grid;
+            grid-template-columns: 280px 1fr;
+        }
+
+        /* Sidebar Design (Skills & Contact) */
+        .sidebar {
+            background-color: var(--jis-navy);
+            color: white;
+            padding: 30px 20px;
+        }
+
+        .profile-photo-placeholder {
+            width: 150px;
+            height: 150px;
+            background-color: white;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--jis-navy);
+            font-weight: bold;
+            border: 4px solid var(--jis-red);
+        }
+
+        .sidebar h3 {
+            color: #ffffff;
+            text-transform: uppercase;
+            font-size: 16px;
+            border-bottom: 2px solid var(--jis-red);
+            padding-bottom: 5px;
+            margin-top: 30px;
+            letter-spacing: 1px;
+        }
+
+        .contact-info div {
+            margin-bottom: 12px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-icon {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+
+        .skill-tag {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 5px 10px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            font-size: 13px;
+            display: inline-block;
+        }
+
+        /* Main Content Design */
+        .main-content {
+            padding: 40px;
+        }
+
+        header {
+            border-bottom: 3px solid var(--jis-red);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 36px;
+            color: var(--jis-navy);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: var(--jis-purple);
+            font-weight: 500;
+            margin-top: 5px;
+        }
+
+        .summary {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        h2 {
+            color: var(--jis-navy);
+            font-size: 22px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 22px;
+            background-color: var(--jis-red);
+            margin-right: 10px;
+        }
+
+        .job-card {
+            margin-bottom: 25px;
+            border-left: 3px solid #eee;
+            padding-left: 20px;
+            transition: border-color 0.3s;
+        }
+
+        .job-card:hover {
+            border-left-color: var(--jis-purple);
+        }
+
+        .job-title {
+            font-weight: bold;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .company-name {
+            color: var(--jis-navy);
+            font-weight: 600;
+        }
+
+        .date-range {
+            font-size: 13px;
+            color: #777;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin-top: 5px;
+        }
+
+        li {
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .education-item {
+            margin-bottom: 15px;
+        }
+
+        .degree {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .uni {
+            color: #555;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .resume-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                text-align: center;
+            }
+
+            .profile-photo-placeholder {
+                margin: 0 auto 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="resume-container">
+        <aside class="sidebar">
+            <div class="profile-photo-placeholder">PHOTO</div>
+
+            <h3>Contact</h3>
+            <div class="contact-info">
+                <div><span class="contact-icon">📍</span> Hanoi, Vietnam</div>
+                <div><span class="contact-icon">📞</span> +84 98 893 0491</div>
+                <div><span class="contact-icon">📧</span> vmoronu@gmail.com</div>
+                <div><span class="contact-icon">🔗</span> linkedin.com/in/victor-moronu</div>
+            </div>
+
+            <h3>Core Competencies</h3>
+            <div class="skill-tag">Cambridge Primary Framework</div>
+            <div class="skill-tag">ESL / EFL Pedagogy</div>
+            <div class="skill-tag">CLIL & STEAM Integration</div>
+            <div class="skill-tag">Art & Design in Education</div>
+            <div class="skill-tag">Classroom Management</div>
+            <div class="skill-tag">Differentiated Instruction</div>
+            <div class="skill-tag">Student-Centered Inquiry</div>
+
+            <h3>Technical Skills</h3>
+            <div class="skill-tag">Interactive Whiteboards</div>
+            <div class="skill-tag">Microsoft Office Suite</div>
+            <div class="skill-tag">Educational AI Tools</div>
+            <div class="skill-tag">Engineering Design</div>
+
+            <h3>Languages</h3>
+            <div class="skill-tag">English (Native/C2)</div>
+            <div class="skill-tag">Igbo (Native)</div>
+            <div class="skill-tag">Spanish (Basic)</div>
+
+            <h3>Certifications</h3>
+            <div style="font-size: 13px; margin-bottom: 10px;">
+                <strong>120-Hour TESOL/TEFL</strong><br>World TESOL Academy
+            </div>
+            <div style="font-size: 13px;">
+                <strong>IELTS Band 8.5</strong><br>C2 Proficient
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header>
+                <h1>Victor Moronu</h1>
+                <div class="subtitle">Primary ESL & STEAM Educator | Engineering Background</div>
+            </header>
+
+            <div class="summary">
+                Innovative Educator with a Bachelor of Engineering and 3+ years of international teaching experience in
+                Vietnam. Expert in bridging the gap between abstract language concepts and real-world application
+                through <strong>Art, Design, and STEAM</strong> projects. Proficient in the <strong>Cambridge
+                    Primary</strong> framework and committed to the holistic development of students—aligning academic
+                rigor with morality and practice. Proven track record of increasing student engagement by 20% through
+                kinesthetic, inquiry-based learning methods.
+            </div>
+
+            <h2>Teaching Experience</h2>
+
+            <div class="job-card">
+                <div class="job-title">Primary & Lower Secondary Science/English Teacher</div>
+                <div class="company-name">Victoria Thăng Long | Hanoi, Vietnam</div>
+                <div class="date-range">Sept 2024 - Present</div>
+                <ul>
+                    <li><strong>Integrated Curriculum (CLIL):</strong> Orchestrated the delivery of an integrated Math,
+                        Science, and English curriculum, utilizing <strong>Cambridge-style</strong> thematic units to
+                        foster interdisciplinary understanding for EAL learners.</li>
+                    <li><strong>Art & STEAM Integration:</strong> Led a 'Structural Art & Engineering' unit where
+                        students applied English vocabulary to construct load-bearing bridge models. This hands-on
+                        "Practice" (Hành) approach increased student engagement scores by <strong>20%</strong>.</li>
+                    <li><strong>Differentiation Strategies:</strong> Implemented scaffolded learning materials for
+                        mixed-ability classes, ensuring EAL students could access complex concepts through visual aids
+                        and tactile learning, resulting in a <strong>15% increase</strong> in termly assessment
+                        averages.</li>
+                    <li><strong>Character Education:</strong> Acted as a Homeroom Advisor, delivering pastoral care
+                        modules focused on resilience, manners, and emotional well-being, directly supporting the
+                        school’s personality education goals.</li>
+                </ul>
+            </div>
+
+            <div class="job-card">
+                <div class="job-title">Primary English & Science Teacher (Grades 1-4)</div>
+                <div class="company-name">Hanoi Primary & High School System (Thang Long)</div>
+                <div class="date-range">Aug 2023 - June 2024</div>
+                <ul>
+                    <li><strong>Creative Lesson Design:</strong> Designed playful, concept-rich lessons blending
+                        Cambridge and McGraw-Hill curricula. Integrated <strong>visual arts</strong> (drawing, modeling)
+                        to help students visualize and retain new English vocabulary.</li>
+                    <li><strong>Student-Centered Learning:</strong> Simplified complex ideas through storytelling,
+                        songs, and hands-on activities to accommodate diverse primary learning styles.</li>
+                    <li><strong>Classroom Management:</strong> Established a positive, disciplined classroom culture
+                        emphasizing respect and collaboration, aligning with Japanese-style educational values.</li>
+                </ul>
+            </div>
+
+            <div class="job-card">
+                <div class="job-title">Academic Manager & Curriculum Lead (Primary Focus)</div>
+                <div class="company-name">Happy English Club | Hanoi, Vietnam</div>
+                <div class="date-range">2022 - Present</div>
+                <ul>
+                    <li><strong>Curriculum Development:</strong> Pioneered a "Language Discovery" framework fusing
+                        <strong>Montessori principles</strong> and Project-Based Learning (PBL). Designed
+                        "Art-in-English" modules to encourage creative expression.</li>
+                    <li><strong>Universal Design for Learning (UDL):</strong> Oversaw the development of the English
+                        curriculum for Vietnamese students, transforming traditional rote lessons into student-centered
+                        inquiry projects suitable for young learners.</li>
+                    <li><strong>Teacher Training:</strong> Mentored junior staff on effective ESL techniques for primary
+                        students, focusing on Total Physical Response (TPR) and gamification.</li>
+                </ul>
+            </div>
+
+            <h2>Education</h2>
+            <div class="education-item">
+                <div class="degree">U.S. Teaching License (In Progress)</div>
+                <div class="uni">Moreland University, USA (Expected Jan 2026)</div>
+                <div style="font-size: 13px; color: #666;">Focus: Inclusive Pedagogy & Assessment</div>
+            </div>
+
+            <div class="education-item">
+                <div class="degree">Post Graduate Certificate in Education (PGCE)</div>
+                <div class="uni">Moreland University, USA </div>
+                <div style="font-size: 13px; color: #666;">Focus: Inclusive Pedagogy & Assessment</div>
+            </div>
+
+
+            <div class="education-item">
+                <div class="degree">Bachelor of Engineering (Mechanical)</div>
+                <div class="uni">University of Nigeria (2018)</div>
+                <div style="font-size: 13px; color: #666;">Applied Math & Physics focus - Translatable to STEAM
+                    Education</div>
+            </div>
+
+        </main>
+    </div>
+
+</body>
+
+</html>
