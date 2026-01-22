@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Victor Moronu - Primary ESL & STEAM Educator</title>
+    <title>Application - Victor Moronu</title>
     <style>
-        /* JIS Brand Identity Integration */
+        /* Shared & Resume Variables */
         :root {
             --jis-navy: #050176;
             --jis-red: #b21f1c;
@@ -21,13 +21,113 @@
             line-height: 1.6;
             color: var(--jis-text);
             margin: 0;
-            padding: 0;
+            padding: 40px 0;
             background-color: #e9ecef;
         }
 
+        /* Page Break Utility */
+        .page-break {
+            height: 50px;
+            page-break-before: always;
+        }
+
+        @media print {
+            .page-break {
+                height: 0;
+                display: block;
+                page-break-before: always;
+            }
+
+            body {
+                padding: 0;
+                background-color: white;
+            }
+
+            .letter-container,
+            .resume-container {
+                box-shadow: none;
+                margin: 0;
+                width: 100%;
+                max-width: 100%;
+                border: none;
+            }
+        }
+
+        /* --- Cover Letter Styles --- */
+        .letter-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 60px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-top: 10px solid var(--jis-navy);
+            border-bottom: 5px solid var(--jis-red);
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 50px;
+        }
+
+        .letter-container .header {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 50px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+
+        .letter-container .sender-info {
+            font-size: 14px;
+            color: #555;
+            text-align: right;
+        }
+
+        .letter-container .sender-name {
+            font-weight: bold;
+            color: var(--jis-navy);
+            font-size: 18px;
+        }
+
+        .letter-container .recipient-block {
+            margin-bottom: 30px;
+            font-size: 15px;
+        }
+
+        .letter-container h1 {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 20px;
+            color: var(--jis-navy);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+        }
+
+        .letter-container p {
+            margin-bottom: 18px;
+            text-align: justify;
+        }
+
+        .letter-container .highlight {
+            font-weight: bold;
+            color: var(--jis-navy);
+        }
+
+        .letter-container .closing {
+            margin-top: 40px;
+        }
+
+        .letter-container .signature {
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: bold;
+            color: var(--jis-navy);
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+        /* --- Resume Styles --- */
         .resume-container {
             max-width: 900px;
-            margin: 40px auto;
+            margin: 0 auto;
             background-color: var(--bg-color);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             display: grid;
@@ -39,20 +139,6 @@
             background-color: var(--jis-navy);
             color: white;
             padding: 30px 20px;
-        }
-
-        .profile-photo-placeholder {
-            width: 150px;
-            height: 150px;
-            background-color: white;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--jis-navy);
-            font-weight: bold;
-            border: 4px solid var(--jis-red);
         }
 
         .sidebar h3 {
@@ -91,18 +177,20 @@
             padding: 40px;
         }
 
-        header {
+        /* Resume-specific header targeting to avoid conflict */
+        .resume-container header {
             border-bottom: 3px solid var(--jis-red);
             padding-bottom: 20px;
             margin-bottom: 30px;
         }
 
-        h1 {
+        .resume-container h1 {
             margin: 0;
             font-size: 36px;
             color: var(--jis-navy);
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-family: 'Segoe UI', sans-serif;
         }
 
         .subtitle {
@@ -119,7 +207,7 @@
             font-style: italic;
         }
 
-        h2 {
+        .resume-container h2 {
             color: var(--jis-navy);
             font-size: 22px;
             margin-top: 0;
@@ -128,7 +216,7 @@
             align-items: center;
         }
 
-        h2::before {
+        .resume-container h2::before {
             content: '';
             display: inline-block;
             width: 8px;
@@ -166,12 +254,12 @@
             font-weight: 500;
         }
 
-        ul {
+        .resume-container ul {
             padding-left: 20px;
             margin-top: 5px;
         }
 
-        li {
+        .resume-container li {
             margin-bottom: 6px;
             font-size: 14px;
         }
@@ -198,19 +286,86 @@
             .sidebar {
                 text-align: center;
             }
-
-            .profile-photo-placeholder {
-                margin: 0 auto 20px;
-            }
         }
     </style>
 </head>
 
 <body>
 
+    <!-- Cover Letter Section -->
+    <div class="letter-container">
+        <div class="header">
+            <div class="sender-info">
+                <div class="sender-name">Victor Moronu</div>
+                VinHomes Smart City, Hanoi<br>
+                +84 98 893 0491<br>
+                vmoronu@gmail.com
+            </div>
+        </div>
+
+        <div class="recipient-block">
+            <strong>Hiring Committee / Head of Primary</strong><br>
+            Japanese International School (JIS)<br>
+            84A Nguyen Thanh Binh, Van Phuc<br>
+            Ha Dong, Hanoi, Vietnam
+        </div>
+
+        <h1>Application for Primary ESL Teacher (Japanese International Program)</h1>
+
+        <p>Dear Hiring Committee,</p>
+
+        <p>It is with great respect for the educational mission of the Japanese International School (JIS) that I submit
+            my application for the Primary ESL Teacher position. Having observed the educational landscape in Hanoi for
+            several years, I am deeply impressed by JIS’s commitment to the philosophy of <strong>"Minh Triết"
+                (Wisdom)</strong> and the development of the whole child through Morality, Intelligence, and Practice.
+            As an educator with a background in Engineering, I share the conviction that true education requires the
+            harmonious development of the mind and the character.</p>
+
+        <p>While my academic background is in Engineering, my passion lies in <strong>Primary Education</strong> and
+            <strong>Language Acquisition</strong>. I believe my unique profile offers a distinct advantage to the JIS
+            curriculum, particularly in addressing the requirement for integrated Art and English learning:
+        </p>
+
+        <p><strong>1. Bridging Art, English, and Engineering (STEAM):</strong><br>
+            The JIS curriculum values "Practice" (*Hành*) and "Aesthetics" (*Mỹ*). With my engineering degree, I do not
+            just teach English vocabulary from a textbook; I create <strong>"Makerspace" lessons</strong> where students
+            design, draw, and build. Whether we are constructing paper structures or drawing geometric art, students are
+            learning the English language of shape, function, and design. This directly addresses the school’s need for
+            an educator who can bridge <strong>ESL and Art</strong> within the Cambridge Primary framework.</p>
+
+        <p><strong>2. Alignment with Japanese Educational Values:</strong><br>
+            I understand that in the Japanese educational model, the classroom is a community founded on respect and
+            discipline. My teaching philosophy emphasizes <strong>collaborative learning</strong> and <strong>shared
+                responsibility</strong>. I view the teacher not just as an instructor, but as a moral role model who
+            guides students in etiquette and resilience alongside grammar and phonics. I am eager to support the
+            school’s unique culture, including the emphasis on physical health and manners.</p>
+
+        <p><strong>3. Cambridge Curriculum Expertise:</strong><br>
+            At Victoria Thăng Long and Happy English Club, I have extensively utilized <strong>Inquiry-Based
+                Learning</strong> to make the Cambridge curriculum accessible to Vietnamese learners. I have a proven
+            track record of differentiating instruction for mixed-ability classes, using visual scaffolding and
+            kinesthetic activities to ensure that every child, regardless of their starting point, can engage with the
+            material and build confidence.</p>
+
+        <p>I hold a Bachelor of Engineering, a 120-Hour TESOL certification, and am currently finalizing my U.S.
+            Teaching License with a focus on Inclusive Pedagogy. I am eager to bring my energy, my technical creativity,
+            and my dedication to holistic education to the JIS team.</p>
+
+        <p>Thank you for your time and consideration. I would welcome the opportunity to discuss how I can contribute to
+            the wisdom and growth of JIS students.</p>
+
+        <div class="closing">
+            Sincerely,
+            <div class="signature">Victor Moronu</div>
+        </div>
+    </div>
+
+    <!-- Page Break -->
+    <div class="page-break"></div>
+
+    <!-- Resume Section -->
     <div class="resume-container">
         <aside class="sidebar">
-
 
             <h3>Contact</h3>
             <div class="contact-info">
