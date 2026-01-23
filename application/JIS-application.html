@@ -5,30 +5,476 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Application - Victor Moronu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Shared & Resume Variables */
+        /* Glassmorphism & JIS Brand Theme */
         :root {
+            /* Brand Colors (Preserved but adapted) */
             --jis-navy: #050176;
             --jis-red: #b21f1c;
             --jis-purple: #470d7d;
-            --jis-text: #333333;
-            --bg-color: #ffffff;
-            --section-bg: #f8f9fa;
+            --text-dark: #1e293b;
+            --text-light: #f8fafc;
+            --text-muted: #64748b;
+
+            /* Glass Vars */
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            --card-glass: rgba(255, 255, 255, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Segoe UI', 'Roboto', 'Helvetica', sans-serif;
+            font-family: 'Outfit', sans-serif;
             line-height: 1.6;
-            color: var(--jis-text);
+            color: var(--text-dark);
             margin: 0;
-            padding: 40px 0;
-            background-color: #e9ecef;
+            padding: 40px 20px;
+            min-height: 100vh;
+            /* Animated Mesh Gradient Background */
+            background-color: #e0e7ff;
+            background-image:
+                radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
+                radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 1) 0, transparent 50%),
+                radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 1) 0, transparent 50%);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+
+        /* Ambient shapes */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, var(--jis-purple) 0%, transparent 70%);
+            opacity: 0.1;
+            z-index: -1;
+            filter: blur(80px);
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -10%;
+            right: -10%;
+            width: 40vw;
+            height: 40vw;
+            background: radial-gradient(circle, var(--jis-red) 0%, transparent 70%);
+            opacity: 0.1;
+            z-index: -1;
+            filter: blur(80px);
+        }
+
+        /* Common Glass Styles */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* --- Cover Letter Specifics --- */
+        .letter-container {
+            max-width: 900px;
+            margin: 0 auto 50px;
+            padding: 60px;
+            font-size: 1.05rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 50px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding-bottom: 20px;
+        }
+
+        .sender-info {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            text-align: right;
+        }
+
+        .sender-name {
+            font-weight: 700;
+            color: var(--jis-navy);
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .recipient-block {
+            margin-bottom: 30px;
+            font-size: 1rem;
+            color: var(--text-dark);
+            background: rgba(255, 255, 255, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--jis-navy);
+        }
+
+        .letter-container h1 {
+            font-size: 1.6rem;
+            color: var(--jis-navy);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 30px;
+            font-weight: 700;
+            border-bottom: 2px solid transparent;
+            display: inline-block;
+            background: linear-gradient(135deg, var(--jis-navy) 0%, var(--jis-purple) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .letter-container p {
+            margin-bottom: 20px;
+            text-align: justify;
+            color: #334155;
+        }
+
+        .closing {
+            margin-top: 50px;
+            font-weight: 500;
+        }
+
+        .signature {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            color: var(--jis-navy);
+            margin-top: 15px;
+            font-size: 1.4rem;
+        }
+
+        /* --- Resume Specifics --- */
+        .resume-container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            /* Gap handled by grid in desktop or layout */
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            padding: 30px;
+            /* Darker glass for sidebar to contrast */
+            background: rgba(5, 1, 118, 0.85);
+            color: white;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-photo {
+            width: 160px;
+            height: 160px;
+            object-fit: cover;
+            object-position: top center;
+            border-radius: 50%;
+            margin: 0 auto 25px;
+            display: block;
+            border: 4px solid #c8aa6e;
+            /* Premium muted gold/bronze */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .profile-photo:hover {
+            transform: scale(1.05);
+            border-color: #e0c080;
+        }
+
+        .sidebar h3 {
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-info div {
+            margin-bottom: 14px;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            opacity: 0.9;
+        }
+
+        .contact-icon {
+            margin-right: 12px;
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        .contact-info a {
+            color: white;
+            text-decoration: none;
+            transition: text-shadow 0.2s;
+        }
+
+        .contact-info a:hover {
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            text-decoration: underline;
+        }
+
+        .skill-tag {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 6px 12px;
+            margin: 0 4px 8px 0;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            display: inline-block;
+            transition: background 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            animation: fadeIn 0.5s ease-out forwards;
+            opacity: 0;
+            animation-delay: 0.3s;
+            animation-fill-mode: forwards;
+        }
+
+        .skill-tag:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.85);
+            /* Slightly more opaque for readability */
+        }
+
+        header {
+            border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+            padding-bottom: 25px;
+            margin-bottom: 35px;
+        }
+
+        .resume-container h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: var(--jis-navy);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--jis-navy) 0%, var(--jis-purple) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--jis-purple);
+            font-weight: 500;
+            margin-top: 8px;
+            opacity: 0.9;
+        }
+
+        .summary {
+            font-size: 1rem;
+            color: var(--text-dark);
+            margin-bottom: 40px;
+            line-height: 1.7;
+            background: rgba(255, 255, 255, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--jis-red);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .summary:hover {
+            transform: scale(1.01);
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        .resume-container h2 {
+            color: var(--jis-navy);
+            font-size: 1.4rem;
+            margin-top: 0;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+        }
+
+        .resume-container h2::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 24px;
+            background: linear-gradient(to bottom, var(--jis-red), var(--jis-purple));
+            margin-right: 12px;
+            border-radius: 3px;
+        }
+
+        .job-card {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+            border-left: 3px solid transparent;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border-left: 3px solid var(--jis-purple);
+        }
+
+        .job-title {
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .company-name {
+            color: var(--jis-purple);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .date-range {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            display: inline-block;
+            background: #f1f5f9;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            color: #334155;
+            padding-left: 5px;
+        }
+
+        li::marker {
+            color: var(--jis-red);
+        }
+
+        .education-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: background 0.2s ease;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .education-item:last-child {
+            border-bottom: none;
+        }
+
+        .education-item:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .degree {
+            font-weight: 700;
+            color: var(--text-dark);
+            font-size: 1.05rem;
+        }
+
+        .uni {
+            color: var(--jis-navy);
+            font-weight: 500;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .letter-container,
+        .resume-container {
+            animation: fadeIn 0.8s ease-out forwards;
         }
 
         /* Page Break Utility */
         .page-break {
             height: 50px;
-            page-break-before: always;
+        }
+
+        /* Desktop Grid Layout for Resume */
+        @media (min-width: 850px) {
+            .resume-container {
+                display: grid;
+                grid-template-columns: 320px 1fr;
+                align-items: start;
+                /* Remove gap since valid valid grid/glass combo usually wants flushed or specific gap */
+            }
+
+            .sidebar {
+                border-radius: 20px 0 0 20px;
+                min-height: 100%;
+            }
+
+            .main-content {
+                border-radius: 0 20px 20px 0;
+            }
+        }
+
+        /* For very small devices, adjust padding */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .letter-container {
+                padding: 30px;
+            }
+
+            .main-content {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
         }
 
         @media print {
@@ -41,250 +487,32 @@
             body {
                 padding: 0;
                 background-color: white;
+                background-image: none;
             }
 
             .letter-container,
-            .resume-container {
+            .resume-container,
+            .glass-panel,
+            .sidebar,
+            .main-content {
                 box-shadow: none;
                 margin: 0;
                 width: 100%;
                 max-width: 100%;
                 border: none;
-            }
-        }
-
-        /* --- Cover Letter Styles --- */
-        .letter-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            padding: 60px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            border-top: 10px solid var(--jis-navy);
-            border-bottom: 5px solid var(--jis-red);
-            font-family: 'Georgia', serif;
-            line-height: 1.8;
-            color: #333;
-            margin-bottom: 50px;
-        }
-
-        .letter-container .header {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 50px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 20px;
-        }
-
-        .letter-container .sender-info {
-            font-size: 14px;
-            color: #555;
-            text-align: right;
-        }
-
-        .letter-container .sender-name {
-            font-weight: bold;
-            color: var(--jis-navy);
-            font-size: 18px;
-        }
-
-        .letter-container .recipient-block {
-            margin-bottom: 30px;
-            font-size: 15px;
-        }
-
-        .letter-container h1 {
-            font-family: 'Segoe UI', sans-serif;
-            font-size: 20px;
-            color: var(--jis-navy);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 25px;
-        }
-
-        .letter-container p {
-            margin-bottom: 18px;
-            text-align: justify;
-        }
-
-        .letter-container .highlight {
-            font-weight: bold;
-            color: var(--jis-navy);
-        }
-
-        .letter-container .closing {
-            margin-top: 40px;
-        }
-
-        .letter-container .signature {
-            font-family: 'Segoe UI', sans-serif;
-            font-weight: bold;
-            color: var(--jis-navy);
-            margin-top: 10px;
-            font-size: 18px;
-        }
-
-        /* --- Resume Styles --- */
-        .resume-container {
-            max-width: 900px;
-            margin: 0 auto;
-            background-color: var(--bg-color);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            display: grid;
-            grid-template-columns: 280px 1fr;
-        }
-
-        /* Sidebar Design (Skills & Contact) */
-        .sidebar {
-            background-color: var(--jis-navy);
-            color: white;
-            padding: 30px 20px;
-        }
-
-        .sidebar h3 {
-            color: #ffffff;
-            text-transform: uppercase;
-            font-size: 16px;
-            border-bottom: 2px solid var(--jis-red);
-            padding-bottom: 5px;
-            margin-top: 30px;
-            letter-spacing: 1px;
-        }
-
-        .contact-info div {
-            margin-bottom: 12px;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-        }
-
-        .contact-icon {
-            margin-right: 10px;
-            font-size: 16px;
-        }
-
-        .skill-tag {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 5px 10px;
-            margin-bottom: 8px;
-            border-radius: 4px;
-            font-size: 13px;
-            display: inline-block;
-        }
-
-        /* Main Content Design */
-        .main-content {
-            padding: 40px;
-        }
-
-        /* Resume-specific header targeting to avoid conflict */
-        .resume-container header {
-            border-bottom: 3px solid var(--jis-red);
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-
-        .resume-container h1 {
-            margin: 0;
-            font-size: 36px;
-            color: var(--jis-navy);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-family: 'Segoe UI', sans-serif;
-        }
-
-        .subtitle {
-            font-size: 18px;
-            color: var(--jis-purple);
-            font-weight: 500;
-            margin-top: 5px;
-        }
-
-        .summary {
-            font-size: 15px;
-            color: #555;
-            margin-bottom: 30px;
-            font-style: italic;
-        }
-
-        .resume-container h2 {
-            color: var(--jis-navy);
-            font-size: 22px;
-            margin-top: 0;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-        }
-
-        .resume-container h2::before {
-            content: '';
-            display: inline-block;
-            width: 8px;
-            height: 22px;
-            background-color: var(--jis-red);
-            margin-right: 10px;
-        }
-
-        .job-card {
-            margin-bottom: 25px;
-            border-left: 3px solid #eee;
-            padding-left: 20px;
-            transition: border-color 0.3s;
-        }
-
-        .job-card:hover {
-            border-left-color: var(--jis-purple);
-        }
-
-        .job-title {
-            font-weight: bold;
-            font-size: 18px;
-            color: #333;
-        }
-
-        .company-name {
-            color: var(--jis-navy);
-            font-weight: 600;
-        }
-
-        .date-range {
-            font-size: 13px;
-            color: #777;
-            margin-bottom: 10px;
-            font-weight: 500;
-        }
-
-        .resume-container ul {
-            padding-left: 20px;
-            margin-top: 5px;
-        }
-
-        .resume-container li {
-            margin-bottom: 6px;
-            font-size: 14px;
-        }
-
-        .education-item {
-            margin-bottom: 15px;
-        }
-
-        .degree {
-            font-weight: bold;
-            color: #333;
-        }
-
-        .uni {
-            color: #555;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .resume-container {
-                grid-template-columns: 1fr;
+                background: white !important;
+                backdrop-filter: none;
+                color: black;
             }
 
             .sidebar {
-                text-align: center;
+                color: black;
+                border-right: 1px solid #eee;
+            }
+
+            .sidebar h3,
+            .contact-info a {
+                color: black;
             }
         }
     </style>
@@ -293,10 +521,10 @@
 <body>
 
     <!-- Cover Letter Section -->
-    <div class="letter-container">
+    <div class="letter-container glass-panel">
         <div class="header">
             <div class="sender-info">
-                <div class="sender-name">Victor Moronu</div>
+                <span class="sender-name">Victor Moronu</span>
                 VinHomes Smart City, Hanoi<br>
                 +84 98 893 0491<br>
                 vmoronu@gmail.com
@@ -364,15 +592,18 @@
     <div class="page-break"></div>
 
     <!-- Resume Section -->
-    <div class="resume-container">
+    <div class="resume-container glass-panel">
         <aside class="sidebar">
+
+            <img src="headshot.png" alt="Victor Moronu" class="profile-photo">
 
             <h3>Contact</h3>
             <div class="contact-info">
                 <div><span class="contact-icon">📍</span> Hanoi, Vietnam</div>
                 <div><span class="contact-icon">📞</span> +84 98 893 0491</div>
-                <div><span class="contact-icon">📧</span> vmoronu@gmail.com</div>
-                <div><span class="contact-icon">🔗</span> linkedin.com/in/victor-moronu</div>
+                <div><span class="contact-icon">📧</span> <a href="mailto:vmoronu@gmail.com">vmoronu@gmail.com</a></div>
+                <div><span class="contact-icon">🔗</span> <a
+                        href="https://linkedin.com/in/victor-moronu">linkedin.com/in/victor-moronu</a></div>
             </div>
 
             <h3>Core Competencies</h3>
@@ -396,18 +627,20 @@
             <div class="skill-tag">Spanish (Basic)</div>
 
             <h3>Certifications</h3>
-            <div style="font-size: 13px; margin-bottom: 10px;">
-                <strong>120-Hour TESOL/TEFL</strong><br>World TESOL Academy
+            <div style="font-size: 0.9rem; margin-bottom: 15px;">
+                <strong style="display:block; margin-bottom: 2px;">120-Hour TESOL/TEFL</strong>
+                <span style="opacity: 0.7;">World TESOL Academy</span>
             </div>
-            <div style="font-size: 13px;">
-                <strong>IELTS Band 8.5</strong><br>C2 Proficient
+            <div style="font-size: 0.9rem;">
+                <strong style="display:block; margin-bottom: 2px;">IELTS Band 8.5</strong>
+                <span style="opacity: 0.7;">C2 Proficient</span>
             </div>
         </aside>
 
         <main class="main-content">
             <header>
                 <h1>Victor Moronu</h1>
-                <div class="subtitle">Primary ESL & STEAM Educator | Engineering Background</div>
+                <div class="subtitle">Primary & Secondary ESL & STEAM Educator | Engineering Background</div>
             </header>
 
             <div class="summary">
@@ -478,20 +711,23 @@
             <div class="education-item">
                 <div class="degree">U.S. Teaching License (In Progress)</div>
                 <div class="uni">Moreland University, USA (Expected Jan 2026)</div>
-                <div style="font-size: 13px; color: #666;">Focus: Inclusive Pedagogy & Assessment</div>
+                <div style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px;">Focus: Inclusive Pedagogy &
+                    Assessment</div>
             </div>
 
             <div class="education-item">
                 <div class="degree">Post Graduate Certificate in Education (PGCE)</div>
                 <div class="uni">Moreland University, USA </div>
-                <div style="font-size: 13px; color: #666;">Focus: Inclusive Pedagogy & Assessment</div>
+                <div style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px;">Focus: Inclusive Pedagogy &
+                    Assessment</div>
             </div>
 
 
             <div class="education-item">
                 <div class="degree">Bachelor of Engineering (Mechanical)</div>
                 <div class="uni">University of Nigeria (2018)</div>
-                <div style="font-size: 13px; color: #666;">Applied Math & Physics focus - Translatable to STEAM
+                <div style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px;">Applied Math & Physics focus
+                    - Translatable to STEAM
                     Education</div>
             </div>
 
