@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Victor Moronu - VinFast Application</title>
+    <style>
+        :root {
+            /* VinFast Brand Colors based on Brand Book */
+            --vf-blue: #1464F4;
+            --vf-grey: #92A0B2;
+            --vf-light-grey: #F4F6F8;
+            --vf-text: #2c3e50;
+            --vf-text-light: #546e7a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: var(--vf-text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #e9ecef;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 40px auto;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- RESUME STYLES --- */
+        .resume-header {
+            background-color: white;
+            padding: 40px 40px 20px 40px;
+            border-bottom: 4px solid var(--vf-blue);
+        }
+
+        .resume-header h1 {
+            font-size: 36px;
+            color: var(--vf-blue);
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .resume-header h2 {
+            font-size: 18px;
+            color: var(--vf-text-light);
+            margin: 5px 0 15px 0;
+            font-weight: 500;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 14px;
+            color: var(--vf-text-light);
+        }
+
+        .contact-info a {
+            color: var(--vf-blue);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            color: var(--vf-blue);
+            text-transform: uppercase;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .job-block {
+            margin-bottom: 20px;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 5px;
+        }
+
+        .job-title {
+            font-weight: 700;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .company-name {
+            font-style: italic;
+            color: var(--vf-text-light);
+        }
+
+        .job-date {
+            font-size: 14px;
+            color: var(--vf-blue);
+            font-weight: 600;
+        }
+
+        ul {
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .skill-category {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--vf-text);
+        }
+
+        .skill-list {
+            font-size: 14px;
+            color: var(--vf-text-light);
+        }
+
+        /* --- COVER LETTER STYLES --- */
+        .cover-letter-page {
+            padding: 60px 50px;
+            background: white;
+            margin-top: 40px;
+            /* Space between resume and cover letter in scroll view */
+        }
+
+        .cl-header {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .cl-contact {
+            text-align: right;
+            font-size: 13px;
+            color: var(--vf-text-light);
+        }
+
+        .cl-contact h1 {
+            color: var(--vf-blue);
+            font-size: 24px;
+            margin: 0 0 5px 0;
+        }
+
+        .cl-recipient {
+            margin-bottom: 30px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .cl-body {
+            font-size: 15px;
+            line-height: 1.7;
+            text-align: justify;
+        }
+
+        .cl-body p {
+            margin-bottom: 15px;
+        }
+
+        .cl-body ul {
+            margin-bottom: 15px;
+        }
+
+        /* Print Optimization */
+        @media print {
+            body {
+                background-color: white;
+            }
+
+            .container {
+                box-shadow: none;
+                margin: 0;
+                max-width: 100%;
+            }
+
+            .cover-letter-page {
+                page-break-before: always;
+                margin-top: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="resume-header">
+            <h1>Victor Moronu</h1>
+            <h2>Technical Learning & Development Specialist | Mechanical Engineer</h2>
+            <div class="contact-info">
+                <span>📍 VinHomes Smart City, Hanoi</span>
+                <span>📞 +84 98 893 0491</span>
+                <span>📧 <a href="mailto:vmoronu@gmail.com">vmoronu@gmail.com</a></span>
+                <span>🔗 <a
+                        href="https://linkedin.com/in/victor-moronu">linkedin</a></span>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="section">
+                <div class="section-title">Professional Summary</div>
+                <p style="font-size: 14px;">
+                    Results-oriented Learning & Development Expert with a Bachelor of Engineering in Mechanical
+                    Engineering and 3+ years of experience designing high-impact technical training programs. Uniquely
+                    qualified to bridge the gap between complex engineering concepts and practical workforce application
+                    through Inquiry-Based Learning and Instructional Design. Proven track record of managing
+                    academic operations, leading "Train-the-Trainer" initiatives, and utilizing data-driven assessment
+                    strategies to improve learner competency by 15%+. Seeking to leverage expertise in engineering
+                    fundamentals and curriculum development to drive workforce capability at VinFast.
+                </p>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Core Competencies</div>
+                <div class="skills-grid">
+                    <div>
+                        <div class="skill-category">Instructional Design</div>
+                        <div class="skill-list">ADDIE Model, Curriculum Development, Competency Mapping, Blended
+                            Learning</div>
+                    </div>
+                    <div>
+                        <div class="skill-category">Technical Training</div>
+                        <div class="skill-list">Engineering Fundamentals, STEM Pedagogy, Technical Documentation, Lab
+                            Safety</div>
+                    </div>
+                    <div style="margin-top:10px;">
+                        <div class="skill-category">Training Delivery</div>
+                        <div class="skill-list">Workshop Facilitation, VILT, Train-the-Trainer (T3)</div>
+                    </div>
+                    <div style="margin-top:10px;">
+                        <div class="skill-category">Technology</div>
+                        <div class="skill-list">Python, JavaScript, AI for EdTech, LMS Management</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Professional Experience</div>
+
+                <div class="job-block">
+                    <div class="job-header">
+                        <div>
+                            <span class="job-title">Technical Curriculum Lead & Academic Manager</span><br>
+                            <span class="company-name">Happy English Club (Language & Inquiry Center) | Hanoi</span>
+                        </div>
+                        <span class="job-date">2022 – Present</span>
+                    </div>
+                    <ul>
+                        <li><strong>Strategic Program Management:</strong> Directed the design and execution of
+                            technical and logic-based curricula, transforming traditional passive learning into active,
+                            <strong>Project-Based Learning (PBL)</strong> modules.</li>
+                        <li><strong>Instructional Design:</strong> Developed a standardized training framework fusing
+                            <strong>Universal Design for Learning (UDL)</strong> to ensure curriculum accessibility for
+                            diverse learner profiles.</li>
+                        <li><strong>Staff Development:</strong> Led "Train-the-Trainer" sessions for junior instructors,
+                            conducting performance evaluations and providing coaching to ensure consistent delivery of
+                            curriculum standards.</li>
+                        <li><strong>Operational Leadership:</strong> Managed training schedules and resource allocation,
+                            ensuring alignment with organizational learning goals.</li>
+                    </ul>
+                </div>
+
+                <div class="job-block">
+                    <div class="job-header">
+                        <div>
+                            <span class="job-title">STEM Facilitator & Instructional Designer</span><br>
+                            <span class="company-name">Victoria Thăng Long | Hanoi</span>
+                        </div>
+                        <span class="job-date">Sept 2024 – Present</span>
+                    </div>
+                    <ul>
+                        <li><strong>Technical Training Delivery:</strong> Orchestrated the delivery of integrated
+                            technical modules, utilizing <strong>engineering principles</strong> (Statics, Forces,
+                            Dynamics) to create hands-on technical projects.</li>
+                        <li><strong>Project Leadership:</strong> Led a 'Structural Engineering' training unit where
+                            learners applied physics concepts to construct load-bearing models, resulting in a
+                            <strong>20% increase in engagement metrics</strong>.</li>
+                        <li><strong>Data-Driven Assessment:</strong> Implemented differentiation strategies and
+                            competency-based assessments to track learner progress, resulting in a 15% increase in
+                            termly performance averages.</li>
+                    </ul>
+                </div>
+
+                <div class="job-block">
+                    <div class="job-header">
+                        <div>
+                            <span class="job-title">Academic Manager & Senior Instructor</span><br>
+                            <span class="company-name">Boda Learning Center | Hanoi</span>
+                        </div>
+                        <span class="job-date">2022 – 2024</span>
+                    </div>
+                    <ul>
+                        <li><strong>Operations Management:</strong> Directed academic operations for a premium learning
+                            center, ensuring strict adherence to international assessment standards (IB MYP).</li>
+                        <li><strong>Performance Improvement:</strong> Designed high-impact quantitative reasoning
+                            courses utilizing <strong>engineering problem-solving frameworks</strong>, improving average
+                            learner scores by 100+ points.</li>
+                        <li><strong>Faculty Management:</strong> Managed a team of 5 instructors, overseeing
+                            professional development, recruitment, and quality assurance processes.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Education & Certifications</div>
+                <div class="job-block">
+                    <div class="job-header">
+                        <span class="job-title">U.S. Teaching License (In Progress)</span>
+                        <span class="job-date">Exp. Jan 2026</span>
+                    </div>
+                    <span class="company-name">Moreland University, USA | Focus: Inclusive Pedagogy, Assessment
+                        Strategy</span>
+                </div>
+                <div class="job-block">
+                    <div class="job-header">
+                        <span class="job-title">Bachelor of Engineering (B.Eng) - Mechanical Engineering</span>
+                        <span class="job-date">2018</span>
+                    </div>
+                    <span class="company-name">University of Nigeria | Coursework: Thermodynamics, Fluid Mechanics,
+                        Engineering Design</span>
+                </div>
+                <div style="font-size: 14px; margin-top: 5px;">
+                    <strong>Certifications:</strong> 120-Hour TESOL/TEFL (World TESOL Academy) • C2 Proficient English
+                    (IBMI Berlin) • IELTS Band 8.5
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container cover-letter-page">
+        <div class="cl-header">
+            <div style="font-size: 14px; color: var(--vf-text-light);">
+                <strong>Date:</strong> January 24, 2026
+            </div>
+            <div class="cl-contact">
+                <h1>Victor Moronu</h1>
+                VinHomes Smart City, Hanoi<br>
+                +84 98 893 0491<br>
+                vmoronu@gmail.com
+            </div>
+        </div>
+
+        <div class="cl-recipient">
+            <strong>Hiring Manager</strong><br>
+            Learning and Development Department<br>
+            VinFast Trading and Production LLC<br>
+            Dinh Vu – Cat Hai Economic Zone, Hai Phong, Vietnam
+        </div>
+
+        <div class="cl-body">
+            <p><strong>Re: Application for Learning and Development Expert</strong></p>
+
+            <p>Dear Hiring Team,</p>
+
+            <p>As a Mechanical Engineer who transitioned into professional education to pursue a passion for human
+                capital development, I have long admired VinFast’s mission to drive the global smart electric vehicle
+                revolution. Living in VinHomes Smart City, I witness daily the rapid acceleration of Vietnam’s green
+                mobility ecosystem. I am writing to apply for the <strong>Learning and Development Expert</strong>
+                position, confident that my unique blend of engineering technicality and instructional design expertise
+                makes me the ideal candidate to support VinFast’s workforce upskilling and "Train-the-Trainer"
+                initiatives.</p>
+
+            <p>Currently, VinFast is at a critical juncture, scaling production and creating a sustainable talent
+                pipeline through strategic partnerships with 30 leading universities. This phase requires L&D
+                professionals who are bilingual in two distinct "languages": the technical language of engineering and
+                the pedagogical language of effective training. With a <strong>Bachelor of Engineering in Mechanical
+                    Engineering</strong> and over three years of experience managing academic curricula and training
+                faculties in Hanoi, I possess exactly this dual fluency.</p>
+
+            <p>My experience as an Academic Manager and Curriculum Lead has honed my ability to break down complex
+                theoretical concepts—whether mathematical variables or engineering statics—into digestible, actionable
+                learning modules. At Victoria Thăng Long, I spearheaded a 'Structural Engineering' unit that increased
+                learner engagement by 20%, proving that technical training is most effective when it is hands-on and
+                inquiry-based. I am eager to apply this same <strong>Project-Based Learning (PBL)</strong> approach to
+                VinFast’s technical training modules, ensuring that technicians and engineers not only understand the
+                <em>theory</em> of EV systems but master the <em>practical diagnostics</em> required for excellence in
+                aftersales service.</p>
+
+            <p>Specifically, I bring the following value propositions to the VinFast L&D team:</p>
+            <ul>
+                <li><strong>Technical Competency:</strong> My engineering background allows me to rapidly grasp
+                    high-voltage systems, ADAS technologies, and EV powertrain mechanics, reducing the learning curve
+                    for content development.</li>
+                <li><strong>Instructional Design:</strong> I am skilled in designing standardized curricula and
+                    assessment tools (using the ADDIE model and UDL principles) that can be scaled across VinFast’s
+                    training centers and university partners.</li>
+                <li><strong>Operational Agility:</strong> Having managed faculty and academic operations, I am
+                    comfortable working in fast-paced environments, managing stakeholders, and delivering results under
+                    tight timelines—qualities essential for success within the Vingroup culture.</li>
+            </ul>
+
+            <p>I am particularly excited about the opportunity to contribute to the development of the "Basic VinFast
+                Electric Vehicle Maintenance and Repair Technology" module and to support the training of future EV
+                experts. I am eager to discuss how my background in engineering and education can help VinFast achieve
+                its vision of a sustainable future for everyone.</p>
+
+            <p>Thank you for your time and consideration.</p>
+
+            <p>Sincerely,</p>
+
+            <p style="margin-top: 40px; font-weight: bold;">Victor Moronu</p>
+            <p style="font-size: 14px; color: var(--vf-text-light);">B.Eng Mechanical Engineering | U.S. Licensed
+                Educator (In-Progress)</p>
+        </div>
+    </div>
+
+</body>
+
+</html>

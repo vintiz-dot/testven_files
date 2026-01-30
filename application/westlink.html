@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Victor Moronu - Westlink Application</title>
+    
+    <!-- Modern Fonts: Outfit (Headers) & Inter (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        westlink: {
+                            navy: '#002060',  /* Deep Blue */
+                            cyan: '#00B5E2',  /* Bright Blue/Cyan */
+                            slate: '#F8FAFC',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Document Setup */
+        body {
+            background-color: #525659; /* PDF Viewer Background Color */
+            margin: 0;
+            padding: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        
+        /* The "Paper" Sheet */
+        .page {
+            background: white;
+            width: 210mm; /* A4 width */
+            min-height: 297mm; /* A4 height */
+            padding: 18mm 20mm; /* Balanced margins */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        /* Timeline vertical line */
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -18px;
+            top: 6px;
+            bottom: -24px;
+            width: 2px;
+            background-color: #E2E8F0;
+        }
+        .timeline-item:last-child::before {
+            display: none;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: -22px;
+            top: 6px;
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            background-color: #00B5E2;
+            border: 2px solid white;
+            box-shadow: 0 0 0 1px #00B5E2;
+        }
+
+        /* Print Styles - ATS Friendly & Page Breaks */
+        @media print {
+            body {
+                background: white;
+                margin: 0;
+                padding: 0;
+                display: block;
+            }
+            .page {
+                width: 100%;
+                height: auto;
+                min-height: auto; /* Allow flexible height for print */
+                margin: 0;
+                padding: 15mm 15mm;
+                box-shadow: none;
+                page-break-after: always;
+            }
+            .page:last-child {
+                page-break-after: auto;
+            }
+            .no-print {
+                display: none !important;
+            }
+            a {
+                text-decoration: none;
+                color: black;
+            }
+            /* Force background colors for pills/tags */
+            .bg-blue-50 { background-color: #eff6ff !important; }
+            .bg-gray-100 { background-color: #f3f4f6 !important; }
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased">
+
+    <!-- Control Bar -->
+    <div class="no-print fixed top-6 right-8 z-50">
+        <button onclick="window.print()" class="bg-westlink-navy text-white px-6 py-3 rounded-full font-display font-bold shadow-xl hover:bg-westlink-cyan transition-all flex items-center gap-2 transform hover:scale-105 active:scale-95">
+            <i class="fas fa-file-pdf"></i> Save / Print PDF
+        </button>
+    </div>
+
+    <!-- =========================
+         PAGE 1: COVER LETTER
+         ========================= -->
+    <div class="page" id="cover-letter">
+        <!-- Modern Header -->
+        <header class="flex justify-between items-start border-b-2 border-slate-100 pb-8 mb-10">
+            <div>
+                <h1 class="font-display text-5xl font-extrabold text-westlink-navy tracking-tight leading-none mb-2">
+                    Victor <span class="text-westlink-cyan">Moronu</span>
+                </h1>
+                <p class="font-display text-lg font-medium text-slate-500 tracking-wide">
+                    STEM & Mathematics Educator <span class="text-westlink-cyan mx-2">•</span> B.Eng Mechanical Engineering
+                </p>
+            </div>
+            <!-- QR Code Placeholder or Initials -->
+            <div class="hidden md:flex h-16 w-16 bg-westlink-navy text-white items-center justify-center rounded-2xl text-2xl font-bold font-display shadow-lg">
+                VM
+            </div>
+        </header>
+
+        <!-- Modern Contact Bar -->
+        <div class="flex flex-wrap gap-3 mb-10 text-sm font-medium text-slate-600">
+            <div class="flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+                <i class="fas fa-envelope text-westlink-cyan"></i> vmoronu@gmail.com
+            </div>
+            <div class="flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+                <i class="fas fa-phone text-westlink-cyan"></i> +84 98 893 0491
+            </div>
+            <div class="flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+                <i class="fab fa-linkedin text-westlink-cyan"></i> linkedin.com/in/victor-moronu
+            </div>
+            <div class="flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200">
+                <i class="fas fa-map-marker-alt text-westlink-cyan"></i> Hanoi, Vietnam
+            </div>
+        </div>
+
+        <!-- Body Content -->
+        <div class="max-w-3xl">
+            <div class="mb-8 font-display text-sm text-slate-500 flex justify-between items-end border-b border-slate-100 pb-2">
+                <div>
+                    <strong>To:</strong> The Hiring Committee<br>
+                    <strong>Westlink International School Hanoi</strong>
+                </div>
+                <div>
+                    <strong>Date:</strong> <span id="current-date">October 26, 2025</span>
+                </div>
+            </div>
+
+            <h2 class="text-xl font-display font-bold text-westlink-navy mb-6 flex items-center gap-3">
+                <span class="w-1.5 h-8 bg-westlink-cyan rounded-full"></span>
+                Application for Math & Science Teacher (Primary / Secondary)
+            </h2>
+
+            <div class="prose max-w-none text-slate-700 leading-relaxed text-[10.5pt] space-y-5">
+                <p>Dear Hiring Committee,</p>
+
+                <p>
+                    I am writing to express my enthusiastic interest in joining Westlink International School. As an educator with a background in <strong>Mechanical Engineering</strong> and a versatile teaching portfolio, I offer the unique ability to bridge the gap between playful primary inquiry and rigorous secondary analysis. Whether guiding a Grade 3 student’s first experiment or preparing a Grade 9 student for complex algebra, I am committed to building foundational curiosity that evolves into academic mastery.
+                </p>
+
+                <div>
+                    <h3 class="font-display font-bold text-westlink-navy text-sm uppercase tracking-wide mb-2">Navigating Rigor: Common Core & International Standards</h3>
+                    <p>
+                        My experience in Hanoi’s bilingual and international landscape has required me to master diverse curricular frameworks. At <strong>Victoria Thang Long School</strong>, I successfully delivered the <strong>enVision Math & Science</strong> curriculum, ensuring full alignment with <strong>Common Core State Standards (CCSS)</strong>. I utilized this rigor to lead complex projects—such as a "Bridge Building" statics unit—that demanded precision and critical thinking, mirroring the expectations of the <strong>IB MYP</strong> framework.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="font-display font-bold text-westlink-navy text-sm uppercase tracking-wide mb-2">Holistic & Inquiry-Based Pedagogy</h3>
+                    <p>
+                        Conversely, at the <strong>Hanoi Primary & High School System</strong>, I embraced a more holistic approach using <strong>Cambridge</strong> and <strong>McGraw Hill</strong> resources. Here, I learned that engagement drives achievement. I translated abstract physics concepts into tactile challenges (e.g., LEGO mechanics), ensuring that even my English Language Learners (ELLs) could access high-level content through hands-on discovery.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="font-display font-bold text-westlink-navy text-sm uppercase tracking-wide mb-2">Future-Ready Teaching</h3>
+                    <p>
+                        Currently finalizing my <strong>Master of Education in Educational Technology</strong>, alongside my <strong>U.S. Teaching License</strong> and <strong>PGCE</strong>, I bring a modern, evidence-based skillset to the classroom. I am eager to apply my "builder’s mindset" at Westlink, leveraging data-driven instruction and technology to help your students construct a robust understanding of the world.
+                    </p>
+                </div>
+
+                <p class="mt-8">
+                    Thank you for considering my application. I look forward to the possibility of discussing how I can contribute to your STEM department.
+                </p>
+
+                <div class="mt-8">
+                    <p class="text-slate-500 mb-2">Sincerely,</p>
+                    <p class="font-display font-bold text-2xl text-westlink-navy">Victor Moronu</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================
+         PAGE 2: RESUME
+         ========================= -->
+    <div class="page" id="resume">
+        
+        <!-- Resume Header -->
+        <div class="flex justify-between items-center mb-8 border-b-2 border-slate-100 pb-4">
+            <div>
+                <h2 class="font-display text-3xl font-extrabold text-westlink-navy">Victor Moronu</h2>
+                <p class="text-westlink-cyan font-medium">STEM Educator & Mechanical Engineer</p>
+            </div>
+            <div class="bg-westlink-navy text-white px-4 py-1.5 rounded-lg text-xs font-bold tracking-widest uppercase shadow-md">
+                Resume
+            </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-8">
+            
+            <!-- LEFT COLUMN (Main Content) -->
+            <div class="col-span-8">
+                
+                <!-- Summary -->
+                <div class="mb-8">
+                    <h3 class="font-display text-sm font-bold text-westlink-cyan uppercase tracking-wider mb-3 flex items-center gap-2">
+                        <i class="fas fa-user"></i> Professional Profile
+                    </h3>
+                    <p class="text-sm text-slate-700 leading-relaxed bg-slate-50 p-4 rounded-xl border border-slate-100">
+                        Innovative <strong>STEM Educator</strong> and former <strong>Mechanical Engineer</strong> with 3+ years of experience in Vietnam. Expert in bridging <strong>Common Core (CCSS)</strong> rigor with <strong>Inquiry-Based Learning</strong>. Skilled in <strong>enVision</strong>, <strong>Cambridge</strong>, and <strong>IB MYP</strong> curricula. Committed to inclusive pedagogy and currently finalizing a Master’s in EdTech.
+                    </p>
+                </div>
+
+                <!-- Experience -->
+                <div>
+                    <h3 class="font-display text-sm font-bold text-westlink-cyan uppercase tracking-wider mb-5 flex items-center gap-2">
+                        <i class="fas fa-briefcase"></i> Teaching Experience
+                    </h3>
+                    
+                    <div class="ml-2 pl-4 border-l-2 border-slate-100 space-y-8">
+                        
+                        <!-- Role 1 -->
+                        <div class="timeline-item relative">
+                            <div class="timeline-dot"></div>
+                            <div class="flex justify-between items-baseline mb-1">
+                                <h4 class="font-display font-bold text-westlink-navy text-lg">Secondary Math & Science Teacher</h4>
+                                <span class="text-xs text-slate-500 font-medium bg-white px-2 py-0.5 rounded border border-slate-200">Sept 2024 – Present</span>
+                            </div>
+                            <p class="text-sm text-slate-600 font-medium mb-2">Victoria Thang Long School, Hanoi</p>
+                            <ul class="list-disc list-outside ml-4 text-sm text-slate-600 space-y-1.5 marker:text-westlink-cyan">
+                                <li>Delivered <strong>enVision Math & Science</strong> (Common Core aligned) with IMYC 'Big Idea' integration.</li>
+                                <li>Designed a "Bridge Building" PBL unit (Statics), increasing engagement by 20%.</li>
+                                <li>Raised assessment averages by 15% via data-driven differentiation.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Role 2 -->
+                        <div class="timeline-item relative">
+                            <div class="timeline-dot"></div>
+                            <div class="flex justify-between items-baseline mb-1">
+                                <h4 class="font-display font-bold text-westlink-navy text-lg">Primary Math & Science Teacher</h4>
+                                <span class="text-xs text-slate-500 font-medium bg-white px-2 py-0.5 rounded border border-slate-200">Aug 2023 – June 2024</span>
+                            </div>
+                            <p class="text-sm text-slate-600 font-medium mb-2">Hanoi Primary & HS System (Thang Long)</p>
+                            <ul class="list-disc list-outside ml-4 text-sm text-slate-600 space-y-1.5 marker:text-westlink-cyan">
+                                <li>Taught <strong>Cambridge</strong> & <strong>McGraw Hill</strong> curricula to ESL learners.</li>
+                                <li>Built a "Happy Classroom" environment focusing on emotional safety.</li>
+                                <li>Used storytelling and manipulatives to simplify complex concepts.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Role 3 (Happy English Club) -->
+                        <div class="timeline-item relative">
+                            <div class="timeline-dot"></div>
+                            <div class="flex justify-between items-baseline mb-1">
+                                <h4 class="font-display font-bold text-westlink-navy text-lg">Academic Manager (STEM)</h4>
+                                <span class="text-xs text-slate-500 font-medium bg-white px-2 py-0.5 rounded border border-slate-200">2022 – Present</span>
+                            </div>
+                            <p class="text-sm text-slate-600 font-medium mb-2">Happy English Club</p>
+                            <ul class="list-disc list-outside ml-4 text-sm text-slate-600 space-y-1.5 marker:text-westlink-cyan">
+                                <li>Pioneered a pedagogical framework fusing <strong>Montessori principles</strong> with <strong>Project-Based Learning (PBL)</strong>.</li>
+                                <li>Designed "Math Discovery" corners encouraging self-directed learning and autonomy.</li>
+                                <li>Implemented <strong>Universal Design for Learning (UDL)</strong> strategies to ensure accessibility for all students.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Role 4 (Boda Learning Center) -->
+                        <div class="timeline-item relative">
+                            <div class="timeline-dot"></div>
+                            <div class="flex justify-between items-baseline mb-1">
+                                <h4 class="font-display font-bold text-westlink-navy text-lg">Academic Manager & IB MYP Instructor</h4>
+                                <span class="text-xs text-slate-500 font-medium bg-white px-2 py-0.5 rounded border border-slate-200">2022 – 2024</span>
+                            </div>
+                            <p class="text-sm text-slate-600 font-medium mb-2">Boda Learning Center</p>
+                            <ul class="list-disc list-outside ml-4 text-sm text-slate-600 space-y-1.5 marker:text-westlink-cyan">
+                                <li>Oversaw academic operations and teacher development for 5 instructors, increasing enrollment by 20%.</li>
+                                <li>Delivered rigorous <strong>IB MYP</strong> instruction aligning with international assessment criteria.</li>
+                                <li>Designed high-impact SAT Math prep courses using engineering problem-solving, improving scores by 100+ points.</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN (Education & Skills) -->
+            <div class="col-span-4 flex flex-col gap-8">
+                
+                <!-- Education Block -->
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100">
+                    <h3 class="font-display text-sm font-bold text-westlink-navy uppercase tracking-wider mb-4 border-b border-slate-200 pb-2">
+                        Education
+                    </h3>
+                    
+                    <div class="space-y-4">
+                        <div class="relative pl-3 border-l-2 border-westlink-cyan">
+                            <h4 class="font-bold text-slate-800 text-sm leading-tight">M.Ed. Educational Technology</h4>
+                            <p class="text-xs text-slate-500 mt-1">Moreland University</p>
+                            <span class="text-[10px] font-bold text-westlink-cyan uppercase">Exp. May 2026</span>
+                        </div>
+
+                        <div class="relative pl-3 border-l-2 border-westlink-cyan">
+                            <h4 class="font-bold text-slate-800 text-sm leading-tight">U.S. Teaching License</h4>
+                            <p class="text-xs text-slate-500 mt-1">Secondary Math/Sci</p>
+                            <span class="text-[10px] font-bold text-westlink-cyan uppercase">Exp. Jan 2026</span>
+                        </div>
+
+                        <div class="relative pl-3 border-l-2 border-westlink-cyan">
+                            <h4 class="font-bold text-slate-800 text-sm leading-tight">PGCE</h4>
+                            <p class="text-xs text-slate-500 mt-1">Moreland University</p>
+                            <span class="text-[10px] font-bold text-westlink-cyan uppercase"> Jan 2026</span>
+                        </div>
+
+                        <div class="relative pl-3 border-l-2 border-slate-300">
+                            <h4 class="font-bold text-slate-800 text-sm leading-tight">B.Eng. Mechanical Engineering</h4>
+                            <p class="text-xs text-slate-500 mt-1">University of Nigeria</p>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase">2018</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Competencies Block -->
+                <div>
+                    <h3 class="font-display text-sm font-bold text-westlink-navy uppercase tracking-wider mb-4 border-b border-slate-200 pb-2">
+                        Competencies
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-sm">Common Core (CCSS)</span>
+                        <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-sm">enVision Math</span>
+                        <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-sm">Project-Based Learning</span>
+                        <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-sm">IB MYP</span>
+                        <span class="px-2.5 py-1 bg-white border border-slate-200 rounded-md text-xs font-medium text-slate-700 shadow-sm">Cambridge</span>
+                    </div>
+                </div>
+
+                 <!-- Tech Skills Block -->
+                 <div>
+                    <h3 class="font-display text-sm font-bold text-westlink-navy uppercase tracking-wider mb-4 border-b border-slate-200 pb-2">
+                        Tech & Tools
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2.5 py-1 bg-blue-50 text-westlink-navy rounded-md text-xs font-semibold">Python</span>
+                        <span class="px-2.5 py-1 bg-blue-50 text-westlink-navy rounded-md text-xs font-semibold">GeoGebra</span>
+                        <span class="px-2.5 py-1 bg-blue-50 text-westlink-navy rounded-md text-xs font-semibold">Desmos</span>
+                        <span class="px-2.5 py-1 bg-blue-50 text-westlink-navy rounded-md text-xs font-semibold">AI Tools</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dateElement = document.getElementById('current-date');
+        const today = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        dateElement.textContent = today.toLocaleDateString('en-US', options);
+    </script>
+</body>
+</html>

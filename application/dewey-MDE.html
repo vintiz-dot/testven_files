@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Victor Moronu - MDE & STEM Educator Application</title>
+    <meta name="description" content="Application for MDE and Science Teacher at The Dewey Schools. Specializing in Design Thinking, Engineering, NGSS, and CAD.">
+    <style>
+        :root {
+            --dewey-blue: #00205B;
+            --dewey-orange: #F58220;
+            --text-dark: #333;
+            --text-light: #666;
+            --bg-light: #f9f9f9;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            color: var(--dewey-blue);
+            margin-bottom: 0.5em;
+        }
+
+        h1 { font-size: 2.5rem; font-weight: 700; }
+        h2 { font-size: 1.8rem; border-bottom: 3px solid var(--dewey-orange); display: inline-block; padding-bottom: 5px; margin-top: 30px; }
+        h3 { font-size: 1.3rem; color: var(--dewey-orange); margin-top: 20px; }
+        
+        strong { color: var(--dewey-blue); }
+
+        /* Layout */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: var(--white);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        header {
+            background: var(--dewey-blue);
+            color: var(--white);
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 { color: var(--white); margin: 0; }
+        header p { font-size: 1.2rem; margin-top: 10px; color: #ddd; }
+        header .contact-info { margin-top: 15px; font-size: 0.9rem; }
+        header .contact-info a { color: var(--dewey-orange); text-decoration: none; font-weight: bold; }
+
+        .section {
+            padding: 40px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--dewey-orange);
+            color: var(--white);
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+
+        .btn:hover { background: #d16b15; }
+
+        /* Keyword Tags */
+        .tags {
+            margin-top: 15px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #eef2f6;
+            color: var(--dewey-blue);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        /* Grid for Resume */
+        .resume-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .resume-grid { grid-template-columns: 1fr; }
+        }
+
+        .sidebar h3 { margin-top: 0; }
+        .sidebar ul { list-style: none; }
+        .sidebar li { margin-bottom: 10px; font-size: 0.95rem; }
+        
+        .main-content .job { margin-bottom: 25px; }
+        .main-content .job-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+        .main-content .date { font-style: italic; color: var(--text-light); }
+        .main-content ul { padding-left: 20px; }
+        .main-content li { margin-bottom: 8px; }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #333;
+            color: #fff;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>VICTOR MORONU</h1>
+        <p>Mechanical Engineer (B.Eng) | Educator | Tech Enthusiast</p>
+        <div class="contact-info">
+            Hanoi, Vietnam | <a href="mailto:vmoronu@gmail.com">vmoronu@gmail.com</a> | +84 98 893 0491
+        </div>
+        <div class="tags" style="justify-content: center; display: flex; flex-wrap: wrap;">
+            <span class="tag" style="background:rgba(255,255,255,0.2); color:#fff;">MDE Specialist</span>
+            <span class="tag" style="background:rgba(255,255,255,0.2); color:#fff;">Design Thinking</span>
+            <span class="tag" style="background:rgba(255,255,255,0.2); color:#fff;">Engineering</span>
+            <span class="tag" style="background:rgba(255,255,255,0.2); color:#fff;">Makerspace</span>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <section class="section">
+            <h2>Cover Letter: The Engineer-Educator</h2>
+            <p><strong>To:</strong> Mr. David Drouin (Head of English Program) & Ms. Pham Thi Phuong Nam (Head of MDE/Science)</p>
+            <br>
+            <p>Dear Hiring Team,</p>
+            <p>The Dewey Schools’ partnership with <strong>The Mount Vernon School</strong> and your commitment to <strong>Design Thinking</strong> represents the future of education in Vietnam. As a <strong>Mechanical Engineer (B.Eng)</strong> turned educator, I am uniquely positioned to bridge the gap between theoretical science and the hands-on innovation required in your MDE (Maker, Design, and Engineering) program.</p>
+            
+            <p>My application is built on three core pillars that align with The Dewey Schools' mission:</p>
+            
+            <ul>
+                <br>
+                <li><strong>Technical Authority in the Makerspace:</strong> Unlike generalist science teachers, my background in <strong>Mechanical Engineering</strong> provides me with a "first principles" understanding of statics, kinematics, and material science. I possess the formal training in <strong>Workshop Practice and Engineering Drawing</strong> necessary to safely supervise students on CNC machines, laser cutters, and 3D printers.</li>
+                <br>
+                <li><strong>Inquiry-Based Learning & NGSS Alignment:</strong> I do not just teach from a textbook; I build experiences. I recently led a "Bridge Building" engineering unit using the <strong>Engineering Design Process</strong>, where students calculated forces and constructed load-bearing models. This <strong>Project-Based Learning (PBL)</strong> approach increased student engagement by 20%—a direct mirror of your <strong>Innovation Studio</strong> model.</li>
+                <br>
+                <li><strong>Digital Fluency & Coding:</strong> I am proficient in <strong>Python, HTML, and JavaScript</strong>, allowing me to guide students through the complexities of physical computing and educational technology. I am currently developing custom web applications to streamline grading and assessment, demonstrating the exact "creation over consumption" mindset you instill in students.</li>
+            </ul>
+            <br>
+            <p>With my U.S. Teaching License (Moreland University) nearing completion (Expected May 2026) and a relentless drive for innovation—from analyzing <strong>air quality data</strong> to customizing electric vehicles—I am ready to help Dewey students solve real-world problems.</p>
+            
+            <p>Sincerely,</p>
+            <p><strong>Victor Moronu</strong><br>B.Eng Mechanical Engineering</p>
+        </section>
+
+        <section class="section">
+            <h2>Professional Profile</h2>
+            <div class="resume-grid">
+                
+                <div class="sidebar">
+                    <h3>Core Competencies</h3>
+                    <ul>
+                        <li><span class="tag">Design Thinking</span></li>
+                        <li><span class="tag">Engineering Design Process</span></li>
+                        <li><span class="tag">CAD (Computer Aided Design)</span></li>
+                        <li><span class="tag">NGSS Framework</span></li>
+                        <li><span class="tag">Python & JavaScript</span></li>
+                        <li><span class="tag">Workshop Safety</span></li>
+                        <li><span class="tag">IB MYP Criteria B & C</span></li>
+                        <li><span class="tag">Differentiation (UDL)</span></li>
+                    </ul>
+
+                    <h3>Education</h3>
+                    <p><strong>Master of Education (M.Ed)</strong><br>
+                    Educational Technology<br>
+                    <em>Moreland University (Expected May 2026)</em></p>
+                    <br>
+                    <p><strong>U.S. Teaching License</strong><br>
+                    Secondary STEM Pedagogy<br>
+                    <em>Moreland University (In Progress)</em></p>
+                    <br>
+                    <p><strong>Bachelor of Engineering (B.Eng)</strong><br>
+                    Mechanical Engineering<br>
+                    <em>University of Nigeria (2018)</em><br>
+                    <small>Focus: Thermodynamics, Fluid Mechanics, Engineering Drawing</small></p>
+
+                    <h3>Technical Skills</h3>
+                    <ul>
+                        <li><strong>Fabrication:</strong> 3D Printing, Laser Cutting, CNC</li>
+                        <li><strong>Software:</strong> VS Code, GeoGebra, Desmos, MS Office Suite</li>
+                        <li><strong>Analysis:</strong> Data visualization, Air Quality Monitoring</li>
+                    </ul>
+                </div>
+
+                <div class="main-content">
+                    <h3>Teaching Experience</h3>
+                    
+                    <div class="job">
+                        <div class="job-header">
+                            <strong>Math & Science Teacher</strong>
+                            <span class="date">Sep 2024 – Present</span>
+                        </div>
+                        <div><em>International School / Victoria Thăng Long, Hanoi</em></div>
+                        <ul>
+                            <li><strong>Engineering Pedagogy:</strong> Designed and executed a semester-long "Bridge Building" MDE unit. Guided students through the <strong>Engineering Design Cycle</strong> (Ideate, Prototype, Test), resulting in a 20% boost in engagement and practical understanding of statics.</li>
+                            <li><strong>Differentiation & SEL:</strong> Successfully mentored students with speaking anxiety (SEL), utilizing <strong>Universal Design for Learning (UDL)</strong> to create safe, inclusive, and high-performance classroom environments.</li>
+                            <li><strong>Tech Integration:</strong> Integrated <strong>Python coding</strong> challenges into math modules, fostering computational thinking alongside algebraic concepts.</li>
+                        </ul>
+                    </div>
+
+                    <div class="job">
+                        <div class="job-header">
+                            <strong>Academic Manager</strong>
+                            <span class="date">2022 – Present</span>
+                        </div>
+                        <div><em>Happy English Club, Hanoi</em></div>
+                        <ul>
+                            <li><strong>Curriculum Design:</strong> Pioneered a STEAM-focused curriculum fusing Montessori principles with engineering challenges.</li>
+                            <li><strong>Leadership:</strong> Managed teacher schedules, training, and curriculum development for a center with over 40 active students.</li>
+                        </ul>
+                    </div>
+
+                    <div class="job">
+                        <div class="job-header">
+                            <strong>IB MYP Math Instructor</strong>
+                            <span class="date">2022 – 2024</span>
+                        </div>
+                        <div><em>Boda Learning Center, Hanoi</em></div>
+                        <ul>
+                            <li><strong>IB Alignment:</strong> Delivered Math instruction aligned with <strong>IB MYP Criteria A (Knowing)</strong> and <strong>Criteria C (Communicating)</strong>.</li>
+                            <li><strong>High-Stakes Testing:</strong> Mentored high-performance students to achieve significant score increases in SAT Math through rigorous problem-solving drills.</li>
+                        </ul>
+                    </div>
+
+                    <h3>Real-World Engineering Projects</h3>
+                    <div class="job">
+                        <ul>
+                            <li><strong>Environmental Data Analysis:</strong> Active monitoring and analysis of Hanoi air quality data using dedicated sensors to teach students about environmental science and data literacy.</li>
+                            <li><strong>Electric Vehicle Mechanics:</strong> Hands-on experience with EV modification (VinFast Theon S), applying mechanical engineering principles to real-world transportation technology.</li>
+                            <li><strong>EdTech Development:</strong> Developing custom HTML/JS web applications for automated student grading and vocabulary testing.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Teaching Philosophy: The Dewey Way</h2>
+            <p>My philosophy is rooted in the belief that <strong>education is not preparation for life; education is life itself.</strong></p>
+            <br>
+            <p>In the MDE classroom, this translates to:</p>
+            <ul style="list-style-type: none;">
+                <li style="margin-bottom: 15px;">🚀 <strong>Fail Forward:</strong> Creating a psychological safe space where students feel comfortable prototyping, failing, and iterating—the core of the <strong>Design Thinking</strong> mindset.</li>
+                <li style="margin-bottom: 15px;">🔧 <strong>Authentic Context:</strong> Physics and Math are not abstract concepts; they are the tools we use to understand why a bridge stands or how a motor turns.</li>
+                <li style="margin-bottom: 15px;">🌍 <strong>Global Citizenship:</strong> Using engineering to solve human problems, from sustainable energy to accessible infrastructure.</li>
+            </ul>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Victor Moronu. </p>
+    </footer>
+
+</body>
+</html>

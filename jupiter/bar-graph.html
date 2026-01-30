@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jupiter Class: Data Inquiry Station</title>
+    <style>
+        :root {
+            /* IB PYP Inspired Palette - Natural & Focused */
+            --ib-blue: #2c3e50;
+            --ib-teal: #16a085;
+            --ib-orange: #e67e22;
+            --ib-cloud: #ecf0f1;
+            --ib-paper: #fdfbf7;
+            --text-main: #2c3e50;
+            --success: #27ae60;
+            --font-heading: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --font-body: 'Georgia', serif;
+            /* Serif for a more "academic/book" feel */
+        }
+
+        body {
+            font-family: var(--font-heading);
+            background-color: var(--ib-cloud);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-main);
+        }
+
+        .inquiry-container {
+            background: var(--ib-paper);
+            width: 95%;
+            max-width: 900px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 700px;
+            position: relative;
+        }
+
+        /* IB Header */
+        header {
+            background: var(--ib-blue);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--ib-orange);
+        }
+
+        .header-title h1 {
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .header-title small {
+            font-family: var(--font-body);
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .learner-profile-badge {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Main Inquiry Space */
+        main {
+            padding: 40px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Menu / Transdisciplinary Theme */
+        .theme-circle {
+            width: 120px;
+            height: 120px;
+            background: var(--ib-teal);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(22, 160, 133, 0.3);
+            border: 4px solid white;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        .station-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-left: 5px solid var(--ib-teal);
+            padding: 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-align: left;
+        }
+
+        .station-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .station-card h3 {
+            margin-top: 0;
+            color: var(--ib-blue);
+        }
+
+        .station-card p {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        /* The Graph Artifact & Coloring */
+        .artifact-display {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            padding: 10px;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .interactive-graph-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        .interactive-graph-container img {
+            width: 100%;
+            display: block;
+            pointer-events: none;
+            /* Let clicks pass through to overlay */
+        }
+
+        .graph-overlay {
+            position: absolute;
+            top: 10%;
+            /* Adjust based on image margins */
+            left: 10%;
+            right: 5%;
+            bottom: 15%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            z-index: 10;
+        }
+
+        .bar-column {
+            flex: 1;
+            height: 100%;
+            margin: 0 2%;
+            background: rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            transition: background 0.2s;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .bar-column:hover {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .bar-fill {
+            width: 100%;
+            height: 0%;
+            background: rgba(46, 204, 113, 0.6);
+            /* Default Green */
+            transition: height 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-top: 3px solid #27ae60;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .hint-text {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+        }
+
+        .bar-column:hover .hint-text {
+            opacity: 1;
+        }
+
+        /* Inquiry Question */
+        .concept-tag {
+            background: var(--ib-orange);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .question-box {
+            text-align: center;
+            max-width: 650px;
+            width: 100%;
+        }
+
+        .question-text {
+            font-family: var(--font-body);
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--ib-blue);
+        }
+
+        /* Interactive Inputs */
+        .input-options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .ib-btn {
+            background: white;
+            border: 2px solid var(--ib-blue);
+            color: var(--ib-blue);
+            padding: 12px 24px;
+            font-size: 1.1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: var(--font-heading);
+        }
+
+        .ib-btn:hover {
+            background: var(--ib-blue);
+            color: white;
+        }
+
+        .ib-btn.selected {
+            background: var(--ib-blue);
+            color: white;
+            box-shadow: 0 0 0 4px rgba(44, 62, 80, 0.2);
+        }
+
+        .ib-number-input {
+            font-size: 2rem;
+            padding: 10px 20px;
+            border: 2px solid var(--ib-blue);
+            border-radius: 8px;
+            width: 120px;
+            text-align: center;
+            color: var(--ib-blue);
+            font-family: var(--font-heading);
+        }
+
+        /* Feedback Area */
+        .feedback-area {
+            margin-top: 25px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .feedback-icon {
+            font-size: 1.5rem;
+        }
+
+        .feedback-text {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        /* Navigation */
+        .nav-controls {
+            margin-top: auto;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding-top: 20px;
+        }
+
+        .primary-btn {
+            background: var(--ib-teal);
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(22, 160, 133, 0.4);
+            transition: transform 0.2s;
+        }
+
+        .primary-btn:hover {
+            transform: scale(1.02);
+        }
+
+        /* Reflection Screen */
+        .reflection-card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Progress Dots */
+        .progress-dots {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: #ddd;
+            border-radius: 50%;
+        }
+
+        .dot.active {
+            background: var(--ib-blue);
+        }
+
+        .dot.complete {
+            background: var(--ib-teal);
+        }
+    </style>
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function () {
+            emailjs.init("GpWE40ze9vHUQ60Qk");
+        })();
+    </script>
+</head>
+
+<body>
+
+    <div class="inquiry-container">
+
+        <header>
+            <div class="header-title">
+                <h1>How We Organize Ourselves</h1>
+                <small>Jupiter Class &bull; Data Inquiry Unit</small>
+            </div>
+            <div class="learner-profile-badge">
+                <span id="profileAttribute">Start Inquiry</span> 🌟
+            </div>
+        </header>
+
+        <!-- TUNING IN (MENU) -->
+        <main id="tuningIn">
+            <div class="theme-circle">
+                <div style="padding:10px;">Central Idea:<br>Organization</div>
+            </div>
+
+            <h2 style="color: var(--ib-blue);">Choose an Inquiry Station</h2>
+            <p style="max-width: 500px; text-align: center; color: #7f8c8d;">
+                As <strong>Inquirers</strong>, we will explore different graphs to understand how data helps us make
+                decisions.
+            </p>
+
+            <div style="text-align: center; margin-top: 50px;">
+                <button class="primary-btn" style="padding: 20px 60px; font-size: 1.5rem; animation: pulse 2s infinite;"
+                    onclick="startLinearInquiry()">
+                    Start Data Inquiry Journey 🚀
+                </button>
+            </div>
+
+            <style>
+                @keyframes pulse {
+                    0% {
+                        box-shadow: 0 0 0 0 rgba(22, 160, 133, 0.7);
+                    }
+
+                    70% {
+                        box-shadow: 0 0 0 20px rgba(22, 160, 133, 0);
+                    }
+
+                    100% {
+                        box-shadow: 0 0 0 0 rgba(22, 160, 133, 0);
+                    }
+                }
+            </style>
+        </main>
+
+        <!-- FINDING OUT & SORTING OUT (QUIZ) -->
+        <main id="findingOut" class="hidden">
+
+            <div class="artifact-display">
+                <div class="interactive-graph-container" id="graphContainer">
+                    <img id="graphImage" src="" alt="Graph Base">
+                    <div id="graphOverlay" class="graph-overlay">
+                        <!-- Bars injected here -->
+                    </div>
+                </div>
+                <!-- <div style="text-align:center; font-size:0.8rem; color:#7f8c8d; margin-top:5px;">👆 Click the chart to color the bars!</div> -->
+            </div>
+
+            <div class="progress-dots" id="progressDots"></div>
+
+            <div class="question-box">
+                <div style="margin-top:20px;">
+                    <span class="concept-tag" id="keyConcept">FORM</span>
+                </div>
+                <div class="question-text" id="questionText">Question loading...</div>
+
+                <div id="interactionArea"></div>
+
+                <div class="feedback-area" id="feedbackArea"></div>
+            </div>
+
+            <div class="nav-controls">
+                <button class="primary-btn" id="checkBtn" onclick="checkAnswer()">Explore Answer</button>
+            </div>
+        </main>
+
+        <!-- REFLECTION (END SCREEN) -->
+        <main id="reflecting" class="hidden">
+            <div class="reflection-card">
+                <div style="font-size: 3rem; margin-bottom: 10px;">🧠</div>
+                <h2 style="color: var(--ib-blue); margin-top:0;">Reflection Time</h2>
+
+                <p id="resultSummary" style="font-size: 1.1rem; color: #2c3e50; margin-bottom: 20px;"></p>
+
+                <div
+                    style="background: #f0f8ff; padding: 15px; border-radius: 8px; margin-bottom: 25px; text-align: left;">
+                    <strong>Thinking about your learning:</strong>
+                    <ul style="margin: 10px 0 0 20px; color: #555;">
+                        <li>How did the bars help you see the numbers quickly?</li>
+                        <li>Which question made you think the hardest?</li>
+                    </ul>
+                </div>
+
+                <div id="emailSubmissionSection">
+                    <div style="margin-top:30px; border-top: 2px dashed #eee; padding-top:20px;">
+                        <h3 style="color:var(--ib-blue);">Submit Your Work</h3>
+                        <p style="font-size:0.9rem; color:#7f8c8d;">Send your inquiry results to your teacher.</p>
+
+                        <input type="text" id="studentName" placeholder="Enter Your Name"
+                            style="padding:15px; width:80%; font-size:1.2rem; border:2px solid #ddd; border-radius:8px; margin-bottom:15px; font-family:var(--font-heading); text-align:center;">
+                        <br>
+                        <button class="primary-btn" id="submitBtn" onclick="submitResults()"
+                            style="background-color:var(--ib-blue);">Send to Teacher 📧</button>
+                    </div>
+                    <p id="emailStatus" style="font-weight:bold; margin-top:15px; min-height:24px;"></p>
+                </div>
+
+                <button class="primary-btn hidden" id="resetBtn" onclick="goHome()"
+                    style="background: var(--ib-orange);">Start Over</button>
+            </div>
+        </main>
+
+    </div>
+
+    <script>
+        // IB DATA STRUCTURE
+        // Including all 20 questions extracted from the PDFs
+
+        const inquiryUnits = [
+            {
+                title: "Fruit Juice Store",
+                image: "graph1.png",
+                categories: ["Lemon", "Grape", "Apple", "Orange"],
+                maxVal: 12, // Approximate max value for % calculation
+                placeholder: "Graph A: Juice Sales",
+                questions: [
+                    { q: "What juice sold the most?", a: "Grape", type: "choice", concept: "Function", options: ["Lemon", "Grape", "Apple", "Orange"] },
+                    { q: "What juice sold the least?", a: "Lemon", type: "choice", concept: "Function", options: ["Lemon", "Grape", "Apple", "Orange"] },
+                    { q: "How many glasses of apple juice were sold?", a: 9, type: "number", concept: "Form" },
+                    { q: "How many more glasses of grape juice were sold than lemon juice?", a: 3, type: "number", concept: "Connection" },
+                    { q: "How many glasses of orange and apple juice together were sold?", a: 17, type: "number", concept: "Connection" },
+                    { q: "How many glasses were sold in all?", a: 34, type: "number", concept: "Form" }
+                ]
+            },
+            {
+                title: "Vince's Tools",
+                image: "graph 2.png",
+                categories: ["Saw", "Hammer", "Screwdriver", "Shovel"],
+                maxVal: 12,
+                placeholder: "Graph B: Tools",
+                questions: [
+                    { q: "How many screwdrivers are there?", a: 8, type: "number", concept: "Form" },
+                    { q: "Which tool is the greatest in number?", a: "Hammer", type: "choice", concept: "Function", options: ["Saw", "Hammer", "Screwdriver", "Shovel"] },
+                    { q: "Which tool is the least in number?", a: "Saw", type: "choice", concept: "Function", options: ["Saw", "Hammer", "Screwdriver", "Shovel"] },
+                    { q: "Which tools have the same number?", a: "Screwdriver and Shovel", type: "choice", concept: "Connection", options: ["Saw and Hammer", "Screwdriver and Shovel", "Hammer and Shovel"] },
+                    { q: "How many shovels and hammers are there?", a: 17, type: "number", concept: "Connection" },
+                    { q: "If Vince added six more hammers, how many hammers would there be?", a: 15, type: "number", concept: "Change" } // 9+6
+                ]
+            },
+            {
+                title: "Favorite Colors",
+                image: "graph 3.png",
+                categories: ["Red", "Yellow", "Blue", "Green", "Orange"],
+                maxVal: 12,
+                placeholder: "Graph C: Colors",
+                questions: [
+                    { q: "What color is liked the most?", a: "Yellow", type: "choice", concept: "Function", options: ["Red", "Yellow", "Blue", "Green", "Orange"] },
+                    { q: "What color is liked the least?", a: "Blue", type: "choice", concept: "Function", options: ["Red", "Yellow", "Blue", "Green", "Orange"] },
+                    { q: "What two colors got a total of 12 votes?", a: "Red and Green", type: "choice", concept: "Connection", options: ["Red and Green", "Blue and Orange", "Yellow and Blue"] },
+                    { q: "How many more votes did red have than blue?", a: 1, type: "number", concept: "Connection" },
+                    { q: "How many fewer votes did blue have than yellow?", a: 5, type: "number", concept: "Connection" },
+                    { q: "How many kids voted for red, green and orange?", a: 20, type: "number", concept: "Form" },
+                    { q: "What is the difference between the votes for orange and blue?", a: 3, type: "number", concept: "Connection" },
+                    { q: "How many votes were there in total?", a: 35, type: "number", concept: "Form" }
+                ]
+            }
+        ];
+
+        let currentUnit = null;
+        let qIndex = 0;
+        let score = 0;
+        let userSelection = null;
+
+        // DOM Elements
+        const screens = {
+            tuningIn: document.getElementById('tuningIn'),
+            findingOut: document.getElementById('findingOut'),
+            reflecting: document.getElementById('reflecting')
+        };
+
+        const ui = {
+            graphLabel: document.getElementById('graphLabel'), // Removed from DOM but ref kept safe
+            graphImage: document.getElementById('graphImage'),
+            graphOverlay: document.getElementById('graphOverlay'),
+            questionText: document.getElementById('questionText'),
+            keyConcept: document.getElementById('keyConcept'),
+            interactionArea: document.getElementById('interactionArea'),
+            feedbackArea: document.getElementById('feedbackArea'),
+            checkBtn: document.getElementById('checkBtn'),
+            profileAttribute: document.getElementById('profileAttribute'),
+            progressDots: document.getElementById('progressDots')
+        };
+
+        function switchScreen(screenName) {
+            Object.values(screens).forEach(s => s.classList.add('hidden'));
+            screens[screenName].classList.remove('hidden');
+        }
+
+        function startInquiry(index) {
+            currentUnit = inquiryUnits[index];
+            qIndex = 0;
+            score = 0;
+            ui.profileAttribute.innerText = "Inquirer";
+            ui.graphLabel.innerText = currentUnit.placeholder;
+
+            // Create progress dots
+            ui.progressDots.innerHTML = '';
+            currentUnit.questions.forEach(() => {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                ui.progressDots.appendChild(dot);
+            });
+
+            switchScreen('findingOut');
+            loadQuestion();
+        }
+
+        // --- Linear Flow Refactor ---
+
+        let currentUnitIndex = 0;
+
+        function startLinearInquiry() {
+            currentUnitIndex = 0;
+            score = 0; // Reset total score
+            ui.profileAttribute.innerText = "Inquirer";
+
+            // Start the first unit
+            startUnit(currentUnitIndex);
+        }
+
+        function startUnit(index) {
+            currentUnit = inquiryUnits[index];
+            qIndex = 0;
+
+            // Reset UI for new unit
+            // ui.graphLabel.innerText = currentUnit.placeholder;
+            ui.graphImage.src = currentUnit.image;
+            ui.keyConcept.innerText = "Unit Loading...";
+
+            // Setup Interactive Overlay
+            ui.graphOverlay.innerHTML = '';
+            currentUnit.categories.forEach(cat => {
+                const col = document.createElement('div');
+                col.className = 'bar-column';
+                col.title = `Color ${cat}`;
+
+                const hint = document.createElement('span');
+                hint.className = 'hint-text';
+                hint.innerText = cat;
+
+                const fill = document.createElement('div');
+                fill.className = 'bar-fill';
+
+                col.appendChild(hint);
+                col.appendChild(fill);
+
+                // Click to paint
+                col.onclick = (e) => {
+                    const rect = col.getBoundingClientRect();
+                    const heightClicked = rect.bottom - e.clientY;
+                    const totalHeight = rect.height;
+                    let pct = (heightClicked / totalHeight) * 100;
+                    if (pct > 95) pct = 100;
+                    if (pct < 5) pct = 0;
+                    fill.style.height = `${pct}%`;
+                };
+
+                ui.graphOverlay.appendChild(col);
+            });
+
+            // Update Header
+
+            // Update Header
+            ui.profileAttribute.innerHTML = `Station ${index + 1} of 3`;
+
+            // Create progress dots for this unit
+            ui.progressDots.innerHTML = '';
+            currentUnit.questions.forEach(() => {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                ui.progressDots.appendChild(dot);
+            });
+
+            switchScreen('findingOut');
+            loadQuestion();
+        }
+
+        function nextQuestion() {
+            qIndex++;
+            if (qIndex < currentUnit.questions.length) {
+                loadQuestion();
+            } else {
+                // Unit Complete - Check if more units exist
+                if (currentUnitIndex < inquiryUnits.length - 1) {
+                    currentUnitIndex++;
+                    alert(`Station ${currentUnitIndex + 1} Unlocked! Loaded: ${inquiryUnits[currentUnitIndex].title}`);
+                    startUnit(currentUnitIndex);
+                } else {
+                    showReflection();
+                }
+            }
+        }
+
+        function loadQuestion() {
+            const q = currentUnit.questions[qIndex];
+
+            // UI Updates
+            ui.keyConcept.innerText = `Key Concept: ${q.concept}`;
+            ui.questionText.innerText = q.q;
+            ui.feedbackArea.innerHTML = '';
+            ui.interactionArea.innerHTML = '';
+            ui.checkBtn.innerText = "Explore Answer";
+            ui.checkBtn.onclick = checkAnswer;
+            ui.checkBtn.disabled = false;
+
+            // Update dots
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach((d, i) => {
+                d.classList.remove('active');
+                if (i === qIndex) d.classList.add('active');
+            });
+
+            userSelection = null;
+
+            if (q.type === 'choice') {
+                q.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'ib-btn';
+                    btn.innerText = opt;
+                    btn.onclick = () => {
+                        document.querySelectorAll('.ib-btn').forEach(b => b.classList.remove('selected'));
+                        btn.classList.add('selected');
+                        userSelection = opt;
+                    };
+                    ui.interactionArea.appendChild(btn);
+                });
+            } else {
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.className = 'ib-number-input';
+                input.placeholder = "?";
+                input.oninput = (e) => userSelection = parseInt(e.target.value);
+                input.addEventListener("keypress", function (event) {
+                    if (event.key === "Enter") checkAnswer();
+                });
+                ui.interactionArea.appendChild(input);
+                setTimeout(() => input.focus(), 100);
+            }
+        }
+
+        function checkAnswer() {
+            const q = currentUnit.questions[qIndex];
+            if (userSelection === null || (typeof userSelection === 'number' && isNaN(userSelection))) return;
+
+            let isCorrect = false;
+            if (q.type === 'number') {
+                isCorrect = userSelection === q.a;
+            } else {
+                isCorrect = userSelection.toLowerCase() === q.a.toLowerCase();
+            }
+
+            if (isCorrect) {
+                ui.feedbackArea.innerHTML = `<span class="feedback-icon">🌟</span><span class="feedback-text" style="color:var(--success)">Great thinking! Accurate Data.</span>`;
+                score++;
+                if (document.querySelectorAll('.dot')[qIndex]) {
+                    document.querySelectorAll('.dot')[qIndex].classList.add('complete');
+                }
+            } else {
+                ui.feedbackArea.innerHTML = `<span class="feedback-icon">🧐</span><span class="feedback-text" style="color:var(--ib-orange)">Good try! The data shows ${q.a}.</span>`;
+            }
+
+            ui.checkBtn.innerText = "Continue Inquiry";
+            ui.checkBtn.onclick = nextQuestion;
+        }
+
+        function showReflection() {
+            switchScreen('reflecting');
+            // Calculate percentage based on ALL questions so far
+            const totalQuestions = inquiryUnits.reduce((acc, unit) => acc + unit.questions.length, 0);
+            const percentage = Math.round((score / totalQuestions) * 100);
+
+            let message = "";
+            if (percentage === 100) message = "You are a Master Data Analyst!";
+            else if (percentage > 70) message = "You are a knowledgeable Inquirer!";
+            else message = "Great practice! You are developing your skills.";
+
+            document.getElementById('resultSummary').innerHTML = `
+                <strong>${score} / ${totalQuestions} Questions Solved</strong><br>
+                ${message}
+            `;
+
+            ui.profileAttribute.innerText = "Reflective";
+        }
+
+        function goHome() {
+            switchScreen('tuningIn');
+            ui.profileAttribute.innerText = "Start Inquiry";
+            // Reset Email Form
+            document.getElementById('emailSubmissionSection').classList.remove('hidden');
+            document.getElementById('resetBtn').classList.add('hidden');
+            document.getElementById('studentName').value = '';
+            document.getElementById('emailStatus').innerText = '';
+            document.getElementById('submitBtn').disabled = false;
+            document.getElementById('submitBtn').style.opacity = '1';
+        }
+
+        async function submitResults() {
+            const name = document.getElementById('studentName').value.trim();
+            const status = document.getElementById('emailStatus');
+            const btn = document.getElementById('submitBtn');
+
+            if (!name) {
+                alert("Please enter your name!");
+                return;
+            }
+
+            status.innerText = "Sending...";
+            status.style.color = "var(--ib-orange)";
+            btn.disabled = true;
+            btn.style.opacity = "0.6";
+
+            // Calculate total questions
+            const totalQuestions = inquiryUnits.reduce((acc, unit) => acc + unit.questions.length, 0);
+
+            let report = `Data Inquiry Station Report for ${name}\n`;
+            report += `Final Score: ${score} / ${totalQuestions}\n`;
+            report += `Date: ${new Date().toLocaleString()}\n`;
+            report += `--------------------------------\n`;
+            report += `Completed all 3 stations: Juice Shop, Tool Shed, and Class Favorites.\n`;
+
+            const params = {
+                name: name,
+                time: new Date().toLocaleString(),
+                message: report
+            };
+
+            try {
+                // service_m0h97uh, template_rzjx94s
+                await emailjs.send('service_m0h97uh', 'template_rzjx94s', params);
+
+                status.innerText = "Results Sent Successfully! 🚀";
+                status.style.color = "var(--success)";
+
+                // Show reset option
+                setTimeout(() => {
+                    document.getElementById('emailSubmissionSection').classList.add('hidden');
+                    document.getElementById('resetBtn').classList.remove('hidden');
+                }, 2000);
+
+            } catch (e) {
+                console.error(e);
+                status.innerText = "Failed to send. Please try again.";
+                status.style.color = "red";
+                btn.disabled = false;
+                btn.style.opacity = "1";
+            }
+        }
+
+    </script>
+</body>
+
+</html>
