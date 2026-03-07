@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tet Closure Notice</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,700;1,700&family=Quicksand:wght@500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --red-primary: #8B0000;
+            --red-dark: #580000;
+            --red-bright: #D91E18;
+            --gold: #FFD700;
+            --gold-light: #FBE8A6;
+            --gold-dark: #B8860B;
+            --cream: #FFFDD0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #1a0505;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* --- Main Card Container --- */
+        .card {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            /* Constrain width for poster look */
+            aspect-ratio: 3/4;
+            background-color: var(--red-primary);
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 8px solid #4a0000;
+        }
+
+        /* --- Background Pattern (Asian Lattice) --- */
+        .card-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%),
+                linear-gradient(45deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%);
+            background-position: 0 0, 20px 20px;
+            background-size: 40px 40px;
+            z-index: 1;
+        }
+
+        /* Vignette for depth */
+        .card-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.6) 100%);
+            z-index: 2;
+        }
+
+        /* --- Top Roof & Small Lanterns --- */
+        .roof-section {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            z-index: 10;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            padding-top: 10px;
+            background: linear-gradient(to bottom, #4a0000 0%, #6d0000 100%);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border-bottom: 4px solid #330000;
+        }
+
+        /* Roof Tiles Effect */
+        .roof-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background-image: repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(0, 0, 0, 0.3) 20px);
+        }
+
+        .small-lantern {
+            width: 40px;
+            height: 35px;
+            background: radial-gradient(circle at 30% 30%, #ff4d4d, #cc0000);
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 0, 0, 0.4);
+            animation: sway 3s ease-in-out infinite alternate;
+            transform-origin: top center;
+        }
+
+        .small-lantern::before {
+            /* Top cap */
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 10px;
+            width: 20px;
+            height: 4px;
+            background: var(--gold);
+        }
+
+        .small-lantern::after {
+            /* Bottom cap */
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 12px;
+            width: 16px;
+            height: 4px;
+            background: var(--gold);
+        }
+
+        /* Tassel */
+        .small-lantern .tassel {
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 10px;
+            background: var(--gold);
+        }
+
+        @keyframes sway {
+            0% {
+                transform: rotate(-5deg);
+            }
+
+            100% {
+                transform: rotate(5deg);
+            }
+        }
+
+        /* --- Large Side Lanterns --- */
+        .big-lantern-container {
+            position: absolute;
+            top: 120px;
+            z-index: 5;
+            width: 120px;
+            height: 140px;
+            animation: gentle-bob 4s ease-in-out infinite;
+        }
+
+        .big-lantern-container.left {
+            left: -30px;
+        }
+
+        .big-lantern-container.right {
+            right: -30px;
+        }
+
+        .big-lantern {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 40% 40%, #ffaa80, #ff0000 60%, #660000);
+            border-radius: 45%;
+            position: relative;
+            box-shadow: 0 0 30px rgba(255, 69, 0, 0.4);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        /* Lantern Ribs */
+        .big-lantern::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 45%;
+            background: repeating-linear-gradient(90deg, transparent, transparent 15%, rgba(0, 0, 0, 0.1) 16%, rgba(0, 0, 0, 0.1) 20%);
+        }
+
+        /* Lantern Top/Bottom Gold Caps */
+        .lantern-cap {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: 12px;
+            background: linear-gradient(to right, var(--gold-dark), var(--gold), var(--gold-dark));
+            border-radius: 4px;
+        }
+
+        .lantern-cap.top {
+            top: -8px;
+        }
+
+        .lantern-cap.bottom {
+            bottom: -8px;
+        }
+
+        /* Tassels */
+        .big-tassels {
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .tassel-thread {
+            width: 4px;
+            height: 50px;
+            background: var(--red-bright);
+        }
+
+        .tassel-bunch {
+            width: 20px;
+            height: 40px;
+            background: repeating-linear-gradient(90deg, var(--red-bright), var(--red-dark) 2px);
+            margin-top: -5px;
+            border-radius: 0 0 5px 5px;
+        }
+
+        @keyframes gentle-bob {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* --- Logo Banner --- */
+        .logo-banner {
+            position: absolute;
+            top: 0;
+            left: 40px;
+            width: 70px;
+            height: 110px;
+            background: #b30000;
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 15px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+            /* Swallowtail cut */
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 50% 85%, 0% 100%);
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid var(--gold);
+        }
+
+        .fallback-logo {
+            display: none;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* --- Main Content Area --- */
+        .content-layer {
+            position: relative;
+            z-index: 10;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 100px;
+            /* Space below roof */
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            color: #fff;
+            text-transform: uppercase;
+            text-shadow:
+                0 0 10px var(--gold),
+                0 0 20px var(--gold-dark);
+            margin-bottom: 0;
+            line-height: 1;
+            letter-spacing: 2px;
+            /* Gradient Text */
+            background: linear-gradient(to bottom, #ffffff 20%, #ffeebb 50%, #ffcc00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #fff;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            opacity: 0.9;
+        }
+
+        /* --- Notice Box --- */
+        .notice-box {
+            width: 80%;
+            border: 2px solid var(--gold-light);
+            padding: 30px 20px;
+            text-align: center;
+            background: rgba(139, 0, 0, 0.4);
+            /* Semi-transparent */
+            backdrop-filter: blur(2px);
+            border-radius: 4px;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
+            position: relative;
+        }
+
+        /* Inner border for style */
+        .notice-box::after {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            pointer-events: none;
+        }
+
+        .notice-text {
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .date {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 15px;
+            display: block;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .closing-wish {
+            margin-top: 20px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            color: var(--gold-light);
+            text-transform: uppercase;
+        }
+
+        /* --- Door Knockers --- */
+        .door-handles {
+            display: flex;
+            gap: 120px;
+            margin-top: -20px;
+            /* Overlap with box slightly */
+            z-index: 5;
+        }
+
+        .handle {
+            width: 60px;
+            height: 60px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .handle-base {
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, var(--gold-light), var(--gold-dark));
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            z-index: 2;
+            margin-top: 10px;
+        }
+
+        .handle-ring {
+            position: absolute;
+            top: 20px;
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--gold);
+            border-radius: 50%;
+            box-shadow: 0 5px 5px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(45deg, var(--gold-dark), var(--gold-light), var(--gold-dark));
+            -webkit-mask: radial-gradient(transparent 55%, black 56%);
+            mask: radial-gradient(transparent 55%, black 56%);
+        }
+
+        /* --- Bottom Decorations --- */
+        .bottom-deco {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 250px;
+            z-index: 20;
+            pointer-events: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        /* Horses (SVG) */
+        .horse {
+            width: 180px;
+            height: 180px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+        }
+
+        .horse path {
+            fill: url(#gold-gradient);
+        }
+
+        .horse.left {
+            transform: scaleX(-1);
+            margin-left: -20px;
+        }
+
+        .horse.right {
+            margin-right: -20px;
+        }
+
+        /* Clouds/Waves at bottom */
+        .waves {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background-image: radial-gradient(circle at 25px 0, transparent 25px, #8B0000 26px);
+            /* Inverse wave mask trick */
+            /* Better wave approach using repetitive radial gradients */
+            background:
+                radial-gradient(circle at 50% 100%, #b30000 15px, transparent 16px),
+                radial-gradient(circle at 50% 100%, #d91e18 10px, transparent 11px);
+            background-size: 30px 40px;
+            background-repeat: repeat-x;
+            z-index: 5;
+            display: flex;
+        }
+
+        /* Proper wave SVG pattern for the bottom border */
+        .wave-border {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' fill='%23b30000'/%3E%3C/svg%3E");
+            background-size: cover;
+            transform: rotate(180deg);
+            z-index: 1;
+        }
+
+        /* Traditional Pattern Bottom SVG */
+        .traditional-bottom {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+            background-color: var(--red-dark);
+            z-index: 30;
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .circle-pattern {
+            width: 50px;
+            height: 50px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            margin: 5px -5px;
+            box-shadow: inset 0 0 0 4px var(--red-primary);
+        }
+
+        /* --- Cherry Blossoms --- */
+        .branch {
+            position: absolute;
+            z-index: 15;
+            pointer-events: none;
+        }
+
+        .branch.left {
+            top: 250px;
+            left: -20px;
+            width: 150px;
+            height: 100px;
+            transform: rotate(20deg);
+        }
+
+        .branch.right {
+            top: 220px;
+            right: -20px;
+            width: 150px;
+            height: 120px;
+            transform: rotate(-20deg) scaleX(-1);
+        }
+
+        .flower {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #ffe6f2, #ffb3d9);
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Petals shape */
+        .flower::before,
+        .flower::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            border-radius: 50%;
+        }
+
+        .flower::before {
+            transform: translateX(5px) translateY(-2px);
+        }
+
+        .flower::after {
+            transform: translateX(-5px) translateY(-2px);
+        }
+
+        /* Floating Petals Animation */
+        .falling-petal {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ffcce6;
+            border-radius: 10px 0 10px 0;
+            z-index: 25;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(600px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* SVG Definitions hidden */
+        .svg-defs {
+            position: absolute;
+            width: 0;
+            height: 0;
+            overflow: hidden;
+        }
+
+        /* Responsive */
+        @media (max-width: 500px) {
+            h1 {
+                font-size: 3.5rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .horse {
+                width: 120px;
+                height: 120px;
+            }
+
+            .notice-box {
+                width: 90%;
+                padding: 20px 10px;
+            }
+
+            .date {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SVG Gradients & Shapes Definitions -->
+    <svg class="svg-defs">
+        <defs>
+            <linearGradient id="gold-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#FBE8A6;stop-opacity:1" />
+                <stop offset="50%" style="stop-color:#FFD700;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#B8860B;stop-opacity:1" />
+            </linearGradient>
+            <!-- Horse Silhouette -->
+            <symbol id="horse-shape" viewBox="0 0 100 100">
+                <!-- Stylized horse head/chest shape -->
+                <path
+                    d="M70,20 C75,10 85,5 90,10 C92,15 90,25 88,30 C95,35 90,50 85,55 C85,65 80,70 70,80 C60,90 40,85 30,80 C35,70 50,70 60,60 C55,65 30,60 20,80 L20,95 L10,95 L10,75 C10,60 20,40 35,30 C35,15 45,25 50,15 C55,10 65,15 70,20 Z" />
+            </symbol>
+        </defs>
+    </svg>
+
+    <div class="card">
+        <div class="card-bg"></div>
+
+        <!-- Top Roof -->
+        <div class="roof-section">
+            <div class="small-lantern">
+                <div class="tassel"></div>
+            </div>
+            <div class="small-lantern" style="animation-delay: 0.5s">
+                <div class="tassel"></div>
+            </div>
+            <div class="small-lantern" style="animation-delay: 1s">
+                <div class="tassel"></div>
+            </div>
+            <div class="small-lantern" style="animation-delay: 1.5s">
+                <div class="tassel"></div>
+            </div>
+        </div>
+
+        <!-- Logo -->
+        <div class="logo-banner">
+            <img src="https://drive.google.com/thumbnail?id=1lALbBMPh5VzKP05kOEcOtFay_I6LqL3D&sz=w1000" alt="HEC Logo"
+                class="logo-img"
+                onerror="this.style.display='none'; document.querySelector('.fallback-logo').style.display='block';">
+            <div class="fallback-logo">HEC</div>
+        </div>
+
+        <!-- Big Lanterns -->
+        <div class="big-lantern-container left">
+            <div class="big-lantern">
+                <div class="lantern-cap top"></div>
+                <div class="lantern-cap bottom"></div>
+                <div class="big-tassels">
+                    <div class="tassel-thread"></div>
+                    <div class="tassel-bunch"></div>
+                </div>
+            </div>
+        </div>
+        <div class="big-lantern-container right">
+            <div class="big-lantern">
+                <div class="lantern-cap top"></div>
+                <div class="lantern-cap bottom"></div>
+                <div class="big-tassels">
+                    <div class="tassel-thread"></div>
+                    <div class="tassel-bunch"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-layer">
+            <h1>TẾT</h1>
+            <div class="subtitle">THÔNG BÁO NGHỈ TẾT</div>
+
+            <div class="notice-box">
+                <div class="notice-text">Trung tâm tiếng anh Hanoi Happy English<br>thông báo lịch nghỉ tết:</div>
+                <span class="date">Từ ngày 14/02 - 23/02</span>
+
+                <div class="notice-text">Bắt đầu khai xuân vào:</div>
+                <span class="date">24/02/2026 (Tức thứ 3)</span>
+
+                <div class="closing-wish" style="font-size: 0.9rem; line-height: 1.6;">HEC kính chúc đại gia đình<br>Năm
+                    mới An Khang Thịnh Vượng</div>
+            </div>
+
+            <div class="door-handles">
+                <div class="handle">
+                    <div class="handle-base"></div>
+                    <div class="handle-ring"></div>
+                </div>
+                <div class="handle">
+                    <div class="handle-base"></div>
+                    <div class="handle-ring"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blossoms -->
+        <div class="branch left">
+            <div class="flower" style="top:10px; left:20px;"></div>
+            <div class="flower" style="top:40px; left:50px;"></div>
+            <div class="flower" style="top:0px; left:80px;"></div>
+        </div>
+        <div class="branch right">
+            <div class="flower" style="top:20px; left:10px;"></div>
+            <div class="flower" style="top:50px; left:40px;"></div>
+            <div class="flower" style="top:10px; left:80px;"></div>
+        </div>
+
+        <!-- Falling Petals JS Generator -->
+        <script>
+            // Simple script to generate falling petals
+            const card = document.querySelector('.card');
+            function createPetal() {
+                const petal = document.createElement('div');
+                petal.classList.add('falling-petal');
+                petal.style.left = Math.random() * 100 + '%';
+                petal.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                petal.style.opacity = Math.random();
+                card.appendChild(petal);
+
+                // Cleanup
+                setTimeout(() => { petal.remove(); }, 7000);
+            }
+            setInterval(createPetal, 600);
+        </script>
+
+        <!-- Bottom Decorations -->
+        <div class="bottom-deco">
+            <!-- Horses using SVG -->
+            <svg class="horse left" viewBox="0 0 100 100">
+                <use href="#horse-shape" />
+            </svg>
+
+            <!-- Decorative Clouds/Smoke -->
+            <div
+                style="position: absolute; bottom: 40px; width: 100%; display: flex; justify-content: center; opacity: 0.8;">
+                <!-- Abstract clouds via CSS shapes -->
+                <div
+                    style="width: 40px; height: 20px; background: #580000; border-radius: 20px 20px 0 0; margin: 0 5px;">
+                </div>
+                <div
+                    style="width: 60px; height: 30px; background: #580000; border-radius: 30px 30px 0 0; margin: 0 5px;">
+                </div>
+                <div
+                    style="width: 40px; height: 20px; background: #580000; border-radius: 20px 20px 0 0; margin: 0 5px;">
+                </div>
+            </div>
+
+            <svg class="horse right" viewBox="0 0 100 100">
+                <use href="#horse-shape" />
+            </svg>
+        </div>
+
+        <!-- Traditional Wave Pattern Footer -->
+        <div class="traditional-bottom">
+            <div class="circle-pattern"></div>
+            <div class="circle-pattern"></div>
+            <div class="circle-pattern"></div>
+            <div class="circle-pattern"></div>
+            <div class="circle-pattern"></div>
+            <div class="circle-pattern"></div>
+            <div class="circle-pattern"></div>
+            <div class="circle-pattern"></div>
+            <div class="circle-pattern"></div>
+            <div class="circle-pattern"></div>
+            <div class="circle-pattern"></div>
+            <div class="circle-pattern"></div>
+        </div>
+
+    </div>
+</body>
+
+</html>

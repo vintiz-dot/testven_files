@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Victor Moronu - Secondary Mathematics Educator</title>
+    
+    <!-- Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        vas: {
+                            navy: '#1B365D',   /* Sophisticated Academic Navy */
+                            gold: '#C49A45',   /* Academic Gold */
+                            light: '#F8FAFC',
+                            slate: '#475569'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* A4 Print Setup and Web Preview */
+        body {
+            background-color: #cbd5e1;
+            margin: 0;
+            padding: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        .a4-page {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            position: relative;
+            box-sizing: border-box;
+            padding: 15mm 18mm;
+        }
+
+        /* Narrative/STAR Bullet Styling */
+        .impact-bullet {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .impact-bullet::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #C49A45;
+            font-size: 1.5rem;
+            line-height: 1;
+            top: -2px;
+        }
+
+        /* Print Optimization */
+        @media print {
+            body { background: white; margin: 0; padding: 0; display: block; }
+            .a4-page { 
+                margin: 0; 
+                padding: 15mm 18mm; 
+                box-shadow: none; 
+                page-break-after: always;
+                min-height: 297mm;
+            }
+            .a4-page:last-child { page-break-after: auto; }
+            .no-print { display: none !important; }
+            a { text-decoration: none; color: inherit; }
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased leading-relaxed">
+
+    <!-- Print Control Bar -->
+    <div class="no-print fixed top-6 right-8 z-50">
+        <button onclick="window.print()" class="bg-vas-navy text-white px-6 py-3 rounded-md font-sans font-semibold shadow-xl hover:bg-opacity-90 transition-all flex items-center gap-2">
+            <i class="fas fa-print"></i> Print / Save PDF
+        </button>
+    </div>
+
+    <!-- ==========================================
+         PAGE 1 
+         ========================================== -->
+    <div class="a4-page">
+        
+        <!-- Header Section -->
+        <header class="border-b-4 border-vas-navy pb-5 mb-6">
+            <h1 class="font-serif text-5xl font-bold text-vas-navy tracking-tight mb-2 uppercase">Victor Moronu</h1>
+            <h2 class="font-sans text-lg font-semibold text-vas-gold tracking-widest uppercase">Secondary Mathematics Educator</h2>
+            
+            <div class="flex flex-wrap gap-4 mt-4 font-sans text-sm font-medium text-slate-600">
+                <div class="flex items-center gap-2"><i class="fas fa-map-marker-alt text-vas-navy"></i> Hanoi, Vietnam</div>
+                <div class="flex items-center gap-2"><i class="fas fa-phone text-vas-navy"></i> +84 98 893 0491</div>
+                <div class="flex items-center gap-2"><i class="fas fa-envelope text-vas-navy"></i> vmoronu@gmail.com</div>
+                <div class="flex items-center gap-2"><i class="fab fa-linkedin text-vas-navy"></i> linkedin.com/in/victor-moronu</div>
+            </div>
+        </header>
+
+        <!-- Profile & Philosophy -->
+        <section class="mb-6">
+            <h3 class="font-sans font-bold text-vas-navy text-sm uppercase tracking-widest border-b border-gray-200 pb-1 mb-3">Professional Philosophy & Profile</h3>
+            <p class="text-[10.5pt] text-justify text-vas-slate leading-relaxed mb-3">
+                Dynamic and highly analytical Mathematics Educator blending a background in Mechanical Engineering with modern pedagogical expertise. I possess a deep, "first-principles" command of the <strong>IGCSE and British O-Level equivalent frameworks (WAEC)</strong>, enabling me to effectively prepare secondary students for high-stakes examinations. Currently finalizing a Master of Education in Educational Technology and a U.S. Teaching License, I leverage digital tools to make abstract mathematics tangible.
+            </p>
+            <p class="text-[10.5pt] text-justify text-vas-slate leading-relaxed">
+                <strong>Safeguarding & Wellbeing Priority:</strong> I operate on the non-negotiable principle that <em>child safety and emotional wellbeing are the absolute prerequisites for academic success</em>. I actively integrate daily socio-emotional check-ins and proactive safeguarding measures to ensure my classroom is a psychologically secure environment where ESL and neurodivergent learners feel safe to take intellectual risks.
+            </p>
+        </section>
+
+        <!-- Core Competencies (Woven Skills) -->
+        <section class="mb-6">
+            <h3 class="font-sans font-bold text-vas-navy text-sm uppercase tracking-widest border-b border-gray-200 pb-1 mb-3">Core Competencies</h3>
+            <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-[10.5pt] font-medium text-vas-slate">
+                <div class="flex items-center gap-2"><i class="fas fa-check-circle text-vas-gold text-xs"></i> IGCSE / Equivalent Exam Preparation</div>
+                <div class="flex items-center gap-2"><i class="fas fa-check-circle text-vas-gold text-xs"></i> Proactive Child Safeguarding & Care</div>
+                <div class="flex items-center gap-2"><i class="fas fa-check-circle text-vas-gold text-xs"></i> EdTech Integration (Desmos, GeoGebra)</div>
+                <div class="flex items-center gap-2"><i class="fas fa-check-circle text-vas-gold text-xs"></i> ESL Scaffolding & Differentiation</div>
+                <div class="flex items-center gap-2"><i class="fas fa-check-circle text-vas-gold text-xs"></i> Formative & Summative Assessment</div>
+                <div class="flex items-center gap-2"><i class="fas fa-check-circle text-vas-gold text-xs"></i> Parent-Teacher Communication</div>
+            </div>
+        </section>
+
+        <!-- Professional Experience (STAR-I Impact) -->
+        <section>
+            <h3 class="font-sans font-bold text-vas-navy text-sm uppercase tracking-widest border-b border-gray-200 pb-1 mb-4">Professional Experience & Impact</h3>
+            
+            <!-- Job 1 -->
+            <div class="mb-6">
+                <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-sans font-bold text-[13pt] text-gray-900">Secondary Math & Science Teacher</h4>
+                    <span class="font-semibold text-vas-navy text-[10pt]">Sept 2024 – Present</span>
+                </div>
+                <div class="font-medium text-vas-gold text-[11pt] mb-3 italic">Victoria Thăng Long School | Hanoi, Vietnam</div>
+                
+                <div class="text-[10.5pt] text-vas-slate">
+                    <div class="impact-bullet">
+                        <strong>Safeguarding & Classroom Culture:</strong> Established a non-negotiable child protection framework within the classroom. Implemented subtle, daily socio-emotional check-ins to monitor behavioral baselines, allowing for early identification of academic anxiety or distress, thereby creating a psychologically safe space for highly stressed secondary students.
+                    </div>
+                    <div class="impact-bullet">
+                        <strong>Differentiating for ESL Learners (The "Bite-Sized" Approach):</strong> 
+                        <em>Challenge:</em> Bilingual students frequently struggled with the abstract language of algebraic functions. 
+                        <em>Action:</em> Deconstructed complex equations into "bite-sized" chunks, employing multiple teaching styles including manipulatives, pictorial models, and kinesthetic activities.
+                        <em>Result:</em> Successfully bridged the language gap, increasing termly Math assessment averages by 15% across mixed-ability cohorts.
+                    </div>
+                    <div class="impact-bullet">
+                        <strong>EdTech for Conceptual Mastery:</strong> Replaced rote memorization with interactive discovery. Utilized <strong>Desmos</strong> and <strong>GeoGebra</strong> to help students dynamically graph and visualize quadratic and linear functions. This transformed passive learners into active investigators, allowing them to instantly see the cause-and-effect of altering mathematical variables.
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+    <!-- ==========================================
+         PAGE 2 
+         ========================================== -->
+    <div class="a4-page">
+        
+        <section class="mb-8 mt-2">
+            
+            <!-- Job 2 -->
+            <div class="mb-6">
+                <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-sans font-bold text-[13pt] text-gray-900">Academic Manager & IB MYP / High-Level Math Instructor</h4>
+                    <span class="font-semibold text-vas-navy text-[10pt]">2022 – 2024</span>
+                </div>
+                <div class="font-medium text-vas-gold text-[11pt] mb-3 italic">Boda Learning Center | Hanoi, Vietnam</div>
+                
+                <div class="text-[10.5pt] text-vas-slate">
+                    <div class="impact-bullet">
+                        <strong>High-Stakes Exam Preparation:</strong> Oversaw rigorous mathematical training aligned with international standards (IB MYP Criteria A & C). Designed targeted intervention programs for students preparing for competitive standardized tests.
+                    </div>
+                    <div class="impact-bullet">
+                        <strong>Algorithmic Thinking via Tech:</strong> 
+                        <em>Challenge:</em> Students struggled with multi-step logical reasoning required for upper-secondary math.
+                        <em>Action:</em> Integrated basic <strong>Python</strong> algorithmic exercises into logic modules to teach step-by-step computational thinking.
+                        <em>Result:</em> Students developed highly structured problem-solving frameworks, directly contributing to an average score increase of over 100 points in quantitative standardized testing.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job 3 continued from previous page structure -->
+            <div class="mb-6">
+                <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-sans font-bold text-[13pt] text-gray-900">Academic Manager (STEM Lead)</h4>
+                    <span class="font-semibold text-vas-navy text-[10pt]">2022 – Present</span>
+                </div>
+                <div class="font-medium text-vas-gold text-[11pt] mb-3 italic">Happy English Club | Hanoi, Vietnam</div>
+                
+                <div class="text-[10.5pt] text-vas-slate">
+                    <div class="impact-bullet">
+                        <strong>Holistic Wellbeing & Leadership:</strong> Pioneered a pedagogical framework fusing Montessori principles with Project-Based Learning. Trained a faculty of 5 instructors on inclusive teaching practices, emphasizing that emotional security and positive reinforcement are foundational to cognitive development.
+                    </div>
+                    <div class="impact-bullet">
+                        <strong>Universal Design for Learning (UDL):</strong> Ensured all curriculum materials were accessible. Translated rigid logic problems into tangible, visual "Math Discovery" projects, proving that rigorous foundational math can be engaging and stress-free.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job 4 -->
+            <div>
+                <div class="flex justify-between items-baseline mb-1">
+                    <h4 class="font-sans font-bold text-[13pt] text-gray-900">Primary Math & Science Teacher</h4>
+                    <span class="font-semibold text-vas-navy text-[10pt]">Aug 2023 – June 2024</span>
+                </div>
+                <div class="font-medium text-vas-gold text-[11pt] mb-3 italic">Hanoi Primary & High School System (Thang Long)</div>
+                
+                <div class="text-[10.5pt] text-vas-slate">
+                    <div class="impact-bullet">
+                        <strong>Curriculum Delivery:</strong> Taught foundational math and science concepts utilizing Cambridge and McGraw-Hill resources. 
+                    </div>
+                    <div class="impact-bullet">
+                        <strong>Engagement & Safety:</strong> Built a "Happy Classroom" environment. Managed behavior through positive reinforcement rather than punitive measures, significantly reducing classroom anxiety and improving participation rates among previously disengaged ELL students by 20%.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education & Credentials -->
+        <section class="mb-8">
+            <h3 class="font-sans font-bold text-vas-navy text-sm uppercase tracking-widest border-b border-gray-200 pb-1 mb-4">Education & Professional Credentials</h3>
+            
+            <div class="grid grid-cols-1 gap-4 text-[11pt]">
+                <div class="bg-vas-light p-4 rounded-md border border-gray-100">
+                    <div class="flex justify-between">
+                        <span class="font-bold text-gray-900">Master of Education (M.Ed.) - Educational Technology</span>
+                        <span class="text-vas-navy font-semibold text-[10pt]">Exp. May 2026</span>
+                    </div>
+                    <div class="text-vas-slate text-[10pt]">Moreland University, USA</div>
+                </div>
+
+                <div class="bg-vas-light p-4 rounded-md border border-gray-100">
+                    <div class="flex justify-between">
+                        <span class="font-bold text-gray-900">U.S. Teaching License & PGCE (Secondary STEM)</span>
+                        <span class="text-vas-navy font-semibold text-[10pt]">Jan 2026</span>
+                    </div>
+                    <div class="text-vas-slate text-[10pt]">Moreland University, USA (Includes Comprehensive Safeguarding & Pedagogy Training)</div>
+                </div>
+
+                <div class="bg-vas-light p-4 rounded-md border border-gray-100">
+                    <div class="flex justify-between">
+                        <span class="font-bold text-gray-900">Bachelor of Engineering (B.Eng.) - Mechanical Engineering</span>
+                        <span class="text-vas-navy font-semibold text-[10pt]">2018</span>
+                    </div>
+                    <div class="text-vas-slate text-[10pt]">Fully Accredited University Program</div>
+                </div>
+
+                <div class="bg-vas-light p-4 rounded-md border border-gray-100">
+                    <div class="flex justify-between">
+                        <span class="font-bold text-gray-900">Secondary Education Framework (WAEC)</span>
+                    </div>
+                    <div class="text-vas-slate text-[10pt] mt-1">
+                        <em>Internationally recognized equivalent to the British Cambridge O-Level / IGCSE. Provides a deep, foundational mastery of the rigorous exam-based curriculum required for IGCSE instruction.</em>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Professional Referees -->
+        <section>
+            <h3 class="font-sans font-bold text-vas-navy text-sm uppercase tracking-widest border-b border-gray-200 pb-1 mb-4">Professional Referees</h3>
+            
+            <div class="grid grid-cols-3 gap-4">
+                <!-- Referee 1 -->
+                <div class="text-[10pt]">
+                    <div class="font-bold text-gray-900 text-[11pt]">Matt Howard-White</div>
+                    <div class="text-vas-gold font-medium mb-1">Head of International Dept.</div>
+                    <div class="text-vas-slate">Victoria Thăng Long School</div>
+                    <div class="text-vas-slate mt-2"><i class="fas fa-envelope text-vas-navy w-4"></i> m.howardwhite@gmail.com</div>
+                    <div class="text-vas-slate"><i class="fas fa-phone text-vas-navy w-4"></i> 0386 130 3306</div>
+                </div>
+
+                <!-- Referee 2 -->
+                <div class="text-[10pt]">
+                    <div class="font-bold text-gray-900 text-[11pt]">Ms. Thi Huong</div>
+                    <div class="text-vas-gold font-medium mb-1">Line Manager</div>
+                    <div class="text-vas-slate">Happy English Club</div>
+                    <div class="text-vas-slate mt-2"><i class="fas fa-phone text-vas-navy w-4"></i> 0975 679 889</div>
+                    <div class="text-vas-slate italic mt-1">(Email available upon request)</div>
+                </div>
+
+                <!-- Referee 3 -->
+                <div class="text-[10pt]">
+                    <div class="font-bold text-gray-900 text-[11pt]">Rita Molino</div>
+                    <div class="text-vas-gold font-medium mb-1">Clinical Instructor</div>
+                    <div class="text-vas-slate">Moreland University</div>
+                    <div class="text-vas-slate mt-2"><i class="fas fa-envelope text-vas-navy w-4"></i> ritams@moreland.edu</div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ngozi Thelma Alum - CV</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --text-color: #333;
+            --light-bg: #f4f7f6;
+            --border-color: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: grid;
+            grid-template-columns: 300px 1fr;
+        }
+
+        /* Sidebar Styles */
+        aside {
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 40px 25px;
+        }
+
+        .profile-photo-placeholder {
+            width: 120px;
+            height: 120px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            border: 2px solid var(--accent-color);
+        }
+
+        aside h1 {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        aside .title {
+            text-align: center;
+            font-size: 14px;
+            color: var(--accent-color);
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .contact-info {
+            margin-bottom: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 13px;
+        }
+
+        .contact-item span {
+            margin-left: 10px;
+            word-break: break-all;
+        }
+
+        .sidebar-section {
+            margin-bottom: 30px;
+        }
+
+        .sidebar-section h3 {
+            font-size: 16px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-tag {
+            background: rgba(255,255,255,0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        ul.sidebar-list {
+            list-style: none;
+            padding: 0;
+            font-size: 13px;
+        }
+
+        ul.sidebar-list li {
+            margin-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 5px;
+        }
+
+        /* Main Content Styles */
+        main {
+            padding: 40px;
+        }
+
+        .summary {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            margin-top: 30px;
+        }
+
+        .job {
+            margin-bottom: 25px;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 5px;
+        }
+
+        .job-title {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--primary-color);
+        }
+
+        .job-company {
+            font-style: italic;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .job-date {
+            font-size: 13px;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .job ul {
+            margin-top: 8px;
+            padding-left: 18px;
+            font-size: 14px;
+            color: #444;
+        }
+
+        .job li {
+            margin-bottom: 6px;
+        }
+
+        .education-item {
+            margin-bottom: 15px;
+        }
+
+        .degree {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .school {
+            font-style: italic;
+            color: #555;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                margin: 0;
+            }
+            aside {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <aside>
+        <div class="profile-photo-placeholder">
+            <span>NA</span>
+        </div>
+        <h1>Ngozi Thelma Alum</h1>
+        <div class="title">Licensed Early Childhood Educator<br>& English Language Specialist</div>
+
+        <div class="contact-info">
+            <div class="contact-item">
+                <span>Hung Yen, Vietnam</span>
+            </div>
+            <div class="contact-item">
+                <span>+84 354 572 395</span>
+            </div>
+            <div class="contact-item">
+                <span>alumthelma@gmail.com</span>
+            </div>
+            <div class="contact-item">
+                <a href="https://www.linkedin.com/in/ngozikar" style="color: white; text-decoration: none;">linkedin.com/in/ngozikar</a>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <h3>Core Competencies</h3>
+            <div class="skill-tags">
+                <span class="skill-tag">Early Childhood Education</span>
+                <span class="skill-tag">Cambridge Curriculum</span>
+                <span class="skill-tag">IELTS Preparation</span>
+                <span class="skill-tag">STEAM Integration</span>
+                <span class="skill-tag">Special Needs Support</span>
+                <span class="skill-tag">Classroom Management</span>
+                <span class="skill-tag">Differentiated Instruction</span>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <h3>Technical Skills</h3>
+            <div class="skill-tags">
+                <span class="skill-tag">AI for Instructional Design</span>
+                <span class="skill-tag">Digital Content Creation</span>
+                <span class="skill-tag">Video Editing</span>
+                <span class="skill-tag">Canva & PowerPoint</span>
+                <span class="skill-tag">Interactive Presentations</span>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <h3>Languages</h3>
+            <ul class="sidebar-list">
+                <li><strong>English:</strong> Native/Bilingual (C2)</li>
+                <li><strong>Igbo:</strong> Native</li>
+                <li><strong>Vietnamese:</strong> Basic Conversational</li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h3>Pedagogy</h3>
+            <div class="skill-tags">
+                <span class="skill-tag">Learner-Centered</span>
+                <span class="skill-tag">Inquiry-Based</span>
+                <span class="skill-tag">Scaffolded Learning</span>
+                <span class="skill-tag">Inclusive Education</span>
+            </div>
+        </div>
+    </aside>
+
+    <main>
+        <div class="summary">
+            <h2 class="section-title" style="margin-top: 0;">Professional Profile</h2>
+            <p>
+                Innovative and dual-licensed English Language and Early Childhood Educator with over 8 years of experience in multicultural settings. Proven expertise in the Cambridge Assessment English curriculum, IELTS preparation, and Grapeseed programs . Adept at designing STEAM-integrated, communicative lessons that foster critical thinking and language acquisition . Skilled in managing diverse classrooms—including high-energy learners and students with special needs—through positive behavior support and differentiated instruction. Committed to leveraging EdTech and AI tools to create engaging, hands-on learning experiences.
+            </p>
+        </div>
+
+        <div class="experience">
+            <h2 class="section-title">Teaching Experience</h2>
+
+            <div class="job">
+                <div class="job-header">
+                    <div>
+                        <div class="job-title">English Language Teacher (Kindergarten – IELTS)</div>
+                        <div class="job-company">Cambridge Assessment English (CAE) Programs</div>
+                    </div>
+                    <div class="job-date">July 2024 – Present</div>
+                </div>
+                <ul>
+                    <li>Deliver comprehensive English instruction across Kindergarten to Secondary levels, effectively preparing students for Starters, Movers, Flyers, KET, PET, and IELTS examinations .</li>
+                    <li>Integrate STEAM methodologies and hands-on projects to enhance communication skills and critical thinking .</li>
+                    <li>Utilize data-driven formative and summative assessments to monitor student progress and tailor instruction to individual needs .</li>
+                    <li>Contribute to curriculum development initiatives and create digital learning materials, including video and audio content for independent practice .</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <div>
+                        <div class="job-title">Kindergarten Teacher (Special Needs Focus)</div>
+                        <div class="job-company">Mai Anh Kindergarten, Hung Yen</div>
+                    </div>
+                    <div class="job-date">Nov 2024 – Mar 2025</div>
+                </div>
+                <ul>
+                    <li>Managed a full inclusive classroom, implementing individualized strategies for students with diverse special needs .</li>
+                    <li>Established structured routines, visual supports, and sensory breaks to promote emotional regulation and focus .</li>
+                    <li>Collaborated with support staff and families to meet IEP goals, fostering a safe and patient learning environment .</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <div>
+                        <div class="job-title">Kindergarten Teacher</div>
+                        <div class="job-company">Thiên Thần Nhỏ Kindergarten</div>
+                    </div>
+                    <div class="job-date">Aug 2024 – Aug 2025</div>
+                </div>
+                <ul>
+                    <li>Supported high-energy learners through proactive behavioral strategies and structured movement activities .</li>
+                    <li>Designed hands-on, active lessons to maintain high engagement levels and build self-regulation skills .</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <div>
+                        <div class="job-title">ESL Teacher</div>
+                        <div class="job-company">Dream School, Thai Nguyen</div>
+                    </div>
+                    <div class="job-date">July 2023 – June 2024</div>
+                </div>
+                <ul>
+                    <li>Planned and delivered structured English lessons covering core language skills .</li>
+                    <li>Designed rigorous assessments and provided actionable feedback to track and improve student performance .</li>
+                    <li>Reviewed and optimized curriculum materials to ensure alignment with learning standards .</li>
+                </ul>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <div>
+                        <div class="job-title">English Language & Early Years Educator</div>
+                        <div class="job-company">Earnest Divine Light Academy</div>
+                    </div>
+                    <div class="job-date">Aug 2019 – Sept 2022</div>
+                </div>
+                <ul>
+                    <li>Taught early literacy and English language skills in primary settings using phonics, storytelling, and guided practice .</li>
+                    <li>Differentiated instruction to support varied learning abilities and consistently monitored student progress .</li>
+                </ul>
+            </div>
+            
+            <div class="job">
+                <div class="job-header">
+                    <div>
+                        <div class="job-title">English and Literature Teacher</div>
+                        <div class="job-company">Amuzukwu Girls' Secondary School</div>
+                    </div>
+                    <div class="job-date">May 2018 – Feb 2019</div>
+                </div>
+                <ul>
+                    <li>Increased student engagement by incorporating drama-based strategies, including acting out scenes from literary texts .</li>
+                    <li>Provided mentorship and structured guidance to support students' academic and personal development .</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="education">
+            <h2 class="section-title">Education & Licensure</h2>
+            
+            <div class="education-item">
+                <div class="degree">U.S. Teaching License & PGCE (Early Childhood Education)</div>
+                <div class="school">Moreland University | 2026 </div>
+            </div>
+
+            <div class="education-item">
+                <div class="degree">Master of Arts - Theatre and Film Studies</div>
+                <div class="school">University of Nigeria </div>
+            </div>
+
+            <div class="education-item">
+                <div class="degree">Bachelor of Arts - English and Literary Studies</div>
+                <div class="school">University of Nigeria | 2017 </div>
+            </div>
+        </div>
+
+        <div class="education">
+             <h2 class="section-title">Certifications</h2>
+             <ul style="padding-left: 18px; margin-top: 5px;">
+                 <li><strong>English Teaching Methods For Kindergarten Children</strong> - Ministry of Education and Training, Vietnam (2025) </li>
+                 <li><strong>120-Hour TESOL/TEFL Certificate</strong> - World Tesol Academy (2023) </li>
+                 <li><strong>Business English</strong> - International Business Management Institute, Berlin (2026) </li>
+             </ul>
+        </div>
+
+    </main>
+</div>
+
+</body>
+</html>

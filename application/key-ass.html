@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kleynn Daryl - Educator Resume</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Custom print styles to ensure ATS-friendly and beautiful physical copies */
+        @media print {
+            body { background-color: white; color: black; font-size: 11pt; }
+            .no-print { display: none !important; }
+            .print-break-inside-avoid { break-inside: avoid; }
+            a { text-decoration: none; color: black; }
+            .highlight-metric { background-color: transparent !important; font-weight: bold; }
+            main { max-width: 100%; padding: 0; box-shadow: none; }
+        }
+        /* Interactive Highlight Transition */
+        .highlight-metric {
+            transition: background-color 0.3s ease, padding 0.3s ease;
+            border-radius: 4px;
+        }
+        .highlight-active {
+            background-color: #fef08a; /* yellow-200 */
+            padding: 0 4px;
+            font-weight: 600;
+            color: #166534; /* green-800 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans leading-relaxed min-h-screen pb-12">
+
+    <!-- Interactive Web Controls (Hidden on Print) -->
+    <div class="no-print sticky top-0 bg-white shadow-md z-50 p-4 mb-8 flex justify-center gap-4">
+        <button id="toggleMetrics" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors">
+            <i data-lucide="bar-chart-2" class="w-4 h-4"></i> Highlight SMART Metrics
+        </button>
+        <button onclick="window.print()" class="flex items-center gap-2 bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors">
+            <i data-lucide="printer" class="w-4 h-4"></i> Print / Save as PDF
+        </button>
+    </div>
+
+    <!-- Main Resume Container -->
+    <main class="max-w-4xl mx-auto bg-white p-10 md:p-14 shadow-lg rounded-xl">
+        
+        <!-- Header Section -->
+        <header class="border-b-4 border-blue-800 pb-6 mb-8">
+            <h1 class="text-4xl font-extrabold text-gray-900 tracking-tight uppercase">Kleynn Daryl</h1>
+            <h2 class="text-xl font-medium text-blue-700 mt-2">Secondary Educator | iPGCE Candidate (UWE Bristol)</h2>
+            
+            <div class="flex flex-wrap gap-4 mt-4 text-sm text-gray-600">
+                <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-4 h-4"></i> Hanoi, Vietnam</span>
+                <span class="flex items-center gap-1"><i data-lucide="mail" class="w-4 h-4"></i> educator.daryl@email.com</span>
+                <span class="flex items-center gap-1"><i data-lucide="phone" class="w-4 h-4"></i> +84 XX XXX XXXX</span>
+                <span class="flex items-center gap-1"><i data-lucide="linkedin" class="w-4 h-4"></i> linkedin.com/in/kleynndaryl</span>
+            </div>
+        </header>
+
+        <!-- Professional Summary -->
+        <section class="mb-8 print-break-inside-avoid">
+            <h3 class="text-lg font-bold text-gray-900 uppercase tracking-wider mb-3 flex items-center gap-2">
+                <i data-lucide="user" class="w-5 h-5 text-blue-700"></i> Professional Summary
+            </h3>
+            <p class="text-gray-700 text-justify">
+                Forward-thinking and highly adaptable Secondary Educator committed to fostering inclusive, student-led learning environments. Currently completing an iPGCE with UWE Bristol, bridging comprehensive theoretical pedagogy with practical classroom excellence. Proven track record of transitioning students from foundational primary frameworks (IB PYP, National Geographic) to rigorous secondary curriculums (Cambridge). Dedicated to Universal Design for Learning (UDL) and stringent safeguarding protocols, utilizing daily wellbeing metrics and EdTech to ensure every student finds their unique voice and achieves measurable academic growth in a psychologically safe space.
+            </p>
+        </section>
+
+        <!-- Core Competencies (ATS Keyword Optimization) -->
+        <section class="mb-8 print-break-inside-avoid">
+            <h3 class="text-lg font-bold text-gray-900 uppercase tracking-wider mb-3 flex items-center gap-2">
+                <i data-lucide="target" class="w-5 h-5 text-blue-700"></i> Core Competencies & Pedagogical Skills
+            </h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm text-gray-700">
+                <ul class="list-disc list-inside space-y-1">
+                    <li>Universal Design for Learning (UDL)</li>
+                    <li>Cambridge & IB Frameworks</li>
+                    <li>Student Agency & Voice</li>
+                </ul>
+                <ul class="list-disc list-inside space-y-1">
+                    <li>Child Safeguarding & Wellbeing</li>
+                    <li>Socio-Emotional Check-ins</li>
+                    <li>Differentiated Instruction</li>
+                </ul>
+                <ul class="list-disc list-inside space-y-1">
+                    <li>Google Workspace & Nearpod</li>
+                    <li>ManageBac / Seesaw Integration</li>
+                    <li>Formative & Summative Data Analysis</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Professional Experience -->
+        <section class="mb-8">
+            <h3 class="text-lg font-bold text-gray-900 uppercase tracking-wider mb-5 flex items-center gap-2 border-b border-gray-200 pb-2">
+                <i data-lucide="briefcase" class="w-5 h-5 text-blue-700"></i> Professional Experience
+            </h3>
+
+            <!-- Atlantic English 5 Star -->
+            <article class="mb-6 print-break-inside-avoid">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-baseline mb-2">
+                    <h4 class="text-xl font-bold text-gray-900">Secondary Educator (Grades 6–11)</h4>
+                    <span class="text-sm font-semibold text-blue-700 bg-blue-50 px-3 py-1 rounded-full">07/2024 – 2026</span>
+                </div>
+                <div class="text-md font-medium text-gray-600 mb-3">Atlantic English 5 Star | Hanoi, Vietnam</div>
+                <ul class="list-disc list-outside ml-5 space-y-3 text-gray-700 text-justify">
+                    <li><strong>Pedagogy & UDL Application:</strong> Designed and delivered dynamic, highly differentiated lessons for diverse Grade 6-11 cohorts. Integrated Universal Design for Learning (UDL) principles via Nearpod and Google Classroom, providing multiple pathways for student engagement and <span class="highlight-metric">improving assignment completion rates by 35%</span>.</li>
+                    <li><strong>Culture & Safeguarding Action:</strong> Identified initial student hesitancy in mixed-ability classrooms. Implemented structured, daily socio-emotional check-ins and restorative peer dialogue to establish a psychologically safe, inclusive environment centered on mutual respect.</li>
+                    <li><strong>Measurable Impact (Big Win):</strong> Empowered historically reluctant speakers to find and express their unique voices. Shifted classroom dynamics to support academic risk-taking, resulting in a <span class="highlight-metric">100% participation rate in peer-led Socratic seminars</span> and a demonstrable increase in self-advocacy among at-risk learners.</li>
+                </ul>
+            </article>
+
+            <!-- Trang Long-XALA -->
+            <article class="mb-6 print-break-inside-avoid">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-baseline mb-2">
+                    <h4 class="text-xl font-bold text-gray-900">Middle School Educator (Full-Time)</h4>
+                    <span class="text-sm font-semibold text-blue-700 bg-blue-50 px-3 py-1 rounded-full">11/2022 – 05/2024</span>
+                </div>
+                <div class="text-md font-medium text-gray-600 mb-3">Trang Long-XALA | Hanoi, Vietnam</div>
+                <ul class="list-disc list-outside ml-5 space-y-3 text-gray-700 text-justify">
+                    <li><strong>Curriculum Delivery:</strong> Facilitated the comprehensive delivery of the Cambridge curriculum. Mapped learning objectives to interactive, project-based tasks to bridge the academic gap between primary learning and rigorous secondary expectations.</li>
+                    <li><strong>Assessment & Technology:</strong> Utilized data-driven formative assessments (via Quizizz and internal LMS) to track individual progress. Provided targeted scaffolding that <span class="highlight-metric">raised overall cohort assessment scores by an average of 22%</span> over three consecutive terms.</li>
+                    <li><strong>Stakeholder Communication:</strong> Maintained transparent, continuous communication with parents and school leadership regarding both academic progress and student wellbeing, strictly adhering to campus safeguarding protocols.</li>
+                </ul>
+            </article>
+
+            <!-- POLY English Center -->
+            <article class="mb-6 print-break-inside-avoid">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-baseline mb-2">
+                    <h4 class="text-xl font-bold text-gray-900">Primary Years Educator (Part-Time)</h4>
+                    <span class="text-sm font-semibold text-blue-700 bg-blue-50 px-3 py-1 rounded-full">11/2022 – 05/2024</span>
+                </div>
+                <div class="text-md font-medium text-gray-600 mb-3">POLY English Center | Hanoi, Vietnam</div>
+                <ul class="list-disc list-outside ml-5 space-y-3 text-gray-700 text-justify">
+                    <li><strong>Foundational Learning:</strong> Instructed Grades 1-4 utilizing high-level National Geographic content mapped directly to the IB Primary Years Programme (PYP) framework, cultivating early global citizenship and inquiry-based learning.</li>
+                    <li><strong>Student Agency Initiative:</strong> Shifted traditional, teacher-led instruction to a student-driven inquiry model. Utilized ClassDojo/Seesaw to build digital portfolios, which <span class="highlight-metric">increased student-initiated project proposals by 40%</span>.</li>
+                </ul>
+            </article>
+
+            <!-- School Link -->
+            <article class="print-break-inside-avoid">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-baseline mb-1">
+                    <h4 class="text-lg font-bold text-gray-900">Relief Educator</h4>
+                    <span class="text-sm font-semibold text-blue-700 bg-blue-50 px-3 py-1 rounded-full">10/2022 – 11/2022</span>
+                </div>
+                <div class="text-md font-medium text-gray-600 mb-2">School Link | Hanoi, Vietnam</div>
+                <ul class="list-disc list-outside ml-5 space-y-1 text-gray-700 text-justify text-sm">
+                    <li>Demonstrated high adaptability by rapidly assimilating to varying classroom environments and maintaining curriculum continuity during short-term placements.</li>
+                </ul>
+            </article>
+        </section>
+
+        <!-- Education & Certifications -->
+        <section class="print-break-inside-avoid">
+            <h3 class="text-lg font-bold text-gray-900 uppercase tracking-wider mb-5 flex items-center gap-2 border-b border-gray-200 pb-2">
+                <i data-lucide="graduation-cap" class="w-5 h-5 text-blue-700"></i> Education & Qualifications
+            </h3>
+            
+            <article class="mb-4">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-baseline mb-1">
+                    <h4 class="text-lg font-bold text-gray-900">International Postgraduate Certificate in Education (iPGCE)</h4>
+                    <span class="text-sm font-semibold text-gray-600">Expected Completion</span>
+                </div>
+                <div class="text-md text-gray-700">University of the West of England (UWE) Bristol | UK</div>
+                <p class="text-sm text-gray-600 mt-1 italic">Focusing on modern pedagogical frameworks, international curriculum delivery, and advanced classroom management.</p>
+            </article>
+
+            <!-- Placeholder for Bachelor Degree - You can edit this directly in the file or I can update it -->
+            <article>
+                <div class="flex flex-col md:flex-row md:justify-between md:items-baseline mb-1">
+                    <h4 class="text-lg font-bold text-gray-900">Bachelor's Degree</h4>
+                    <span class="text-sm font-semibold text-gray-600">[Year]</span>
+                </div>
+                <div class="text-md text-gray-700">[University Name] | [Location]</div>
+            </article>
+        </section>
+
+    </main>
+
+    <!-- JavaScript for Interactivity -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Interactive "Highlight Metrics" feature
+        const toggleBtn = document.getElementById('toggleMetrics');
+        const metrics = document.querySelectorAll('.highlight-metric');
+        let isHighlighted = false;
+
+        toggleBtn.addEventListener('click', () => {
+            isHighlighted = !isHighlighted;
+            metrics.forEach(metric => {
+                if (isHighlighted) {
+                    metric.classList.add('highlight-active');
+                } else {
+                    metric.classList.remove('highlight-active');
+                }
+            });
+
+            // Update button UI
+            if (isHighlighted) {
+                toggleBtn.innerHTML = '<i data-lucide="eye-off" class="w-4 h-4"></i> Hide Impact Metrics';
+                toggleBtn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+                toggleBtn.classList.add('bg-green-600', 'hover:bg-green-700');
+            } else {
+                toggleBtn.innerHTML = '<i data-lucide="bar-chart-2" class="w-4 h-4"></i> Highlight SMART Metrics';
+                toggleBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
+                toggleBtn.classList.add('bg-blue-600', 'hover:bg-blue-700');
+            }
+            lucide.createIcons(); // Re-render icon
+        });
+    </script>
+</body>
+</html>

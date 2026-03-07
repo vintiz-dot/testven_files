@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Victor Moronu - LSA Resume</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        htsRed: '#C8102E', // Classic Canadian/HTS Red
+                        htsNavy: '#00205B', // Professional Navy Blue
+                        htsGray: '#F3F4F6'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #e5e7eb;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+        .page {
+            max-width: 21cm;
+            min-height: 29.7cm;
+            margin: 2rem auto;
+            background: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        /* Print Styles */
+        @media print {
+            body { background: white; margin: 0; padding: 0; }
+            .page { 
+                margin: 0; 
+                box-shadow: none; 
+                max-width: 100%;
+                width: 100%;
+            }
+            .no-print { display: none; }
+        }
+
+        .section-title {
+            color: #00205B;
+            border-bottom: 2px solid #C8102E;
+            padding-bottom: 0.25rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased">
+
+    <!-- Print Button for User Convenience -->
+    <div class="no-print text-center pt-4">
+        <button onclick="window.print()" class="bg-htsRed hover:bg-red-800 text-white font-bold py-2 px-6 rounded shadow-lg transition duration-300">
+            <i class="fas fa-print mr-2"></i> Save as PDF / Print
+        </button>
+        <p class="text-sm text-gray-500 mt-2">For best results, set margins to "None" in the print dialog.</p>
+    </div>
+
+    <div class="page flex flex-col md:flex-row overflow-hidden relative">
+        <!-- Top Accent Bar -->
+        <div class="absolute top-0 left-0 w-full h-2 bg-htsRed"></div>
+
+        <!-- Left Column: Sidebar -->
+        <div class="w-full md:w-1/3 bg-htsNavy text-white p-8 flex flex-col pt-12">
+            <!-- Header Info -->
+            <div class="mb-8 border-b border-blue-800 pb-6">
+                <h1 class="text-3xl font-bold tracking-tight mb-1 text-white">VICTOR</h1>
+                <h1 class="text-3xl font-bold tracking-tight mb-3 text-htsRed">MORONU</h1>
+                <p class="text-sm font-medium uppercase tracking-wider text-blue-200">Inclusive Educator & <br>Learning Support Specialist</p>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="mb-8">
+                <h2 class="text-sm font-bold uppercase tracking-wider text-blue-300 mb-4">Contact</h2>
+                <ul class="space-y-3 text-sm">
+                    <li class="flex items-center"><i class="fas fa-map-marker-alt w-5 text-htsRed"></i> Hanoi, Vietnam</li>
+                    <li class="flex items-center"><i class="fas fa-phone w-5 text-htsRed"></i> +84 98 893 0491</li>
+                    <li class="flex items-center"><i class="fas fa-envelope w-5 text-htsRed"></i> vmoronu@gmail.com</li>
+                    <li class="flex items-center"><i class="fab fa-linkedin w-5 text-htsRed"></i> in/victor-moronu</li>
+                </ul>
+            </div>
+
+            <!-- Education Section -->
+            <div class="mb-8">
+                <h2 class="text-sm font-bold uppercase tracking-wider text-blue-300 mb-4">Education</h2>
+                
+                <div class="mb-4">
+                    <h3 class="font-bold text-white text-sm">Master of Education (M.Ed.)</h3>
+                    <p class="text-xs text-blue-200 italic">Educational Technology</p>
+                    <p class="text-xs text-blue-300 mt-1">Expected May 2026</p>
+                    <p class="text-xs mt-1 text-gray-300">Focus: Curriculum accessibility & technology for special needs.</p>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="font-bold text-white text-sm">U.S. Teaching License & SEN Endorsement</h3>
+                    <p class="text-xs text-blue-200">Moreland University / OSSE Washington D.C.</p>
+                    <p class="text-xs text-blue-300 mt-1">Jan 2026</p>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-white text-sm">B.Eng Mechanical Engineering</h3>
+                    <p class="text-xs text-blue-200">University of Nigeria</p>
+                    <p class="text-xs text-blue-300 mt-1">2018</p>
+                </div>
+            </div>
+
+            <!-- Core Competencies -->
+            <div class="mb-8">
+                <h2 class="text-sm font-bold uppercase tracking-wider text-blue-300 mb-4">Competencies</h2>
+                <div class="flex flex-wrap gap-2">
+                    <span class="bg-blue-800 text-xs px-2 py-1 rounded">Special Education (SEN)</span>
+                    <span class="bg-blue-800 text-xs px-2 py-1 rounded">UDL Strategies</span>
+                    <span class="bg-blue-800 text-xs px-2 py-1 rounded">Pastoral Care</span>
+                    <span class="bg-blue-800 text-xs px-2 py-1 rounded">EAL Support</span>
+                    <span class="bg-blue-800 text-xs px-2 py-1 rounded">Behavior Management</span>
+                    <span class="bg-blue-800 text-xs px-2 py-1 rounded">IEP Execution</span>
+                    <span class="bg-blue-800 text-xs px-2 py-1 rounded">High-Level STEM Tutoring</span>
+                </div>
+            </div>
+
+            <!-- Languages -->
+            <div class="mb-8">
+                <h2 class="text-sm font-bold uppercase tracking-wider text-blue-300 mb-4">Languages</h2>
+                <ul class="text-sm space-y-2">
+                    <li class="flex justify-between"><span>English (Native/C2)</span> <span class="font-bold text-htsRed">IELTS 8.5</span></li>
+                    <li class="flex justify-between"><span>Igbo</span> <span class="text-gray-400">Native</span></li>
+                    <li class="flex justify-between"><span>Spanish</span> <span class="text-gray-400">Basic</span></li>
+                </ul>
+            </div>
+            
+            <!-- Certifications & Publications -->
+            <div>
+                <h2 class="text-sm font-bold uppercase tracking-wider text-blue-300 mb-4">Certs & Pubs</h2>
+                <ul class="text-xs space-y-2 text-gray-300">
+                    <li><i class="fas fa-certificate text-htsRed mr-1"></i> TEFL - London Teacher Training</li>
+                    <li><i class="fas fa-certificate text-htsRed mr-1"></i> IBM Berlin Certification</li>
+                    <li class="mt-3 text-white font-bold border-t border-blue-800 pt-3">Author:</li>
+                    <li class="italic">"Synergy Ace the Quantitative Section of the SAT and GRE: A Step-by-Step Guide"</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Right Column: Main Content -->
+        <div class="w-full md:w-2/3 p-8 pt-12">
+            
+            <!-- Professional Summary -->
+            <section class="mb-8">
+                <h2 class="text-xl section-title">Professional Summary</h2>
+                <p class="text-sm text-gray-700 leading-relaxed text-justify">
+                    Dedicated and empathetic, fully licensed U.S. Educator holding a <span class="font-bold text-htsRed">Special Education Endorsement from Washington D.C.</span> Strong foundation in Universal Design for Learning (UDL), assistive technology, and scaffolded instruction. Currently pursuing a Master’s in Educational Technology with a focus on making learning accessible to special needs students. 
+                </p>
+                <p class="text-sm text-gray-700 leading-relaxed text-justify mt-2">
+                    Proven ability to support diverse learners, including EAL students and neurodiverse individuals, by modifying classroom materials and simplifying complex STEM concepts. Highly skilled in pastoral care, behavior management, and 1:1 individualized coaching. Fully committed to fostering inclusive, safe, and positive learning environments in alignment with International Schools Partnership (ISP) principles.
+                </p>
+            </section>
+
+            <!-- Professional Experience -->
+            <section>
+                <h2 class="text-xl section-title">Professional Experience</h2>
+
+                <!-- Experience 1 -->
+                <div class="mb-6 relative">
+                    <div class="absolute w-2 h-2 bg-htsRed rounded-full mt-1.5 -left-4"></div>
+                    <div class="flex justify-between items-baseline mb-1">
+                        <h3 class="font-bold text-gray-900">Secondary School Science & Math Teacher | Homeroom Advisor</h3>
+                        <span class="text-xs font-semibold text-htsRed whitespace-nowrap ml-2">Sept 2024 – Present</span>
+                    </div>
+                    <div class="text-sm font-semibold text-htsNavy mb-2 italic">Victoria Thăng Long | Hanoi, Vietnam</div>
+                    <ul class="list-disc list-outside ml-4 text-sm text-gray-700 space-y-1.5">
+                        <li>Utilize data-driven differentiation strategies and assistive technologies to support mixed-ability classrooms, ensuring equitable access to the curriculum.</li>
+                        <li>Design and implement scaffolded worksheets and modified visual materials specifically tailored for EAL learners and students requiring academic support.</li>
+                        <li>Provide vital pastoral care as a Homeroom Advisor, closely monitoring student wellbeing, emotional development, and behavioral progress.</li>
+                        <li>Collaborate with leadership to foster a safe environment, leading a 'Bridge Building' unit that increased overall student engagement by 20%.</li>
+                    </ul>
+                </div>
+
+                <!-- Experience 2 -->
+                <div class="mb-6 relative">
+                    <div class="absolute w-2 h-2 bg-htsRed rounded-full mt-1.5 -left-4"></div>
+                    <div class="flex justify-between items-baseline mb-1">
+                        <h3 class="font-bold text-gray-900">Primary School Math & Science Teacher</h3>
+                        <span class="text-xs font-semibold text-htsRed whitespace-nowrap ml-2">Aug 2023 – June 2024</span>
+                    </div>
+                    <div class="text-sm font-semibold text-htsNavy mb-2 italic">Hanoi Primary & High School System (Thang Long)</div>
+                    <ul class="list-disc list-outside ml-4 text-sm text-gray-700 space-y-1.5">
+                        <li>Adapted and simplified complex academic ideas through storytelling, visual prompt cards, and hands-on activities to accommodate neurodiverse learning styles.</li>
+                        <li>Facilitated inclusive classroom environments for Grades 1-4, improving class participation rates by 20% among previously disengaged learners.</li>
+                        <li>Implemented positive reinforcement strategies to motivate students, manage classroom behavior, and encourage social interaction among peers.</li>
+                    </ul>
+                </div>
+
+                <!-- Experience 3 -->
+                <div class="mb-6 relative">
+                    <div class="absolute w-2 h-2 bg-htsRed rounded-full mt-1.5 -left-4"></div>
+                    <div class="flex justify-between items-baseline mb-1">
+                        <h3 class="font-bold text-gray-900">Academic Manager & Curriculum Lead</h3>
+                        <span class="text-xs font-semibold text-htsRed whitespace-nowrap ml-2">2022 – Present</span>
+                    </div>
+                    <div class="text-sm font-semibold text-htsNavy mb-2 italic">HappyEnglishClub | Hanoi, Vietnam</div>
+                    <ul class="list-disc list-outside ml-4 text-sm text-gray-700 space-y-1.5">
+                        <li>Champion Universal Design for Learning (UDL) strategies to ensure curriculum accessibility for learners with diverse educational and cognitive needs.</li>
+                        <li>Manage a student-centered, "Inquiry-First" environment rooted in Montessori principles, emphasizing individualized pacing.</li>
+                        <li>Train and mentor staff on inclusive teaching practices, ensuring educators are equipped to handle varied behavioral challenges.</li>
+                    </ul>
+                </div>
+
+                <!-- Experience 4 -->
+                <div class="mb-6 relative">
+                    <div class="absolute w-2 h-2 bg-htsRed rounded-full mt-1.5 -left-4"></div>
+                    <div class="flex justify-between items-baseline mb-1">
+                        <h3 class="font-bold text-gray-900">Academic Manager & IB MYP Instructor</h3>
+                        <span class="text-xs font-semibold text-htsRed whitespace-nowrap ml-2">2022 – 2024</span>
+                    </div>
+                    <div class="text-sm font-semibold text-htsNavy mb-2 italic">BodaLearningCenter | Hanoi, Vietnam</div>
+                    <ul class="list-disc list-outside ml-4 text-sm text-gray-700 space-y-1.5">
+                        <li>Delivered highly individualized instruction and 1:1 coaching, closely monitoring progress and adapting methodologies to bridge learning gaps.</li>
+                        <li>Leveraged deep subject mastery (IB Math, Physics) to support high-performing students while scaffolding materials for those needing foundational support.</li>
+                        <li>Fostered strong home-school links, providing parents with regular feedback on student challenges, emotional well-being, and academic milestones.</li>
+                    </ul>
+                </div>
+
+                <!-- Experience 5 -->
+                <div class="mb-0 relative">
+                    <div class="absolute w-2 h-2 bg-htsRed rounded-full mt-1.5 -left-4"></div>
+                    <div class="flex justify-between items-baseline mb-1">
+                        <h3 class="font-bold text-gray-900">Quantitative Instructor (1:1 & Small Group)</h3>
+                        <span class="text-xs font-semibold text-htsRed whitespace-nowrap ml-2">2017 – 2021</span>
+                    </div>
+                    <div class="text-sm font-semibold text-htsNavy mb-2 italic">Synergy Lifeline Consulting</div>
+                    <ul class="list-disc list-outside ml-4 text-sm text-gray-700 space-y-1.5">
+                        <li>Provided intensive 1:1 support to over 500 students, developing highly individualized learning plans based on cognitive strengths and weaknesses.</li>
+                        <li>Demonstrated extreme patience and adaptable communication skills while guiding students through challenging concepts, achieving a 90% target success rate.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Technical Skills (Bottom) -->
+            <section class="mt-8 border-t border-gray-200 pt-6">
+                <h2 class="text-xl section-title mb-4">Technical & Educational Tools</h2>
+                <div class="flex flex-wrap gap-3">
+                    <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-semibold border border-gray-300 rounded-full">Assistive Technology Integration</span>
+                    <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-semibold border border-gray-300 rounded-full">Interactive Whiteboards</span>
+                    <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-semibold border border-gray-300 rounded-full">Visual Aids Creation</span>
+                    <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-semibold border border-gray-300 rounded-full">AI Prompting for Differentiation</span>
+                    <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-semibold border border-gray-300 rounded-full">GeoGebra & Desmos</span>
+                    <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-semibold border border-gray-300 rounded-full">Python & JavaScript</span>
+                </div>
+            </section>
+        </div>
+    </div>
+
+</body>
+</html>
