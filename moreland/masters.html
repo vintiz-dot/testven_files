@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Victor Moronu | EdTech Portfolio</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* --- CSS VARIABLES & THEMING --- */
+        :root {
+            --bg-base: #020617;
+            /* Very Dark Slate */
+            --bg-surface: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --bg-card-hover: rgba(51, 65, 85, 0.9);
+            --border-glass: rgba(255, 255, 255, 0.1);
+
+            --accent-primary: #0ea5e9;
+            /* Sky Blue */
+            --accent-primary-hover: #0284c7;
+            --accent-secondary: #8b5cf6;
+            /* Violet */
+
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+
+            --font-sans: 'Inter', sans-serif;
+            --font-display: 'Poppins', sans-serif;
+
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-full: 9999px;
+
+            --transition-fast: 0.2s ease;
+            --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(14, 165, 233, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.08), transparent 25%);
+            background-attachment: fixed;
+        }
+
+        a {
+            color: var(--accent-primary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        a:hover {
+            color: var(--text-main);
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: var(--font-display);
+            line-height: 1.2;
+            color: var(--text-main);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            background: rgba(2, 6, 23, 0.7);
+            border-bottom: 1px solid var(--border-glass);
+            padding: 1rem 0;
+            transition: all var(--transition-fast);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: -0.5px;
+            cursor: pointer;
+        }
+
+        .logo span {
+            color: var(--accent-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-item {
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: color var(--transition-fast);
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--accent-primary);
+            transition: width var(--transition-smooth);
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            color: var(--text-main);
+        }
+
+        .nav-item.active::after {
+            width: 100%;
+        }
+
+        /* Mobile Menu Button */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            cursor: pointer;
+        }
+
+        /* --- LAYOUT & SECTIONS --- */
+        main {
+            padding-top: 100px;
+            /* Account for fixed header */
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-section {
+            display: none;
+            /* Hidden by default for SPA routing */
+            animation: fadeIn var(--transition-smooth) forwards;
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            max-width: 700px;
+        }
+
+        /* --- HOME PAGE --- */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 70vh;
+            gap: 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 800px;
+        }
+
+        .golden-circle {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            padding: 3rem;
+            margin-top: 2rem;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .golden-circle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent-primary), var(--accent-secondary));
+        }
+
+        .golden-circle h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .golden-circle p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-primary);
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            font-family: var(--font-display);
+            transition: all var(--transition-fast);
+            border: none;
+            cursor: pointer;
+            margin-top: 1.5rem;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(14, 165, 233, 0.3);
+            color: #fff;
+        }
+
+        /* --- ABOUT PAGE --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: flex-start;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            /* 16:9 Aspect Ratio */
+            height: 0;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border-glass);
+            background: #000;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .about-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-content p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .download-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 2rem;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-glass);
+        }
+
+        .doc-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            transition: all var(--transition-fast);
+        }
+
+        .doc-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        /* --- SOCIAL MEDIA SECTION --- */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .social-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all var(--transition-fast);
+        }
+
+        .social-card:hover {
+            border-color: var(--accent-primary);
+            background: var(--bg-card-hover);
+        }
+
+        .social-card .icon-wrapper {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(14, 165, 233, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-primary);
+        }
+
+        .social-info h4 {
+            margin-bottom: 2px;
+            font-size: 1.1rem;
+        }
+
+        .social-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* --- MODULES PAGE --- */
+        .module-accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .module-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: all var(--transition-fast);
+        }
+
+        .module-header {
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+            cursor: pointer;
+        }
+
+        .module-header:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .module-info h3 {
+            font-size: 1.4rem;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .module-info span {
+            font-size: 0.9rem;
+            color: var(--accent-primary);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .module-body {
+            padding: 0 2rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height var(--transition-smooth), padding var(--transition-smooth);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .module-card.expanded .module-body {
+            padding: 2rem;
+            max-height: 2000px;
+            /* Arbitrary large number for expansion */
+            border-top: 1px solid var(--border-glass);
+        }
+
+        .module-card.expanded .chevron {
+            transform: rotate(180deg);
+        }
+
+        .chevron {
+            transition: transform var(--transition-fast);
+            color: var(--text-muted);
+        }
+
+        /* Project Cards (Inside Modules) */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .project-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            transition: all var(--transition-fast);
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-secondary);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-tag {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            border-radius: var(--radius-full);
+            background: rgba(139, 92, 246, 0.15);
+            color: #c4b5fd;
+            font-weight: 600;
+        }
+
+        .project-card h4 {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            padding-right: 60px;
+            /* make room for tag */
+        }
+
+        .project-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+        }
+
+        .project-link:hover {
+            color: var(--text-main);
+        }
+
+        /* --- PLACEHOLDER STATE --- */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            border: 2px dashed var(--border-glass);
+            border-radius: var(--radius-lg);
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .empty-state i {
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            margin-top: 5rem;
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border-glass);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--bg-surface);
+                flex-direction: column;
+                padding: 1.5rem;
+                gap: 1.5rem;
+                border-bottom: 1px solid var(--border-glass);
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <header>
+        <div class="nav-container">
+            <div class="logo" onclick="navigate('home')">Victor<span>.EdTech</span></div>
+            <button class="mobile-menu-btn" onclick="toggleMenu()">
+                <i data-lucide="menu"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li class="nav-item active" data-target="home" onclick="navigate('home')">Home</li>
+                <li class="nav-item" data-target="about" onclick="navigate('about')">About Me</li>
+                <li class="nav-item" data-target="teach-now" onclick="navigate('teach-now')">TEACH-NOW</li>
+                <li class="nav-item" data-target="med" onclick="navigate('med')">M.Ed. Modules</li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <!-- ================= HOME SECTION ================= -->
+        <section id="home" class="page-section active container">
+            <div class="hero">
+                <div
+                    style="display:inline-block; padding:8px 16px; background:rgba(14,165,233,0.1); border-radius:99px; color:var(--accent-primary); font-weight:600; font-size:0.9rem; margin-bottom:1rem;">
+                    Master's in Educational Technology Candidate
+                </div>
+                <h1>Engineering the Future of <br><span class="gradient-text">Inclusive Education</span></h1>
+                <p>Hi, I'm Victor Moronu. I'm a Middle School Mathematics and Science Educator, MDE Specialist, and former Mechanical
+                    Engineer utilizing technology to bridge the gap between abstract concepts and accessible student
+                    experiences.</p>
+                <div style="display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; justify-content: center;">
+                    <button class="btn-primary"
+                        style="background: transparent; border: 1px solid var(--border-glass); color: var(--text-main);"
+                        onclick="navigate('teach-now')">
+                        View Past Work (Certification) <i data-lucide="history" width="18"></i>
+                    </button>
+                    <button class="btn-primary" onclick="navigate('med')">
+                        Current Master's Journey <i data-lucide="arrow-right" width="18"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="golden-circle">
+                <h2><i data-lucide="compass" style="color:var(--accent-primary);"></i> My "Why"</h2>
+                <p>I entered the EdTech field to advocate for tools built with the classroom in mind. I believe that
+                    educational technology should not merely direct student learning, but act as an assistive key that
+                    <strong>inspires student autonomy and agency</strong>.
+                </p>
+                <p>Too often, differently-abled students are treated as "edge cases" in software development. My mission
+                    is to ensure that student wellness and profound inclusivity are rooted directly in the business
+                    logic of educational programs. When deployed correctly, technology isn't a barrier—it's the ultimate
+                    tool for universal access.</p>
+            </div>
+        </section>
+
+        <!-- ================= ABOUT SECTION ================= -->
+        <section id="about" class="page-section container">
+            <h2 class="section-title">About Me</h2>
+            <p class="section-subtitle">This digital space chronicles my continuous growth as an educator—from earning
+                my teaching certification to pursuing advanced leadership in Educational Technology.</p>
+
+            <div class="about-grid">
+                <div>
+                    <!-- Properly Embedded About Me Video -->
+                    <div class="video-container"
+                        style="box-shadow: 0 20px 40px rgba(14, 165, 233, 0.2); border-color: rgba(14, 165, 233, 0.3);">
+                        <!-- IMPORTANT: To embed your YouTube video, do NOT use the standard 'watch' link. 
+                             You MUST use the 'embed' format: https://www.youtube.com/embed/YOUR_VIDEO_ID
+                             Example: If your link is https://www.youtube.com/watch?v=123456789
+                             Then your src below should be "https://www.youtube.com/embed/123456789" -->
+                        <iframe src="https://www.youtube.com/embed/M7pGDLVLPdY" title="Victor Moronu - My Why"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen></iframe>
+                    </div>
+                    <p style="text-align:center; font-size:0.9rem; color:var(--text-muted); margin-top:1rem;">
+                        <em>Activity 1: My "Why" and EdTech Goals</em>
+                    </p>
+                </div>
+
+                <div class="about-content">
+                    <h3>The Engineer-Educator</h3>
+                    <p>Blending a background in <strong>Mechanical Engineering (B.Eng)</strong> with modern pedagogical
+                        expertise, I operate on the non-negotiable principle that child safety and emotional wellbeing
+                        are the absolute prerequisites for academic success.</p>
+                    <p>My teaching philosophy is rooted in the belief that education is not preparation for life;
+                        education is life itself. In my classroom, this translates to <strong>Failing Forward</strong>
+                        (creating a psychologically safe space for prototyping and iterating) and providing an
+                        <strong>Authentic Context</strong> (using math and physics as tools to understand the real
+                        world).
+                    </p>
+                    <p>Having successfully completed the rigorous <strong>TEACH-NOW Teacher Preparation
+                            Program</strong>, I have now transitioned into the <strong>Master's in Educational
+                            Technology</strong> track to develop district-wide technology improvement plans and bridge
+                        the gap between software engineers and authentic classroom experiences.</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 4rem; margin-bottom: 1rem; font-size: 1.8rem;">Digital Footprint & PLN</h3>
+            <p style="color:var(--text-muted); max-width:800px; margin-bottom: 2rem;">As an educational leader,
+                maintaining a curated and professional online presence is vital for networking, sharing resources, and
+                establishing a professional learning network (PLN).</p>
+
+            <div class="social-grid">
+                <a href="https://linkedin.com/in/victor-moronu" target="_blank" class="social-card">
+                    <div class="icon-wrapper"><i data-lucide="linkedin"></i></div>
+                    <div class="social-info">
+                        <h4>LinkedIn</h4>
+                        <p>Professional Networking</p>
+                    </div>
+                </a>
+                <a href="mailto:vmoronu@gmail.com" class="social-card">
+                    <div class="icon-wrapper" style="background: rgba(234, 179, 8, 0.1); color: #eab308;"><i
+                            data-lucide="mail"></i></div>
+                    <div class="social-info">
+                        <h4>Email</h4>
+                        <p>Direct Contact</p>
+                    </div>
+                </a>
+                <div class="social-card" style="opacity: 0.6; cursor: not-allowed;">
+                    <div class="icon-wrapper" style="background: rgba(255, 255, 255, 0.1); color: #fff;"><i
+                            data-lucide="twitter"></i></div>
+                    <div class="social-info">
+                        <h4>X (Twitter)</h4>
+                        <p>PLN & Chats (Coming Soon)</p>
+                    </div>
+                </div>
+                <div class="social-card" style="opacity: 0.6; cursor: not-allowed;">
+                    <div class="icon-wrapper" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;"><i
+                            data-lucide="youtube"></i></div>
+                    <div class="social-info">
+                        <h4>YouTube</h4>
+                        <p>EdTech Tutorials (Coming Soon)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TEACH-NOW SECTION (COMPLETED WORKS) ================= -->
+        <section id="teach-now" class="page-section container">
+            <h2 class="section-title">TEACH-NOW Certificate <span
+                    style="font-size: 1.2rem; color: var(--accent-success); vertical-align: middle; padding: 4px 12px; background: rgba(52, 211, 153, 0.1); border-radius: 99px; margin-left: 10px; font-family: var(--font-sans); font-weight: 500;">Completed</span>
+            </h2>
+            <p class="section-subtitle">A showcase of my foundational work completed during the TEACH-NOW Teacher
+                Preparation Certificate Program. These artifacts demonstrate my mastery of the InTASC standards,
+                clinical practice, and instructional design, setting the stage for my advanced Master's studies.</p>
+
+            <div class="project-grid">
+                <!-- Project Card: Clinical Portfolio -->
+                <div class="project-card"
+                    style="border-color: rgba(14, 165, 233, 0.4); background: rgba(14, 165, 233, 0.05);">
+                    <span class="project-tag" style="background:var(--accent-primary); color:#fff;">Featured App</span>
+                    <i data-lucide="briefcase" width="32" style="color:var(--accent-primary);"></i>
+                    <h4>Educator Clinical Portfolio</h4>
+                    <p>An interactive, data-driven web application showcasing my alignment with InTASC Standards through
+                        a cycle of planning, instruction, and assessment.</p>
+                    <a href="https://vintiz-dot.github.io/testven_files/moreland/clinical" target="_blank"
+                        class="project-link">Launch Portfolio App <i data-lucide="external-link" width="14"></i></a>
+                </div>
+
+                <!-- Project Card: Final Reflection -->
+                <div class="project-card">
+                    <span class="project-tag">Reflection</span>
+                    <i data-lucide="brain-circuit" width="32" style="color:var(--accent-primary);"></i>
+                    <h4>From Activity to Rigor</h4>
+                    <p>My final reflection on clinical practice growth, focusing on the shift to cognitive rigor and
+                        neurodiversity-affirming pedagogy.</p>
+                    <a href="https://vintiz-dot.github.io/testven_files/moreland/clinical" target="_blank"
+                        class="project-link">Read Reflection <i data-lucide="arrow-right" width="14"></i></a>
+                </div>
+
+                <!-- Project Card: Blog Reflection -->
+                <div class="project-card">
+                    <span class="project-tag">Blog</span>
+                    <i data-lucide="layout-template" width="32" style="color:var(--accent-secondary);"></i>
+                    <h4>Authentic Assessment</h4>
+                    <p>A deep dive into implementing performance assessments challenging Grade 7 students to apply math
+                        to real-world scenarios.</p>
+                    <a href="https://vintiz-dot.github.io/testven_files/moreland/clinical" target="_blank"
+                        class="project-link">View Blog Post <i data-lucide="arrow-right" width="14"></i></a>
+                </div>
+
+                <!-- Project Card: Math Modeling Rubric -->
+                <div class="project-card">
+                    <span class="project-tag">Assessment</span>
+                    <i data-lucide="table" width="32" style="color:var(--accent-secondary);"></i>
+                    <h4>Mathematical Modeling Rubric</h4>
+                    <p>An analytic rubric designed to evaluate students on factoring linear expressions within
+                        real-world engineering contexts.</p>
+                    <a href="https://vintiz-dot.github.io/testven_files/moreland/clinical" target="_blank"
+                        class="project-link">View Rubric <i data-lucide="arrow-right" width="14"></i></a>
+                </div>
+            </div>
+
+            <div
+                style="margin-top: 4rem; text-align: center; padding: 3rem; background: rgba(255,255,255,0.02); border-radius: var(--radius-lg); border: 1px solid var(--border-glass);">
+                <i data-lucide="graduation-cap" width="48" height="48"
+                    style="color: var(--accent-secondary); margin-bottom: 1rem;"></i>
+                <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Transitioning to Master's Coursework</h3>
+                <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 1.5rem auto;">With my foundational
+                    pedagogical training complete, my focus now shifts to exploring systems thinking, instructional
+                    design, and macro-level technology integration.</p>
+                <button class="btn-primary" onclick="navigate('med')">
+                    Explore My Master's Journey <i data-lucide="arrow-down" width="18"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= MASTER'S MODULES SECTION (IN PROGRESS) ================= -->
+        <section id="med" class="page-section container">
+            <h2 class="section-title">Master's Coursework <span
+                    style="font-size: 1.2rem; color: var(--accent-primary); vertical-align: middle; padding: 4px 12px; background: rgba(14, 165, 233, 0.1); border-radius: 99px; margin-left: 10px; font-family: var(--font-sans); font-weight: 500;">In
+                    Progress</span></h2>
+            <p class="section-subtitle">My current and upcoming coursework for the Master's in Educational Technology.
+                Artifacts will be published here as I progress through the modules.</p>
+
+            <div class="module-accordion">
+
+                <!-- ED 540 -->
+                <div class="module-card expanded"> <!-- First module expanded by default -->
+                    <div class="module-header" onclick="toggleModule(this)">
+                        <div class="module-info">
+                            <span>Module 40 / ED 540</span>
+                            <h3>Systems Thinking in Digital Learning & EdTech</h3>
+                        </div>
+                        <i data-lucide="chevron-down" class="chevron"></i>
+                    </div>
+                    <div class="module-body">
+                        <p style="color:var(--text-muted); margin-bottom: 1.5rem;">Focus: Developing a strong foundation
+                            of educational technology tools, classroom integration, external micro-credentialing, and
+                            understanding macro-level systems.</p>
+                        <div class="empty-state">
+                            <i data-lucide="loader" width="48" height="48"
+                                style="animation: spin 3s linear infinite;"></i>
+                            <h4>Currently Enrolled</h4>
+                            <p>Artifacts, systems maps, and digital learning frameworks are currently being developed
+                                and will be published soon.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ED 541 -->
+                <div class="module-card">
+                    <div class="module-header" onclick="toggleModule(this)">
+                        <div class="module-info">
+                            <span>Module 41 / ED 541</span>
+                            <h3>Becoming an Instructional Coach for EdTech</h3>
+                        </div>
+                        <i data-lucide="chevron-down" class="chevron"></i>
+                    </div>
+                    <div class="module-body">
+                        <p style="color:var(--text-muted); margin-bottom: 1.5rem;">Focus: Applying models of
+                            instructional coaching to support teacher professional development, analyzing data, and
+                            resolving problems of practice.</p>
+                        <div class="empty-state">
+                            <i data-lucide="calendar-clock" width="48" height="48"></i>
+                            <h4>Upcoming Module</h4>
+                            <p>Coaching strategies and professional development materials will be added during this
+                                phase of the program.</p>
+                        </div>
+                    </div>
+                    <!-- ================= CAPSTONE SECTION ================= -->
+                    <section id="capstone" class="page-section container">
+                        <h2 class="section-title">Capstone Project</h2>
+                        <p class="section-subtitle">Implementing an Educational Technology Project (ED 543) — A
+                            school-wide strategic improvement plan.</p>
+
+                        <div class="project-grid" style="margin-bottom: 3rem;">
+                            <!-- Phase 1: Problem of Practice -->
+                            <div class="project-card" style="border-color: rgba(14, 165, 233, 0.3);">
+                                <i data-lucide="target" width="32" style="color:var(--accent-primary);"></i>
+                                <h4>1. Problem of Practice</h4>
+                                <p>Identifying a critical gap in current educational technology integration,
+                                    accessibility, or instructional coaching within a specific school or district
+                                    context.</p>
+                                <span
+                                    style="font-size: 0.8rem; color: var(--accent-primary); font-weight: 600; text-transform: uppercase;">Planning
+                                    Phase</span>
+                            </div>
+
+                            <!-- Phase 2: Strategic Implementation -->
+                            <div class="project-card">
+                                <i data-lucide="map" width="32" style="color:var(--text-muted);"></i>
+                                <h4>2. Strategic Implementation</h4>
+                                <p>Designing a comprehensive, research-backed department or district-wide educational
+                                    technology improvement plan to resolve the identified problem.</p>
+                                <span
+                                    style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Upcoming</span>
+                            </div>
+
+                            <!-- Phase 3: Data & Evaluation -->
+                            <div class="project-card">
+                                <i data-lucide="bar-chart-2" width="32" style="color:var(--text-muted);"></i>
+                                <h4>3. Data & Evaluation</h4>
+                                <p>Collecting and analyzing qualitative and quantitative data to evaluate the efficacy
+                                    of the implemented technology solution.</p>
+                                <span
+                                    style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Upcoming</span>
+                            </div>
+                        </div>
+
+                        <div class="empty-state"
+                            style="padding: 4rem 2rem; border-color: rgba(139, 92, 246, 0.3); background: rgba(139, 92, 246, 0.05);">
+                            <i data-lucide="presentation" width="64" height="64"
+                                style="color: var(--accent-secondary); margin-bottom: 1.5rem;"></i>
+                            <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: var(--text-main);">Final Capstone
+                                Presentation</h3>
+                            <p style="max-width: 600px; margin: 0 auto; line-height: 1.8; color: var(--text-muted);">
+                                The final artifacts, including the recorded presentation, data analysis reports, and the
+                                complete Educational Technology Strategic Plan will be published here upon completion of
+                                the Master's program.
+                            </p>
+                            <button class="btn-primary"
+                                style="background: rgba(255,255,255,0.1); color: var(--text-muted); cursor: not-allowed; margin-top: 2rem;">
+                                <i data-lucide="lock" width="16"></i> Available May 2026
+                            </button>
+                        </div>
+                    </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div style="display:flex; justify-content:center; gap:1.5rem; margin-bottom:1.5rem;">
+                <a href="https://linkedin.com/in/victor-moronu" target="_blank"><i data-lucide="linkedin"></i></a>
+                <a href="mailto:vmoronu@gmail.com"><i data-lucide="mail"></i></a>
+            </div>
+            <p>&copy; 2026 Victor Moronu. Master's in Educational Technology Portfolio.</p>
+            <p style="font-size: 0.8rem; opacity: 0.6; margin-top: 0.5rem;">Designed with systems thinking and modern
+                web technologies.</p>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVITY SCRIPTS -->
+    <script>
+        // Initialize Icons
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        } else {
+            console.error("Lucide icons library failed to load.");
+        }
+
+        // Single Page Routing Logic
+        function navigate(pageId) {
+            // Hide all sections
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            // Show target section
+            document.getElementById(pageId).classList.add('active');
+
+            // Update Nav Links
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-target') === pageId) {
+                    item.classList.add('active');
+                }
+            });
+
+            // Close mobile menu if open
+            const navLinks = document.getElementById('navLinks');
+            if (navLinks.classList.contains('show')) {
+                navLinks.classList.remove('show');
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('show');
+        }
+
+        // Accordion Toggle for Modules
+        function toggleModule(element) {
+            const card = element.parentElement;
+            card.classList.toggle('expanded');
+        }
+    </script>
+</body>
+
+</html>
