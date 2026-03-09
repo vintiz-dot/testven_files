@@ -607,7 +607,7 @@
             <ul class="nav-links" id="navLinks">
                 <li class="nav-item active" data-target="home" onclick="navigate('home')">Home</li>
                 <li class="nav-item" data-target="about" onclick="navigate('about')">About Me</li>
-                <li class="nav-item" data-target="teach-now" onclick="navigate('teach-now')">TEACH-NOW</li>
+                <li class="nav-item" onclick="window.location.href='./clinical.html'">TEACH-NOW</li>
                 <li class="nav-item" data-target="med" onclick="navigate('med')">M.Ed. Modules</li>
             </ul>
         </div>
@@ -622,13 +622,14 @@
                     Master's in Educational Technology Candidate
                 </div>
                 <h1>Engineering the Future of <br><span class="gradient-text">Inclusive Education</span></h1>
-                <p>Hi, I'm Victor Moronu. I'm a Middle School Mathematics and Science Educator, MDE Specialist, and former Mechanical
+                <p>Hi, I'm Victor Moronu. I'm a Middle School Mathematics and Science Educator, MDE Specialist, and
+                    former Mechanical
                     Engineer utilizing technology to bridge the gap between abstract concepts and accessible student
                     experiences.</p>
                 <div style="display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap; justify-content: center;">
                     <button class="btn-primary"
                         style="background: transparent; border: 1px solid var(--border-glass); color: var(--text-main);"
-                        onclick="navigate('teach-now')">
+                        onclick="window.location.href='./clinical.html'">
                         View Past Work (Certification) <i data-lucide="history" width="18"></i>
                     </button>
                     <button class="btn-primary" onclick="navigate('med')">
@@ -733,75 +734,7 @@
             </div>
         </section>
 
-        <!-- ================= TEACH-NOW SECTION (COMPLETED WORKS) ================= -->
-        <section id="teach-now" class="page-section container">
-            <h2 class="section-title">TEACH-NOW Certificate <span
-                    style="font-size: 1.2rem; color: var(--accent-success); vertical-align: middle; padding: 4px 12px; background: rgba(52, 211, 153, 0.1); border-radius: 99px; margin-left: 10px; font-family: var(--font-sans); font-weight: 500;">Completed</span>
-            </h2>
-            <p class="section-subtitle">A showcase of my foundational work completed during the TEACH-NOW Teacher
-                Preparation Certificate Program. These artifacts demonstrate my mastery of the InTASC standards,
-                clinical practice, and instructional design, setting the stage for my advanced Master's studies.</p>
-
-            <div class="project-grid">
-                <!-- Project Card: Clinical Portfolio -->
-                <div class="project-card"
-                    style="border-color: rgba(14, 165, 233, 0.4); background: rgba(14, 165, 233, 0.05);">
-                    <span class="project-tag" style="background:var(--accent-primary); color:#fff;">Featured App</span>
-                    <i data-lucide="briefcase" width="32" style="color:var(--accent-primary);"></i>
-                    <h4>Educator Clinical Portfolio</h4>
-                    <p>An interactive, data-driven web application showcasing my alignment with InTASC Standards through
-                        a cycle of planning, instruction, and assessment.</p>
-                    <a href="https://vintiz-dot.github.io/testven_files/moreland/clinical" target="_blank"
-                        class="project-link">Launch Portfolio App <i data-lucide="external-link" width="14"></i></a>
-                </div>
-
-                <!-- Project Card: Final Reflection -->
-                <div class="project-card">
-                    <span class="project-tag">Reflection</span>
-                    <i data-lucide="brain-circuit" width="32" style="color:var(--accent-primary);"></i>
-                    <h4>From Activity to Rigor</h4>
-                    <p>My final reflection on clinical practice growth, focusing on the shift to cognitive rigor and
-                        neurodiversity-affirming pedagogy.</p>
-                    <a href="https://vintiz-dot.github.io/testven_files/moreland/clinical" target="_blank"
-                        class="project-link">Read Reflection <i data-lucide="arrow-right" width="14"></i></a>
-                </div>
-
-                <!-- Project Card: Blog Reflection -->
-                <div class="project-card">
-                    <span class="project-tag">Blog</span>
-                    <i data-lucide="layout-template" width="32" style="color:var(--accent-secondary);"></i>
-                    <h4>Authentic Assessment</h4>
-                    <p>A deep dive into implementing performance assessments challenging Grade 7 students to apply math
-                        to real-world scenarios.</p>
-                    <a href="https://vintiz-dot.github.io/testven_files/moreland/clinical" target="_blank"
-                        class="project-link">View Blog Post <i data-lucide="arrow-right" width="14"></i></a>
-                </div>
-
-                <!-- Project Card: Math Modeling Rubric -->
-                <div class="project-card">
-                    <span class="project-tag">Assessment</span>
-                    <i data-lucide="table" width="32" style="color:var(--accent-secondary);"></i>
-                    <h4>Mathematical Modeling Rubric</h4>
-                    <p>An analytic rubric designed to evaluate students on factoring linear expressions within
-                        real-world engineering contexts.</p>
-                    <a href="https://vintiz-dot.github.io/testven_files/moreland/clinical" target="_blank"
-                        class="project-link">View Rubric <i data-lucide="arrow-right" width="14"></i></a>
-                </div>
-            </div>
-
-            <div
-                style="margin-top: 4rem; text-align: center; padding: 3rem; background: rgba(255,255,255,0.02); border-radius: var(--radius-lg); border: 1px solid var(--border-glass);">
-                <i data-lucide="graduation-cap" width="48" height="48"
-                    style="color: var(--accent-secondary); margin-bottom: 1rem;"></i>
-                <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Transitioning to Master's Coursework</h3>
-                <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 1.5rem auto;">With my foundational
-                    pedagogical training complete, my focus now shifts to exploring systems thinking, instructional
-                    design, and macro-level technology integration.</p>
-                <button class="btn-primary" onclick="navigate('med')">
-                    Explore My Master's Journey <i data-lucide="arrow-down" width="18"></i>
-                </button>
-            </div>
-        </section>
+        <!-- ================= TEACH-NOW SECTION REMOVED (Redirects directly) ================= -->
 
         <!-- ================= MASTER'S MODULES SECTION (IN PROGRESS) ================= -->
         <section id="med" class="page-section container">

@@ -657,15 +657,27 @@
     <!-- Navigation / Header -->
     <header>
         <div class="container header-content">
-            <div class="brand">
-                <h1>Clinical<span class="highlight">Portfolio</span></h1>
-                <p class="role">Secondary Mathematics Educator</p>
+            <div class="brand" style="display: flex; align-items: center; gap: 1.5rem;">
+                <a href="./masters.html"
+                    style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 0.5rem; border-right: 1px solid var(--border-glass); padding-right: 1.5rem; transition: opacity 0.2s;"
+                    onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=1"
+                    title="Return to Master's Portfolio">
+                    <i data-lucide="arrow-left" width="20"></i>
+                    <div
+                        style="font-weight: 700; font-size: 1.25rem; letter-spacing: -0.5px; font-family: 'Inter', sans-serif;">
+                        Victor<span style="color: var(--accent-primary);">.EdTech</span></div>
+                </a>
+                <div>
+                    <h1>Clinical<span class="highlight">Portfolio</span></h1>
+                    <p class="role">TEACH-NOW Certification</p>
+                </div>
             </div>
             <nav>
                 <a href="#learner" class="nav-link active">The Learner</a>
                 <a href="#content" class="nav-link">Content</a>
                 <a href="#instruction" class="nav-link">Instruction</a>
                 <a href="#responsibility" class="nav-link">Responsibility</a>
+                <a href="#med-coursework" class="nav-link">M.Ed. Modules</a>
             </nav>
         </div>
     </header>
@@ -752,6 +764,20 @@
                 </div>
             </div>
             <div class="project-grid" id="grid-responsibility">
+                <!-- Injected via JS -->
+            </div>
+        </section>
+
+        <!-- Domain 5: Master's Coursework -->
+        <section id="med-coursework" class="domain-section">
+            <div class="domain-header">
+                <i data-lucide="graduation-cap" class="domain-icon"></i>
+                <div>
+                    <h3>Master's Coursework</h3>
+                    <p>Artifacts and reflections from the M.Ed. in Educational Technology program.</p>
+                </div>
+            </div>
+            <div class="project-grid" id="grid-med-coursework">
                 <!-- Injected via JS -->
             </div>
         </section>
@@ -1437,6 +1463,97 @@
                 reflections: [
                     { q: "Core Realization?", a: "Students view engineering failure as design, but math error as deficit. My PDP aims to align these identities." }
                 ]
+            },
+            // --- MASTER'S COURSEWORK (M.ED.) ---
+            {
+                id: "med-mod40-u2a1",
+                domain: "med-coursework",
+                title: "Technology Certified Educators",
+                tags: ["Mod 40", "Unit 2", "Certification", "Pending"],
+                summary: "Earning external EdTech certifications (e.g., Google, Apple, Microsoft) and reflecting on their professional impact.",
+
+                // A. THE BEFORE (Planning)
+                context: "<strong>Module 40:</strong> Systems Thinking in Digital Learning and Educational Technology.<br><strong>Unit 2:</strong> Mastering Digital Technologies.<br><strong>Goal:</strong> Build an online resume by collecting certifications and training from outside groups to better consult and support teachers.",
+                rationale: "An important piece of being an EdTech professional is understanding the tools available to you. Certifications provide a strong background in different tools and innovative learning strategies, which is essential when coaching educators.",
+                artifacts: [
+                    { label: "View Certificate / Badge (Pending)", url: "#", icon: "award" },
+                    { label: "View Reflection Document (Pending)", url: "#", icon: "file-text" }
+                ],
+
+                // B. THE DURING (Instruction)
+                videoUrl: "#",
+                annotations: [
+                    { time: "TBD", text: "Training progress and badge acquisition." }
+                ],
+
+                // C. THE AFTER (Impact)
+                chartData: [],
+                workSamples: [
+                    { title: "Target Certification", desc: "E.g., Google Certified Educator Level 1, Apple Teacher, or Microsoft Education Community Badges.", status: "avg" }
+                ],
+                mentorFeedback: [],
+                reflections: [
+                    { q: "1. Description (What happened?)", a: "I am actively working towards earning external EdTech certifications, specifically targeting Google Certified Educator and Apple Teacher credentials." },
+                    { q: "2. Feelings (What were you thinking and feeling?)", a: "I feel motivated to formally validate my digital skills, though preparing for standardized certification exams alongside my master's coursework can feel slightly demanding." },
+                    { q: "3. Evaluation (What was good and bad about the experience?)", a: "The good aspect is that the training modules expose me to features I haven’t fully utilized. The challenge is finding the dedicated time to complete the performance-based assessments." },
+                    { q: "4. Analysis (What sense can you make of the situation?)", a: "Earning these certifications is critical for my role as an EdTech leader. It provides me with a standardized, recognized foundation that builds trust when I am coaching or consulting with peers." },
+                    { q: "5. Conclusion (What else could you have done?)", a: "I could map the certification study paths directly to the specific problems of practice I am investigating in my Master's coursework to create synergy." },
+                    { q: "6. Action Plan (If it arose again, what would you do?)", a: "Moving forward, I will schedule dedicated 'certification sprints' on weekends and immediately test new tools learned in the classroom to reinforce my understanding before exams." }
+                ]
+            },
+            {
+                id: "med-mod40-u2a2",
+                domain: "med-coursework",
+                title: "Digital Tools for Learning",
+                tags: ["Mod 40", "Unit 2", "Curation", "Completed"],
+                summary: "A collaborative, curated database of 8-10 EdTech applications across various categories to enhance classroom learning.",
+
+                // A. THE BEFORE (Planning)
+                context: "<strong>Module 40:</strong> Systems Thinking in Digital Learning and Educational Technology.<br><strong>Unit 2:</strong> Mastering Digital Technologies.<br><strong>Goal:</strong> Collaborate with my cohort to create a comprehensive online resource of apps and tools to support coaching sessions and classroom integration.",
+                rationale: "As Michael Fullan notes, 'Pedagogy is the driver, technology is the accelerator.' The purpose of this curated list is to provide a readily accessible toolkit to support learning in ways not previously possible. By organizing tools into specific categories (Assessment, Management, Subject-Specific, Communication), I am better equipped to consult with teachers on targeted, innovative strategies.",
+                artifacts: [
+                    { label: "View Curated Toolkit Presentation", url: "https://docs.google.com/presentation/d/11NZuy5fDpTyjfbCA8vQWPTtJC3Wc0aYv5unPn0vWmjk/edit?usp=sharing", icon: "presentation" }
+                ],
+
+                // B. THE DURING (Instruction/Implementation)
+                videoUrl: "#", // Replaced with an iframe of the slides in the logic below, but kept "#" here for standard handling
+                annotations: [
+                    { time: "Categories", text: "Tools were categorized into Assessment, Management, Subject-Specific (Secondary/Elementary), Communication, and Production." },
+                    { time: "Analysis", text: "Each tool includes target audience, platform compatibility, and a practical classroom use case." }
+                ],
+
+                // Override the default video renderer for this specific item to embed the Google Slides
+                customVideoEmbed: `
+                    <div class="video-wrapper" style="margin-bottom: 24px;">
+                        <div class="video-placeholder" style="margin-bottom:8px; padding-bottom: 56.25%; position: relative; height: 0; overflow: hidden; border-radius: var(--radius-md);">
+                            <iframe src="https://docs.google.com/presentation/d/11NZuy5fDpTyjfbCA8vQWPTtJC3Wc0aYv5unPn0vWmjk/embed?start=false&loop=false&delayms=3000" 
+                                frameborder="0" width="100%" height="100%" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"
+                                style="position: absolute; top: 0; left: 0;">
+                            </iframe>
+                        </div>
+                        <div style="text-align: center;">
+                            <a href="https://docs.google.com/presentation/d/11NZuy5fDpTyjfbCA8vQWPTtJC3Wc0aYv5unPn0vWmjk/edit?usp=sharing" target="_blank" style="color: var(--text-muted); font-size: 0.8rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                                <i data-lucide="external-link" width="14"></i> Open Presentation in New Tab
+                            </a>
+                        </div>
+                    </div>
+                `,
+
+                // C. THE AFTER (Impact)
+                chartData: [],
+                workSamples: [
+                    { title: "Assessment/Feedback", desc: "Tools curated for immediate formative feedback.", status: "strong" },
+                    { title: "Subject Specific (Secondary)", desc: "Tools tailored for complex concepts in higher grades.", status: "strong" }
+                ],
+                mentorFeedback: [],
+                reflections: [
+                    { q: "1. Description (What happened?)", a: "I collaborated with my cohort to research, vet, and curate a comprehensive database of 8-10 EdTech applications categorized by their pedagogical use case (Assessment, Management, etc.)." },
+                    { q: "2. Feelings (What were you thinking and feeling?)", a: "I felt a sense of clarity working collaboratively. Pooling our collective classroom experiences made it much easier to separate flashy tools from genuinely effective ones." },
+                    { q: "3. Evaluation (What was good and bad about the experience?)", a: "The peer collaboration was excellent and provided diverse perspectives. However, keeping the list concise was difficult as there are so many tools on the market." },
+                    { q: "4. Analysis (What sense can you make of the situation?)", a: "As Michael Fullan says, 'Pedagogy is the driver.' Developing this resource highlighted that the value of an EdTech tool lies entirely in its specific instructional deployment, not in its novelty." },
+                    { q: "5. Conclusion (What else could you have done?)", a: "While we categorized by use case, the toolkit could be improved by including a 'barrier to entry' rating for teachers who are less tech-savvy." },
+                    { q: "6. Action Plan (If it arose again, what would you do?)", a: "I will use this curated presentation as a living document. During instructional coaching sessions, I will use this toolkit as a rapid-response database when a teacher presents a specific student learning barrier." }
+                ]
             }
         ];
 
@@ -1454,21 +1571,84 @@
                 const container = document.getElementById(`grid-${item.domain}`);
                 if (!container) return;
 
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `
-                    <div class="card-tags">
-                        ${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                    </div>
-                    <h4>${item.title}</h4>
-                    <p>${item.summary}</p>
-                    <div class="card-footer">
-                        <span>View Evidence</span>
-                        <i data-lucide="arrow-right" width="16"></i>
-                    </div>
-                `;
-                card.onclick = () => openModal(item.id);
-                container.appendChild(card);
+                if (item.domain === 'med-coursework') {
+                    // Override the CSS grid to display as single column blocks for full details
+                    container.style.display = 'flex';
+                    container.style.flexDirection = 'column';
+                    container.style.gap = '32px';
+
+                    const block = document.createElement('div');
+                    block.style.background = 'var(--bg-card)';
+                    block.style.border = '1px solid var(--border-glass)';
+                    block.style.borderRadius = 'var(--radius-lg)';
+                    block.style.padding = '32px';
+
+                    let artifactsHtml = item.artifacts.map(art => `
+                        <a href="${art.url}" target="_blank" style="display:inline-flex; align-items:center; gap:8px; padding:10px 16px; background:rgba(56, 189, 248, 0.1); border:1px solid rgba(56, 189, 248, 0.2); color:var(--text-main); text-decoration:none; border-radius:6px; margin-right:10px; margin-bottom:10px; transition: all 0.2s;" onmouseover="this.style.background='rgba(56, 189, 248, 0.2)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(56, 189, 248, 0.1)'; this.style.transform='translateY(0)'">
+                            <i data-lucide="${art.icon || 'link'}" width="16"></i> ${art.label}
+                        </a>
+                    `).join('');
+
+                    let reflectionsHtml = item.reflections.map(r => `
+                        <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                            <strong style="color:var(--accent-primary); display:block; margin-bottom:8px; font-size: 1.05rem;">${r.q}</strong>
+                            <p style="color:var(--text-muted); line-height: 1.6;">${r.a}</p>
+                        </div>
+                    `).join('');
+
+                    block.innerHTML = `
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px;">
+                            <div>
+                                <div class="card-tags" style="margin-bottom:12px;">
+                                    ${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                                </div>
+                                <h3 style="font-size: 1.8rem; margin-bottom: 8px;">${item.title}</h3>
+                            </div>
+                        </div>
+                        <p style="font-size:1.1rem; color: var(--text-muted); margin-bottom:32px; border-left: 4px solid var(--accent-secondary); padding-left: 16px;">${item.summary}</p>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr; gap: 32px;">
+                            <div>
+                                <h4 style="color:var(--text-main); margin-bottom:16px; display:flex; align-items:center; gap:8px; font-size: 1.2rem;"><i data-lucide="info" width="20" style="color:var(--accent-primary);"></i> Context & Rationale</h4>
+                                <div style="background:rgba(255,255,255,0.03); padding:24px; border-radius:var(--radius-md); border: 1px solid var(--border-glass);">
+                                    <p style="margin-bottom:16px; line-height: 1.7;">${item.context}</p>
+                                    ${item.rationale ? `<p style="color:var(--text-muted); border-top:1px dashed rgba(255,255,255,0.1); padding-top:16px; margin-top:16px; line-height: 1.7;">${item.rationale}</p>` : ''}
+                                </div>
+                            </div>
+
+                            ${item.customVideoEmbed ? `<div><h4 style="color:var(--text-main); margin-bottom:16px; display:flex; align-items:center; gap:8px; font-size: 1.2rem;"><i data-lucide="monitor-play" width="20" style="color:var(--accent-primary);"></i> Media & Presentation</h4>${item.customVideoEmbed}</div>` : ''}
+
+                            <div>
+                                <h4 style="color:var(--text-main); margin-bottom:16px; display:flex; align-items:center; gap:8px; font-size: 1.2rem;"><i data-lucide="file-check" width="20" style="color:var(--accent-primary);"></i> Project Artifacts</h4>
+                                <div>${artifactsHtml}</div>
+                            </div>
+
+                            <div>
+                                <h4 style="color:var(--text-main); margin-bottom:16px; display:flex; align-items:center; gap:8px; font-size: 1.2rem;"><i data-lucide="refresh-cw" width="20" style="color:var(--accent-primary);"></i> Gibbs' Reflective Cycle</h4>
+                                <div style="background:rgba(15, 23, 42, 0.4); border:1px solid var(--border-glass); border-radius:var(--radius-md); padding:32px 32px 12px 32px; box-shadow: inset 0 2px 10px rgba(0,0,0,0.2);">
+                                    ${reflectionsHtml}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(block);
+                } else {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <div class="card-tags">
+                            ${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                        <h4>${item.title}</h4>
+                        <p>${item.summary}</p>
+                        <div class="card-footer">
+                            <span>View Evidence</span>
+                            <i data-lucide="arrow-right" width="16"></i>
+                        </div>
+                    `;
+                    card.onclick = () => openModal(item.id);
+                    container.appendChild(card);
+                }
             });
             lucide.createIcons(); // Refresh icons
         }
