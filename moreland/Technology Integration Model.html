@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technology Integration Models: A Comprehensive Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* slate-900 */
+            color: #f8fafc; /* slate-50 */
+        }
+
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Tab Navigation Enhancements */
+        .tab-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+            transform-origin: left;
+        }
+
+        .tab-btn.active::after {
+            transform: scaleX(1);
+        }
+
+        .tab-btn.active {
+            color: #fff;
+            background: rgba(56, 189, 248, 0.1);
+        }
+
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: all 0.4s ease-out;
+        }
+
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom details/summary for progressive disclosure */
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+        details[open] summary ~ * {
+            animation: slideDown 0.3s ease-in-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    </style>
+</head>
+<body class="antialiased min-h-screen relative overflow-x-hidden selection:bg-blue-500 selection:text-white">
+    
+    <!-- Ambient Background Blobs -->
+    <div class="fixed top-[-15%] left-[-10%] w-[40rem] h-[40rem] bg-blue-600 rounded-full mix-blend-multiply filter blur-[150px] opacity-20 z-0 pointer-events-none"></div>
+    <div class="fixed bottom-[-15%] right-[-10%] w-[40rem] h-[40rem] bg-purple-600 rounded-full mix-blend-multiply filter blur-[150px] opacity-20 z-0 pointer-events-none"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        
+        <!-- Hero Header -->
+        <header class="text-center mb-20">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-medium mb-6">
+                <i class="fas fa-microscope"></i> Pedagogical Research Synthesis
+            </div>
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight leading-tight">
+                Evaluating <span class="gradient-text">EdTech Integration</span>
+            </h1>
+            <p class="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto font-light leading-relaxed">
+                An interactive, research-based analysis of SAMR, TPACK, and PICRAT models to determine the optimal framework for localized pedagogical transformation.
+            </p>
+        </header>
+
+        <!-- Interactive Comparison Section -->
+        <section class="mb-24">
+            
+            <!-- Tab Navigation -->
+            <div class="flex flex-wrap justify-center border-b border-slate-700/50 mb-8" id="tabs">
+                <button class="tab-btn active px-8 py-4 font-semibold text-slate-400 hover:text-slate-200 text-lg sm:text-xl rounded-t-xl" onclick="switchTab('samr')">SAMR Model</button>
+                <button class="tab-btn px-8 py-4 font-semibold text-slate-400 hover:text-slate-200 text-lg sm:text-xl rounded-t-xl" onclick="switchTab('tpack')">TPACK Framework</button>
+                <button class="tab-btn px-8 py-4 font-semibold text-slate-400 hover:text-slate-200 text-lg sm:text-xl rounded-t-xl" onclick="switchTab('picrat')">PICRAT Matrix</button>
+            </div>
+
+            <!-- SAMR Content -->
+            <div id="samr" class="tab-content active glass-panel rounded-3xl p-6 lg:p-10">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                   
+
+                    <!-- Details -->
+                    <div class="lg:col-span-8 flex flex-col gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-slate-800/40 p-6 rounded-2xl border border-slate-700/50 hover:bg-slate-800/60 transition-colors">
+                                <h4 class="font-bold text-blue-400 mb-3 text-lg"><i class="fas fa-book-open mr-2"></i>Core Concept</h4>
+                                <p class="text-slate-300 text-sm leading-relaxed">SAMR divides integration into two phases: <strong>Enhancement</strong> (Substitution, Augmentation) where tech acts as a direct tool substitute, and <strong>Transformation</strong> (Modification, Redefinition) where tech allows for significant task redesign or entirely new tasks.</p>
+                            </div>
+                            <div class="bg-slate-800/40 p-6 rounded-2xl border border-slate-700/50 hover:bg-slate-800/60 transition-colors">
+                                <h4 class="font-bold text-pink-400 mb-3 text-lg"><i class="fas fa-laptop-code mr-2"></i>Practical Application</h4>
+                                <p class="text-slate-300 text-sm leading-relaxed">Teachers use it to self-audit. <em>"Am I just digitizing a worksheet (Substitution), or am I having students collaborate globally on a multimedia project (Redefinition)?"</em> It provides a clear, aspirational trajectory.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Progressive Disclosure: Deep Dive -->
+                        <details class="bg-slate-800/30 rounded-2xl border border-slate-700/50 group">
+                            <summary class="cursor-pointer p-6 font-semibold text-white flex justify-between items-center hover:text-blue-400 transition-colors">
+                                <span class="flex items-center gap-3"><i class="fas fa-search-plus text-blue-500"></i> Expansive Research & Critique</span>
+                                <i class="fas fa-chevron-down text-slate-500 group-open:rotate-180 transition-transform duration-300"></i>
+                            </summary>
+                            <div class="p-6 pt-0 text-sm text-slate-300 space-y-4 border-t border-slate-700/50 mt-2">
+                                <p><strong>Academic Depth:</strong> Puentedura's model is heavily utilized due to its accessible vernacular. However, academic critiques (e.g., Hamilton et al., 2016) note that SAMR lacks a focus on context and pedagogy. It implicitly suggests that "Redefinition" is always superior, whereas sometimes "Substitution" is the most pedagogically appropriate choice for a specific learning objective.</p>
+                                <p><strong>Hanoi Context Application:</strong> In a developing infrastructure, pushing for Redefinition can cause frustration. SAMR must be used carefully here, ensuring teachers do not feel inadequate if they remain in the Enhancement phase while building baseline digital fluency.</p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TPACK Content -->
+            <div id="tpack" class="tab-content glass-panel rounded-3xl p-6 lg:p-10">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                    <div class="lg:col-span-4 border-b lg:border-b-0 lg:border-r border-slate-700/50 pb-8 lg:pb-0 lg:pr-8">
+                        <div class="w-full aspect-square bg-slate-900/50 rounded-2xl flex items-center justify-center mb-6 shadow-inner relative overflow-hidden border border-slate-700/50">
+                            <!-- CSS Venn Diagram -->
+                            <div class="relative w-48 h-48">
+                                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-32 rounded-full bg-blue-500/40 mix-blend-screen border border-blue-400/50 flex justify-center items-start pt-4 font-bold text-blue-200">TK</div>
+                                <div class="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-red-500/40 mix-blend-screen border border-red-400/50 flex justify-start items-end pb-8 pl-6 font-bold text-red-200">PK</div>
+                                <div class="absolute bottom-0 right-0 w-32 h-32 rounded-full bg-green-500/40 mix-blend-screen border border-green-400/50 flex justify-end items-end pb-8 pr-6 font-bold text-green-200">CK</div>
+                                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-extrabold text-white text-sm z-10 mt-2">TPACK</div>
+                            </div>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-2">TPACK</h3>
+                        <p class="text-purple-400 font-medium text-sm mb-4">Mishra & Koehler (2006)</p>
+                        <p class="text-slate-400 leading-relaxed">A highly theoretical framework identifying the complex interplay of knowledge required by teachers to effectively integrate technology into their teaching.</p>
+                    </div>
+                    
+                    <div class="lg:col-span-8 flex flex-col gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-slate-800/40 p-6 rounded-2xl border border-slate-700/50 hover:bg-slate-800/60 transition-colors">
+                                <h4 class="font-bold text-purple-400 mb-3 text-lg"><i class="fas fa-network-wired mr-2"></i>Core Concept</h4>
+                                <p class="text-slate-300 text-sm leading-relaxed">Builds on Shulman’s (1986) PCK (Pedagogical Content Knowledge). It asserts that effective teaching requires an understanding of how Technology Knowledge (TK), Pedagogy (PK), and Content (CK) interact dynamically.</p>
+                            </div>
+                            <div class="bg-slate-800/40 p-6 rounded-2xl border border-slate-700/50 hover:bg-slate-800/60 transition-colors">
+                                <h4 class="font-bold text-pink-400 mb-3 text-lg"><i class="fas fa-puzzle-piece mr-2"></i>Practical Application</h4>
+                                <p class="text-slate-300 text-sm leading-relaxed">Used heavily in teacher-prep programs. Before adopting a tool, teachers ask: "Does this technology (TK) actually support the specific pedagogy (PK) I need to teach this specific subject matter (CK)?"</p>
+                            </div>
+                        </div>
+
+                        <!-- Progressive Disclosure: Deep Dive -->
+                        <details class="bg-slate-800/30 rounded-2xl border border-slate-700/50 group">
+                            <summary class="cursor-pointer p-6 font-semibold text-white flex justify-between items-center hover:text-purple-400 transition-colors">
+                                <span class="flex items-center gap-3"><i class="fas fa-search-plus text-purple-500"></i> Expansive Research & Intersections</span>
+                                <i class="fas fa-chevron-down text-slate-500 group-open:rotate-180 transition-transform duration-300"></i>
+                            </summary>
+                            <div class="p-6 pt-0 text-sm text-slate-300 space-y-4 border-t border-slate-700/50 mt-2">
+                                <p><strong>Academic Depth:</strong> The power of TPACK lies in its intersections. <strong>TCK</strong> (Technological Content Knowledge) involves knowing how subject matter is changed by tech (e.g., teaching anatomy via 3D VR vs. textbooks). <strong>TPK</strong> (Technological Pedagogical Knowledge) involves understanding how teaching changes with tech (e.g., using forums for asynchronous discussion). True integration, the center, recognizes teaching with tech as a "Wicked Problem" requiring fluid, context-specific solutions rather than a one-size-fits-all approach.</p>
+                                <p><strong>Critique:</strong> While intellectually robust, researchers note boundaries between constructs (e.g., TPK vs. PCK) are often blurry for practicing educators, making it difficult to use as a quick, daily evaluative tool.</p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PICRAT Content -->
+            <div id="picrat" class="tab-content glass-panel rounded-3xl p-6 lg:p-10">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                    <div class="lg:col-span-4 border-b lg:border-b-0 lg:border-r border-slate-700/50 pb-8 lg:pb-0 lg:pr-8">
+                        <div class="w-full aspect-square bg-slate-900/50 rounded-2xl flex items-center justify-center mb-6 shadow-inner relative p-6 border border-slate-700/50">
+                            <!-- CSS Grid Matrix -->
+                            <div class="w-full h-full flex flex-col relative">
+                                <div class="absolute -left-5 top-1/2 -translate-y-1/2 -rotate-90 text-xs font-bold text-slate-500 tracking-widest whitespace-nowrap">TEACHER USE</div>
+                                <div class="absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs font-bold text-slate-500 tracking-widest whitespace-nowrap">STUDENT USE</div>
+                                <table class="w-full h-full text-center border-collapse text-sm font-semibold">
+                                    <tr>
+                                        <td class="w-8 border-r border-slate-700 text-blue-400">T</td>
+                                        <td class="border border-slate-700/50 bg-indigo-500/10 hover:bg-indigo-500/30 transition-colors">PT</td>
+                                        <td class="border border-slate-700/50 bg-indigo-500/20 hover:bg-indigo-500/40 transition-colors">IT</td>
+                                        <td class="border border-slate-700/50 bg-indigo-500/40 hover:bg-indigo-500/60 transition-colors text-white shadow-[inset_0_0_10px_rgba(99,102,241,0.5)]">CT</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w-8 border-r border-slate-700 text-blue-400">A</td>
+                                        <td class="border border-slate-700/50 hover:bg-slate-800 transition-colors">PA</td>
+                                        <td class="border border-slate-700/50 bg-indigo-500/10 hover:bg-indigo-500/30 transition-colors">IA</td>
+                                        <td class="border border-slate-700/50 bg-indigo-500/20 hover:bg-indigo-500/40 transition-colors">CA</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w-8 border-r border-slate-700 text-blue-400">R</td>
+                                        <td class="border border-slate-700/50 hover:bg-slate-800 transition-colors">PR</td>
+                                        <td class="border border-slate-700/50 hover:bg-slate-800 transition-colors">IR</td>
+                                        <td class="border border-slate-700/50 bg-indigo-500/10 hover:bg-indigo-500/30 transition-colors">CR</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td class="h-8 border-t border-slate-700 text-green-400">P</td>
+                                        <td class="h-8 border-t border-slate-700 text-green-400">I</td>
+                                        <td class="h-8 border-t border-slate-700 text-green-400">C</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-2">PICRAT</h3>
+                        <p class="text-indigo-400 font-medium text-sm mb-4">Kimmons, Graham, & West (2020)</p>
+                        <p class="text-slate-400 leading-relaxed">A modern, highly actionable two-dimensional matrix evaluating both what the student is doing and how the teacher is utilizing the technology.</p>
+                    </div>
+                    
+                    <div class="lg:col-span-8 flex flex-col gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-slate-800/40 p-6 rounded-2xl border border-slate-700/50 hover:bg-slate-800/60 transition-colors">
+                                <h4 class="font-bold text-indigo-400 mb-3 text-lg"><i class="fas fa-th mr-2"></i>Core Concept</h4>
+                                <p class="text-slate-300 text-sm leading-relaxed">Cross-references the <strong>Student's Relationship</strong> to technology (Passive, Interactive, Creative) against the <strong>Teacher's Practice</strong> (Replacement, Amplification, Transformation). It results in 9 distinct integration coordinates.</p>
+                            </div>
+                            <div class="bg-slate-800/40 p-6 rounded-2xl border border-slate-700/50 hover:bg-slate-800/60 transition-colors">
+                                <h4 class="font-bold text-pink-400 mb-3 text-lg"><i class="fas fa-route mr-2"></i>Practical Application</h4>
+                                <p class="text-slate-300 text-sm leading-relaxed">Teachers plot a specific activity on the matrix. The institutional goal is upward and rightward mobility—shifting students from passive consumers to creative producers (the "CT" quadrant).</p>
+                            </div>
+                        </div>
+
+                        <!-- Progressive Disclosure: Deep Dive -->
+                        <details class="bg-slate-800/30 rounded-2xl border border-slate-700/50 group">
+                            <summary class="cursor-pointer p-6 font-semibold text-white flex justify-between items-center hover:text-indigo-400 transition-colors">
+                                <span class="flex items-center gap-3"><i class="fas fa-search-plus text-indigo-500"></i> Expansive Research & Matrix Detail</span>
+                                <i class="fas fa-chevron-down text-slate-500 group-open:rotate-180 transition-transform duration-300"></i>
+                            </summary>
+                            <div class="p-6 pt-0 text-sm text-slate-300 space-y-4 border-t border-slate-700/50 mt-2">
+                                <p><strong>Academic Depth:</strong> Developed specifically to overcome the shortcomings of SAMR and TPACK. Kimmons et al. recognized that previous models often ignored the student's cognitive state. By isolating student actions (PIC) from teacher actions (RAT), it clarifies integration. A teacher could use highly transformative tech (VR), but if the student is merely passively watching it (PT), the integration falls short of pedagogical excellence.</p>
+                                <ul class="list-disc pl-5 space-y-2 mt-3">
+                                    <li><strong>Passive (P):</strong> Student consumes information (watching a video).</li>
+                                    <li><strong>Interactive (I):</strong> Student interacts with the medium (completing a digital drag-and-drop).</li>
+                                    <li><strong>Creative (C):</strong> Student generates original artifacts (recording a podcast).</li>
+                                </ul>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conclusive Choice Section for Hanoi -->
+        <section class="mb-24 relative">
+            <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-[2rem] blur opacity-25"></div>
+            <div class="relative glass-panel rounded-[2rem] p-8 lg:p-12 overflow-hidden border-t border-l border-white/10">
+                
+                <div class="flex flex-col md:flex-row gap-12 items-start">
+                    <!-- Left: Recommendation -->
+                    <div class="md:w-1/2">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-bold uppercase tracking-wider mb-4">
+                            Final Determination
+                        </div>
+                        <h2 class="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">Recommended Model: <br><span class="gradient-text">PICRAT</span></h2>
+                        <p class="text-slate-300 mb-8 text-lg leading-relaxed">
+                            Based on our structural analysis and the localized needs of our Hanoi campus, the <strong>PICRAT model</strong> is the definitively superior framework. It bridges theoretical rigor with immediate, visual practicality.
+                        </p>
+
+                        <h3 class="text-xl font-bold mb-4 text-white flex items-center gap-2"><i class="fas fa-check-double text-indigo-400"></i> Empirical Justification</h3>
+                        <ul class="space-y-4 text-slate-300">
+                            <li class="flex items-start gap-3 bg-slate-800/30 p-4 rounded-xl border border-slate-700/30">
+                                <div class="bg-indigo-500/20 p-2 rounded-lg mt-0.5"><i class="fas fa-user-graduate text-indigo-400 text-sm"></i></div>
+                                <div><strong>Cognitive Focus:</strong> It mandates evaluation of student output (PIC), which is scientifically proven to be a stronger indicator of learning than teacher input alone.</div>
+                            </li>
+                            <li class="flex items-start gap-3 bg-slate-800/30 p-4 rounded-xl border border-slate-700/30">
+                                <div class="bg-indigo-500/20 p-2 rounded-lg mt-0.5"><i class="fas fa-map-signs text-indigo-400 text-sm"></i></div>
+                                <div><strong>Actionable Metrics:</strong> It removes the ambiguity of TPACK by providing a concrete 3x3 plotting system for lesson planning.</div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Right: Context & Implementation -->
+                    <div class="md:w-1/2 flex flex-col gap-6">
+                        
+                        <!-- Hanoi Context -->
+                        <div class="bg-indigo-900/20 border border-indigo-500/30 rounded-2xl p-6 relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500 rounded-full mix-blend-overlay filter blur-[40px] opacity-40"></div>
+                            <h3 class="text-lg font-bold mb-3 text-indigo-300 flex items-center gap-2">
+                                <i class="fas fa-globe-asia"></i> Contextual Alignment: Hanoi Bilingual Campus
+                            </h3>
+                            <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                                Operating without a centralized Learning Management System (LMS) and with diverse staff tech-literacy, our environment demands a <strong>low-barrier, grassroots framework</strong>. 
+                            </p>
+                            <p class="text-slate-300 text-sm leading-relaxed">
+                                PICRAT succeeds here because it does not require complex infrastructure. It validates teachers making initial steps (Passive/Replacement using basic tools) while giving our tech-champions a clear vocabulary to drive bilingual students toward higher-order language production (Creative/Transformative output).
+                            </p>
+                        </div>
+
+                        <!-- Implementation Phases -->
+                        <div class="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-6">
+                            <h3 class="text-lg font-bold mb-4 text-white flex items-center gap-2">
+                                <i class="fas fa-rocket text-blue-400"></i> Strategic Implementation Phases
+                            </h3>
+                            <div class="space-y-4 relative before:absolute before:inset-0 before:ml-2 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-600 before:to-transparent">
+                                
+                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                                    <div class="flex items-center justify-center w-5 h-5 rounded-full border border-blue-500 bg-slate-900 text-blue-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2"></div>
+                                    <div class="w-[calc(100%-2rem)] md:w-[calc(50%-1.5rem)] bg-slate-800/80 p-3 rounded-lg border border-slate-700">
+                                        <h4 class="font-bold text-sm text-blue-400">Phase 1: Vocabulary</h4>
+                                        <p class="text-xs text-slate-400 mt-1">Introduce PICRAT matrix in PD. Establish non-evaluative shared language.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                                    <div class="flex items-center justify-center w-5 h-5 rounded-full border border-purple-500 bg-slate-900 text-purple-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2"></div>
+                                    <div class="w-[calc(100%-2rem)] md:w-[calc(50%-1.5rem)] bg-slate-800/80 p-3 rounded-lg border border-slate-700">
+                                        <h4 class="font-bold text-sm text-purple-400">Phase 2: The "+1 Shift"</h4>
+                                        <p class="text-xs text-slate-400 mt-1">Challenge staff to move one lesson up or right on the grid (e.g., Passive to Interactive).</p>
+                                    </div>
+                                </div>
+
+                                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                                    <div class="flex items-center justify-center w-5 h-5 rounded-full border border-pink-500 bg-slate-900 text-pink-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2"></div>
+                                    <div class="w-[calc(100%-2rem)] md:w-[calc(50%-1.5rem)] bg-slate-800/80 p-3 rounded-lg border border-slate-700">
+                                        <h4 class="font-bold text-sm text-pink-400">Phase 3: Shared Hub</h4>
+                                        <p class="text-xs text-slate-400 mt-1">Create a localized Google Drive (bypassing LMS) of PICRAT-mapped bilingual lesson plans.</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Academic References Section -->
+        <section class="mb-12 border-t border-slate-800 pt-10">
+            <h3 class="text-xl font-bold mb-6 text-slate-300 flex items-center gap-2">
+                <i class="fas fa-bookmark text-slate-500"></i> Academic References
+            </h3>
+            <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-800 text-sm text-slate-400 space-y-4 font-light">
+                <p class="pl-6 -indent-6">Hamilton, E. R., Rosenberg, J. M., & Akcaoglu, M. (2016). The substitution augmentation modification redefinition (SAMR) model: A critical review and suggestions for its use. <em>TechTrends, 60</em>(5), 433-441. https://doi.org/10.1007/s11528-016-0091-y</p>
+                <p class="pl-6 -indent-6">Kimmons, R., Graham, C. R., & West, R. E. (2020). The PICRAT model for technology integration in teacher preparation. <em>Contemporary Issues in Technology and Teacher Education, 20</em>(1), 176-198.</p>
+                <p class="pl-6 -indent-6">Mishra, P., & Koehler, M. J. (2006). Technological pedagogical content knowledge: A framework for teacher knowledge. <em>Teachers College Record, 108</em>(6), 1017-1054.</p>
+                <p class="pl-6 -indent-6">Puentedura, R. R. (2006). Transformation, technology, and education. <em>Hippesasus</em>. Retrieved from http://hippasus.com/resources/tte/</p>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        function switchTab(tabId) {
+            // Fade out current active content
+            const currentActive = document.querySelector('.tab-content.active');
+            if (currentActive) {
+                currentActive.style.opacity = '0';
+                currentActive.style.transform = 'translateY(15px)';
+                setTimeout(() => {
+                    currentActive.classList.remove('active');
+                    showNewTab(tabId);
+                }, 300); // Wait for transition
+            } else {
+                showNewTab(tabId);
+            }
+
+            // Update Tab Button UI
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('active');
+                el.classList.add('text-slate-400');
+                el.classList.remove('text-white');
+            });
+            event.currentTarget.classList.add('active');
+            event.currentTarget.classList.remove('text-slate-400');
+            event.currentTarget.classList.add('text-white');
+        }
+
+        function showNewTab(tabId) {
+            const newTab = document.getElementById(tabId);
+            newTab.classList.add('active');
+            // Trigger reflow
+            void newTab.offsetWidth;
+            newTab.style.opacity = '1';
+            newTab.style.transform = 'translateY(0)';
+        }
+    </script>
+</body>
+</html>

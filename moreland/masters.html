@@ -450,15 +450,16 @@
             padding: 0 2rem;
             max-height: 0;
             overflow: hidden;
-            transition: max-height var(--transition-smooth), padding var(--transition-smooth);
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             background: rgba(0, 0, 0, 0.2);
         }
 
         .module-card.expanded .module-body {
             padding: 2rem;
-            max-height: 2000px;
-            /* Arbitrary large number for expansion */
+            max-height: 8000px;
+            /* Increased severely to prevent cutoffs on long modules with many artifacts */
             border-top: 1px solid var(--border-glass);
+            overflow-y: auto;
         }
 
         .module-card.expanded .chevron {
@@ -761,6 +762,95 @@
                             understanding macro-level systems.</p>
 
                         <div style="display:flex; flex-direction:column; gap:32px; padding: 1.5rem 0;">
+                            <!-- Item 0: Learning Management Systems -->
+                            <div style="background:var(--bg-card); border:1px solid var(--border-glass); border-radius:var(--radius-lg); padding:32px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px;">
+                                    <div>
+                                        <div class="card-tags" style="margin-bottom:12px; display: flex; gap: 8px; flex-wrap: wrap;">
+                                            <span class="tag" style="background:rgba(56, 189, 248, 0.1); color:var(--text-main); border:1px solid rgba(56, 189, 248, 0.2); border-radius:100px; padding:4px 12px; font-size:0.8rem; font-weight:500;">Mod 40</span>
+                                            <span class="tag" style="background:rgba(56, 189, 248, 0.1); color:var(--text-main); border:1px solid rgba(56, 189, 248, 0.2); border-radius:100px; padding:4px 12px; font-size:0.8rem; font-weight:500;">Unit 1</span>
+                                            <span class="tag" style="background:rgba(56, 189, 248, 0.1); color:var(--text-main); border:1px solid rgba(56, 189, 248, 0.2); border-radius:100px; padding:4px 12px; font-size:0.8rem; font-weight:500;">LMS Analysis</span>
+                                            <span class="tag" style="background:rgba(56, 189, 248, 0.1); color:var(--text-main); border:1px solid rgba(56, 189, 248, 0.2); border-radius:100px; padding:4px 12px; font-size:0.8rem; font-weight:500;">Completed</span>
+                                        </div>
+                                        <h3 style="font-size: 1.8rem; margin-bottom: 8px;">Learning Management Systems Investigation</h3>
+                                    </div>
+                                </div>
+                                <p style="font-size:1.1rem; color: var(--text-muted); margin-bottom:32px; border-left: 4px solid var(--accent-secondary); padding-left: 16px;">
+                                    A collaborative comparative analysis of four prominent Learning Management Systems, evaluating communication options, assessment tools, and strategic adoption procedures.
+                                </p>
+
+                                <div style="display: grid; grid-template-columns: 1fr; gap: 32px;">
+                                    <div>
+                                        <h4 style="color:var(--text-main); margin-bottom:16px; display:flex; align-items:center; gap:8px; font-size: 1.2rem;">
+                                            <i data-lucide="info" width="20" style="color:var(--accent-primary);"></i> Academic Overview & Rationale
+                                        </h4>
+                                        <div style="background:rgba(255,255,255,0.03); padding:24px; border-radius:var(--radius-md); border: 1px solid var(--border-glass);">
+                                            <p style="margin-bottom:16px; line-height: 1.7;"><strong>Overview:</strong> As classrooms transition towards blended and 1:1 models, the selection of a Learning Management System (LMS) is foundational. An effective LMS must not only manage curriculum and assessment but also streamline teacher-student-parent communication and align deeply with the school’s overarching technology vision.</p>
+                                            <p style="color:var(--text-muted); border-top:1px dashed rgba(255,255,255,0.1); padding-top:16px; margin-top:16px; line-height: 1.7;">
+                                                <strong>Rationale:</strong> This project evaluates four diverse LMS platforms (Google Classroom, Canvas, Schoology, and Moodle). The goal was to look past the marketing features and critically analyze how content is shared, what analytical tools are provided for formative assessment, and what the logistical process of proposing adoption to district leadership would entail.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <h4 style="color:var(--text-main); margin-bottom:16px; display:flex; align-items:center; gap:8px; font-size: 1.2rem;">
+                                            <i data-lucide="monitor-play" width="20" style="color:var(--accent-primary);"></i> Interactive Submission Showcase
+                                        </h4>
+                                        <div class="video-wrapper" style="margin-bottom: 24px;">
+                                            <div class="video-placeholder" style="margin-bottom:8px; padding-bottom: 75%; position: relative; height: 0; overflow: hidden; border-radius: var(--radius-md); border: 1px solid var(--border-glass); background: #0f172a;">
+                                                <iframe src="https://padlet.com/embed/6pfslunhjp8g356" 
+                                                    frameborder="0" width="100%" height="100%" allowfullscreen="true"
+                                                    style="position: absolute; top: 0; left: 0;">
+                                                </iframe>
+                                            </div>
+                                            <div style="text-align: center;">
+                                                <a href="https://padlet.com/ryanlinehan/lms-6pfslunhjp8g356" target="_blank" style="color: var(--text-muted); font-size: 0.8rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: color 0.2s;" onmouseover="this.style.color='var(--text-main)'" onmouseout="this.style.color='var(--text-muted)'">
+                                                    <i data-lucide="external-link" width="14"></i> Open Padlet in New Tab
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <h4 style="color:var(--text-main); margin-bottom:16px; display:flex; align-items:center; gap:8px; font-size: 1.2rem;">
+                                            <i data-lucide="refresh-cw" width="20" style="color:var(--accent-primary);"></i> Gibbs' Reflective Cycle
+                                        </h4>
+                                        <div style="background:rgba(15, 23, 42, 0.4); border:1px solid var(--border-glass); border-radius:var(--radius-md); padding:32px 32px 12px 32px; box-shadow: inset 0 2px 10px rgba(0,0,0,0.2);">
+                                            
+                                            <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                                <strong style="color:var(--accent-primary); display:block; margin-bottom:8px; font-size: 1.05rem;">1. Description (What happened?)</strong>
+                                                <p style="color:var(--text-muted); line-height: 1.6;">I collaborated with a partner to research and build a presentation evaluating four major Learning Management Systems. We synthesized data regarding their origins, content-sharing capabilities, assessment tools, and communication structures, culminating in a structured adoption proposal.</p>
+                                            </div>
+
+                                            <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                                <strong style="color:var(--accent-primary); display:block; margin-bottom:8px; font-size: 1.05rem;">2. Feelings (What were you thinking and feeling?)</strong>
+                                                <p style="color:var(--text-muted); line-height: 1.6;">I initially felt overwhelmed by the sheer volume of features each platform boasted. However, organizing the analysis into standardized categories (Assessment, Communication, etc.) on Padlet made the comparative process feel much more manageable and visually clear.</p>
+                                            </div>
+
+                                            <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                                <strong style="color:var(--accent-primary); display:block; margin-bottom:8px; font-size: 1.05rem;">3. Evaluation (What was good and bad about the experience?)</strong>
+                                                <p style="color:var(--text-muted); line-height: 1.6;">The collaborative aspect was highly effective—splitting the research allowed for deeper dives into each platform. A downside was trying to ascertain the true "usability" of some platforms without having full administrative sandbox access to test the backend workflows.</p>
+                                            </div>
+
+                                            <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                                <strong style="color:var(--accent-primary); display:block; margin-bottom:8px; font-size: 1.05rem;">4. Analysis (What sense can you make of the situation?)</strong>
+                                                <p style="color:var(--text-muted); line-height: 1.6;">A key realization is that there is no "perfect" LMS; rather, there is only the LMS that best fits a school's specific hardware ecosystem (e.g., 1:1 Chromebooks vs. BYOD) and faculty technical literacy. The adoption process outlined in the project highlighted that buy-in and training are often more critical than the software itself.</p>
+                                            </div>
+
+                                            <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                                <strong style="color:var(--accent-primary); display:block; margin-bottom:8px; font-size: 1.05rem;">5. Conclusion (What else could you have done?)</strong>
+                                                <p style="color:var(--text-muted); line-height: 1.6;">If expanding this research, I would have surveyed current faculty members across different departments to gather qualitative data on the specific pain points they currently experience with our existing setup.</p>
+                                            </div>
+
+                                            <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                                <strong style="color:var(--accent-primary); display:block; margin-bottom:8px; font-size: 1.05rem;">6. Action Plan (If it arose again, what would you do?)</strong>
+                                                <p style="color:var(--text-muted); line-height: 1.6;">When tasked with proposing new technology in the future, I will always start by auditing the current infrastructure and faculty needs first, using the outline developed in this assignment to frame the cost-benefit analysis for administration.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Item 1: Certification -->
                             <div
                                 style="background:var(--bg-card); border:1px solid var(--border-glass); border-radius:var(--radius-lg); padding:32px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
@@ -1087,6 +1177,86 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Item 3: Technology Integration Model -->
+                            <div style="background:var(--bg-card); border:1px solid var(--border-glass); border-radius:var(--radius-lg); padding:32px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px;">
+                                    <div>
+                                        <div class="card-tags" style="margin-bottom:12px; display: flex; gap: 8px; flex-wrap: wrap;">
+                                            <span class="tag" style="background:rgba(56, 189, 248, 0.1); color:var(--text-main); border:1px solid rgba(56, 189, 248, 0.2); border-radius:100px; padding:4px 12px; font-size:0.8rem; font-weight:500;">Mod 40</span>
+                                            <span class="tag" style="background:rgba(56, 189, 248, 0.1); color:var(--text-main); border:1px solid rgba(56, 189, 248, 0.2); border-radius:100px; padding:4px 12px; font-size:0.8rem; font-weight:500;">Integration</span>
+                                            <span class="tag" style="background:rgba(56, 189, 248, 0.1); color:var(--text-main); border:1px solid rgba(56, 189, 248, 0.2); border-radius:100px; padding:4px 12px; font-size:0.8rem; font-weight:500;">Analysis</span>
+                                            <span class="tag" style="background:rgba(56, 189, 248, 0.1); color:var(--text-main); border:1px solid rgba(56, 189, 248, 0.2); border-radius:100px; padding:4px 12px; font-size:0.8rem; font-weight:500;">Completed</span>
+                                        </div>
+                                        <h3 style="font-size: 1.8rem; margin-bottom: 8px;">Technology Integration Models</h3>
+                                    </div>
+                                </div>
+                                <p style="font-size:1.1rem; color: var(--text-muted); margin-bottom:32px; border-left: 4px solid var(--accent-secondary); padding-left: 16px;">A comprehensive, interactive analysis of SAMR, TPACK, and PICRAT models to determine the optimal framework for localized pedagogical transformation.</p>
+
+                                <div style="display: grid; grid-template-columns: 1fr; gap: 32px;">
+                                    <div>
+                                        <h4 style="color:var(--text-main); margin-bottom:16px; display:flex; align-items:center; gap:8px; font-size: 1.2rem;"><i data-lucide="info" width="20" style="color:var(--accent-primary);"></i> Context & Academic Summary</h4>
+                                        <div style="background:rgba(255,255,255,0.03); padding:24px; border-radius:var(--radius-md); border: 1px solid var(--border-glass);">
+                                            <p style="margin-bottom:16px; line-height: 1.7;"><strong>Overview:</strong> When bringing technology into the classroom, it is critical to provide educators with a clear model to visualize the systemic changes taking place. This project evaluates prevalent models, including SAMR, TPACK, and PICRAT, exploring their strengths, practical applications, and critiques.</p>
+                                            <p style="color:var(--text-muted); border-top:1px dashed rgba(255,255,255,0.1); padding-top:16px; margin-top:16px; line-height: 1.7;"><strong>Rationale:</strong> The fundamental goal of integration is to move beyond mere substitution. By establishing a shared vocabulary via the PICRAT framework, staff at a bilingual campus without a centralized LMS can systematically shift student engagement from passive consumption to active, language-rich digital creation.</p>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <h4 style="color:var(--text-main); margin-bottom:16px; display:flex; align-items:center; gap:8px; font-size: 1.2rem;"><i data-lucide="monitor-play" width="20" style="color:var(--accent-primary);"></i> Interactive Submission Showcase</h4>
+                                        <div class="video-wrapper" style="margin-bottom: 24px;">
+                                            <div class="video-placeholder" style="margin-bottom:8px; padding-bottom: 75%; position: relative; height: 0; overflow: hidden; border-radius: var(--radius-md); border: 1px solid var(--border-glass); background: #0f172a;">
+                                                <iframe src="Technology Integration Model.html" 
+                                                    frameborder="0" width="100%" height="100%" allowfullscreen="true"
+                                                    style="position: absolute; top: 0; left: 0;">
+                                                </iframe>
+                                            </div>
+                                            <div style="text-align: center;">
+                                                <a href="Technology Integration Model.html" target="_blank" style="color: var(--text-muted); font-size: 0.8rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: color 0.2s;" onmouseover="this.style.color='var(--text-main)'" onmouseout="this.style.color='var(--text-muted)'">
+                                                    <i data-lucide="external-link" width="14"></i> Open Submission in New Tab
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <h4 style="color:var(--text-main); margin-bottom:16px; display:flex; align-items:center; gap:8px; font-size: 1.2rem;"><i data-lucide="refresh-cw" width="20" style="color:var(--accent-primary);"></i> Gibbs' Reflective Cycle</h4>
+                                        <div style="background:rgba(15, 23, 42, 0.4); border:1px solid var(--border-glass); border-radius:var(--radius-md); padding:32px 32px 12px 32px; box-shadow: inset 0 2px 10px rgba(0,0,0,0.2);">
+                                            
+                                            <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                                <strong style="color:var(--accent-primary); display:block; margin-bottom:8px; font-size: 1.05rem;">1. Description (What happened?)</strong>
+                                                <p style="color:var(--text-muted); line-height: 1.6;">I researched and synthesized three major technology integration frameworks (SAMR, TPACK, and PICRAT), ultimately determining which model would be most effective for faculty deployment at my bilingual campus.</p>
+                                            </div>
+
+                                            <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                                <strong style="color:var(--accent-primary); display:block; margin-bottom:8px; font-size: 1.05rem;">2. Feelings (What were you thinking and feeling?)</strong>
+                                                <p style="color:var(--text-muted); line-height: 1.6;">I felt intellectually engaged by TPACK's theoretical depth but realized quite quickly that its complexity might alienate educators who are already overwhelmed by learning new digital tools.</p>
+                                            </div>
+
+                                            <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                                <strong style="color:var(--accent-primary); display:block; margin-bottom:8px; font-size: 1.05rem;">3. Evaluation (What was good and bad about the experience?)</strong>
+                                                <p style="color:var(--text-muted); line-height: 1.6;">The comparative analysis was excellent because it forced me to see the limitations of SAMR's linear "ladder" approach. The challenge was finding a model that honored teacher effort while prioritizing student cognitive engagement.</p>
+                                            </div>
+
+                                            <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                                <strong style="color:var(--accent-primary); display:block; margin-bottom:8px; font-size: 1.05rem;">4. Analysis (What sense can you make of the situation?)</strong>
+                                                <p style="color:var(--text-muted); line-height: 1.6;">I concluded that PICRAT is the superior model for my context. By isolating the student's relationship to technology (Passive vs. Creative) from the teacher's use of it, PICRAT offers a highly visual, immediate matrix for auditing a lesson plan without overwhelming jargon.</p>
+                                            </div>
+
+                                            <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                                <strong style="color:var(--accent-primary); display:block; margin-bottom:8px; font-size: 1.05rem;">5. Conclusion (What else could you have done?)</strong>
+                                                <p style="color:var(--text-muted); line-height: 1.6;">I could have expanded the analysis to include the adoption lifecycle of these models mapped against our specific campus demographics and tech fluency levels.</p>
+                                            </div>
+
+                                            <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                                <strong style="color:var(--accent-primary); display:block; margin-bottom:8px; font-size: 1.05rem;">6. Action Plan (If it arose again, what would you do?)</strong>
+                                                <p style="color:var(--text-muted); line-height: 1.6;">I will build professional development sessions entirely around the PICRAT matrix, challenging teachers to make the "+1 Shift" (e.g., consciously moving a lesson from Passive-Replacement to Interactive-Amplification).</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
 
                     </div>
