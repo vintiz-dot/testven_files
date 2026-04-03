@@ -578,6 +578,7 @@ function collectFormData() {
   const recommendation = document.getElementById('q8-recommendation').value.trim();
 
   return {
+    submission_id: Date.now().toString(36) + Math.random().toString(36).slice(2, 8),
     timestamp: new Date().toISOString(),
     grade_band: gradeBand,
     role: role,
@@ -894,16 +895,17 @@ async function handleSubmit() {
   btn.disabled = true;
   btn.textContent = 'Submitting…';
 
-  // Fire ALL three submission strategies simultaneously for maximum reliability.
-  // If any one method gets through, the data is recorded.
+  // Use iframe (most reliable for Apps Script redirects), fall back sequentially
   try {
-    await Promise.all([
-      submitViaIframe(data),         // PRIMARY — most reliable for Apps Script redirects
-      submitViaImageBeacon(data),    // SECONDARY insurance
-      submitViaFetchGet(data)        // TERTIARY — may silently fail, but costs nothing
-    ]);
+    await submitViaIframe(data);
   } catch (err) {
-    console.warn('[Survey] Submission error (data may still have been recorded):', err);
+    console.warn('[Survey] iframe failed, trying image beacon', err);
+    try {
+      await submitViaImageBeacon(data);
+    } catch (err2) {
+      console.warn('[Survey] image beacon failed, trying fetch', err2);
+      await submitViaFetchGet(data);
+    }
   }
 
   // Show success

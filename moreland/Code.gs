@@ -62,6 +62,20 @@ function doGet(e) {
     if (data.grade_band || data.current_devices || data.challenges || data.recommendation) {
       var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
 
+      // ── Deduplication: skip if this submission_id already exists ──
+      var subId = data.submission_id || '';
+      if (subId) {
+        var lastRow = sheet.getLastRow();
+        if (lastRow > 1) {
+          var ids = sheet.getRange(2, 15, lastRow - 1, 1).getValues().flat();
+          if (ids.indexOf(subId) !== -1) {
+            return ContentService
+              .createTextOutput(JSON.stringify({ status: 'duplicate', message: 'Already recorded' }))
+              .setMimeType(ContentService.MimeType.JSON);
+          }
+        }
+      }
+
       var row = [
         new Date(),                              // A: Timestamp (server time)
         data.timestamp || '',                    // B: Submitted At (client time)
@@ -76,7 +90,8 @@ function doGet(e) {
         data.challenges || '',                   // K: Challenges
         data.pd_needs || '',                     // L: PD Needs
         data.device_preference || '',            // M: Device Preference
-        data.recommendation || ''                // N: Recommendation
+        data.recommendation || '',               // N: Recommendation
+        subId                                    // O: Submission ID (dedup key)
       ];
 
       sheet.appendRow(row);
@@ -136,6 +151,20 @@ function doPost(e) {
         .setMimeType(ContentService.MimeType.JSON);
     }
 
+    // ── Deduplication ──
+    var subId = data.submission_id || '';
+    if (subId) {
+      var lastRow = sheet.getLastRow();
+      if (lastRow > 1) {
+        var ids = sheet.getRange(2, 15, lastRow - 1, 1).getValues().flat();
+        if (ids.indexOf(subId) !== -1) {
+          return ContentService
+            .createTextOutput(JSON.stringify({ status: 'duplicate', message: 'Already recorded' }))
+            .setMimeType(ContentService.MimeType.JSON);
+        }
+      }
+    }
+
     var row = [
       new Date(),
       data.timestamp || '',
@@ -150,7 +179,8 @@ function doPost(e) {
       data.challenges || '',
       data.pd_needs || '',
       data.device_preference || '',
-      data.recommendation || ''
+      data.recommendation || '',
+      subId
     ];
 
     sheet.appendRow(row);
@@ -190,7 +220,8 @@ function setupHeaders() {
     'Challenges',
     'PD Needs',
     'Device Preference',
-    'Recommendation'
+    'Recommendation',
+    'Submission ID'
   ];
 
   // Set headers in row 1
