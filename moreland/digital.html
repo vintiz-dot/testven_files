@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instructional Coaching Models – Digital Presentation</title>
+<meta name="description" content="A presentation summarizing three instructional coaching models: GROW, Cognitive Coaching, and Dialogical Coaching.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#0a0e1a;--surface:#111827;--card:#1a2236;--border:#2a3550;
+--accent:#6366f1;--accent2:#818cf8;--coral:#f472b6;--teal:#2dd4bf;
+--gold:#fbbf24;--violet:#a78bfa;--text:#e2e8f0;--muted:#94a3b8;
+--radius:16px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
+/* NAV */
+.topnav{position:fixed;top:0;left:0;width:100%;z-index:100;background:rgba(10,14,26,.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:12px 32px;display:flex;align-items:center;gap:24px}
+.topnav .logo{font-weight:800;font-size:1.1rem;background:linear-gradient(135deg,var(--accent),var(--coral));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.topnav a{color:var(--muted);text-decoration:none;font-size:.85rem;font-weight:500;transition:color .3s}
+.topnav a:hover{color:var(--text)}
+.nav-dots{margin-left:auto;display:flex;gap:8px}
+.nav-dots span{width:10px;height:10px;border-radius:50%;background:var(--border);cursor:pointer;transition:all .3s}
+.nav-dots span.active{background:var(--accent);box-shadow:0 0 12px var(--accent)}
+/* SECTIONS */
+section{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:100px 48px 60px;position:relative}
+.slide-inner{max-width:1100px;width:100%;animation:fadeUp .8s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,5vw,3.8rem);line-height:1.15;margin-bottom:16px}
+h2{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,3.5vw,2.6rem);margin-bottom:12px}
+h3{font-size:1.2rem;font-weight:700;margin-bottom:8px;color:var(--accent2)}
+.gradient-text{background:linear-gradient(135deg,var(--accent),var(--coral));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.subtitle{font-size:1.1rem;color:var(--muted);max-width:720px;margin-bottom:32px}
+/* CARDS */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:24px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;transition:transform .3s,box-shadow .3s}
+.card:hover{transform:translateY(-6px);box-shadow:0 16px 48px rgba(99,102,241,.15)}
+.card .icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:16px}
+.card ul{list-style:none;margin-top:12px}
+.card li{padding:6px 0;padding-left:20px;position:relative;color:var(--muted);font-size:.92rem}
+.card li::before{content:'›';position:absolute;left:0;color:var(--accent);font-weight:700}
+/* TAGS */
+.tag{display:inline-block;padding:4px 14px;border-radius:20px;font-size:.78rem;font-weight:600;margin:4px}
+.tag-gold{background:rgba(251,191,36,.15);color:var(--gold)}
+.tag-teal{background:rgba(45,212,191,.15);color:var(--teal)}
+.tag-coral{background:rgba(244,114,182,.15);color:var(--coral)}
+.tag-violet{background:rgba(167,139,250,.15);color:var(--violet)}
+.tag-accent{background:rgba(99,102,241,.15);color:var(--accent2)}
+/* IMAGE */
+.model-img{width:100%;max-width:520px;border-radius:var(--radius);border:1px solid var(--border);margin:20px auto;display:block;box-shadow:0 8px 32px rgba(0,0,0,.4)}
+/* COMPARISON TABLE */
+.comp-table{width:100%;border-collapse:collapse;margin-top:24px;font-size:.88rem}
+.comp-table th{background:var(--accent);color:#fff;padding:14px 16px;text-align:left;font-weight:600}
+.comp-table td{padding:12px 16px;border-bottom:1px solid var(--border);vertical-align:top}
+.comp-table tr:nth-child(even) td{background:rgba(26,34,54,.6)}
+.comp-table tr:hover td{background:rgba(99,102,241,.08)}
+/* CHOSEN MODEL HIGHLIGHT */
+.chosen-box{background:linear-gradient(135deg,rgba(99,102,241,.12),rgba(244,114,182,.08));border:2px solid var(--accent);border-radius:var(--radius);padding:36px;margin-top:24px;position:relative;overflow:hidden}
+.chosen-box::before{content:'★';position:absolute;top:-10px;right:20px;font-size:4rem;opacity:.08}
+.chosen-box h3{color:var(--gold);font-size:1.3rem}
+/* STEPS */
+.steps{counter-reset:step;margin-top:20px}
+.step{counter-increment:step;padding:16px 16px 16px 56px;position:relative;border-left:2px solid var(--border);margin-left:20px}
+.step::before{content:counter(step);position:absolute;left:-16px;top:14px;width:32px;height:32px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700}
+.step:last-child{border-left-color:transparent}
+.step h4{font-size:1rem;margin-bottom:4px;color:var(--text)}
+.step p{font-size:.88rem;color:var(--muted)}
+/* CITATIONS */
+.citation{font-size:.84rem;color:var(--muted);padding:8px 0;border-bottom:1px solid rgba(42,53,80,.5);line-height:1.6}
+.citation:last-child{border-bottom:none}
+/* HERO OVERLAY */
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 20%,rgba(99,102,241,.18),transparent 60%),radial-gradient(ellipse at 70% 80%,rgba(244,114,182,.12),transparent 50%);pointer-events:none}
+/* FOOTER */
+footer{text-align:center;padding:40px;color:var(--muted);font-size:.82rem;border-top:1px solid var(--border)}
+/* RESPONSIVE */
+@media(max-width:768px){
+  section{padding:80px 20px 40px}
+  .topnav{padding:10px 16px;gap:12px}
+  .card-grid{grid-template-columns:1fr}
+  .comp-table{font-size:.78rem}
+}
+/* SCROLL ANIMATIONS */
+.reveal{opacity:0;transform:translateY(30px);transition:all .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+/* Pulse ring on chosen */
+@keyframes pulseRing{0%{box-shadow:0 0 0 0 rgba(99,102,241,.4)}70%{box-shadow:0 0 0 12px rgba(99,102,241,0)}100%{box-shadow:0 0 0 0 rgba(99,102,241,0)}}
+.pulse{animation:pulseRing 2s infinite}
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="topnav" id="topnav">
+  <span class="logo">Coaching Models</span>
+  <a href="#hero">Home</a>
+  <a href="#overview">Overview</a>
+  <a href="#grow">GROW</a>
+  <a href="#cognitive">Cognitive</a>
+  <a href="#dialogical">Dialogical</a>
+  <a href="#compare">Compare</a>
+  <a href="#choice">My Choice</a>
+  <a href="#citations">Citations</a>
+  <div class="nav-dots" id="navDots">
+    <span data-slide="0" class="active"></span><span data-slide="1"></span><span data-slide="2"></span>
+    <span data-slide="3"></span><span data-slide="4"></span><span data-slide="5"></span>
+    <span data-slide="6"></span><span data-slide="7"></span>
+  </div>
+</nav>
+
+<!-- SLIDE 1: HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="slide-inner" style="text-align:center">
+    <span class="tag tag-accent" style="margin-bottom:16px;display:inline-block">Unit 3 — Digital Presentation</span>
+    <h1>Exploring <span class="gradient-text">Instructional Coaching Models</span></h1>
+    <p class="subtitle" style="margin:16px auto 28px">An in-depth look at three research-based coaching models and a defense of the Dialogical approach for school/district implementation.</p>
+    <p style="color:var(--muted);font-size:.95rem"><strong style="color:var(--text)">Presented by:</strong> Moreland</p>
+    <p style="color:var(--muted);font-size:.85rem;margin-top:8px">M.Ed. Educational Technology — Spring 2026</p>
+    <div style="margin-top:40px">
+      <a href="#overview" style="display:inline-block;padding:14px 36px;background:var(--accent);color:#fff;border-radius:40px;text-decoration:none;font-weight:600;font-size:.95rem;transition:transform .3s;box-shadow:0 8px 24px rgba(99,102,241,.35)">Begin Presentation ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 2: OVERVIEW -->
+<section id="overview" style="background:var(--surface)">
+  <div class="slide-inner reveal">
+    <span class="tag tag-teal">Context</span>
+    <h2>Why Coaching Models Matter</h2>
+    <p class="subtitle">John Whitmore writes, <em>"The coach is not a problem solver, a teacher, an adviser, an instructor or even an expert; he or she is a sounding board, facilitator… who raises awareness and responsibility."</em></p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="icon" style="background:rgba(251,191,36,.15);color:var(--gold)">🎯</div>
+        <h3>Purpose</h3>
+        <p style="color:var(--muted);font-size:.9rem">A coaching model provides a structured framework for instructional coaches to guide meaningful, goal-oriented conversations with teachers.</p>
+      </div>
+      <div class="card">
+        <div class="icon" style="background:rgba(45,212,191,.15);color:var(--teal)">🤝</div>
+        <h3>Partnership</h3>
+        <p style="color:var(--muted);font-size:.9rem">Effective coaching models prioritize the teacher-coach relationship, positioning the teacher as an autonomous professional with valuable expertise.</p>
+      </div>
+      <div class="card">
+        <div class="icon" style="background:rgba(244,114,182,.15);color:var(--coral)">📈</div>
+        <h3>Impact</h3>
+        <p style="color:var(--muted);font-size:.9rem">Research consistently shows that high-quality coaching improves teacher practice and, ultimately, student outcomes across all content areas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 3: GROW MODEL -->
+<section id="grow">
+  <div class="slide-inner reveal">
+    <span class="tag tag-gold">Model 1</span>
+    <h2>The GROW Model</h2>
+    <p class="subtitle">Developed by Sir John Whitmore in the 1980s, GROW is a structured, goal-oriented coaching framework widely adopted in both business and education.</p>
+    <img src="grow_model.png" alt="GROW Model Diagram — Goal, Reality, Options, Will" class="model-img">
+    <div class="card-grid" style="grid-template-columns:repeat(4,1fr)">
+      <div class="card" style="border-top:3px solid var(--gold)">
+        <h3 style="color:var(--gold)">G — Goal</h3>
+        <p style="font-size:.88rem;color:var(--muted)">Define a clear, measurable objective. <em>"What do you want to achieve?"</em></p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--teal)">
+        <h3 style="color:var(--teal)">R — Reality</h3>
+        <p style="font-size:.88rem;color:var(--muted)">Assess the current situation honestly. <em>"What is happening now?"</em></p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--coral)">
+        <h3 style="color:var(--coral)">O — Options</h3>
+        <p style="font-size:.88rem;color:var(--muted)">Brainstorm multiple strategies and possibilities. <em>"What could you do?"</em></p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--violet)">
+        <h3 style="color:var(--violet)">W — Will</h3>
+        <p style="font-size:.88rem;color:var(--muted)">Commit to specific actions and accountability. <em>"What will you do?"</em></p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:24px">
+      <h3>Strengths & Considerations</h3>
+      <ul>
+        <li>Highly structured — easy for new coaches to learn and apply</li>
+        <li>Promotes teacher autonomy through open-ended questioning</li>
+        <li>Originally designed for business; may oversimplify complex classroom dynamics</li>
+        <li>Can become formulaic if followed too rigidly without adaptation</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 4: COGNITIVE COACHING -->
+<section id="cognitive" style="background:var(--surface)">
+  <div class="slide-inner reveal">
+    <span class="tag tag-violet">Model 2</span>
+    <h2>Cognitive Coaching</h2>
+    <p class="subtitle">Developed by Arthur Costa and Robert Garmston, Cognitive Coaching fosters self-directed learning by transforming educators' internal thought processes.</p>
+    <img src="cognitive_coaching.png" alt="Cognitive Coaching — Five States of Mind" class="model-img">
+    <h3 style="margin-top:28px">The Five States of Mind</h3>
+    <div class="card-grid" style="grid-template-columns:repeat(5,1fr);margin-top:12px">
+      <div class="card" style="text-align:center;padding:20px 14px">
+        <div style="font-size:1.6rem;margin-bottom:8px">🧠</div>
+        <strong style="font-size:.85rem">Consciousness</strong>
+        <p style="font-size:.78rem;color:var(--muted);margin-top:4px">Metacognitive awareness</p>
+      </div>
+      <div class="card" style="text-align:center;padding:20px 14px">
+        <div style="font-size:1.6rem;margin-bottom:8px">🛠️</div>
+        <strong style="font-size:.85rem">Craftsmanship</strong>
+        <p style="font-size:.78rem;color:var(--muted);margin-top:4px">Pursuit of excellence</p>
+      </div>
+      <div class="card" style="text-align:center;padding:20px 14px">
+        <div style="font-size:1.6rem;margin-bottom:8px">💪</div>
+        <strong style="font-size:.85rem">Efficacy</strong>
+        <p style="font-size:.78rem;color:var(--muted);margin-top:4px">Belief in one's impact</p>
+      </div>
+      <div class="card" style="text-align:center;padding:20px 14px">
+        <div style="font-size:1.6rem;margin-bottom:8px">🔄</div>
+        <strong style="font-size:.85rem">Flexibility</strong>
+        <p style="font-size:.78rem;color:var(--muted);margin-top:4px">Perspective-taking</p>
+      </div>
+      <div class="card" style="text-align:center;padding:20px 14px">
+        <div style="font-size:1.6rem;margin-bottom:8px">🤲</div>
+        <strong style="font-size:.85rem">Interdependence</strong>
+        <p style="font-size:.78rem;color:var(--muted);margin-top:4px">Collaborative spirit</p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:24px">
+      <h3>Key Tools & Techniques</h3>
+      <ul>
+        <li><strong>Planning Conversations</strong> — Pre-observation conferences to clarify intentions</li>
+        <li><strong>Reflecting Conversations</strong> — Post-observation analysis of teacher thinking</li>
+        <li><strong>Paraphrasing & Mediating Questions</strong> — Non-judgmental prompts that deepen reflection</li>
+        <li><strong>Positive Presuppositions</strong> — Questions that assume the teacher's capability and good intent</li>
+      </ul>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <h3>Strengths & Considerations</h3>
+      <ul>
+        <li>Deep focus on transforming thinking, not just behavior</li>
+        <li>Builds long-term self-directedness in educators</li>
+        <li>Requires extensive training and certification for coaches</li>
+        <li>Non-directive stance may frustrate teachers seeking immediate, concrete strategies</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 5: DIALOGICAL COACHING -->
+<section id="dialogical">
+  <div class="slide-inner reveal">
+    <span class="tag tag-coral">Model 3</span>
+    <h2>Dialogical Coaching</h2>
+    <p class="subtitle">Championed by Jim Knight, the Dialogical model occupies the productive middle ground between facilitative and directive coaching — a true partnership of equals.</p>
+    <img src="dialogical_model.png" alt="Dialogical Coaching — Balance of Advocacy and Inquiry" class="model-img">
+    <div class="card-grid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="card" style="border-top:3px solid var(--coral)">
+        <h3 style="color:var(--coral)">Facilitative</h3>
+        <p style="font-size:.88rem;color:var(--muted)">Coach acts as a sounding board; withholds expertise to let teachers self-discover. Risk: teachers may lack access to evidence-based strategies.</p>
+      </div>
+      <div class="card pulse" style="border:2px solid var(--accent);background:rgba(99,102,241,.06)">
+        <h3 style="color:var(--accent2)">★ Dialogical</h3>
+        <p style="font-size:.88rem;color:var(--text)"><strong>The sweet spot.</strong> Coach shares expertise as a partner while honoring teacher autonomy. Both voices carry equal weight in the conversation.</p>
+      </div>
+      <div class="card" style="border-top:3px solid var(--violet)">
+        <h3 style="color:var(--violet)">Directive</h3>
+        <p style="font-size:.88rem;color:var(--muted)">Coach as expert trainer; prescribes strategies for fidelity. Risk: undermines teacher ownership and professional identity.</p>
+      </div>
+    </div>
+    <h3 style="margin-top:32px">Core Principles</h3>
+    <div class="card-grid">
+      <div class="card">
+        <h3>Advocacy + Inquiry</h3>
+        <p style="font-size:.88rem;color:var(--muted)">The coach balances sharing evidence-based strategies (advocacy) with asking powerful questions and listening deeply (inquiry).</p>
+      </div>
+      <div class="card">
+        <h3>Partnership</h3>
+        <p style="font-size:.88rem;color:var(--muted)">Neither coach nor teacher is positioned as the expert. Knowledge is co-constructed through authentic professional dialogue.</p>
+      </div>
+      <div class="card">
+        <h3>The Impact Cycle</h3>
+        <p style="font-size:.88rem;color:var(--muted)">A practical framework: <strong>Identify</strong> (current reality + goals) → <strong>Learn</strong> (new strategies) → <strong>Improve</strong> (implement, measure, adapt).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 6: COMPARISON -->
+<section id="compare" style="background:var(--surface)">
+  <div class="slide-inner reveal">
+    <span class="tag tag-accent">Analysis</span>
+    <h2>Side-by-Side Comparison</h2>
+    <p class="subtitle">How do these three models differ across key dimensions of instructional coaching?</p>
+    <div style="overflow-x:auto">
+    <table class="comp-table">
+      <thead>
+        <tr><th>Dimension</th><th>GROW Model</th><th>Cognitive Coaching</th><th>Dialogical Coaching</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Developer</strong></td><td>Sir John Whitmore</td><td>Costa & Garmston</td><td>Jim Knight</td></tr>
+        <tr><td><strong>Core Focus</strong></td><td>Goal achievement</td><td>Self-directed thinking</td><td>Partnership & shared expertise</td></tr>
+        <tr><td><strong>Coach Role</strong></td><td>Question-based facilitator</td><td>Mediator of thinking</td><td>Equal partner</td></tr>
+        <tr><td><strong>Teacher Role</strong></td><td>Goal-setter & action-planner</td><td>Self-reflective practitioner</td><td>Co-constructor & decision-maker</td></tr>
+        <tr><td><strong>Knowledge Sharing</strong></td><td>Minimal; coach asks, not tells</td><td>Withheld; teacher discovers</td><td>Shared openly as suggestions</td></tr>
+        <tr><td><strong>Structure</strong></td><td>4-step linear cycle</td><td>Planning/Reflecting maps</td><td>Impact Cycle (Identify → Learn → Improve)</td></tr>
+        <tr><td><strong>Best For</strong></td><td>New coaches; quick goal-setting</td><td>Deep cognitive transformation</td><td>Balanced, practical coaching at scale</td></tr>
+        <tr><td><strong>Training Required</strong></td><td>Low–Medium</td><td>High (certification)</td><td>Medium</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 7: MY CHOICE — DIALOGICAL -->
+<section id="choice">
+  <div class="slide-inner reveal">
+    <span class="tag tag-gold">Individual Explanation</span>
+    <h2>My Choice: <span class="gradient-text">The Dialogical Model</span></h2>
+    <p class="subtitle">After examining all three models, I am choosing to implement the Dialogical Coaching model in my school/district setting. Here is my detailed rationale and implementation plan.</p>
+
+    <div class="chosen-box">
+      <h3>🏆 Why the Dialogical Model Is the Best Fit</h3>
+      <p style="margin-top:12px;font-size:.92rem;color:var(--text)">The Dialogical model, as articulated by Jim Knight, resonates most deeply with my philosophy of coaching because it <strong>honors teachers as professionals</strong> while still giving the coach permission to share knowledge. In my school, teachers often express frustration when coaches either withhold useful strategies (pure facilitative approach) or impose a top-down mandate (directive approach). The Dialogical model threads this needle perfectly.</p>
+      <ul style="list-style:none;margin-top:16px">
+        <li style="padding:6px 0;padding-left:24px;position:relative;color:var(--text);font-size:.9rem"><span style="position:absolute;left:0;color:var(--gold)">✦</span><strong>Equity in voice:</strong> Both coach and teacher bring expertise to the table — pedagogical content knowledge from the coach and contextual classroom knowledge from the teacher.</li>
+        <li style="padding:6px 0;padding-left:24px;position:relative;color:var(--text);font-size:.9rem"><span style="position:absolute;left:0;color:var(--gold)">✦</span><strong>Teacher buy-in:</strong> Because teachers are the ultimate decision-makers, they are far more likely to implement and sustain the changes they co-construct.</li>
+        <li style="padding:6px 0;padding-left:24px;position:relative;color:var(--text);font-size:.9rem"><span style="position:absolute;left:0;color:var(--gold)">✦</span><strong>Data-driven:</strong> The Impact Cycle centers on measurable student-focused goals, creating accountability without judgment.</li>
+        <li style="padding:6px 0;padding-left:24px;position:relative;color:var(--text);font-size:.9rem"><span style="position:absolute;left:0;color:var(--gold)">✦</span><strong>Scalable:</strong> Unlike Cognitive Coaching, which requires extensive certification, the Dialogical model can be adopted incrementally and trained in-house.</li>
+      </ul>
+    </div>
+
+    <h3 style="margin-top:36px">Implementation Plan for My School/District</h3>
+    <div class="steps">
+      <div class="step">
+        <h4>Phase 1 — Foundation Building (Months 1–2)</h4>
+        <p>Introduce Jim Knight's partnership principles to all staff through a PD session. Distribute <em>The Impact Cycle</em> as shared reading for the coaching team. Establish coaching norms rooted in equality, choice, voice, dialogue, reflection, praxis, and reciprocity.</p>
+      </div>
+      <div class="step">
+        <h4>Phase 2 — Pilot Program (Months 3–4)</h4>
+        <p>Begin Impact Cycles with 8–10 volunteer teachers across content areas. Use video observation and student data to collaboratively set PEERS goals (Powerful, Easy to measure, Emotionally compelling, Reachable, Student-focused).</p>
+      </div>
+      <div class="step">
+        <h4>Phase 3 — Full Implementation (Months 5–8)</h4>
+        <p>Expand to all interested teachers. Coach and teacher pairs meet biweekly to progress through Identify → Learn → Improve cycles. Ongoing data collection to measure student impact.</p>
+      </div>
+      <div class="step">
+        <h4>Phase 4 — Reflection & Scaling (Months 9–12)</h4>
+        <p>Analyze aggregated student outcome data. Share success stories at faculty meetings. Refine coaching protocols based on teacher feedback. Train additional coaches using the dialogical framework.</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:28px;border-left:4px solid var(--teal)">
+      <h3 style="color:var(--teal)">Why My District Will Respond Positively</h3>
+      <p style="font-size:.9rem;color:var(--muted);margin-top:8px">My district values teacher empowerment and professional growth, making the partnership principles of the Dialogical model a natural fit. Teachers have expressed a desire for coaching that is collaborative rather than evaluative. Because the Dialogical model explicitly separates coaching from evaluation and positions the teacher as the decision-maker, it addresses teachers' concerns about autonomy while still providing the research-based strategies they need. The Impact Cycle's emphasis on measurable student outcomes also aligns with district goals for data-informed instruction.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 8: CITATIONS -->
+<section id="citations" style="background:var(--surface)">
+  <div class="slide-inner reveal">
+    <span class="tag tag-accent">References</span>
+    <h2>APA Citations</h2>
+    <p class="subtitle">All sources used in this presentation, formatted in APA 7th Edition style.</p>
+    <div class="card" style="padding:32px">
+      <div class="citation">Costa, A. L., & Garmston, R. J. (2016). <em>Cognitive coaching: Developing self-directed leaders and learners</em> (3rd ed.). Rowman & Littlefield.</div>
+      <div class="citation">Knight, J. (2018). <em>The impact cycle: What instructional coaches should do to foster powerful improvements in teaching</em>. Corwin.</div>
+      <div class="citation">Knight, J. (2007). <em>Instructional coaching: A partnership approach to improving instruction</em>. Corwin Press.</div>
+      <div class="citation">Knight, J. (2011). <em>Unmistakable impact: A partnership approach for dramatically improving instruction</em>. Corwin Press.</div>
+      <div class="citation">Knight, J. (2016). <em>Better conversations: Coaching ourselves and each other to be more credible, caring, and connected</em>. Corwin Press.</div>
+      <div class="citation">Whitmore, J. (2017). <em>Coaching for performance: The principles and practice of coaching and leadership</em> (5th ed.). Nicholas Brealey Publishing.</div>
+      <div class="citation">Costa, A. L., & Garmston, R. J. (2015). Cognitive coaching: A foundation for Renaissance schools. In <em>Thinking Collaborative</em>. https://www.thinkingcollaborative.com</div>
+      <div class="citation">Knight, J. (2019). Why teacher autonomy is central to coaching success. <em>Educational Leadership, 77</em>(3), 14–20.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Instructional Coaching Models — Digital Presentation &copy; 2026 | M.Ed. Educational Technology</p>
+  <p style="margin-top:8px;font-size:.78rem">Created with care for Unit 3: Coaching Models Assignment</p>
+</footer>
+
+<script>
+// Scroll-reveal animation
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); } });
+}, { threshold: 0.15 });
+revealEls.forEach(el => observer.observe(el));
+
+// Nav dot tracking
+const sections = document.querySelectorAll('section');
+const dots = document.querySelectorAll('.nav-dots span');
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      const idx = Array.from(sections).indexOf(e.target);
+      dots.forEach((d,i) => d.classList.toggle('active', i===idx));
+    }
+  });
+}, { threshold: 0.4 });
+sections.forEach(s => sectionObserver.observe(s));
+dots.forEach(d => d.addEventListener('click', () => {
+  const i = parseInt(d.dataset.slide);
+  sections[i]?.scrollIntoView({ behavior:'smooth' });
+}));
+</script>
+</body>
+</html>

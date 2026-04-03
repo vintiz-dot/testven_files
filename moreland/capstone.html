@@ -1,0 +1,1264 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EdTech Capstone — Teacher Technology Infrastructure Survey</title>
+  <meta name="description"
+    content="Quick 2-3 minute survey for teachers on classroom technology infrastructure, device usage, and minimum tech requirements for effective teaching.">
+  <meta name="color-scheme" content="light dark">
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== DESIGN TOKENS ===== */
+    :root {
+      --primary: #6366F1;
+      /* Indigo */
+      --primary-light: #818CF8;
+      --primary-dark: #4F46E5;
+      --accent: #06B6D4;
+      /* Cyan */
+      --accent-light: #22D3EE;
+      --success: #10B981;
+      --success-glow: rgba(16, 185, 129, .35);
+      --warning: #F59E0B;
+      --bg: #F8FAFC;
+      --surface: rgba(255, 255, 255, .72);
+      --surface-2: rgba(255, 255, 255, .55);
+      --text: #0F172A;
+      --text-muted: #64748B;
+      --border: rgba(148, 163, 184, .28);
+      --radius: 16px;
+      --radius-lg: 24px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, .06);
+      --shadow-md: 0 8px 30px rgba(0, 0, 0, .08);
+      --shadow-lg: 0 20px 60px rgba(0, 0, 0, .12);
+      --blur: saturate(180%) blur(20px);
+      --transition: .25s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0B1120;
+        --surface: rgba(30, 41, 59, .65);
+        --surface-2: rgba(30, 41, 59, .45);
+        --text: #E2E8F0;
+        --text-muted: #94A3B8;
+        --border: rgba(148, 163, 184, .18);
+      }
+    }
+
+    /* ===== RESET & BASE ===== */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== ANIMATED BACKGROUND ===== */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 900px 700px at 15% -5%, rgba(99, 102, 241, .18), transparent 60%),
+        radial-gradient(ellipse 800px 600px at 85% 10%, rgba(6, 182, 212, .14), transparent 55%),
+        radial-gradient(ellipse 700px 500px at 50% 90%, rgba(16, 185, 129, .10), transparent 60%);
+      animation: bgShift 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes bgShift {
+      0% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: .7;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    /* ===== KEYFRAMES ===== */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: -200% 0;
+      }
+
+      100% {
+        background-position: 200% 0;
+      }
+    }
+
+    @keyframes pulse-ring {
+      0% {
+        box-shadow: 0 0 0 0 rgba(99, 102, 241, .4);
+      }
+
+      70% {
+        box-shadow: 0 0 0 12px rgba(99, 102, 241, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+      }
+    }
+
+    @keyframes checkPop {
+      0% {
+        transform: scale(0) rotate(-45deg);
+        opacity: 0;
+      }
+
+      60% {
+        transform: scale(1.15) rotate(0deg);
+      }
+
+      100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        max-height: 0;
+      }
+
+      to {
+        opacity: 1;
+        max-height: 800px;
+      }
+    }
+
+    /* ===== HEADER ===== */
+    .survey-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: var(--blur);
+      -webkit-backdrop-filter: var(--blur);
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--border);
+      animation: fadeUp .6s ease both;
+    }
+
+    .header-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 16px clamp(16px, 4vw, 28px);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: grid;
+      place-items: center;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, .3);
+      font-size: 18px;
+      color: #fff;
+    }
+
+    .brand h1 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -.01em;
+    }
+
+    .brand .sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    .timer-badge {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 999px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      animation: pulse-ring 2.4s infinite;
+      white-space: nowrap;
+    }
+
+    /* ===== PROGRESS BAR ===== */
+    .progress-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 4vw, 28px);
+    }
+
+    .progress-bar {
+      height: 5px;
+      border-radius: 999px;
+      background: var(--border);
+      margin-top: -1px;
+      overflow: hidden;
+    }
+
+    .progress-bar>.fill {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--primary), var(--accent), var(--success));
+      background-size: 200% 100%;
+      animation: shimmer 3s linear infinite;
+      transition: width .5s cubic-bezier(.4, 0, .2, 1);
+      border-radius: 999px;
+    }
+
+    /* ===== MAIN CONTAINER ===== */
+    .survey-main {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 28px clamp(16px, 4vw, 28px) 140px;
+    }
+
+    /* ===== INTRO CARD ===== */
+    .intro-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      backdrop-filter: var(--blur);
+      padding: 28px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-md);
+      animation: fadeUp .7s ease both;
+    }
+
+    .intro-card h2 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .intro-card p {
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .intro-card .meta-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .meta-pill {
+      font-size: 12px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .meta-pill .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+
+    /* ===== QUESTION CARD ===== */
+    .q-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: var(--surface);
+      backdrop-filter: var(--blur);
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      animation: fadeUp .7s ease both;
+      position: relative;
+    }
+
+    .q-card:nth-child(2) {
+      animation-delay: .08s;
+    }
+
+    .q-card:nth-child(3) {
+      animation-delay: .16s;
+    }
+
+    .q-card:nth-child(4) {
+      animation-delay: .24s;
+    }
+
+    .q-card:nth-child(5) {
+      animation-delay: .32s;
+    }
+
+    .q-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(99, 102, 241, .25);
+    }
+
+    .q-card.completed {
+      border-color: rgba(16, 185, 129, .35);
+    }
+
+    .q-card.completed::after {
+      content: '✓';
+      position: absolute;
+      top: 16px;
+      right: 18px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--success);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+      font-weight: 700;
+      animation: checkPop .4s cubic-bezier(.4, 0, .2, 1) both;
+      box-shadow: 0 2px 8px var(--success-glow);
+    }
+
+    /* Question numbering */
+    .q-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+
+    .q-label {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+    }
+
+    .q-hint {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      padding-left: 38px;
+    }
+
+    /* ===== FORM INPUTS ===== */
+    .field-wrap {
+      position: relative;
+    }
+
+    .field-wrap+.field-wrap {
+      margin-top: 12px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, .12);
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    select {
+      cursor: pointer;
+      appearance: none;
+      padding-right: 36px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2364748B'%3E%3Cpath d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+    }
+
+    /* Checkbox / Radio groups */
+    .option-grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+
+    .option-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      cursor: pointer;
+      transition: all var(--transition);
+      font-size: 14px;
+    }
+
+    .option-item:hover {
+      border-color: var(--primary-light);
+      background: rgba(99, 102, 241, .06);
+    }
+
+    .option-item input[type="checkbox"],
+    .option-item input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .option-item.selected {
+      border-color: var(--primary);
+      background: rgba(99, 102, 241, .08);
+      box-shadow: 0 0 0 1px rgba(99, 102, 241, .15);
+    }
+
+    /* ===== AUTO-COMPLETE DROPDOWN ===== */
+    .ac-dropdown {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 100%;
+      z-index: 60;
+      margin-top: 4px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
+      backdrop-filter: var(--blur);
+      box-shadow: var(--shadow-lg);
+      max-height: 220px;
+      overflow-y: auto;
+      display: none;
+      animation: slideDown .2s ease;
+    }
+
+    .ac-dropdown.visible {
+      display: block;
+    }
+
+    .ac-item {
+      padding: 10px 16px;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--text);
+      transition: background .15s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ac-item:first-child {
+      border-radius: 12px 12px 0 0;
+    }
+
+    .ac-item:last-child {
+      border-radius: 0 0 12px 12px;
+    }
+
+    .ac-item:hover,
+    .ac-item.active {
+      background: rgba(99, 102, 241, .08);
+    }
+
+    .ac-item .ac-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, .15), rgba(6, 182, 212, .15));
+      display: grid;
+      place-items: center;
+      font-size: 10px;
+      flex-shrink: 0;
+      color: var(--primary);
+    }
+
+    .ac-item .ac-match {
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    /* Inline ghost text */
+    .ghost-text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 12px 16px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--text-muted);
+      opacity: .45;
+      pointer-events: none;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    /* AI badge on auto-complete fields */
+    .ai-badge {
+      position: absolute;
+      top: -8px;
+      right: 12px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      text-transform: uppercase;
+      box-shadow: 0 2px 8px rgba(99, 102, 241, .3);
+    }
+
+    /* ===== SLIDER ===== */
+    .slider-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 6px;
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      outline: none;
+      cursor: pointer;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #fff;
+      border: 3px solid var(--primary);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
+      cursor: pointer;
+      transition: transform .15s;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+
+    .slider-val {
+      min-width: 50px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--primary);
+      background: rgba(99, 102, 241, .08);
+      padding: 4px 10px;
+      border-radius: 8px;
+    }
+
+    /* ===== FOOTER / SUBMIT ===== */
+    .survey-footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      background: var(--surface-2);
+      backdrop-filter: var(--blur);
+      -webkit-backdrop-filter: var(--blur);
+      border-top: 1px solid var(--border);
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, .06);
+    }
+
+    .footer-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 12px clamp(16px, 4vw, 28px);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .progress-text {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .btn-submit {
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      padding: 12px 28px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -.01em;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, .35);
+      transition: all var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-submit::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(255, 255, 255, .3), transparent 40% 60%, rgba(255, 255, 255, .15));
+      transform: translateX(-100%);
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, .4);
+    }
+
+    .btn-submit:hover::before {
+      transform: translateX(100%);
+      transition: transform .6s ease;
+    }
+
+    .btn-submit:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn-submit.success {
+      background: linear-gradient(135deg, var(--success), #059669);
+      box-shadow: 0 4px 14px var(--success-glow);
+    }
+
+    /* ===== TOAST ===== */
+    .toast {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      padding: 12px 24px;
+      border-radius: 14px;
+      z-index: 200;
+      background: var(--surface);
+      backdrop-filter: var(--blur);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-lg);
+      font-size: 14px;
+      font-weight: 600;
+      opacity: 0;
+      pointer-events: none;
+      transition: all .35s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .toast.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+
+    .toast.toast-success {
+      border-color: rgba(16, 185, 129, .35);
+    }
+
+    .toast.toast-error {
+      border-color: rgba(239, 68, 68, .35);
+    }
+
+    /* ===== SUCCESS OVERLAY ===== */
+    .success-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: rgba(0, 0, 0, .5);
+      backdrop-filter: blur(8px);
+      display: none;
+      place-items: center;
+    }
+
+    .success-overlay.visible {
+      display: grid;
+    }
+
+    .success-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      text-align: center;
+      max-width: 420px;
+      box-shadow: var(--shadow-lg);
+      animation: fadeUp .5s ease both;
+    }
+
+    .success-card .big-check {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--success), #059669);
+      display: grid;
+      place-items: center;
+      margin: 0 auto 18px;
+      font-size: 28px;
+      color: #fff;
+      box-shadow: 0 6px 20px var(--success-glow);
+      animation: checkPop .6s cubic-bezier(.4, 0, .2, 1) both;
+    }
+
+    .success-card h3 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .success-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .success-card .btn-close {
+      margin-top: 20px;
+      padding: 10px 24px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .success-card .btn-close:hover {
+      border-color: var(--primary);
+    }
+
+    /* ===== CONFETTI CANVAS ===== */
+    #confetti {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 400;
+    }
+
+    /* ===== VALIDATION ERRORS ===== */
+    .validation-error {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 14px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: rgba(239, 68, 68, .08);
+      border: 1px solid rgba(239, 68, 68, .25);
+      font-size: 13px;
+      line-height: 1.5;
+      color: #EF4444;
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: opacity .3s ease, transform .3s ease;
+    }
+
+    .validation-error.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .validation-error .val-icon {
+      font-size: 15px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .q-card.has-error {
+      border-color: rgba(239, 68, 68, .4) !important;
+      box-shadow: 0 0 0 2px rgba(239, 68, 68, .08) !important;
+    }
+
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      15% {
+        transform: translateX(-6px);
+      }
+
+      30% {
+        transform: translateX(5px);
+      }
+
+      45% {
+        transform: translateX(-4px);
+      }
+
+      60% {
+        transform: translateX(3px);
+      }
+
+      75% {
+        transform: translateX(-2px);
+      }
+    }
+
+    .q-card.shake {
+      animation: shake .5s ease;
+    }
+
+    .toast.toast-error {
+      border-color: rgba(239, 68, 68, .4);
+      color: #EF4444;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .validation-error {
+        background: rgba(239, 68, 68, .12);
+        border-color: rgba(239, 68, 68, .3);
+        color: #FCA5A5;
+      }
+
+      .toast.toast-error {
+        color: #FCA5A5;
+      }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      .brand h1 {
+        font-size: 15px;
+      }
+
+      .q-card {
+        padding: 18px;
+      }
+
+      .option-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .intro-card {
+        padding: 20px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .btn-submit {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="survey-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-icon">📊</div>
+        <div>
+          <h1>Teacher Tech Infrastructure Survey</h1>
+          <div class="sub">EdTech Capstone Project — Moreland University</div>
+        </div>
+      </div>
+      <span class="timer-badge">⏱ ~4 min</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-bar">
+        <div class="fill" id="progressFill"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MAIN ===== -->
+  <main class="survey-main">
+
+    <!-- Intro -->
+    <div class="intro-card">
+      <h2>Help Shape Our Tech Future</h2>
+      <p>
+        Thank you for taking a few minutes to share your perspective on classroom technology.
+        Your responses will directly inform a comprehensive technology infrastructure report,
+        including device evaluation, learning impact analysis, and actionable recommendations
+        for your school. All responses are anonymous and confidential.
+      </p>
+      <div class="meta-row">
+        <span class="meta-pill"><span class="dot"></span> Anonymous</span>
+        <span class="meta-pill">📋 8 questions</span>
+        <span class="meta-pill">⏱ ~4-5 minutes</span>
+        <span class="meta-pill">🤖 Smart Auto-Complete</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Q1 — DEMOGRAPHICS (Grade Band + Role)
+         Maps to: Report Introduction, Grade Band Representation chart
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="q-card" id="q1-card" data-q="1">
+      <div class="q-label"><span class="q-num">1</span> About You</div>
+      <div class="q-hint">Tell us your grade band and primary role so we can analyze responses by group.</div>
+      <div class="field-wrap" style="margin-bottom:12px;">
+        <label style="font-size:13px; font-weight:600; margin-bottom:6px; display:block;">Grade band you teach:</label>
+        <select id="q1-grade">
+          <option value="">— Select grade band —</option>
+          <option value="Pre-K">Pre-K</option>
+          <option value="Kindergarten">Kindergarten</option>
+          <option value="1st-2nd Grade">1st–2nd Grade</option>
+          <option value="3rd-4th Grade">3rd–4th Grade</option>
+          <option value="5th-6th Grade">5th–6th Grade</option>
+          <option value="7th-8th Grade">7th–8th Grade</option>
+          <option value="9th-12th Grade">9th–12th Grade</option>
+          <option value="Multi-grade / K-8">Multi-grade / K–8</option>
+        </select>
+      </div>
+      <div class="field-wrap">
+        <label style="font-size:13px; font-weight:600; margin-bottom:6px; display:block;">Primary role:</label>
+        <select id="q1-role">
+          <option value="">— Select role —</option>
+          <option value="Classroom Teacher">Classroom Teacher</option>
+          <option value="Literacy Interventionist">Literacy Interventionist</option>
+          <option value="Math Interventionist">Math Interventionist</option>
+          <option value="Special Education Teacher">Special Education Teacher</option>
+          <option value="Specials / Electives Teacher">Specials / Electives Teacher</option>
+          <option value="Instructional Coach">Instructional Coach</option>
+          <option value="Reading Specialist">Reading Specialist</option>
+          <option value="ELL / ESL Teacher">ELL / ESL Teacher</option>
+          <option value="Media Specialist / Librarian">Media Specialist / Librarian</option>
+          <option value="Administrator">Administrator</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Q2 — DEVICE USAGE + FREQUENCY
+         Maps to: Chromebook Use section, Frequency of Use chart
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="q-card" id="q2-card" data-q="2">
+      <div class="q-label"><span class="q-num">2</span> What devices do students currently use in your classroom, and how often?</div>
+      <div class="q-hint">Select all devices that apply, then indicate how frequently students use technology overall.</div>
+      <div class="option-grid" id="q2-options">
+        <label class="option-item"><input type="checkbox" name="q2dev" value="1:1 Chromebooks"> 1:1 Chromebooks</label>
+        <label class="option-item"><input type="checkbox" name="q2dev" value="Shared Chromebook Cart"> Shared Chromebook Cart</label>
+        <label class="option-item"><input type="checkbox" name="q2dev" value="iPads / Tablets"> iPads / Tablets</label>
+        <label class="option-item"><input type="checkbox" name="q2dev" value="Interactive Whiteboard / Smartboard"> Interactive Whiteboard</label>
+        <label class="option-item"><input type="checkbox" name="q2dev" value="Desktop Computers"> Desktop Computers</label>
+        <label class="option-item"><input type="checkbox" name="q2dev" value="Document Camera"> Document Camera</label>
+        <label class="option-item"><input type="checkbox" name="q2dev" value="Teacher Laptop + Projector"> Teacher Laptop + Projector</label>
+        <label class="option-item"><input type="checkbox" name="q2dev" value="Student Smartphones (BYOD)"> Student Smartphones (BYOD)</label>
+      </div>
+      <div class="field-wrap" style="margin-top:12px; position:relative;">
+        <span class="ai-badge">AI Assist</span>
+        <input type="text" id="q2-other" placeholder="Other device? Start typing…" autocomplete="off" data-ac="devices">
+        <div class="ac-dropdown" id="q2-dropdown"></div>
+      </div>
+      <div class="field-wrap" style="margin-top:16px;">
+        <label style="font-size:13px; font-weight:600; margin-bottom:6px; display:block;">How frequently do students use devices during instruction?</label>
+        <div class="option-grid">
+          <label class="option-item"><input type="radio" name="q2freq" value="Daily"> Daily</label>
+          <label class="option-item"><input type="radio" name="q2freq" value="Several times per week"> Several times/week</label>
+          <label class="option-item"><input type="radio" name="q2freq" value="Weekly"> Weekly</label>
+          <label class="option-item"><input type="radio" name="q2freq" value="A few times per month"> A few times/month</label>
+          <label class="option-item"><input type="radio" name="q2freq" value="Rarely or never"> Rarely or never</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Q3 — CLASSROOM USES OF DEVICES
+         Maps to: Common Classroom Uses chart
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="q-card" id="q3-card" data-q="3">
+      <div class="q-label"><span class="q-num">3</span> How do students primarily use devices in your classroom?</div>
+      <div class="q-hint">Select all that apply.</div>
+      <div class="option-grid" id="q3-options">
+        <label class="option-item"><input type="checkbox" name="q3use" value="Independent reading / literacy programs"> Independent reading / literacy programs</label>
+        <label class="option-item"><input type="checkbox" name="q3use" value="Math practice programs"> Math practice programs</label>
+        <label class="option-item"><input type="checkbox" name="q3use" value="Writing / word processing"> Writing / word processing</label>
+        <label class="option-item"><input type="checkbox" name="q3use" value="Research and information gathering"> Research and information gathering</label>
+        <label class="option-item"><input type="checkbox" name="q3use" value="Station rotation activities"> Station rotation activities</label>
+        <label class="option-item"><input type="checkbox" name="q3use" value="Assessment / testing"> Assessment / testing</label>
+        <label class="option-item"><input type="checkbox" name="q3use" value="Video-based lessons (EdPuzzle, YouTube)"> Video-based lessons (EdPuzzle, etc.)</label>
+        <label class="option-item"><input type="checkbox" name="q3use" value="Google Classroom / LMS assignments"> Google Classroom / LMS assignments</label>
+        <label class="option-item"><input type="checkbox" name="q3use" value="Creative projects (slides, multimedia)"> Creative projects (slides, multimedia)</label>
+        <label class="option-item"><input type="checkbox" name="q3use" value="Typing practice"> Typing practice</label>
+        <label class="option-item"><input type="checkbox" name="q3use" value="Coding / robotics activities"> Coding / robotics activities</label>
+        <label class="option-item"><input type="checkbox" name="q3use" value="Social-emotional learning (SEL) programs"> SEL programs</label>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Q4 — DIGITAL PLATFORMS USED
+         Maps to: Digital Platforms Used section
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="q-card" id="q4-card" data-q="4">
+      <div class="q-label"><span class="q-num">4</span> Which digital platforms or programs do you use regularly?</div>
+      <div class="q-hint">Select all platforms your students interact with.</div>
+      <div class="option-grid" id="q4-options">
+        <label class="option-item"><input type="checkbox" name="q4plat" value="Boost Reading"> Boost Reading</label>
+        <label class="option-item"><input type="checkbox" name="q4plat" value="ST Math"> ST Math</label>
+        <label class="option-item"><input type="checkbox" name="q4plat" value="Amplify"> Amplify</label>
+        <label class="option-item"><input type="checkbox" name="q4plat" value="Google Classroom"> Google Classroom</label>
+        <label class="option-item"><input type="checkbox" name="q4plat" value="EdPuzzle"> EdPuzzle</label>
+        <label class="option-item"><input type="checkbox" name="q4plat" value="Nearpod"> Nearpod</label>
+        <label class="option-item"><input type="checkbox" name="q4plat" value="Khan Academy"> Khan Academy</label>
+        <label class="option-item"><input type="checkbox" name="q4plat" value="IXL"> IXL</label>
+        <label class="option-item"><input type="checkbox" name="q4plat" value="Lexia / Core5"> Lexia / Core5</label>
+        <label class="option-item"><input type="checkbox" name="q4plat" value="Raz-Kids / Epic!"> Raz-Kids / Epic!</label>
+        <label class="option-item"><input type="checkbox" name="q4plat" value="Seesaw"> Seesaw</label>
+        <label class="option-item"><input type="checkbox" name="q4plat" value="Canvas LMS"> Canvas LMS</label>
+        <label class="option-item"><input type="checkbox" name="q4plat" value="Newsela"> Newsela</label>
+        <label class="option-item"><input type="checkbox" name="q4plat" value="Pear Deck"> Pear Deck</label>
+      </div>
+      <div class="field-wrap" style="margin-top:12px; position:relative;">
+        <span class="ai-badge">AI Assist</span>
+        <input type="text" id="q4-other" placeholder="Other platform? Start typing…" autocomplete="off" data-ac="platforms">
+        <div class="ac-dropdown" id="q4-dropdown"></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Q5 — EFFECTIVENESS + DIFFERENTIATION RATINGS
+         Maps to: Differentiated Instruction Support chart,
+                  Overall Effectiveness chart
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="q-card" id="q5-card" data-q="5">
+      <div class="q-label"><span class="q-num">5</span> How effective is technology in your classroom?</div>
+      <div class="q-hint">Rate how well devices support differentiation and overall learning.</div>
+
+      <div class="field-wrap" style="margin-bottom:18px;">
+        <label style="font-size:13px; font-weight:600; margin-bottom:8px; display:block;">
+          How well do devices support <strong>differentiated / small-group instruction</strong>?
+        </label>
+        <div class="option-grid">
+          <label class="option-item"><input type="radio" name="q5diff" value="1 - Not at all"> 1 — Not at all</label>
+          <label class="option-item"><input type="radio" name="q5diff" value="2 - Slightly"> 2 — Slightly</label>
+          <label class="option-item"><input type="radio" name="q5diff" value="3 - Moderately"> 3 — Moderately</label>
+          <label class="option-item"><input type="radio" name="q5diff" value="4 - Very well"> 4 — Very well</label>
+          <label class="option-item"><input type="radio" name="q5diff" value="5 - Extremely well"> 5 — Extremely well</label>
+        </div>
+      </div>
+
+      <div class="field-wrap">
+        <label style="font-size:13px; font-weight:600; margin-bottom:8px; display:block;">
+          Rate the <strong>overall effectiveness</strong> of current technology in supporting student learning:
+        </label>
+        <div class="slider-wrap">
+          <span style="font-size:12px; color:var(--text-muted);">Low</span>
+          <input type="range" id="q5-slider" min="1" max="10" value="5" step="1">
+          <span style="font-size:12px; color:var(--text-muted);">High</span>
+          <span class="slider-val" id="q5-val">5</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Q6 — CHALLENGES WITH TECHNOLOGY
+         Maps to: Challenges with Chromebook Use chart
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="q-card" id="q6-card" data-q="6">
+      <div class="q-label"><span class="q-num">6</span> What are the biggest challenges you face with classroom technology?</div>
+      <div class="q-hint">Select all that apply.</div>
+      <div class="option-grid" id="q6-options">
+        <label class="option-item"><input type="checkbox" name="q6chal" value="Device performance (slow / outdated)"> Device performance (slow / outdated)</label>
+        <label class="option-item"><input type="checkbox" name="q6chal" value="Student distraction / off-task behavior"> Student distraction / off-task</label>
+        <label class="option-item"><input type="checkbox" name="q6chal" value="Wi-Fi / connectivity issues"> Wi-Fi / connectivity issues</label>
+        <label class="option-item"><input type="checkbox" name="q6chal" value="Not enough devices for all students"> Not enough devices</label>
+        <label class="option-item"><input type="checkbox" name="q6chal" value="Limited teacher training / PD"> Limited teacher training / PD</label>
+        <label class="option-item"><input type="checkbox" name="q6chal" value="Hardware damage (broken screens, keys)"> Hardware damage (screens, keys)</label>
+        <label class="option-item"><input type="checkbox" name="q6chal" value="Software / login difficulties"> Software / login difficulties</label>
+        <label class="option-item"><input type="checkbox" name="q6chal" value="Content filtering too restrictive"> Content filtering too restrictive</label>
+        <label class="option-item"><input type="checkbox" name="q6chal" value="Lack of tech support"> Lack of tech support</label>
+        <label class="option-item"><input type="checkbox" name="q6chal" value="Difficulty managing devices during instruction"> Difficulty managing devices</label>
+      </div>
+      <div class="field-wrap" style="margin-top:12px; position:relative;">
+        <span class="ai-badge">AI Assist</span>
+        <input type="text" id="q6-other" placeholder="Other challenge? Start typing…" autocomplete="off" data-ac="hurdles">
+        <div class="ac-dropdown" id="q6-dropdown"></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Q7 — PROFESSIONAL DEVELOPMENT NEEDS
+         Maps to: Professional Development Needs chart
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="q-card" id="q7-card" data-q="7">
+      <div class="q-label"><span class="q-num">7</span> What professional development would most help you integrate technology more effectively?</div>
+      <div class="q-hint">Select all areas where you'd like support.</div>
+      <div class="option-grid" id="q7-options">
+        <label class="option-item"><input type="checkbox" name="q7pd" value="Using data from digital platforms to drive instruction"> Using data from platforms to drive instruction</label>
+        <label class="option-item"><input type="checkbox" name="q7pd" value="Classroom technology management routines"> Technology management routines</label>
+        <label class="option-item"><input type="checkbox" name="q7pd" value="Digital literacy and citizenship instruction"> Digital literacy & citizenship</label>
+        <label class="option-item"><input type="checkbox" name="q7pd" value="Integrating tech into specific content areas"> Integrating tech into content areas</label>
+        <label class="option-item"><input type="checkbox" name="q7pd" value="Advanced tools: coding, robotics, multimedia"> Advanced tools: coding, robotics</label>
+        <label class="option-item"><input type="checkbox" name="q7pd" value="Troubleshooting common device issues"> Troubleshooting device issues</label>
+        <label class="option-item"><input type="checkbox" name="q7pd" value="Teaching students to evaluate credible sources"> Evaluating credible sources</label>
+        <label class="option-item"><input type="checkbox" name="q7pd" value="Typing instruction strategies"> Typing instruction strategies</label>
+        <label class="option-item"><input type="checkbox" name="q7pd" value="Using AI tools effectively in the classroom"> Using AI tools in the classroom</label>
+        <label class="option-item"><input type="checkbox" name="q7pd" value="Differentiation strategies with technology"> Differentiation with technology</label>
+      </div>
+      <div class="field-wrap" style="margin-top:12px; position:relative;">
+        <span class="ai-badge">AI Assist</span>
+        <input type="text" id="q7-other" placeholder="Other PD need? Start typing…" autocomplete="off" data-ac="pd_needs">
+        <div class="ac-dropdown" id="q7-dropdown"></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Q8 — DEVICE PREFERENCE + RECOMMENDATIONS
+         Maps to: Device Evaluation section, Recommendations section
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="q-card" id="q8-card" data-q="8">
+      <div class="q-label"><span class="q-num">8</span> Device Preference & Recommendations</div>
+      <div class="q-hint">Help us evaluate device options and capture your top recommendation.</div>
+
+      <div class="field-wrap" style="margin-bottom:16px;">
+        <label style="font-size:13px; font-weight:600; margin-bottom:8px; display:block;">
+          Which device type do you believe is <strong>most effective</strong> for your students?
+        </label>
+        <div class="option-grid">
+          <label class="option-item"><input type="radio" name="q8dev" value="Chromebook"> Chromebook</label>
+          <label class="option-item"><input type="radio" name="q8dev" value="iPad / Tablet"> iPad / Tablet</label>
+          <label class="option-item"><input type="radio" name="q8dev" value="Windows Laptop"> Windows Laptop</label>
+          <label class="option-item"><input type="radio" name="q8dev" value="Desktop Computer"> Desktop Computer</label>
+        </div>
+      </div>
+
+      <div class="field-wrap" style="position:relative;">
+        <span class="ai-badge">AI Assist</span>
+        <label style="font-size:13px; font-weight:600; margin-bottom:8px; display:block;">
+          What is the single most important improvement your school could make to strengthen technology integration?
+        </label>
+        <textarea id="q8-recommendation" rows="3"
+          placeholder="e.g., Dedicated tech coach, device refresh cycle, expanded PD, better Wi-Fi…"
+          data-ac="improvements"></textarea>
+        <div class="ac-dropdown" id="q8-dropdown"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="survey-footer">
+    <div class="footer-inner">
+      <span class="progress-text" id="progressText">0 of 8 answered</span>
+      <button class="btn-submit" id="submitBtn" disabled>Submit Survey</button>
+    </div>
+  </footer>
+
+  <!-- ===== TOAST ===== -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ===== SUCCESS OVERLAY ===== -->
+  <div class="success-overlay" id="successOverlay">
+    <div class="success-card">
+      <div class="big-check">✓</div>
+      <h3>Thank You!</h3>
+      <p>Your response has been recorded. Your insights will directly shape the technology infrastructure
+        recommendations for our capstone project.</p>
+      <button class="btn-close"
+        onclick="document.getElementById('successOverlay').classList.remove('visible')">Close</button>
+    </div>
+  </div>
+
+  <!-- ===== CONFETTI ===== -->
+  <canvas id="confetti"></canvas>
+
+  <!-- ===== SCRIPT ===== -->
+  <script src="script.js"></script>
+
+</body>
+
+</html>
