@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>My Toys Worksheets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple: #7C3AED;
+      --purple-light: #A78BFA;
+      --teal: #0EA5E9;
+      --yellow: #FCD34D;
+      --pink: #F472B6;
+      --green: #10B981;
+      --red: #EF4444;
+      --bg: #F0EBFF;
+      --card: #FFFFFF;
+      --text: #1E1B4B;
+      --radius: 20px;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(135deg, #c4b5fd 0%, #a5f3fc 50%, #fde68a 100%);
+      background-attachment: fixed;
+      color: var(--text);
+    }
+
+    #app {
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 0 0 24px;
+    }
+
+    /* ── HEADER ── */
+    #header {
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(10px);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 2px solid rgba(124,58,237,0.15);
+    }
+    #header h1 {
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--purple);
+      letter-spacing: -0.3px;
+    }
+    #score-pill {
+      background: var(--purple);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+
+    /* ── PROGRESS BAR ── */
+    #progress-track {
+      height: 8px;
+      background: rgba(255,255,255,0.5);
+    }
+    #progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--purple), var(--teal));
+      border-radius: 0 4px 4px 0;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+
+    /* ── SCREENS ── */
+    .screen { display: none; flex: 1; padding: 16px; animation: fadeIn 0.3s ease; }
+    .screen.active { display: block; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+
+    /* ── COVER ── */
+    #cover {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: calc(100vh - 50px);
+      gap: 20px;
+    }
+    #cover.active { display: flex; }
+    .cover-emoji-grid {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 8px;
+      font-size: 36px;
+      margin: 8px 0;
+    }
+    .cover-emoji-grid span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      border-radius: 16px;
+      padding: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      animation: float 3s ease-in-out infinite;
+    }
+    .cover-emoji-grid span:nth-child(2n) { animation-delay: 0.5s; }
+    .cover-emoji-grid span:nth-child(3n) { animation-delay: 1s; }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    .cover-title {
+      font-size: 32px;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+    .cover-title .my { color: var(--purple); }
+    .cover-title .toys { color: var(--teal); }
+    .cover-subtitle {
+      font-size: 14px;
+      font-weight: 700;
+      color: #6B7280;
+      letter-spacing: 0.5px;
+    }
+    .cover-tasks {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .cover-tasks span {
+      background: white;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--purple);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    /* ── SECTION HEADING ── */
+    .task-header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .task-badge {
+      display: inline-block;
+      background: var(--purple);
+      color: white;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 4px 14px;
+      border-radius: 999px;
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+    .task-title {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--text);
+    }
+    .task-instruction {
+      font-size: 14px;
+      font-weight: 600;
+      color: #6B7280;
+      margin-top: 4px;
+    }
+
+    /* ── TASK 1: COLOR CARDS ── */
+    #color-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .color-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 14px 10px 10px;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      border: 2.5px solid transparent;
+      transition: border 0.2s;
+      position: relative;
+    }
+    .color-card.correct { border-color: var(--green); }
+    .color-card.wrong { border-color: var(--red); }
+    .color-card .toy-emoji { font-size: 44px; display: block; margin-bottom: 4px; }
+    .color-card .toy-name {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .color-card .question { font-size: 11px; font-weight: 600; color: #9CA3AF; margin-bottom: 8px; }
+    .color-buttons { display: flex; gap: 6px; justify-content: center; }
+    .color-btn {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      border: 3px solid rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.15s, border-color 0.15s;
+      outline: none;
+      position: relative;
+    }
+    .color-btn:active { transform: scale(0.92); }
+    .color-btn.selected { border-color: #1E1B4B; transform: scale(1.15); }
+    .color-btn.correct-pick { border-color: var(--green) !important; transform: scale(1.15); }
+    .color-btn.wrong-pick { border-color: var(--red) !important; }
+    .card-feedback {
+      position: absolute;
+      top: -10px; right: -10px;
+      font-size: 20px;
+      display: none;
+    }
+    .color-card.correct .card-feedback,
+    .color-card.wrong .card-feedback { display: block; }
+
+    /* ── TASK 2: COUNT ── */
+    #count-box {
+      background: white;
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      margin-bottom: 16px;
+      min-height: 180px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+    }
+    .count-toy {
+      font-size: 32px;
+      line-height: 1;
+      transition: transform 0.2s;
+    }
+    .count-toy.tapped { transform: scale(1.3); filter: drop-shadow(0 0 6px rgba(16,185,129,0.7)); }
+    #count-question {
+      text-align: center;
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+    #number-pad {
+      display: grid;
+      grid-template-columns: repeat(5,1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .num-btn {
+      background: white;
+      border: 2.5px solid #E5E7EB;
+      border-radius: 14px;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text);
+      padding: 10px 0;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .num-btn:active { transform: scale(0.93); }
+    .num-btn.correct-num { background: var(--green); color: white; border-color: var(--green); transform: scale(1.1); }
+    .num-btn.wrong-num { background: var(--red); color: white; border-color: var(--red); animation: shake 0.35s; }
+
+    /* ── TASK 3: CIRCLE ── */
+    #circle-question-area {
+      background: white;
+      border-radius: var(--radius);
+      padding: 20px 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    #circle-instruction {
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+    #circle-instruction span { color: var(--purple); }
+    #circle-options {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+    .circle-opt {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 14px;
+      background: #F9FAFB;
+      border-radius: 18px;
+      border: 3px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+      min-width: 80px;
+    }
+    .circle-opt:active { transform: scale(0.95); }
+    .circle-opt .opt-emoji { font-size: 44px; }
+    .circle-opt .opt-label { font-size: 12px; font-weight: 700; color: #6B7280; }
+    .circle-opt.selected { border-color: var(--purple); background: #EDE9FE; }
+    .circle-opt.correct-circle { border-color: var(--green); background: #D1FAE5; }
+    .circle-opt.wrong-circle { border-color: var(--red); background: #FEE2E2; animation: shake 0.35s; }
+    #circle-counter {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: #9CA3AF;
+      margin-top: 10px;
+    }
+
+    /* ── TASK 4: YES / NO ── */
+    #yesno-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 28px 20px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    #yesno-emoji { font-size: 80px; margin-bottom: 16px; display: block; }
+    #yesno-sentence {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 28px;
+      line-height: 1.3;
+    }
+    #yesno-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+    }
+    .yn-btn {
+      flex: 1;
+      max-width: 130px;
+      padding: 18px 0;
+      border-radius: 18px;
+      font-size: 22px;
+      font-weight: 900;
+      border: none;
+      cursor: pointer;
+      transition: all 0.15s;
+      letter-spacing: 1px;
+    }
+    .yn-btn:active { transform: scale(0.93); }
+    #btn-yes { background: var(--green); color: white; }
+    #btn-no  { background: var(--red);   color: white; }
+    .yn-btn.correct-yn { box-shadow: 0 0 0 4px rgba(16,185,129,0.4); transform: scale(1.06); }
+    .yn-btn.wrong-yn   { animation: shake 0.35s; opacity: 0.7; }
+    #yesno-counter {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: #9CA3AF;
+      margin-top: 10px;
+    }
+
+    /* ── FEEDBACK TOAST ── */
+    #toast {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #1E1B4B;
+      color: white;
+      padding: 10px 22px;
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 800;
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 200;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ── NAVIGATION ── */
+    .nav-row {
+      display: flex;
+      gap: 10px;
+      padding: 0 0 8px;
+    }
+    .btn {
+      flex: 1;
+      padding: 14px;
+      border-radius: 16px;
+      font-size: 16px;
+      font-weight: 800;
+      border: none;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: 'Nunito', sans-serif;
+    }
+    .btn:active { transform: scale(0.96); }
+    .btn-primary { background: var(--purple); color: white; }
+    .btn-primary:disabled { background: #D1D5DB; cursor: not-allowed; transform: none; }
+    .btn-secondary { background: white; color: var(--purple); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .btn-big {
+      font-size: 20px;
+      padding: 18px;
+      border-radius: 20px;
+    }
+
+    /* ── FINISH SCREEN ── */
+    #finish {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: calc(100vh - 50px);
+      gap: 16px;
+    }
+    #finish.active { display: flex; }
+    .finish-emoji { font-size: 72px; animation: bounce 0.6s ease infinite alternate; }
+    @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-12px); } }
+    .finish-title { font-size: 30px; font-weight: 900; color: var(--purple); }
+    .finish-score {
+      background: white;
+      border-radius: var(--radius);
+      padding: 20px 36px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+    }
+    .finish-score .big-num { font-size: 56px; font-weight: 900; color: var(--purple); line-height: 1; }
+    .finish-score .of { font-size: 16px; font-weight: 700; color: #9CA3AF; }
+    .stars-row { font-size: 36px; letter-spacing: 4px; }
+    .finish-msg { font-size: 16px; font-weight: 700; color: #6B7280; }
+
+    /* ── CONFETTI ── */
+    .confetti-piece {
+      position: fixed;
+      width: 10px; height: 10px;
+      border-radius: 2px;
+      top: -20px;
+      animation: confettiFall linear forwards;
+      z-index: 300;
+      pointer-events: none;
+    }
+    @keyframes confettiFall {
+      0%   { transform: translateY(0) rotate(0deg); opacity:1; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity:0; }
+    }
+
+    /* ── SHARED ANIMATIONS ── */
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%      { transform: translateX(-8px); }
+      40%      { transform: translateX(8px); }
+      60%      { transform: translateX(-6px); }
+      80%      { transform: translateX(6px); }
+    }
+    @keyframes popIn {
+      0%   { transform: scale(0.5); opacity:0; }
+      70%  { transform: scale(1.15); }
+      100% { transform: scale(1); opacity:1; }
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- HEADER -->
+  <div id="header">
+    <h1>🧸 My Toys Worksheets</h1>
+    <div id="score-pill">⭐ 0 / 15</div>
+  </div>
+  <div id="progress-track"><div id="progress-fill"></div></div>
+
+  <!-- TOAST -->
+  <div id="toast"></div>
+
+  <!-- ═══ COVER SCREEN ═══ -->
+  <div class="screen active" id="cover">
+    <div class="cover-title">
+      <span class="my">MY</span> <span class="toys">TOYS</span><br>WORKSHEETS
+    </div>
+    <div class="cover-emoji-grid">
+      <span>🪁</span><span>🏐</span><span>🤖</span><span>🚗</span>
+      <span>🚂</span><span>🚲</span><span>🪆</span><span>💻</span>
+    </div>
+    <div class="cover-tasks">
+      <span>🎨 Color</span>
+      <span>🔢 Count</span>
+      <span>⭕ Circle</span>
+      <span>✅ Yes or No</span>
+    </div>
+    <div class="cover-subtitle">4 fun tasks · Practice at home!</div>
+    <button class="btn btn-primary btn-big" style="width:100%;margin-top:8px" onclick="showScreen('task1')">
+      Let's Play! 🚀
+    </button>
+  </div>
+
+  <!-- ═══ TASK 1: COLOR THE TOYS ═══ -->
+  <div class="screen" id="task1">
+    <div class="task-header">
+      <div class="task-badge">TASK 1</div>
+      <div class="task-title">🎨 Color the Toys</div>
+      <div class="task-instruction">Tap the correct color for each toy!</div>
+    </div>
+    <div id="color-grid"></div>
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="showScreen('cover')">← Back</button>
+      <button class="btn btn-primary" id="next-task1" disabled onclick="showScreen('task2')">Next →</button>
+    </div>
+  </div>
+
+  <!-- ═══ TASK 2: COUNT AND WRITE ═══ -->
+  <div class="screen" id="task2">
+    <div class="task-header">
+      <div class="task-badge">TASK 2</div>
+      <div class="task-title">🔢 Count and Write</div>
+      <div class="task-instruction">How many toys can you see?</div>
+    </div>
+    <div id="count-box"></div>
+    <div id="count-question">How many toys can you count?</div>
+    <div id="number-pad"></div>
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="showScreen('task1')">← Back</button>
+      <button class="btn btn-primary" id="next-task2" disabled onclick="showScreen('task3')">Next →</button>
+    </div>
+  </div>
+
+  <!-- ═══ TASK 3: CIRCLE THE CORRECT TOY ═══ -->
+  <div class="screen" id="task3">
+    <div class="task-header">
+      <div class="task-badge">TASK 3</div>
+      <div class="task-title">⭕ Circle the Toy</div>
+      <div class="task-instruction">Tap the correct toy in each row!</div>
+    </div>
+    <div id="circle-question-area">
+      <div id="circle-instruction"></div>
+      <div id="circle-options"></div>
+    </div>
+    <div id="circle-counter"></div>
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="showScreen('task2')">← Back</button>
+      <button class="btn btn-primary" id="next-task3" disabled onclick="showScreen('task4')">Next →</button>
+    </div>
+  </div>
+
+  <!-- ═══ TASK 4: YES OR NO ═══ -->
+  <div class="screen" id="task4">
+    <div class="task-header">
+      <div class="task-badge">TASK 4</div>
+      <div class="task-title">✅ Yes or No?</div>
+      <div class="task-instruction">Is the sentence correct?</div>
+    </div>
+    <div id="yesno-card">
+      <span id="yesno-emoji"></span>
+      <div id="yesno-sentence"></div>
+      <div id="yesno-buttons">
+        <button class="yn-btn" id="btn-yes" onclick="checkYesNo(true)">YES</button>
+        <button class="yn-btn" id="btn-no"  onclick="checkYesNo(false)">NO</button>
+      </div>
+    </div>
+    <div id="yesno-counter"></div>
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="showScreen('task3')">← Back</button>
+      <button class="btn btn-primary" id="next-task4" disabled onclick="showFinish()">Finish! 🎉</button>
+    </div>
+  </div>
+
+  <!-- ═══ FINISH SCREEN ═══ -->
+  <div class="screen" id="finish">
+    <div class="finish-emoji">🏆</div>
+    <div class="finish-title">Great Job!</div>
+    <div class="stars-row" id="finish-stars"></div>
+    <div class="finish-score">
+      <div class="of">Your score</div>
+      <div class="big-num" id="finish-score-num">0</div>
+      <div class="of">out of 15</div>
+    </div>
+    <div class="finish-msg" id="finish-msg"></div>
+    <button class="btn btn-primary btn-big" style="width:100%;margin-top:8px" onclick="resetAll()">
+      Play Again! 🔄
+    </button>
+  </div>
+
+</div><!-- #app -->
+
+<script>
+// ─────────────────────────────────────────────
+//  DATA
+// ─────────────────────────────────────────────
+const colorData = [
+  { emoji:'🪁', name:'kite',     correct:'blue',   options:['red','blue','green'] },
+  { emoji:'🏐', name:'ball',     correct:'red',    options:['red','yellow','blue'] },
+  { emoji:'🤖', name:'robot',    correct:'grey',   options:['pink','grey','orange'] },
+  { emoji:'🚗', name:'car',      correct:'green',  options:['green','purple','red'] },
+  { emoji:'🚂', name:'train',    correct:'yellow', options:['blue','yellow','brown'] },
+  { emoji:'🚲', name:'bike',     correct:'orange', options:['black','orange','green'] },
+  { emoji:'🪆', name:'doll',     correct:'pink',   options:['pink','red','yellow'] },
+  { emoji:'💻', name:'computer', correct:'black',  options:['white','black','blue'] },
+];
+
+const colorValues = {
+  red:'#EF4444', blue:'#3B82F6', green:'#10B981', grey:'#9CA3AF',
+  yellow:'#FCD34D', orange:'#F97316', pink:'#EC4899', black:'#1F2937',
+  purple:'#8B5CF6', brown:'#92400E', white:'#F3F4F6'
+};
+
+const circleData = [
+  { instruction:'Circle the <span>car</span> 🚗',
+    options:[
+      {emoji:'🏐', label:'ball'},
+      {emoji:'🚗', label:'car'},
+      {emoji:'🪁', label:'kite'}
+    ], answer:1 },
+  { instruction:'Circle the <span>computer</span> 💻',
+    options:[
+      {emoji:'🤖', label:'robot'},
+      {emoji:'💻', label:'computer'},
+      {emoji:'🪆', label:'doll'}
+    ], answer:1 },
+  { instruction:'Circle the <span>bike</span> 🚲',
+    options:[
+      {emoji:'🚂', label:'train'},
+      {emoji:'🚲', label:'bike'},
+      {emoji:'🏐', label:'ball'}
+    ], answer:1 },
+];
+
+const yesnoData = [
+  { emoji:'🚂', sentence:'This is a train.', answer:true  },
+  { emoji:'🪆', sentence:'This is a doll.',  answer:true  },
+  { emoji:'🚗', sentence:'This is a robot.', answer:false },
+  { emoji:'🏐', sentence:'This is a ball.',  answer:true  },
+];
+
+// Counting toys: 4 balls + 4 cars + 4 lego = 12
+const countToys = [
+  '🏐','🏐','🏐','🏐',
+  '🚗','🚗','🚗','🚗',
+  '🧱','🧱','🧱','🧱',
+];
+const COUNT_ANSWER = 12;
+
+// ─────────────────────────────────────────────
+//  STATE
+// ─────────────────────────────────────────────
+let score = 0;
+let t1Answered = 0;   // how many color cards answered correctly
+let t2Done = false;
+let t3Index = 0;
+let t3Correct = 0;
+let t4Index = 0;
+let t4Correct = 0;
+
+// ─────────────────────────────────────────────
+//  UTILS
+// ─────────────────────────────────────────────
+function showToast(msg, duration = 1500) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), duration);
+}
+
+function updateScore(delta) {
+  score += delta;
+  document.getElementById('score-pill').textContent = '⭐ ' + score + ' / 15';
+}
+
+function updateProgress(pct) {
+  document.getElementById('progress-fill').style.width = pct + '%';
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+
+  // re-render dynamic screens when navigated to
+  if (id === 'task1') renderColorCards();
+  if (id === 'task2') renderCountGrid();
+  if (id === 'task3') renderCircleQ(t3Index);
+  if (id === 'task4') renderYesNo(t4Index);
+}
+
+// ─────────────────────────────────────────────
+//  TASK 1 — COLOR THE TOYS
+// ─────────────────────────────────────────────
+const t1State = new Array(8).fill(null); // null | 'correct' | 'wrong'
+
+function renderColorCards() {
+  const grid = document.getElementById('color-grid');
+  grid.innerHTML = '';
+
+  colorData.forEach((toy, i) => {
+    const card = document.createElement('div');
+    card.className = 'color-card' + (t1State[i] === 'correct' ? ' correct' : t1State[i] === 'wrong' ? '' : '');
+    card.id = 'ccard-' + i;
+
+    const feedback = t1State[i] === 'correct' ? '✅' : (t1State[i] === 'wrong' ? '' : '');
+
+    card.innerHTML = `
+      <div class="card-feedback">${feedback}</div>
+      <span class="toy-emoji">${toy.emoji}</span>
+      <div class="toy-name">${toy.name}</div>
+      <div class="question">What color is it?</div>
+      <div class="color-buttons">
+        ${toy.options.map(c => {
+          let cls = 'color-btn';
+          if (t1State[i] === 'correct' && c === toy.correct) cls += ' correct-pick';
+          return `<button class="${cls}" style="background:${colorValues[c]}" title="${c}"
+            onclick="checkColor(${i}, '${c}')" ${t1State[i] !== null ? 'disabled' : ''}></button>`;
+        }).join('')}
+      </div>`;
+
+    grid.appendChild(card);
+  });
+
+  checkTask1Complete();
+}
+
+function checkColor(idx, chosen) {
+  if (t1State[idx] !== null) return;
+
+  const toy = colorData[idx];
+  const card = document.getElementById('ccard-' + idx);
+
+  if (chosen === toy.correct) {
+    t1State[idx] = 'correct';
+    t1Answered++;
+    updateScore(1);
+    showToast('✅ Correct! Great job!');
+    card.classList.add('correct');
+    card.querySelector('.card-feedback').textContent = '✅';
+    // mark correct button
+    card.querySelectorAll('.color-btn').forEach(b => {
+      if (b.title === toy.correct) b.classList.add('correct-pick');
+      b.disabled = true;
+    });
+  } else {
+    t1State[idx] = 'wrong';
+    card.classList.add('wrong');
+    card.querySelector('.card-feedback').textContent = '❌';
+    card.style.animation = 'none';
+    requestAnimationFrame(() => { card.style.animation = 'shake 0.35s'; });
+    // mark chosen wrong, show correct
+    card.querySelectorAll('.color-btn').forEach(b => {
+      if (b.title === chosen) b.classList.add('wrong-pick');
+      if (b.title === toy.correct) b.classList.add('correct-pick');
+      b.disabled = true;
+    });
+    showToast('❌ Oops! The answer is ' + toy.correct + '.');
+  }
+  checkTask1Complete();
+}
+
+function checkTask1Complete() {
+  const allAnswered = t1State.every(s => s !== null);
+  document.getElementById('next-task1').disabled = !allAnswered;
+  if (allAnswered) updateProgress(25);
+}
+
+// ─────────────────────────────────────────────
+//  TASK 2 — COUNT
+// ─────────────────────────────────────────────
+function renderCountGrid() {
+  const box = document.getElementById('count-box');
+  // shuffle toys for variety
+  const shuffled = [...countToys].sort(() => Math.random() - 0.5);
+  box.innerHTML = shuffled.map((t,i) =>
+    `<span class="count-toy" id="ct${i}" onclick="tapToy(${i})">${t}</span>`
+  ).join('');
+
+  const pad = document.getElementById('number-pad');
+  pad.innerHTML = '';
+  for (let n = 1; n <= 15; n++) {
+    const b = document.createElement('button');
+    b.className = 'num-btn';
+    b.id = 'num-' + n;
+    b.textContent = n;
+    b.onclick = () => checkCount(n, b);
+    pad.appendChild(b);
+  }
+}
+
+function tapToy(i) {
+  const el = document.getElementById('ct' + i);
+  el.classList.toggle('tapped');
+}
+
+function checkCount(n, btn) {
+  if (t2Done) return;
+  if (n === COUNT_ANSWER) {
+    t2Done = true;
+    btn.classList.add('correct-num');
+    updateScore(1);
+    updateProgress(50);
+    document.getElementById('next-task2').disabled = false;
+    showToast('🎉 Yes! There are ' + COUNT_ANSWER + ' toys!');
+    document.querySelectorAll('.num-btn').forEach(b => b.disabled = true);
+  } else {
+    btn.classList.add('wrong-num');
+    setTimeout(() => btn.classList.remove('wrong-num'), 500);
+    showToast('🤔 Try again! Count carefully.');
+  }
+}
+
+// ─────────────────────────────────────────────
+//  TASK 3 — CIRCLE THE CORRECT TOY
+// ─────────────────────────────────────────────
+const t3State = new Array(circleData.length).fill(null);
+
+function renderCircleQ(idx) {
+  if (idx >= circleData.length) return;
+  const q = circleData[idx];
+  document.getElementById('circle-instruction').innerHTML = q.instruction;
+
+  const opts = document.getElementById('circle-options');
+  opts.innerHTML = q.options.map((o, i) => {
+    let cls = 'circle-opt';
+    if (t3State[idx] !== null) {
+      if (i === q.answer) cls += ' correct-circle';
+      else if (i === t3State[idx] && t3State[idx] !== q.answer) cls += ' wrong-circle';
+    }
+    return `<div class="${cls}" onclick="checkCircle(${idx}, ${i})">
+      <span class="opt-emoji">${o.emoji}</span>
+      <span class="opt-label">${o.label}</span>
+    </div>`;
+  }).join('');
+
+  document.getElementById('circle-counter').textContent =
+    'Question ' + (idx + 1) + ' of ' + circleData.length;
+}
+
+function checkCircle(qIdx, chosen) {
+  if (t3State[qIdx] !== null) return;
+  const q = circleData[qIdx];
+  t3State[qIdx] = chosen;
+
+  const opts = document.querySelectorAll('.circle-opt');
+  opts.forEach((el, i) => {
+    if (i === q.answer) el.classList.add('correct-circle');
+    else if (i === chosen) el.classList.add('wrong-circle');
+    el.style.pointerEvents = 'none';
+  });
+
+  if (chosen === q.answer) {
+    t3Correct++;
+    updateScore(1);
+    showToast('✅ Correct! Well done!');
+  } else {
+    showToast('❌ Not quite! The answer is ' + q.options[q.answer].label + '.');
+  }
+
+  // auto-advance after short delay
+  setTimeout(() => {
+    if (qIdx + 1 < circleData.length) {
+      t3Index = qIdx + 1;
+      renderCircleQ(t3Index);
+    } else {
+      updateProgress(75);
+      document.getElementById('next-task3').disabled = false;
+    }
+  }, 900);
+}
+
+// ─────────────────────────────────────────────
+//  TASK 4 — YES OR NO
+// ─────────────────────────────────────────────
+const t4State = new Array(yesnoData.length).fill(null);
+
+function renderYesNo(idx) {
+  if (idx >= yesnoData.length) return;
+  const q = yesnoData[idx];
+  document.getElementById('yesno-emoji').textContent = q.emoji;
+  document.getElementById('yesno-sentence').textContent = q.sentence;
+  document.getElementById('yesno-counter').textContent =
+    'Question ' + (idx + 1) + ' of ' + yesnoData.length;
+
+  const yBtn = document.getElementById('btn-yes');
+  const nBtn = document.getElementById('btn-no');
+  yBtn.classList.remove('correct-yn','wrong-yn');
+  nBtn.classList.remove('correct-yn','wrong-yn');
+  yBtn.disabled = nBtn.disabled = false;
+}
+
+function checkYesNo(isYes) {
+  const idx = t4Index;
+  if (t4State[idx] !== null) return;
+  t4State[idx] = isYes;
+
+  const q = yesnoData[idx];
+  const correct = q.answer === isYes;
+
+  const yBtn = document.getElementById('btn-yes');
+  const nBtn = document.getElementById('btn-no');
+  yBtn.disabled = nBtn.disabled = true;
+
+  if (correct) {
+    (isYes ? yBtn : nBtn).classList.add('correct-yn');
+    t4Correct++;
+    updateScore(1);
+    showToast('✅ Correct! You\'re so smart!');
+  } else {
+    (isYes ? yBtn : nBtn).classList.add('wrong-yn');
+    showToast('❌ Oops! The answer is ' + (q.answer ? 'YES' : 'NO') + '.');
+  }
+
+  setTimeout(() => {
+    if (idx + 1 < yesnoData.length) {
+      t4Index = idx + 1;
+      renderYesNo(t4Index);
+    } else {
+      updateProgress(100);
+      document.getElementById('next-task4').disabled = false;
+    }
+  }, 900);
+}
+
+// ─────────────────────────────────────────────
+//  FINISH
+// ─────────────────────────────────────────────
+function showFinish() {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('finish').classList.add('active');
+  window.scrollTo(0,0);
+
+  document.getElementById('finish-score-num').textContent = score;
+  const pct = score / 15;
+  let stars = '⭐⭐⭐';
+  let msg = '🎉 Amazing! You\'re a toy expert!';
+  if (pct < 0.6) { stars = '⭐'; msg = '😊 Good try! Practice makes perfect!'; }
+  else if (pct < 0.85) { stars = '⭐⭐'; msg = '👍 Great effort! Keep practicing!'; }
+  document.getElementById('finish-stars').textContent = stars;
+  document.getElementById('finish-msg').textContent = msg;
+
+  launchConfetti();
+}
+
+function launchConfetti() {
+  const colors = ['#7C3AED','#0EA5E9','#FCD34D','#F472B6','#10B981','#F97316'];
+  for (let i = 0; i < 50; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti-piece';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.width = (6 + Math.random() * 8) + 'px';
+    c.style.height = (6 + Math.random() * 8) + 'px';
+    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    c.style.animationDuration = (2 + Math.random() * 2) + 's';
+    c.style.animationDelay = (Math.random() * 1.5) + 's';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 5000);
+  }
+}
+
+// ─────────────────────────────────────────────
+//  RESET
+// ─────────────────────────────────────────────
+function resetAll() {
+  score = 0;
+  t1Answered = 0;
+  t2Done = false;
+  t3Index = 0;
+  t3Correct = 0;
+  t4Index = 0;
+  t4Correct = 0;
+  t1State.fill(null);
+  t3State.fill(null);
+  t4State.fill(null);
+  document.getElementById('score-pill').textContent = '⭐ 0 / 15';
+  document.getElementById('progress-fill').style.width = '0%';
+  document.getElementById('next-task1').disabled = true;
+  document.getElementById('next-task2').disabled = true;
+  document.getElementById('next-task3').disabled = true;
+  document.getElementById('next-task4').disabled = true;
+  showScreen('cover');
+}
+
+// ─────────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────────
+renderColorCards();
+renderCountGrid();
+</script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c ' *)",
+      "Bash(python -c \"import sys; print\\(sys.version\\)\")",
+      "Bash(start \"\" \"c:\\\\Users\\\\Dell\\\\OneDrive\\\\Desktop\\\\testven_files\\\\mars\\\\toys-worksheet.html\")"
+    ]
+  }
+}

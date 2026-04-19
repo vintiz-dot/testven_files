@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 2 ESL Money Lesson</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Outfit:wght@400;600;800&display=swap');
+
+        :root {
+            --bg-gradient: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 99%, #FECFEF 100%);
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --secondary-dark: #00b894;
+            --accent: #5f27cd;
+            --text-dark: #2D3436;
+            --text-light: #636E72;
+            --success: #00b894;
+            --danger: #d63031;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-gradient);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            height: 100vh; overflow: hidden; position: relative;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Animated Background Shapes */
+        .bg-shapes { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 0; }
+        .shape { position: absolute; filter: blur(40px); opacity: 0.6; border-radius: 50%; animation: float 10s infinite ease-in-out alternate; }
+        .shape-1 { background: #ffeaa7; width: 400px; height: 400px; top: -100px; left: -100px; animation-delay: 0s; }
+        .shape-2 { background: #81ecec; width: 300px; height: 300px; bottom: -50px; right: 10%; animation-delay: -5s; }
+        .shape-3 { background: #ff7675; width: 250px; height: 250px; top: 30%; left: 40%; animation-delay: -2s; }
+
+        @keyframes float { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(-50px) scale(1.1); } }
+
+        /* Glassmorphism Container */
+        .presentation-wrapper {
+            position: relative; z-index: 1; width: 95%; max-width: 1200px; height: 85vh;
+            background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border); border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1), inset 0 0 0 1px rgba(255,255,255,0.7);
+            display: flex; flex-direction: column; padding: 40px; overflow: hidden;
+        }
+
+        /* Slide mechanics */
+        .slide { flex: 1; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; opacity: 0; animation: slideIn 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .slide.active { display: flex; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(30px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+        /* Typography */
+        h1 { font-family: 'Comic Neue', cursive; font-size: 3.5rem; color: var(--primary); text-shadow: 2px 2px 0px rgba(255,255,255,0.8); margin-bottom: 10px; line-height: 1.1; }
+        h2 { font-size: 2.8rem; color: var(--secondary); margin-bottom: 20px; font-weight: 800; }
+        p { font-size: 1.5rem; color: var(--text-dark); font-weight: 600; margin-bottom: 15px; }
+        .subtext { font-size: 1.2rem; color: var(--accent); background: rgba(255,255,255,0.5); padding: 5px 15px; border-radius: 20px;}
+
+        /* Buttons Globally */
+        button { font-family: 'Outfit', sans-serif; cursor: pointer; transition: 0.2s; }
+        .action-btn { padding: 15px 30px; font-size: 1.5rem; font-weight: 800; border: none; border-radius: 20px; color: white; background: var(--secondary); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .action-btn:hover { transform: translateY(-3px); filter: brightness(1.1); }
+
+        /* Slide Specifics */
+
+        /* Slide 2: Barter */
+        .scenario-box { background: white; padding: 30px; border-radius: 20px; width: 80%; margin: 20px auto; border: 3px dashed var(--accent); }
+        .scenario-reveal { display: none; margin-top: 20px; font-size: 2rem; color: var(--success); font-weight: 800; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+        /* Slide 3: Tray & Leaves */
+        .tray-container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 20px; }
+        .tray-item { background: rgba(255,255,255,0.9); border-radius: 20px; padding: 15px; width: 150px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(0,0,0,0.05); cursor: pointer; position: relative; transition: 0.3s; }
+        .tray-item:hover { transform: translateY(-10px); }
+        .tray-emoji { font-size: 3.5rem; }
+        .tray-label { font-size: 1.1rem; font-weight: 800; color: var(--text-dark); margin-top: 10px; }
+        .tray-wonder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--primary); color: white; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 1rem; font-weight: bold; opacity: 0; transform: scale(0.8); transition: 0.4s; pointer-events: none; padding: 10px; }
+        .tray-item.revealed .tray-wonder { opacity: 1; transform: scale(1); pointer-events: auto; }
+
+        /* Slide 4: Vocab Flex Grid */
+        .vocab-grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px; width: 100%; }
+        .flip-card { width: 150px; height: 180px; perspective: 1000px; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.8s; transform-style: preserve-3d; }
+        .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px; }
+        .flip-card-front { background: white; }
+        .flip-card-back { background: var(--secondary); color: white; transform: rotateY(180deg); }
+        .flip-card-back h3 { font-size: 1.4rem; margin-bottom: 10px;}
+        .card-icon { font-size: 3rem; margin-bottom: 5px; }
+        .card-title { font-size: 1.5rem; font-weight: 800; color: var(--text-dark); }
+
+        /* Slide 5: Higher Order Bloom's Exercise */
+        .bloom-container { display: flex; flex-direction: column; gap: 20px; width: 90%; }
+        .bloom-scenario { background: white; border-radius: 15px; padding: 20px; font-size: 1.6rem; border-left: 10px solid var(--primary); text-align: left; }
+        .bloom-options { display: flex; gap: 15px; justify-content: center; }
+        .bloom-btn { background: white; border: 2px solid var(--accent); padding: 15px 30px; font-size: 1.4rem; border-radius: 15px; font-weight: bold; color: var(--accent); }
+        .bloom-btn:hover { background: var(--accent); color: white; transform: translateY(-3px); }
+        .bloom-feedback { min-height: 80px; font-size: 1.4rem; font-weight: bold; padding: 15px; border-radius: 15px; opacity: 0; transition: 0.3s; background: rgba(255,255,255,0.8); }
+
+        /* Slide 6: Sorting Game */
+        .game-card { background: white; border: 4px dashed #ffeaa7; border-radius: 25px; padding: 30px; width: 80%; font-size: 2rem; font-weight: 800; min-height: 140px; display: flex; align-items: center; justify-content: center; transition: 0.3s; margin: 20px 0; }
+        .game-controls { display: flex; gap: 20px; }
+        
+        .shake { animation: shake 0.5s; background: #ffebee; border-color: var(--danger); color: var(--danger); }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-10px); } 40%, 80% { transform: translateX(10px); } }
+        .celebrate { animation: celebrate 0.5s; background: #e8f5e9; border-color: var(--success); color: var(--success); }
+        @keyframes celebrate { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+        /* Slide 7: Experiential Market */
+        .market-arena { width: 90%; background: rgba(255,255,255,0.7); border-radius: 20px; padding: 30px; display: flex; flex-direction: column; align-items: center; }
+        .timer-display { font-family: 'Comic Neue', cursive; font-size: 6rem; color: var(--danger); background: white; padding: 10px 40px; border-radius: 20px; margin: 20px 0; border: 4px solid var(--danger); box-shadow: 0 10px 20px rgba(214, 48, 49, 0.2); }
+        .timer-controls button { background: var(--success); color: white; border: none; padding: 10px 20px; font-size: 1.2rem; border-radius: 10px; font-weight: bold; margin: 0 10px; }
+
+        /* Slide 8: Voting */
+        .vote-area { display: flex; gap: 50px; width: 100%; justify-content: center; margin-top: 30px; }
+        .vote-column { width: 40%; display: flex; flex-direction: column; align-items: center; }
+        .vote-btn-action { background: white; border: 2px solid var(--primary); border-radius: 20px; padding: 20px; font-size: 1.5rem; font-weight: bold; width: 100%; margin-bottom: 15px; height: 120px; display: flex; flex-direction: column; justify-content: center; align-items: center; color: var(--text-dark); }
+        .vote-btn-action:hover { background: #fff0f0; transform: translateY(-5px); }
+        .bar-container { width: 100%; height: 40px; background: rgba(255,255,255,0.5); border-radius: 20px; overflow: hidden; border: 1px solid rgba(255,255,255,0.8); }
+        .bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--secondary), #00cec9); border-radius: 20px; transition: width 0.5s; display: flex; align-items: center; justify-content: flex-end; padding-right: 15px; color: white; font-weight: bold; }
+
+        /* Global Navigation */
+        .nav-controls { position: absolute; bottom: 20px; left: 0; width: 100%; display: flex; justify-content: space-between; padding: 0 40px; z-index: 10; }
+        .nav-btn { background: rgba(255,255,255,0.9); border: none; padding: 12px 25px; border-radius: 50px; font-size: 1.2rem; font-weight: 800; color: var(--text-dark); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .nav-btn:hover:not(:disabled) { transform: translateY(-3px); background: white; }
+        .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .progress-dots { display: flex; gap: 8px; align-items: center; }
+        .dot { width: 10px; height: 10px; background: rgba(45, 52, 54, 0.3); border-radius: 50%; transition: 0.3s; }
+        .dot.active { background: var(--primary); transform: scale(1.4); }
+
+    </style>
+</head>
+<body>
+    <div class="bg-shapes">
+        <div class="shape shape-1"></div><div class="shape shape-2"></div><div class="shape shape-3"></div>
+    </div>
+
+    <div class="presentation-wrapper">
+        
+        <!-- Slide 1: Welcome -->
+        <div class="slide active">
+            <h1>Money! 💰</h1>
+            <p>What is it? Why do we need it?</p>
+            <div style="font-size: 5rem; animation: float 3s ease-in-out infinite;">🏦 🛒 🐷</div>
+        </div>
+
+        <!-- Slide 2: Barter Problem (Critical Thinking) -->
+        <div class="slide">
+            <h2>The Trading Problem 🤔</h2>
+            <p class="subtext">Before money existed, people traded goods.</p>
+            <div class="scenario-box">
+                <p>🍎 You have apples. You want a pencil ✏️.</p>
+                <p>👧 Your friend has a pencil... but she hates apples!</p>
+                <p style="color: var(--danger); font-weight: bold;">How do you get the pencil?</p>
+            </div>
+            <button class="action-btn" onclick="document.getElementById('barter-reveal').style.display = 'block'">Solve the Problem!</button>
+            <div class="scenario-reveal" id="barter-reveal">💡 Invent Money! 💵</div>
+        </div>
+
+        <!-- Slide 3: The Leaf Dilemma (Critical Thinking) -->
+        <div class="slide">
+            <h2>Could Leaves Be Money? 🍂</h2>
+            <p class="subtext">Click the items to reveal a question!</p>
+            <div class="tray-container">
+                <div class="tray-item" onclick="this.classList.toggle('revealed')">
+                    <div class="tray-emoji">💵</div>
+                    <div class="tray-label">Paper Money</div>
+                    <div class="tray-wonder">Easy to carry!<br>Hard to copy.</div>
+                </div>
+                <div class="tray-item" onclick="this.classList.toggle('revealed')">
+                    <div class="tray-emoji">💳</div>
+                    <div class="tray-label">Plastic Card</div>
+                    <div class="tray-wonder">Digital value!<br>Kept safe in a bank.</div>
+                </div>
+                <div class="tray-item" onclick="this.classList.toggle('revealed')">
+                    <div class="tray-emoji">🐚</div>
+                    <div class="tray-label">Shiny Shell</div>
+                    <div class="tray-wonder">Hard to find!<br>Very special.</div>
+                </div>
+                <div class="tray-item" onclick="this.classList.toggle('revealed')">
+                    <div class="tray-emoji">🍂</div>
+                    <div class="tray-label">Tree Leaf</div>
+                    <div class="tray-wonder" style="background: var(--danger);">They blow away!<br>Everyone has them.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Expanded Vocab -->
+        <div class="slide">
+            <h2>New Vocabulary 📝</h2>
+            <p class="subtext">Hover to reveal meaning</p>
+            <div class="vocab-grid">
+                <div class="flip-card"><div class="flip-card-inner">
+                    <div class="flip-card-front"><div class="card-icon">🛠️</div><div class="card-title">Earn</div></div>
+                    <div class="flip-card-back"><h3>Earn</h3><p>Work hard<br>to get it.</p></div>
+                </div></div>
+                <div class="flip-card"><div class="flip-card-inner">
+                    <div class="flip-card-front"><div class="card-icon">🛍️</div><div class="card-title">Spend</div></div>
+                    <div class="flip-card-back" style="background:#0984e3;"><h3>Spend</h3><p>Give money<br>for things.</p></div>
+                </div></div>
+                <div class="flip-card"><div class="flip-card-inner">
+                    <div class="flip-card-front"><div class="card-icon">🐷</div><div class="card-title">Save</div></div>
+                    <div class="flip-card-back" style="background:#00b894;"><h3>Save</h3><p>Keep money<br>for later.</p></div>
+                </div></div>
+                <div class="flip-card"><div class="flip-card-inner">
+                    <div class="flip-card-front"><div class="card-icon">🤝</div><div class="card-title">Trade</div></div>
+                    <div class="flip-card-back" style="background:#e17055;"><h3>Trade</h3><p>Give one thing<br>to get another.</p></div>
+                </div></div>
+                <div class="flip-card"><div class="flip-card-inner">
+                    <div class="flip-card-front"><div class="card-icon">💎</div><div class="card-title">Value</div></div>
+                    <div class="flip-card-back" style="background:#6c5ce7;"><h3>Value</h3><p>How important<br>something is.</p></div>
+                </div></div>
+            </div>
+        </div>
+
+        <!-- Slide 5: High-Order Bloom's Exercise -->
+        <div class="slide">
+            <h2>Word Detectives 🕵️</h2>
+            <p class="subtext">Read the story. Which word makes the best choice?</p>
+            <div class="bloom-container">
+                <div class="bloom-scenario" id="bloom-text">
+                    "Lan has 20,000 VND. She can buy candy today, or put it in her piggy bank. After 1 month, she buys a beautiful big book."<br><br>
+                    <strong>What did Lan understand about her choices?</strong>
+                </div>
+                <div class="bloom-options">
+                    <button class="bloom-btn" onclick="checkBloom('spend')">Spending</button>
+                    <button class="bloom-btn" onclick="checkBloom('value')">Value of Saving</button>
+                    <button class="bloom-btn" onclick="checkBloom('trade')">Trading leaves</button>
+                </div>
+                <div class="bloom-feedback" id="bloom-feedback"></div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Inclusive Sorting -->
+        <div class="slide">
+            <h2>Earn or Gift? ❤️</h2>
+            <p class="subtext">Is it hard work for the community? Or a nice gift?</p>
+            <div class="game-card" id="game-task">Help a sick friend with their homework. 🤝</div>
+            <div class="game-controls" id="game-buttons">
+                <button class="action-btn" style="background: var(--success);" onclick="handleGame('earn')">EARN (Work/Help)</button>
+                <button class="action-btn" style="background: #fdcb6e; color: #2d3436;" onclick="handleGame('gift')">GIFT (Lucky)</button>
+            </div>
+            <p id="game-feedback" style="height: 30px; font-size: 1.5rem; margin-top: 15px; font-weight: bold;"></p>
+        </div>
+
+        <!-- Slide 7: Experiential Class Market -->
+        <div class="slide">
+            <h2>🛒 The Class Market! 🛒</h2>
+            <div class="market-arena">
+                <p style="font-size: 2rem; color: var(--accent); font-weight: 800;">Let's experience Trading!</p>
+                <ul style="text-align: left; font-size: 1.4rem; line-height: 1.6; margin: 20px 0;">
+                    <li><strong>Sellers:</strong> Set up your items on the desk. Decide the <i>value</i>!</li>
+                    <li><strong>Buyers:</strong> Take your pretend money. Make a <i>choice</i> on what to spend it on!</li>
+                    <li><strong>Rules:</strong> You must speak English to buy!</li>
+                </ul>
+                <div class="timer-display" id="timer">03:00</div>
+                <div class="timer-controls">
+                    <button onclick="startTimer()">▶️ Start Market</button>
+                    <button onclick="resetTimer()" style="background: var(--text-light);">🔄 Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Value Voting -->
+        <div class="slide">
+            <h2>Community Value Debate 🗳️</h2>
+            <p class="subtext">Which job gives more VALUE to our class family?</p>
+            <div class="vote-area">
+                <div class="vote-column">
+                    <button class="vote-btn-action" onclick="vote('A')"><span style="font-size: 3rem;">🧹</span> Cleaning the whiteboard</button>
+                    <div class="bar-container"><div class="bar-fill" id="bar-A" style="background: linear-gradient(90deg, #fd79a8, #e84393);">0</div></div>
+                </div>
+                <div class="vote-column">
+                    <button class="vote-btn-action" onclick="vote('B')"><span style="font-size: 3rem;">💬</span> Translating for a new student</button>
+                    <div class="bar-container"><div class="bar-fill" id="bar-B">0</div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Make Economy -->
+        <div class="slide">
+            <h2>🎨 Design Our Currency! 🎨</h2>
+            <div style="background: rgba(255,255,255,0.8); padding: 30px; border-radius: 20px; text-align: left; margin-top: 10px; width: 80%;">
+                <p style="font-size: 1.8rem; margin-bottom: 15px;"><strong>Remember the Leaf Dilemma!</strong> Paper money must be special.</p>
+                <p>1. <strong>Name:</strong> Hanoi Coins? Star Bucks?</p>
+                <p>2. <strong>Symbol:</strong> A Lotus 🪷? A Turtle 🐢?</p>
+                <p>3. <strong>Value Number:</strong> 1? 5? 10?</p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Video Homework (High Bloom's) -->
+        <div class="slide">
+            <h2>🎥 Director's Homework! 🎬</h2>
+            <p class="subtext">Create a video to teach the world!</p>
+            
+            <div style="display: flex; gap: 20px; width: 90%; margin-top: 20px; text-align: left;">
+                
+                <div style="flex: 1; background: white; border: 3px solid var(--accent); border-radius: 20px; padding: 20px;">
+                    <h3 style="color: var(--accent); font-size: 1.8rem; margin-bottom: 10px;">Step 1: Choose ONE</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        <span style="background: var(--success); color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold;">Earn</span>
+                        <span style="background: #0984e3; color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold;">Spend</span>
+                        <span style="background: #6c5ce7; color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold;">Save</span>
+                    </div>
+                    <h3 style="color: var(--accent); font-size: 1.8rem; margin: 15px 0 10px;">Step 2: Act it out!</h3>
+                    <p style="font-size: 1.3rem;">Show us! (Sweep the floor? Put a coin in a jar?)</p>
+                </div>
+
+                <div style="flex: 1; background: rgba(255,255,255,0.9); border-radius: 20px; padding: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
+                    <h3 style="color: var(--primary); font-size: 1.8rem; margin-bottom: 10px;">Step 3: Tell us your script 🗣️</h3>
+                    <p style="font-size: 1.3rem; background: #f1f2f6; padding: 10px; border-left: 5px solid var(--primary);">
+                        "Hello! I am ________.<br> I am doing ________.<br> This means I ________ money."
+                    </p>
+                    <h3 style="color: var(--danger); font-size: 1.8rem; margin: 15px 0 10px;">Step 4: Record! 📱</h3>
+                    <p style="font-size: 1.3rem;">Make a 30-second video and upload it to our class app.</p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Global Navigation -->
+        <div class="nav-controls">
+            <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>⬅️ Back</button>
+            <div class="progress-dots" id="dots-container"></div>
+            <button class="nav-btn" id="nextBtn" onclick="navigate(1)">Next ➡️</button>
+        </div>
+
+    </div>
+
+    <script>
+        // -- Navigation --
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const dotsContainer = document.getElementById('dots-container');
+        let currentSlide = 0;
+
+        slides.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dotsContainer.appendChild(dot);
+        });
+
+        function updateNav() {
+            slides.forEach((slide, i) => slide.classList.toggle('active', i === currentSlide));
+            document.querySelectorAll('.dot').forEach((dot, i) => dot.classList.toggle('active', i === currentSlide));
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.style.display = currentSlide === slides.length - 1 ? 'none' : 'block';
+        }
+
+        function navigate(dir) {
+            currentSlide = Math.max(0, Math.min(slides.length - 1, currentSlide + dir));
+            updateNav();
+        }
+
+        // -- Bloom's Logic --
+        function checkBloom(answer) {
+            const fb = document.getElementById('bloom-feedback');
+            if(answer === 'value') {
+                fb.innerHTML = `<span style="color: var(--success);">⭐ <b>Synthesis Complete!</b> Lan understood that saving gives her the <b>Value</b> to buy something much better later!</span>`;
+                fb.style.opacity = 1;
+            } else {
+                fb.innerHTML = `<span style="color: var(--danger);">🤔 Not quite! If she just spends it, she gets candy. But what powerful choice did she make?</span>`;
+                fb.style.opacity = 1;
+            }
+        }
+
+        // -- Inclusive Game Logic --
+        const tasks = [
+            { text: "Help a sick friend with their homework. 🤝", type: "earn" },
+            { text: "Get money from the tooth fairy. 🧚‍♀️", type: "gift" },
+            { text: "Help the teacher organize the books. 📚", type: "earn" },
+            { text: "Find a 50,000 VND note on the bus. 🚌", type: "gift" }
+        ];
+        let taskIndex = 0;
+        
+        function handleGame(guess) {
+            if (taskIndex >= tasks.length) return;
+            const card = document.getElementById('game-task');
+            const fb = document.getElementById('game-feedback');
+            
+            card.classList.remove('shake', 'celebrate');
+            void card.offsetWidth; 
+
+            if (guess === tasks[taskIndex].type) {
+                card.classList.add('celebrate');
+                fb.innerHTML = `<span style="color: var(--success);">Yes! Amazing! 🎉</span>`;
+                setTimeout(() => {
+                    taskIndex++;
+                    fb.innerHTML = "";
+                    if (taskIndex < tasks.length) card.innerText = tasks[taskIndex].text;
+                    else {
+                        card.innerText = "You are Community Leaders! 🌟";
+                        document.getElementById('game-buttons').style.display = 'none';
+                    }
+                }, 1500);
+            } else {
+                card.classList.add('shake');
+                fb.innerHTML = `<span style="color: var(--danger);">Try again! Did they work for it?</span>`;
+            }
+        }
+
+        // -- Timer Logic --
+        let timerInterval;
+        let timeRemaining = 180; // 3 minutes
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+            const s = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById('timer').innerText = `${m}:${s}`;
+        }
+
+        function startTimer() {
+            if(timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if(timeRemaining > 0) {
+                    timeRemaining--;
+                    updateTimerDisplay();
+                } else {
+                    clearInterval(timerInterval);
+                    document.getElementById('timer').innerHTML = "TIME IS UP! 🛑";
+                }
+            }, 1000);
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            timeRemaining = 180;
+            updateTimerDisplay();
+            document.getElementById('timer').innerHTML = "03:00";
+        }
+
+        // -- Voting Logic --
+        let votes = { A: 0, B: 0 };
+        function vote(opt) {
+            votes[opt]++;
+            document.getElementById(`bar-${opt}`).innerText = votes[opt];
+            const max = Math.max(votes.A, votes.B, 5);
+            ['A','B'].forEach(o => {
+                document.getElementById(`bar-${o}`).style.width = Math.min((votes[o]/max)*100, 100) + '%';
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 2 ESL Money Lesson</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Nunito:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .slide-container {
+            width: 80%;
+            max-width: 900px;
+            height: 70vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            animation: fadeIn 0.5s;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        h1 {
+            font-family: 'Comic Neue', cursive;
+            font-size: 3.5rem;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            color: #4ecdc4;
+        }
+
+        p {
+            font-size: 1.8rem;
+            color: #333;
+        }
+
+        /* Tray for Provocation */
+        .tray {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            background: #ffe66d;
+            padding: 20px;
+            border-radius: 15px;
+            border: 5px solid #feca57;
+        }
+
+        .tray-item {
+            font-size: 4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .tray-item span {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* Vocabulary section */
+        .vocab-grid {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        .vocab-card {
+            background: #e0f7fa;
+            padding: 20px;
+            border-radius: 15px;
+            width: 25%;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .vocab-card h3 {
+            font-size: 2rem;
+            color: #00838f;
+            margin: 10px 0;
+        }
+
+        .vocab-card p {
+            font-size: 1.2rem;
+        }
+
+        /* Sorting Game */
+        .game-area {
+            margin-top: 20px;
+        }
+
+        .sort-card {
+            font-size: 2rem;
+            background: #fff3e0;
+            padding: 20px;
+            border: 3px dashed #ffb74d;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn-group button {
+            font-size: 1.5rem;
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .btn-earn { background-color: #4caf50; }
+        .btn-gift { background-color: #f44336; }
+
+        /* Controls */
+        .controls {
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-btn {
+            font-size: 1.5rem;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            background-color: #5f27cd;
+            color: white;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .nav-btn:hover {
+            background-color: #341f97;
+        }
+
+        .nav-btn:disabled {
+            background-color: #c8d6e5;
+            cursor: not-allowed;
+        }
+
+        /* Voting */
+        .vote-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        .vote-box {
+            background: #f1f2f6;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 300px;
+        }
+
+        .vote-btn {
+            font-size: 1.2rem;
+            padding: 10px;
+            background: #1e90ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slide-container">
+        
+        <div class="slide active">
+            <h1>💰 Let's Learn About Money! 💰</h1>
+            <p>What is it? How do we get it?</p>
+            <p style="font-size: 5rem;">🏦 🛒 🐷</p>
+        </div>
+
+        <div class="slide">
+            <h2>Look and Think 👀🤔</h2>
+            <p>What are these things?</p>
+            <div class="tray">
+                <div class="tray-item">💵<span>10,000 VND</span></div>
+                <div class="tray-item">💳<span>Card</span></div>
+                <div class="tray-item">🐚<span>Shell</span></div>
+                <div class="tray-item">🍚<span>Rice</span></div>
+            </div>
+            <p>Do you use these to buy food?</p>
+        </div>
+
+        <div class="slide">
+            <h2>New Words 📝</h2>
+            <div class="vocab-grid">
+                <div class="vocab-card">
+                    <h1 style="margin:0;">🛠️</h1>
+                    <h3>Earn</h3>
+                    <p>Work hard to get money.</p>
+                </div>
+                <div class="vocab-card">
+                    <h1 style="margin:0;">🛍️</h1>
+                    <h3>Spend</h3>
+                    <p>Use money to buy things.</p>
+                </div>
+                <div class="vocab-card">
+                    <h1 style="margin:0;">🐷</h1>
+                    <h3>Save</h3>
+                    <p>Keep money for later.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Game: Earn or Gift? 🎮</h2>
+            <p>Did they work for it? Or was it a gift?</p>
+            
+            <div class="game-area">
+                <div id="sort-task" class="sort-card">Sweep the floor for mom. 🧹</div>
+                <div class="btn-group">
+                    <button class="btn-earn" onclick="checkAnswer('earn')">EARN (Work)</button>
+                    <button class="btn-gift" onclick="checkAnswer('gift')">GIFT (No Work)</button>
+                </div>
+                <p id="game-feedback" style="font-weight: bold; height: 30px;"></p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>Let's Vote! 🗳️</h2>
+            <p>We will earn class money. Which job should get MORE money? Tell me WHY.</p>
+            
+            <div class="vote-container">
+                <div class="vote-box">
+                    <h3>✏️ Bring a pencil to class.</h3>
+                    <button class="vote-btn" onclick="addVote('A')">Vote for Pencil</button>
+                    <p>Votes: <span id="voteA">0</span></p>
+                </div>
+                <div class="vote-box">
+                    <h3>🤝 Help a sad friend.</h3>
+                    <button class="vote-btn" onclick="addVote('B')">Vote for Friend</button>
+                    <p>Votes: <span id="voteB">0</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>🎨 Draw Our Class Money! 🎨</h2>
+            <p>You need to draw:</p>
+            <ol style="font-size: 1.5rem; text-align: left; display: inline-block;">
+                <li><strong>A Name:</strong> (Class 2A Coins?)</li>
+                <li><strong>A Picture:</strong> (A turtle? A lotus? A star?)</li>
+                <li><strong>A Number:</strong> (1? 5? 10?)</li>
+            </ol>
+            <p style="color: #ff6b6b; font-weight: bold;">Let's get our paper and pencils!</p>
+        </div>
+
+    </div>
+
+    <div class="controls">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)" disabled>⬅️ Back</button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next ➡️</button>
+    </div>
+
+    <script>
+        // Slide Navigation Logic
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        function changeSlide(direction) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide += direction;
+            slides[currentSlide].classList.add('active');
+
+            // Update buttons
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === slides.length - 1;
+        }
+
+        // Sorting Game Logic
+        const tasks = [
+            { text: "Sweep the classroom floor. 🧹", type: "earn" },
+            { text: "Grandma gives you Lì Xì. 🧧", type: "gift" },
+            { text: "Finish a hard math paper. 📚", type: "earn" },
+            { text: "Find a coin on the street. 🚶", type: "gift" }
+        ];
+        let taskIndex = 0;
+
+        function checkAnswer(guess) {
+            const feedback = document.getElementById('game-feedback');
+            const taskCard = document.getElementById('sort-task');
+
+            if (guess === tasks[taskIndex].type) {
+                feedback.style.color = "#4caf50";
+                feedback.innerText = "Correct! 🎉";
+            } else {
+                feedback.style.color = "#f44336";
+                feedback.innerText = "Try again! 🤔";
+                return; // Stop here if wrong
+            }
+
+            // Move to next task after 1 second
+            setTimeout(() => {
+                taskIndex++;
+                if (taskIndex < tasks.length) {
+                    taskCard.innerText = tasks[taskIndex].text;
+                    feedback.innerText = "";
+                } else {
+                    taskCard.innerText = "You finished the game! 🌟";
+                    document.querySelector('.btn-group').style.display = 'none';
+                    feedback.innerText = "";
+                }
+            }, 1000);
+        }
+
+        // Voting Logic
+        let votes = { A: 0, B: 0 };
+        function addVote(option) {
+            votes[option]++;
+            document.getElementById(`vote${option}`).innerText = votes[option];
+        }
+    </script>
+</body>
+</html>

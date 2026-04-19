@@ -1,0 +1,1790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>High School Educator's Social Media PD Hub — Wakelet Curated Collection</title>
+<meta name="description" content="A curated Wakelet collection of professional development resources for high school science educators (grades 9-12), featuring hashtag communities, educator accounts, digital tools, and webinars for Spring 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================
+   DESIGN TOKENS & CUSTOM PROPERTIES
+   ============================================ */
+:root {
+  /* Palette — cool indigo ▸ teal ▸ violet */
+  --clr-bg:         #0a0a12;
+  --clr-surface-1:  #12121f;
+  --clr-surface-2:  #1a1a2e;
+  --clr-surface-3:  #222240;
+  --clr-border:     rgba(255,255,255,0.06);
+  --clr-border-glow:rgba(124,58,237,0.25);
+
+  --clr-accent-1:   #7c3aed;   /* Violet */
+  --clr-accent-2:   #06b6d4;   /* Cyan */
+  --clr-accent-3:   #f472b6;   /* Pink */
+  --clr-accent-4:   #34d399;   /* Emerald */
+  --clr-accent-5:   #fbbf24;   /* Amber */
+  --clr-accent-6:   #818cf8;   /* Indigo */
+
+  --clr-text:       #e4e4f0;
+  --clr-text-dim:   #9898b8;
+  --clr-text-bright:#ffffff;
+
+  --font-display: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 32px;
+
+  --glass-bg: rgba(18,18,31,0.55);
+  --glass-blur: 22px;
+  --glass-border: rgba(255,255,255,0.08);
+
+  --shadow-card: 0 4px 40px rgba(0,0,0,0.35), 0 0 0 1px var(--glass-border);
+  --shadow-glow: 0 0 60px rgba(124,58,237,0.12);
+
+  --transition-base: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-spring: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ============================================
+   RESET & BASE
+   ============================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--clr-accent-1) var(--clr-surface-1);
+}
+html::-webkit-scrollbar { width: 8px; }
+html::-webkit-scrollbar-track { background: var(--clr-surface-1); }
+html::-webkit-scrollbar-thumb { background: var(--clr-accent-1); border-radius: 4px; }
+
+body {
+  font-family: var(--font-body);
+  color: var(--clr-text);
+  background: var(--clr-bg);
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+   ANIMATED MESH-GRADIENT BACKGROUND
+   ============================================ */
+.mesh-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+}
+.mesh-bg::before,
+.mesh-bg::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(140px);
+  opacity: 0.35;
+  animation: meshFloat 22s ease-in-out infinite alternate;
+}
+.mesh-bg::before {
+  width: 70vw;
+  height: 70vh;
+  top: -20%;
+  left: -10%;
+  background: radial-gradient(circle, var(--clr-accent-1), transparent 70%);
+}
+.mesh-bg::after {
+  width: 60vw;
+  height: 60vh;
+  bottom: -15%;
+  right: -10%;
+  background: radial-gradient(circle, var(--clr-accent-2), transparent 70%);
+  animation-delay: -11s;
+  animation-direction: alternate-reverse;
+}
+.mesh-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.2;
+  width: 50vw;
+  height: 50vh;
+  top: 40%;
+  left: 30%;
+  background: radial-gradient(circle, var(--clr-accent-3), transparent 70%);
+  animation: meshFloat 18s ease-in-out infinite alternate-reverse;
+  animation-delay: -6s;
+}
+
+@keyframes meshFloat {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(6%, -8%) scale(1.08); }
+  66%  { transform: translate(-4%, 5%) scale(0.95); }
+  100% { transform: translate(3%, -3%) scale(1.03); }
+}
+
+/* ============================================
+   NOISE TEXTURE OVERLAY
+   ============================================ */
+.noise {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* ============================================
+   LAYOUT
+   ============================================ */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 4vw, 3rem);
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6rem 2rem 4rem;
+  position: relative;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1.2rem;
+  border-radius: 100px;
+  background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(6,182,212,0.15));
+  border: 1px solid var(--glass-border);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--clr-accent-2);
+  backdrop-filter: blur(12px);
+  margin-bottom: 2rem;
+  animation: fadeInDown 0.8s ease-out;
+}
+.hero-badge::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--clr-accent-4);
+  box-shadow: 0 0 8px var(--clr-accent-4);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.5; transform: scale(0.8); }
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.4rem, 6vw, 4.8rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--clr-text-bright);
+  margin-bottom: 1.5rem;
+  animation: fadeInUp 0.8s ease-out 0.15s both;
+}
+.hero h1 .gradient-text {
+  background: linear-gradient(135deg, var(--clr-accent-1), var(--clr-accent-2), var(--clr-accent-3));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 6s ease infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  max-width: 720px;
+  color: var(--clr-text-dim);
+  margin-bottom: 2.5rem;
+  animation: fadeInUp 0.8s ease-out 0.3s both;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  animation: fadeInUp 0.8s ease-out 0.45s both;
+}
+.hero-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(16px);
+  font-size: 0.85rem;
+  color: var(--clr-text-dim);
+}
+.hero-meta-item .icon { font-size: 1rem; }
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--clr-text-dim);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  animation: fadeInUp 0.8s ease-out 0.6s both;
+}
+.scroll-indicator .chevron {
+  width: 24px;
+  height: 24px;
+  border-left: 2px solid var(--clr-accent-2);
+  border-bottom: 2px solid var(--clr-accent-2);
+  transform: rotate(-45deg);
+  animation: bounceDown 1.8s ease-in-out infinite;
+}
+@keyframes bounceDown {
+  0%, 100% { transform: rotate(-45deg) translate(0, 0); opacity: 0.6; }
+  50%      { transform: rotate(-45deg) translate(5px, 5px); opacity: 1; }
+}
+
+/* ============================================
+   TABLE OF CONTENTS / NAV
+   ============================================ */
+.toc-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  background: rgba(10,10,18,0.75);
+  border-bottom: 1px solid var(--clr-border);
+  padding: 0;
+  transition: var(--transition-base);
+}
+.toc-inner {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.toc-inner::-webkit-scrollbar { display: none; }
+
+.toc-link {
+  flex-shrink: 0;
+  padding: 1rem 1.5rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 0.85rem;
+  text-decoration: none;
+  color: var(--clr-text-dim);
+  position: relative;
+  transition: var(--transition-base);
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+.toc-link:hover, .toc-link.active {
+  color: var(--clr-text-bright);
+}
+.toc-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--clr-accent-1), var(--clr-accent-2));
+  border-radius: 2px;
+  transform: translateX(-50%);
+  transition: width 0.35s ease;
+}
+.toc-link:hover::after, .toc-link.active::after { width: 60%; }
+
+.toc-section-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, var(--clr-accent-1), var(--clr-accent-2));
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #fff;
+  margin-right: 0.5rem;
+}
+
+/* ============================================
+   SECTION HEADERS
+   ============================================ */
+.section {
+  padding: 5rem 0 3rem;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+.section-header .section-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+.section-header h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  color: var(--clr-text-bright);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.75rem;
+}
+.section-header p {
+  max-width: 620px;
+  margin: 0 auto;
+  color: var(--clr-text-dim);
+  font-size: 1rem;
+}
+.section-divider-line {
+  width: 80px;
+  height: 3px;
+  margin: 1.5rem auto 0;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--clr-accent-1), var(--clr-accent-2));
+}
+
+/* ============================================
+   RESOURCE CARDS — GLASSMORPHISM
+   ============================================ */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  transition: var(--transition-base);
+  overflow: hidden;
+  /* scroll-triggered animation */
+  opacity: 0;
+  transform: translateY(30px);
+}
+.card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(124,58,237,0.3), transparent 50%, rgba(6,182,212,0.2));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.card:hover::before { opacity: 1; }
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-glow);
+  border-color: var(--clr-border-glow);
+}
+
+.card-number {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--clr-accent-2);
+  background: rgba(6,182,212,0.1);
+  border: 1px solid rgba(6,182,212,0.18);
+}
+
+.card-icon {
+  font-size: 1.8rem;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.card h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--clr-text-bright);
+  margin-bottom: 0.5rem;
+  padding-right: 2.5rem;
+}
+
+.card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--clr-accent-2);
+  text-decoration: none;
+  padding: 0.25rem 0.7rem;
+  border-radius: 6px;
+  background: rgba(6,182,212,0.08);
+  border: 1px solid rgba(6,182,212,0.12);
+  margin-bottom: 1rem;
+  transition: var(--transition-base);
+  word-break: break-all;
+}
+.card-link:hover {
+  background: rgba(6,182,212,0.18);
+  color: #fff;
+}
+
+.card-description {
+  font-size: 0.92rem;
+  color: var(--clr-text-dim);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.card-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--clr-accent-4);
+  background: rgba(52,211,153,0.08);
+  border: 1px solid rgba(52,211,153,0.12);
+}
+.card-tag.iste { color: var(--clr-accent-6); background: rgba(129,140,248,0.08); border-color: rgba(129,140,248,0.12); }
+.card-tag.ngss { color: var(--clr-accent-5); background: rgba(251,191,36,0.08); border-color: rgba(251,191,36,0.12); }
+.card-tag.pbl  { color: var(--clr-accent-3); background: rgba(244,114,182,0.08); border-color: rgba(244,114,182,0.12); }
+.card-tag.ai   { color: var(--clr-accent-1); background: rgba(124,58,237,0.08); border-color: rgba(124,58,237,0.12); }
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+/* ============================================
+   WEBINAR CARDS — TIMELINE VARIANT
+   ============================================ */
+.webinar-timeline {
+  position: relative;
+  padding-left: 2.5rem;
+}
+.webinar-timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--clr-accent-1), var(--clr-accent-2), var(--clr-accent-3));
+  border-radius: 2px;
+}
+
+.webinar-card {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  margin-bottom: 1.5rem;
+  transition: var(--transition-base);
+  opacity: 0;
+  transform: translateX(-20px);
+}
+.webinar-card.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+.webinar-card:hover {
+  border-color: var(--clr-border-glow);
+  box-shadow: var(--shadow-glow);
+}
+
+.webinar-card::before {
+  content: '';
+  position: absolute;
+  left: -2.5rem;
+  top: 2rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--clr-accent-1);
+  border: 2px solid var(--clr-bg);
+  box-shadow: 0 0 12px var(--clr-accent-1);
+  transform: translateX(-5px);
+}
+
+.webinar-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--clr-accent-5);
+  margin-bottom: 0.5rem;
+}
+.webinar-date .dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--clr-accent-5);
+}
+
+.webinar-card h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--clr-text-bright);
+  margin-bottom: 0.4rem;
+}
+
+.webinar-presenter {
+  font-size: 0.85rem;
+  color: var(--clr-accent-3);
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.webinar-description {
+  font-size: 0.9rem;
+  color: var(--clr-text-dim);
+  line-height: 1.7;
+  margin-bottom: 0.75rem;
+}
+
+.webinar-org {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.webinar-org.edweb { color: var(--clr-accent-2); background: rgba(6,182,212,0.1); border: 1px solid rgba(6,182,212,0.15); }
+.webinar-org.ascd  { color: var(--clr-accent-6); background: rgba(129,140,248,0.1); border: 1px solid rgba(129,140,248,0.15); }
+
+/* ============================================
+   ABOUT / CONTEXT CALLOUT
+   ============================================ */
+.about-callout {
+  background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(6,182,212,0.05));
+  border: 1px solid rgba(124,58,237,0.15);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  margin-bottom: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+.about-callout::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  right: -15%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(124,58,237,0.12), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.about-callout h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--clr-text-bright);
+  margin-bottom: 1rem;
+}
+.about-callout p {
+  font-size: 0.95rem;
+  color: var(--clr-text-dim);
+  line-height: 1.8;
+  position: relative;
+  z-index: 1;
+}
+.about-callout .sections-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+.section-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: var(--transition-base);
+  border: 1px solid;
+}
+.section-pill:nth-child(1) { color: var(--clr-accent-1); background: rgba(124,58,237,0.08); border-color: rgba(124,58,237,0.2); }
+.section-pill:nth-child(2) { color: var(--clr-accent-2); background: rgba(6,182,212,0.08); border-color: rgba(6,182,212,0.2); }
+.section-pill:nth-child(3) { color: var(--clr-accent-4); background: rgba(52,211,153,0.08); border-color: rgba(52,211,153,0.2); }
+.section-pill:nth-child(4) { color: var(--clr-accent-3); background: rgba(244,114,182,0.08); border-color: rgba(244,114,182,0.2); }
+.section-pill:hover { transform: translateY(-2px); filter: brightness(1.3); }
+
+/* ============================================
+   ACADEMIC CONTEXT PANEL (from social media.txt)
+   ============================================ */
+.context-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  margin: 3rem 0;
+}
+.context-panel h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--clr-text-bright);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.context-panel p {
+  font-size: 0.92rem;
+  color: var(--clr-text-dim);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+.context-panel p:last-child { margin-bottom: 0; }
+
+.context-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.context-stat {
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border);
+  background: rgba(255,255,255,0.02);
+}
+.context-stat .stat-num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 2.2rem;
+  background: linear-gradient(135deg, var(--clr-accent-1), var(--clr-accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.context-stat .stat-label {
+  font-size: 0.82rem;
+  color: var(--clr-text-dim);
+  margin-top: 0.25rem;
+}
+
+/* ============================================
+   SAMR MODEL VISUAL
+   ============================================ */
+.samr-visual {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+.samr-level {
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  transition: var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+.samr-level:hover {
+  transform: translateY(-3px);
+  border-color: var(--clr-border-glow);
+}
+.samr-level .level-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
+}
+.samr-level:nth-child(1) .level-tag { color: #7c3aed; background: rgba(124,58,237,0.12); }
+.samr-level:nth-child(2) .level-tag { color: #06b6d4; background: rgba(6,182,212,0.12); }
+.samr-level:nth-child(3) .level-tag { color: #f472b6; background: rgba(244,114,182,0.12); }
+.samr-level:nth-child(4) .level-tag { color: #34d399; background: rgba(52,211,153,0.12); }
+.samr-level h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--clr-text-bright);
+  margin-bottom: 0.5rem;
+}
+.samr-level p {
+  font-size: 0.85rem;
+  color: var(--clr-text-dim);
+  line-height: 1.65;
+}
+
+/* ============================================
+   CRITICAL REFLECTION SECTION
+   ============================================ */
+.reflection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+.reflection-card {
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  transition: var(--transition-base);
+  opacity: 0;
+  transform: translateY(20px);
+}
+.reflection-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reflection-card:hover {
+  border-color: var(--clr-border-glow);
+}
+.reflection-card.benefits { border-left: 3px solid var(--clr-accent-4); }
+.reflection-card.challenges { border-left: 3px solid var(--clr-accent-5); }
+.reflection-card h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--clr-text-bright);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.reflection-card ul {
+  list-style: none;
+  padding: 0;
+}
+.reflection-card li {
+  font-size: 0.9rem;
+  color: var(--clr-text-dim);
+  line-height: 1.7;
+  padding: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.reflection-card li:last-child { border-bottom: none; }
+.reflection-card li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.85rem;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+.reflection-card.benefits li::before { background: var(--clr-accent-4); box-shadow: 0 0 6px rgba(52,211,153,0.4); }
+.reflection-card.challenges li::before { background: var(--clr-accent-5); box-shadow: 0 0 6px rgba(251,191,36,0.4); }
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+  text-align: center;
+  padding: 4rem 2rem 3rem;
+  border-top: 1px solid var(--clr-border);
+}
+.footer-logo {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: var(--clr-text-bright);
+  margin-bottom: 0.5rem;
+}
+.footer p {
+  font-size: 0.82rem;
+  color: var(--clr-text-dim);
+  line-height: 1.8;
+}
+.footer-link {
+  color: var(--clr-accent-2);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(6,182,212,0.3);
+  transition: var(--transition-base);
+}
+.footer-link:hover {
+  color: #fff;
+  border-color: #fff;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 768px) {
+  .card-grid { grid-template-columns: 1fr; }
+  .webinar-timeline { padding-left: 1.5rem; }
+  .samr-visual { grid-template-columns: 1fr; }
+  .reflection-grid { grid-template-columns: 1fr; }
+  .section { padding: 3rem 0 2rem; }
+  .toc-link { padding: 0.75rem 1rem; font-size: 0.78rem; }
+  .about-callout { padding: 1.5rem; }
+  .context-panel { padding: 1.5rem; }
+}
+
+@media (max-width: 480px) {
+  .hero { padding: 4rem 1rem 3rem; min-height: 90vh; }
+  .hero-meta { flex-direction: column; align-items: center; }
+  .card { padding: 1.25rem; }
+}
+
+/* ============================================
+   PRESENTATION SLIDER
+   ============================================ */
+.presentation-wrapper {
+  margin-top: 4rem;
+  background: var(--clr-surface-2);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.presentation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 2rem;
+  background: rgba(0,0,0,0.2);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.pres-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.pres-title h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--clr-text-bright);
+}
+
+.pres-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.btn-pres {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--glass-border);
+  color: var(--clr-text);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+.btn-pres:hover:not(:disabled) {
+  background: var(--clr-accent-1);
+  color: #fff;
+  border-color: var(--clr-accent-1);
+  box-shadow: 0 0 15px rgba(124,58,237,0.4);
+}
+.btn-pres:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+#slideProgress {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--clr-text-dim);
+}
+#currentSlide {
+  color: var(--clr-text-bright);
+}
+
+.presentation-screen {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--clr-bg);
+  overflow: hidden;
+}
+
+.slides-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  padding: 3rem clamp(2rem, 5vw, 6rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0.3;
+  transition: opacity 0.6s ease;
+}
+.slide.active { opacity: 1; }
+
+.slide h2 {
+  font-family: var(--font-display);
+  color: var(--clr-accent-2);
+  font-size: clamp(1.5rem, 3vw, 2.8rem);
+  margin-bottom: 2rem;
+  line-height: 1.2;
+}
+
+.slide p, .slide li {
+  font-size: clamp(1rem, 1.5vw, 1.3rem);
+  color: var(--clr-text);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.slide ul { padding-left: 2rem; }
+.slide li { margin-bottom: 0.75rem; }
+
+.pres-footer {
+  padding: 1rem 2rem;
+  background: rgba(0,0,0,0.2);
+  border-top: 1px solid var(--glass-border);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--clr-text-dim);
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .presentation-header { flex-direction: column; gap: 1rem; align-items: flex-start; }
+  .presentation-screen { aspect-ratio: 4 / 3; }
+  .slide { padding: 2rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- Animated mesh gradient background -->
+<div class="mesh-bg">
+  <div class="mesh-orb"></div>
+</div>
+<div class="noise"></div>
+
+<!-- ========== HERO ========== -->
+<header class="hero" id="top">
+  <div class="hero-badge">
+    <span>Wakelet Curated Collection</span>
+  </div>
+  <h1>High School Educator's<br><span class="gradient-text">Social Media PD Hub</span></h1>
+  <p class="hero-subtitle">A curated professional development collection for high school teachers (9–12), bringing together impactful hashtag communities, authoritative educator accounts, digital simulation platforms, and professional webinars for the Spring 2026 season.</p>
+  <div class="hero-meta">
+    <span class="hero-meta-item"><span class="icon">👤</span> Curated by Victor Moronu</span>
+    <span class="hero-meta-item"><span class="icon">📅</span> April 2026</span>
+    <span class="hero-meta-item"><span class="icon">🎓</span> Grades 9–12</span>
+    <span class="hero-meta-item"><span class="icon">🏫</span> TEACH-NOW EdTech</span>
+  </div>
+  <div class="scroll-indicator">
+    <span>Explore</span>
+    <div class="chevron"></div>
+  </div>
+</header>
+
+<!-- ========== STICKY NAV ========== -->
+<nav class="toc-nav" id="toc-nav">
+  <div class="toc-inner">
+    <a href="#about" class="toc-link"><span class="toc-section-num">✦</span>About</a>
+    <a href="#section1" class="toc-link"><span class="toc-section-num">1</span>Hashtag Chats</a>
+    <a href="#section2" class="toc-link"><span class="toc-section-num">2</span>Educator Accounts</a>
+    <a href="#section3" class="toc-link"><span class="toc-section-num">3</span>Digital Tools</a>
+    <a href="#section4" class="toc-link"><span class="toc-section-num">4</span>Webinars</a>
+    <a href="#context" class="toc-link"><span class="toc-section-num">◆</span>Academic Context</a>
+    <a href="#reflection" class="toc-link"><span class="toc-section-num">◆</span>Reflection</a>
+  </div>
+</nav>
+
+<!-- ========== ABOUT ========== -->
+<main class="container">
+  <section class="section" id="about">
+    <div class="about-callout">
+      <h3>📚 About This Collection</h3>
+      <p>This Wakelet collection was curated as part of a social media professional development activity for high school educators (grades 9–12). It brings together the most impactful hashtag communities, synchronous Twitter chats, authoritative educator accounts, digital simulation platforms, and professional webinars discovered during one week of intentional social media exploration. Resources are organized into four thematic sections and annotated with descriptions and standards/instructional alignment notes. This collection is intended as a <strong>living document</strong> — resources will be added and updated as the professional learning community continues to grow.</p>
+      <div class="sections-nav">
+        <a href="#section1" class="section-pill">🏷️ Section 1: Hashtag Chats &amp; Communities</a>
+        <a href="#section2" class="section-pill">👩‍🏫 Section 2: Essential Educator Accounts</a>
+        <a href="#section3" class="section-pill">🔬 Section 3: Digital Tools &amp; Simulations</a>
+        <a href="#section4" class="section-pill">📡 Section 4: Webinars &amp; Synchronous PD</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 1: HASHTAG CHATS ========== -->
+  <section class="section" id="section1">
+    <div class="section-header">
+      <span class="section-icon">🏷️</span>
+      <h2>Hashtag Chats &amp; Communities</h2>
+      <p>Active Twitter/X and Instagram communities where high school educators connect, share, and learn in real time.</p>
+      <div class="section-divider-line"></div>
+    </div>
+
+    <div class="card-grid">
+      <!-- #edchat -->
+      <article class="card" id="r1-1">
+        <span class="card-number">01</span>
+        <span class="card-icon">💬</span>
+        <h3>#edchat</h3>
+        <a href="https://twitter.com/search?q=%23edchat" target="_blank" rel="noopener" class="card-link">🔗 twitter.com — #edchat</a>
+        <p class="card-description">The largest and longest-running educator Twitter chat. Runs every Tuesday at 12 PM and 7 PM EST. Covers broad educational topics: policy, pedagogy, classroom management, and global trends. An ideal starting point for any educator new to social media PD.</p>
+        <div class="card-tags">
+          <span class="card-tag iste">ISTE Standard 1 — Learner</span>
+          <span class="card-tag">General PD</span>
+        </div>
+      </article>
+
+      <!-- #edtechchat -->
+      <article class="card" id="r1-2">
+        <span class="card-number">02</span>
+        <span class="card-icon">⚡</span>
+        <h3>#edtechchat</h3>
+        <a href="https://twitter.com/search?q=%23edtechchat" target="_blank" rel="noopener" class="card-link">🔗 twitter.com — #edtechchat</a>
+        <p class="card-description">Meets Mondays at 8 PM EST. Intensive focus on technology integration, AI in education, digital citizenship, and evaluating EdTech tools. Directly relevant to high school teachers designing technology-rich learning environments.</p>
+        <div class="card-tags">
+          <span class="card-tag iste">ISTE Standard 5 — Designer</span>
+          <span class="card-tag ai">AI Literacy</span>
+          <span class="card-tag">Digital Citizenship</span>
+        </div>
+      </article>
+
+      <!-- #scichat -->
+      <article class="card" id="r1-3">
+        <span class="card-number">03</span>
+        <span class="card-icon">🧪</span>
+        <h3>#scichat / #hsscienceteacher</h3>
+        <a href="https://twitter.com/search?q=%23scichat" target="_blank" rel="noopener" class="card-link">🔗 twitter.com — #scichat</a>
+        <p class="card-description">The primary community for science educators. Discussions center on NGSS implementation, phenomena-based instruction, AP science lab design, and inquiry-based learning models. Curators share lesson blueprints, student work samples, and assessment frameworks.</p>
+        <div class="card-tags">
+          <span class="card-tag ngss">NGSS Practices</span>
+          <span class="card-tag">AP Biology / Chemistry / Physics</span>
+        </div>
+      </article>
+
+      <!-- #PBLchat -->
+      <article class="card" id="r1-4">
+        <span class="card-number">04</span>
+        <span class="card-icon">🛠️</span>
+        <h3>#PBLchat</h3>
+        <a href="https://twitter.com/search?q=%23PBLchat" target="_blank" rel="noopener" class="card-link">🔗 twitter.com — #PBLchat</a>
+        <p class="card-description">A thriving community for Project-Based Learning practitioners. High school teachers share capstone project designs, cross-curricular collaboration strategies, and rubric templates. Moderated chats occur regularly with structured Q&amp;A sessions.</p>
+        <div class="card-tags">
+          <span class="card-tag pbl">Cross-Curricular PBL</span>
+          <span class="card-tag">Common Core ELA</span>
+        </div>
+      </article>
+
+      <!-- #NGSS -->
+      <article class="card" id="r1-5">
+        <span class="card-number">05</span>
+        <span class="card-icon">📐</span>
+        <h3>#NGSS</h3>
+        <a href="https://twitter.com/search?q=%23NGSS" target="_blank" rel="noopener" class="card-link">🔗 twitter.com — #NGSS</a>
+        <p class="card-description">Directly supports Next Generation Science Standards implementation. Educators post alignment guides, three-dimensional lesson designs, and CER (Claim-Evidence-Reasoning) writing frameworks. Essential for high school science departments undergoing NGSS transitions.</p>
+        <div class="card-tags">
+          <span class="card-tag ngss">NGSS Performance Expectations</span>
+          <span class="card-tag">Science &amp; Engineering Practices</span>
+        </div>
+      </article>
+
+      <!-- #ObserveMe -->
+      <article class="card" id="r1-6">
+        <span class="card-number">06</span>
+        <span class="card-icon">👁️</span>
+        <h3>#ObserveMe</h3>
+        <a href="https://twitter.com/search?q=%23ObserveMe" target="_blank" rel="noopener" class="card-link">🔗 twitter.com — #ObserveMe</a>
+        <p class="card-description">A vulnerability-driven movement where teachers publicly invite peers into their classrooms. Posts often include invitations, observation protocols, and reflections. Models a culture of professional openness and growth-oriented feedback.</p>
+        <div class="card-tags">
+          <span class="card-tag iste">ISTE Standard 4 — Collaborator</span>
+          <span class="card-tag">Peer Observation</span>
+        </div>
+      </article>
+
+      <!-- #txeduchat -->
+      <article class="card" id="r1-7">
+        <span class="card-number">07</span>
+        <span class="card-icon">🌟</span>
+        <h3>#txeduchat</h3>
+        <a href="https://twitter.com/search?q=%23txeduchat" target="_blank" rel="noopener" class="card-link">🔗 twitter.com — #txeduchat</a>
+        <p class="card-description">Sundays at 8 PM CST. A state-level chat with national and global reach. Recognized as one of the most well-organized educator Twitter communities. Covers a wide range of pedagogical and leadership topics with consistent, high-quality moderation.</p>
+        <div class="card-tags">
+          <span class="card-tag">HS Professional Development</span>
+          <span class="card-tag">Leadership</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 2: EDUCATOR ACCOUNTS ========== -->
+  <section class="section" id="section2">
+    <div class="section-header">
+      <span class="section-icon">👩‍🏫</span>
+      <h2>Essential Educator Accounts</h2>
+      <p>Vetted social media accounts offering high-quality, research-informed content for high school educators.</p>
+      <div class="section-divider-line"></div>
+    </div>
+
+    <div class="card-grid">
+      <!-- Kesler Science -->
+      <article class="card" id="r2-1">
+        <span class="card-number">01</span>
+        <span class="card-icon">🔥</span>
+        <h3>Chris Kesler — @keslerscience</h3>
+        <a href="https://www.instagram.com/keslerscience" target="_blank" rel="noopener" class="card-link">🔗 instagram.com/keslerscience</a>
+        <p class="card-description">A cornerstone resource for high school science educators on Instagram. Kesler champions "productive chaos" — the idea that a visually messy, kinetically active lab is evidence of authentic learning, not poor management. His library of inquiry-based lab designs is directly actionable, including thermal equilibrium investigations, ecosystem competition models, and commentary on maintaining hands-on labs in the age of AI.</p>
+        <div class="card-tags">
+          <span class="card-tag ngss">NGSS Practices</span>
+          <span class="card-tag">AP Science Labs</span>
+          <span class="card-tag">Inquiry-Based Learning</span>
+        </div>
+      </article>
+
+      <!-- NSTA -->
+      <article class="card" id="r2-2">
+        <span class="card-number">02</span>
+        <span class="card-icon">🏛️</span>
+        <h3>NSTA — @nsta</h3>
+        <a href="https://twitter.com/nsta" target="_blank" rel="noopener" class="card-link">🔗 twitter.com/nsta</a>
+        <p class="card-description">The National Science Teaching Association — the preeminent professional hub for science educators. Their channels promote blog content on NGSS implementation, laboratory safety (mercury elimination, PFAS protocols, noise exposure standards), and AI epistemology in science classrooms.</p>
+        <div class="card-tags">
+          <span class="card-tag ngss">NGSS</span>
+          <span class="card-tag">Lab Safety — OSHA 1910.95</span>
+          <span class="card-tag">HS Science Standards</span>
+        </div>
+      </article>
+
+      <!-- PBLWorks -->
+      <article class="card" id="r2-3">
+        <span class="card-number">03</span>
+        <span class="card-icon">📋</span>
+        <h3>PBLWorks — @pblworks</h3>
+        <a href="https://twitter.com/pblworks" target="_blank" rel="noopener" class="card-link">🔗 twitter.com/pblworks</a>
+        <p class="card-description">The Buck Institute for Education's official presence. Shares gold-standard Project-Based Learning frameworks, school showcase examples, and research briefs. Particularly useful for high school departments designing semester-long capstone units or interdisciplinary driving question projects.</p>
+        <div class="card-tags">
+          <span class="card-tag pbl">Cross-Curricular PBL</span>
+          <span class="card-tag">Common Core ELA</span>
+        </div>
+      </article>
+
+      <!-- Baruti Kafele -->
+      <article class="card" id="r2-4">
+        <span class="card-number">04</span>
+        <span class="card-icon">🎤</span>
+        <h3>Baruti Kafele — @principalkafele</h3>
+        <a href="https://twitter.com/principalkafele" target="_blank" rel="noopener" class="card-link">🔗 twitter.com/principalkafele</a>
+        <p class="card-description">Nationally recognized author and speaker on student identity, instructional leadership, and building classrooms of belonging. His content on maximizing instructional coaches and centering student identity is particularly valuable for high school administrators and department heads.</p>
+        <div class="card-tags">
+          <span class="card-tag iste">Instructional Leadership</span>
+          <span class="card-tag">Student Equity — HS</span>
+        </div>
+      </article>
+
+      <!-- Physics Girl -->
+      <article class="card" id="r2-5">
+        <span class="card-number">05</span>
+        <span class="card-icon">⚛️</span>
+        <h3>Physics Girl — @thephysicsgirl</h3>
+        <a href="https://www.youtube.com/@physicsgirl" target="_blank" rel="noopener" class="card-link">🔗 youtube.com/@physicsgirl</a>
+        <p class="card-description">Dianna Cowern's channel bridges advanced physics concepts and adolescent curiosity through visually stunning, narrative-driven science communication. Ideal for sparking student interest in STEM careers and providing accessible explanations of AP-level content.</p>
+        <div class="card-tags">
+          <span class="card-tag ngss">AP Physics</span>
+          <span class="card-tag">STEM Careers</span>
+          <span class="card-tag">HS Physical Science</span>
+        </div>
+      </article>
+
+      <!-- edWeb.net -->
+      <article class="card" id="r2-6">
+        <span class="card-number">06</span>
+        <span class="card-icon">🌐</span>
+        <h3>edWeb.net — @edWebnet</h3>
+        <a href="https://home.edweb.net" target="_blank" rel="noopener" class="card-link">🔗 home.edweb.net</a>
+        <p class="card-description">The premier free professional learning community for educators. Offers live and recorded webinars with continuing education certificates accepted for re-licensure in most states. Spring 2026 calendar includes sessions on questioning culture, ethical AI, formative assessment, and PBL design.</p>
+        <div class="card-tags">
+          <span class="card-tag iste">ISTE Educator Standards</span>
+          <span class="card-tag">CEU-Eligible PD</span>
+        </div>
+      </article>
+
+      <!-- ASCD -->
+      <article class="card" id="r2-7">
+        <span class="card-number">07</span>
+        <span class="card-icon">📖</span>
+        <h3>ASCD — @ASCD</h3>
+        <a href="https://www.ascd.org" target="_blank" rel="noopener" class="card-link">🔗 ascd.org</a>
+        <p class="card-description">The Association for Supervision and Curriculum Development provides research-based professional learning for teachers and leaders. Their Transformational Leaders Webinar Series (Spring 2026) covers scaffolding for multilingual learners, microlearning techniques, and strategies for teacher-student relationships.</p>
+        <div class="card-tags">
+          <span class="card-tag">UDL</span>
+          <span class="card-tag iste">ASCD Standards</span>
+          <span class="card-tag">HS Scaffolding</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 3: DIGITAL TOOLS ========== -->
+  <section class="section" id="section3">
+    <div class="section-header">
+      <span class="section-icon">🔬</span>
+      <h2>Digital Tools, Simulations &amp; Learning Platforms</h2>
+      <p>Research-backed digital platforms and tools curated for high school instructional use.</p>
+      <div class="section-divider-line"></div>
+    </div>
+
+    <div class="card-grid">
+      <!-- PhET -->
+      <article class="card" id="r3-1">
+        <span class="card-number">01</span>
+        <span class="card-icon">🎛️</span>
+        <h3>PhET Interactive Simulations</h3>
+        <a href="https://phet.colorado.edu" target="_blank" rel="noopener" class="card-link">🔗 phet.colorado.edu</a>
+        <p class="card-description">Over 160 free, research-based interactive simulations in physics, chemistry, biology, and earth science from the University of Colorado Boulder. Founded by Nobel Laureate Carl Wieman and supported by NSF. Students can manipulate variables, generate data, and test hypotheses in a safe, repeatable digital environment. Available in multiple languages.</p>
+        <div class="card-tags">
+          <span class="card-tag ngss">NGSS HS Practices</span>
+          <span class="card-tag">AP Physics / Chemistry</span>
+          <span class="card-tag">Multilingual</span>
+        </div>
+      </article>
+
+      <!-- Gizmos -->
+      <article class="card" id="r3-2">
+        <span class="card-number">02</span>
+        <span class="card-icon">⚙️</span>
+        <h3>ExploreLearning Gizmos</h3>
+        <a href="https://www.explorelearning.com" target="_blank" rel="noopener" class="card-link">🔗 explorelearning.com</a>
+        <p class="card-description">Over 550 interactive STEM simulations built around NGSS alignment and sensemaking-driven inquiry. Gizmo usage correlates with elevated proficiency on state science assessments. Particularly effective for HS topics like genetics, natural selection, wave behavior, and chemical reactions.</p>
+        <div class="card-tags">
+          <span class="card-tag ngss">NGSS Performance Expectations</span>
+          <span class="card-tag">Data Analysis</span>
+        </div>
+      </article>
+
+      <!-- CK-12 -->
+      <article class="card" id="r3-3">
+        <span class="card-number">03</span>
+        <span class="card-icon">📱</span>
+        <h3>CK-12 Foundation</h3>
+        <a href="https://www.ck12.org" target="_blank" rel="noopener" class="card-link">🔗 ck12.org</a>
+        <p class="card-description">Customizable, free digital textbooks (FlexBooks) paired with an AI tutor (Flexi) that provides adaptive, personalized learning paths. Aligned to NGSS and offers detailed learning analytics for teachers. Ideal for differentiation in heterogeneous HS classrooms.</p>
+        <div class="card-tags">
+          <span class="card-tag ngss">NGSS</span>
+          <span class="card-tag ai">AI Adaptive Learning</span>
+          <span class="card-tag">Common Core Math</span>
+        </div>
+      </article>
+
+      <!-- Generation Genius -->
+      <article class="card" id="r3-4">
+        <span class="card-number">04</span>
+        <span class="card-icon">🎬</span>
+        <h3>Generation Genius</h3>
+        <a href="https://www.generationgenius.com" target="_blank" rel="noopener" class="card-link">🔗 generationgenius.com</a>
+        <p class="card-description">High-production video-based science lessons produced in partnership with the National Science Teaching Association (NSTA). Includes 5E lesson plans, formative quizzes, and teacher guides. Particularly strong for HS Earth &amp; Space Science and Life Science units.</p>
+        <div class="card-tags">
+          <span class="card-tag ngss">NGSS</span>
+          <span class="card-tag">NSTA-Vetted</span>
+          <span class="card-tag">5E Model</span>
+        </div>
+      </article>
+
+      <!-- Legends of Learning -->
+      <article class="card" id="r3-5">
+        <span class="card-number">05</span>
+        <span class="card-icon">🎮</span>
+        <h3>Legends of Learning</h3>
+        <a href="https://www.legendsoflearning.com" target="_blank" rel="noopener" class="card-link">🔗 legendsoflearning.com</a>
+        <p class="card-description">Gamified science education platform with 2,000+ curriculum-aligned mini-games. Academic efficacy studies from Vanderbilt and WestEd demonstrate significant test score improvements. The "Awakening" multiplayer world provides an immersive, student-driven alternative to traditional review tools.</p>
+        <div class="card-tags">
+          <span class="card-tag ngss">NGSS Alignment</span>
+          <span class="card-tag">Vanderbilt / WestEd Research</span>
+        </div>
+      </article>
+
+      <!-- Wakelet -->
+      <article class="card" id="r3-6">
+        <span class="card-number">06</span>
+        <span class="card-icon">🧩</span>
+        <h3>Wakelet</h3>
+        <a href="https://wakelet.com" target="_blank" rel="noopener" class="card-link">🔗 wakelet.com</a>
+        <p class="card-description">The premier educational curation platform — the very tool used to organize this collection. Wakelet enables educators and students to aggregate multimedia content (URLs, PDFs, videos, social posts) into visual, scrollable, interactive collections. Advanced 2026 features include TikTok integration, AI-powered quiz/rubric generation, and global collaborative collections.</p>
+        <div class="card-tags">
+          <span class="card-tag ai">SAMR — Redefinition</span>
+          <span class="card-tag iste">ISTE Student 3 — Knowledge Constructor</span>
+        </div>
+      </article>
+
+      <!-- edWeb.net -->
+      <article class="card" id="r3-7">
+        <span class="card-number">07</span>
+        <span class="card-icon">🎓</span>
+        <h3>edWeb.net</h3>
+        <a href="https://home.edweb.net" target="_blank" rel="noopener" class="card-link">🔗 home.edweb.net</a>
+        <p class="card-description">A massive global community offering free professional development webinars with continuing education certificates accepted across most states for teacher re-licensure. Spring 2026 highlights: Ethical AI in Action (Apr. 16), Designing Learning Walks (Apr. 21), Using AI to Measure PD Efficacy (Apr. 20).</p>
+        <div class="card-tags">
+          <span class="card-tag iste">ISTE Educator Standards</span>
+          <span class="card-tag">CEU-Eligible</span>
+        </div>
+      </article>
+    </div>
+
+    <!-- SAMR Model Visual (from social media.txt) -->
+    <div class="context-panel" style="margin-top: 3rem;">
+      <h3>🔄 Wakelet &amp; the SAMR Model — Integration Framework</h3>
+      <p>When implementing Wakelet within a school district, educational technology professionals should train teachers to utilize the tool through the lens of Dr. Ruben Puentedura's SAMR model, ensuring that technology elevates rather than merely replaces traditional instruction.</p>
+      <div class="samr-visual">
+        <div class="samr-level">
+          <span class="level-tag">S — Substitution</span>
+          <h4>Digital Replacement</h4>
+          <p>Replace a printed syllabus or static text-based list of web links with a basic digital Wakelet collection — identical functional utility in digital format.</p>
+        </div>
+        <div class="samr-level">
+          <span class="level-tag">A — Augmentation</span>
+          <h4>Enhanced Access</h4>
+          <p>Embed interactive PhET simulations, YouTube lab tutorials, and PDF worksheets into a single centralized hub, directly augmenting multimodal student engagement.</p>
+        </div>
+        <div class="samr-level">
+          <span class="level-tag">M — Modification</span>
+          <h4>Task Redesign</h4>
+          <p>Students curate their own collections on specific scientific phenomena, adding analytical notes and reflections — transitioning from passive consumption to active knowledge construction.</p>
+        </div>
+        <div class="samr-level">
+          <span class="level-tag">R — Redefinition</span>
+          <h4>Impossible Without Tech</h4>
+          <p>Real-time global collaboration where classrooms across different international regions co-curate shared digital collections with environmental data, peer-reviewed articles, and fieldwork videos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SECTION 4: WEBINARS ========== -->
+  <section class="section" id="section4">
+    <div class="section-header">
+      <span class="section-icon">📡</span>
+      <h2>Webinars &amp; Synchronous PD</h2>
+      <p>Live and recorded webinars curated from edWeb.net and ASCD for high school educators · Spring 2026</p>
+      <div class="section-divider-line"></div>
+    </div>
+
+    <div class="webinar-timeline">
+      <!-- Webinar 1 -->
+      <article class="webinar-card" id="r4-1">
+        <div class="webinar-date">
+          April 13, 2026 <span class="dot"></span> 12:00 PM EST <span class="dot"></span> Free + CEU
+        </div>
+        <h3>Build a Culture of Questioning to Transform Learning</h3>
+        <span class="webinar-org edweb">edWeb.net</span>
+        <p class="webinar-description">Focuses on moving beyond closed, evaluative questioning toward productive inquiry-driving prompts essential for NGSS sensemaking and student-led academic discourse in HS classrooms.</p>
+        <div class="card-tags">
+          <span class="card-tag ngss">NGSS Practices</span>
+          <span class="card-tag">Bloom's Taxonomy</span>
+          <span class="card-tag">HS Questioning Culture</span>
+        </div>
+      </article>
+
+      <!-- Webinar 2 -->
+      <article class="webinar-card" id="r4-2">
+        <div class="webinar-date">
+          April 16, 2026 <span class="dot"></span> 12:00 PM EST <span class="dot"></span> Free + CEU
+        </div>
+        <h3>Ethical AI in Action: Aligning Responsible Use with Teaching and Learning</h3>
+        <span class="webinar-org edweb">edWeb.net</span>
+        <p class="webinar-description">Directly addresses ethical integration of generative AI tools, epistemic vigilance, and strategies for teaching students to evaluate AI-generated content critically — essential for HS science and ELA.</p>
+        <div class="card-tags">
+          <span class="card-tag iste">ISTE Standard 2 — Leader</span>
+          <span class="card-tag ai">AI Literacy</span>
+          <span class="card-tag">HS Critical Thinking</span>
+        </div>
+      </article>
+
+      <!-- Webinar 3 -->
+      <article class="webinar-card" id="r4-3">
+        <div class="webinar-date">
+          April 21, 2026 <span class="dot"></span> 1:00 PM EST <span class="dot"></span> Free + CEU
+        </div>
+        <h3>Designing Learning Walks as Professional Learning</h3>
+        <span class="webinar-org edweb">edWeb.net</span>
+        <p class="webinar-description">Empowers instructional coaches and department heads to use structured peer observation as an embedded, non-evaluative PD tool. Highly applicable to HS departments with Professional Learning Communities.</p>
+        <div class="card-tags">
+          <span class="card-tag iste">ISTE Standard 4 — Collaborator</span>
+          <span class="card-tag">Instructional Coaching</span>
+          <span class="card-tag">PLC Design</span>
+        </div>
+      </article>
+
+      <!-- Webinar 4 -->
+      <article class="webinar-card" id="r4-4">
+        <div class="webinar-date">
+          April 22, 2026 <span class="dot"></span> 1:00 PM ET
+        </div>
+        <h3>Maximizing Your Assistant Principals and Instructional Coaches</h3>
+        <div class="webinar-presenter">Presenter: Baruti Kafele</div>
+        <span class="webinar-org ascd">ASCD Transformational Leaders</span>
+        <p class="webinar-description">Strategies for creating systemic conditions that support peer coaching, observation, and sustained instructional growth in HS settings. Part of the ASCD Transformational Leaders Series.</p>
+        <div class="card-tags">
+          <span class="card-tag iste">Instructional Leadership</span>
+          <span class="card-tag">HS Administrative PD</span>
+        </div>
+      </article>
+
+      <!-- Webinar 5 -->
+      <article class="webinar-card" id="r4-5">
+        <div class="webinar-date">
+          May 6, 2026 <span class="dot"></span> 1:00 PM ET
+        </div>
+        <h3>Designing Instruction That Works: Scaffolds for Multilingual Learners</h3>
+        <div class="webinar-presenter">Presenter: Paula Polk</div>
+        <span class="webinar-org ascd">ASCD Transformational Leaders</span>
+        <p class="webinar-description">Aligns complex HS content with targeted linguistic supports to increase multilingual learner independence and comprehension. Essential for high schools with diverse student populations.</p>
+        <div class="card-tags">
+          <span class="card-tag">ELD Standards</span>
+          <span class="card-tag">WIDA Framework</span>
+          <span class="card-tag">UDL</span>
+        </div>
+      </article>
+
+      <!-- Webinar 6 -->
+      <article class="webinar-card" id="r4-6">
+        <div class="webinar-date">
+          May 20, 2026 <span class="dot"></span> 1:00 PM ET
+        </div>
+        <h3>Teaching with Precision: Using Microlearning to Move Students Toward Success</h3>
+        <div class="webinar-presenter">Presenters: Nancy Frey, Tyler Gilbert, Douglas Fisher</div>
+        <span class="webinar-org ascd">ASCD Transformational Leaders</span>
+        <p class="webinar-description">Explores methodologies for reducing cognitive overload through targeted, micro-instructional techniques during the critical "I do it" phase of teaching. Directly applicable to content-heavy HS courses.</p>
+        <div class="card-tags">
+          <span class="card-tag">Gradual Release</span>
+          <span class="card-tag">Cognitive Load Theory</span>
+          <span class="card-tag">HS Instructional Design</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ========== ACADEMIC CONTEXT (from social media.txt) ========== -->
+  <section class="section" id="context">
+    <div class="section-header">
+      <span class="section-icon">📑</span>
+      <h2>Academic Context &amp; Research Foundation</h2>
+      <p>Key frameworks and research insights from the broader social media professional development landscape informing this curation.</p>
+      <div class="section-divider-line"></div>
+    </div>
+
+    <div class="context-panel">
+      <h3>🔬 The Paradigm Shift in Teacher Professional Learning</h3>
+      <p>Historically, teacher professional development was constrained by geographic limitations, localized district budgets, and the infrequency of annual conferences. The proliferation of digital networking platforms has catalyzed a paradigm shift toward <strong>decentralized, asynchronous, and highly personalized professional learning ecosystems</strong> — often referred to as "professional development in your pocket."</p>
+      <p>The integration of social media into professional development transforms the isolated educator into a globally connected practitioner. Through active participation in personal learning networks, educators transition through developmental roles — evolving from <strong>passive information consumers</strong> into <strong>active networkers</strong>, and ultimately into <strong>self-directed contributors and educational leaders</strong>.</p>
+      <div class="context-grid">
+        <div class="context-stat">
+          <div class="stat-num">160+</div>
+          <div class="stat-label">PhET Interactive Simulations</div>
+        </div>
+        <div class="context-stat">
+          <div class="stat-num">550+</div>
+          <div class="stat-label">Gizmo STEM Simulations</div>
+        </div>
+        <div class="context-stat">
+          <div class="stat-num">2,000+</div>
+          <div class="stat-label">Legends of Learning Games</div>
+        </div>
+        <div class="context-stat">
+          <div class="stat-num">150B</div>
+          <div class="stat-label">LinkedIn 360Brew AI Parameters</div>
+        </div>
+      </div>
+    </div>
+
+  
+  </section>
+
+  <!-- ========== CRITICAL REFLECTION ========== -->
+  <section class="section" id="reflection">
+    <div class="section-header">
+      <span class="section-icon">🔍</span>
+      <h2>Critical Reflection</h2>
+      <p>Evaluating the systemic benefits and challenges of social media-driven professional development.</p>
+      <div class="section-divider-line"></div>
+    </div>
+
+    <div class="reflection-grid">
+      <div class="reflection-card benefits">
+        <h4>✅ Demonstrated Benefits</h4>
+        <ul>
+          <li><strong>Geographic Liberation:</strong> Total eradication of geographical and temporal isolation — educators in rural or specialized contexts access global expertise beyond their immediate school building.</li>
+          <li><strong>Teacherpreneurship:</strong> Public curation fosters professional identity-building, recognized authority in niche areas (e.g., NGSS frameworks), and psychological resilience through peer support networks.</li>
+          <li><strong>Democratic Practice:</strong> Dynamic interaction — liking, commenting, remixing, debating — transforms PD from a passive, top-down compliance exercise into an active community of practice.</li>
+          <li><strong>Rapid OER Exchange:</strong> Platforms facilitate frictionless exchange of Open Educational Resources and real-time global troubleshooting of specific pedagogical challenges.</li>
+          <li><strong>Flexibility:</strong> Technology-enabled PD offers extreme flexibility with asynchronous access to webinars, chats, and curated collections at any time.</li>
+        </ul>
+      </div>
+      <div class="reflection-card challenges">
+        <h4>⚠️ Systemic Challenges</h4>
+        <ul>
+          <li><strong>Digital Divide:</strong> The assumption that all educators can equally access high-speed digital spaces is fundamentally fallacious — variations in internet connectivity, hardware, and digital literacy exacerbate existing inequities.</li>
+          <li><strong>Information Overload:</strong> Unrelenting content volume leads to cognitive fatigue. Teachers report psychological pressure to "keep up" with idealized classrooms, causing negative social comparison and burnout.</li>
+          <li><strong>Echo Chambers:</strong> Algorithmic curation creates ideological echo chambers where educators are only exposed to philosophies reinforcing pre-existing biases, stifling paradigm-shifting exposure.</li>
+          <li><strong>Commercialization:</strong> Research-backed strategies share space with unvetted, commercialized products. Educators must act as their own rigorous peer-review board.</li>
+          <li><strong>Tactile Misalignment:</strong> Virtual social media PD can fail to capture the nuanced, physical realities of managing active science laboratory environments — face-to-face learning remains preferred for hands-on lab work.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ========== PRESENTATION SLIDER ========== -->
+    <div class="presentation-wrapper">
+      <div class="presentation-header">
+        <div class="pres-title">
+          <span class="icon">📊</span>
+          <h3>Reflection Presentation</h3>
+        </div>
+        <div class="pres-controls">
+          <button id="prevSlide" class="btn-pres" aria-label="Previous Slide">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <span id="slideProgress">Slide <strong id="currentSlide">1</strong> of 10</span>
+          <button id="nextSlide" class="btn-pres" aria-label="Next Slide">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+      </div>
+      
+      <div class="presentation-screen">
+        <ul id="slidesContainer" class="slides-track">
+          <!-- Slides injected via JS -->
+        </ul>
+      </div>
+      <div class="pres-footer">Summarized from reflection_slides.pptx</div>
+    </div>
+  </section>
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <p>Created by Victor Moronu· Curated for High School Educators · Last Updated: April 2026</p>
+  <p>All resources are free to access. Please share this collection with colleagues and students!</p>
+
+<!-- ========== JAVASCRIPT — Scroll Animations & Active Nav ========== -->
+<script>
+(function() {
+  'use strict';
+
+  // Intersection Observer for card entrance animations
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px 0px -60px 0px',
+    threshold: 0.1
+  };
+
+  const animateOnScroll = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        // Stagger animation by index within the same batch
+        const siblings = Array.from(entry.target.parentElement.children);
+        const idx = siblings.indexOf(entry.target);
+        entry.target.style.transitionDelay = `${idx * 0.08}s`;
+        entry.target.classList.add('visible');
+        animateOnScroll.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  // Observe all animatable elements
+  document.querySelectorAll('.card, .webinar-card, .reflection-card').forEach(el => {
+    animateOnScroll.observe(el);
+  });
+
+  // Active nav link on scroll
+  const sections = document.querySelectorAll('.section');
+  const navLinks = document.querySelectorAll('.toc-link');
+
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -75% 0px', threshold: 0 });
+
+  sections.forEach(sec => navObserver.observe(sec));
+
+  // Smooth scroll for nav links
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Also handle section pill links
+  document.querySelectorAll('.section-pill').forEach(pill => {
+    pill.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(pill.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Presentation Slider Logic
+  const slideData = [
+    { title: "Social Media & Professional Development", content: "<p style='font-size:1.5rem; font-weight:600; color:var(--clr-text-bright)'>A Personal Reflection on PD in Your Pocket</p><br><p style='color:var(--clr-text-dim)'>Victor Moronu | High School Educator (9–12)<br>TEACH-NOW EdTech Program | April 2026</p>" },
+    { title: "What Is Social Media Professional Development?", content: "<p><strong>\"PD in your pocket.\" &nbsp; | &nbsp; \"PD from your couch.\"</strong></p><p>The constant availability of peer-driven, self-directed learning on platforms like Twitter/X, Instagram, LinkedIn, and YouTube.</p>" },
+    { title: "My Exploration Process", content: "<ul><li><strong>01</strong> Started with Hashtag Search (#edchat, #edtechchat)</li><li><strong>02</strong> Narrowed to High School Focus (#NGSS, #scichat)</li><li><strong>03</strong> \"Lurked\" in Live Twitter Chats to learn formatting</li><li><strong>04</strong> Followed Vetted Accounts (@keslerscience, @nsta)</li><li><strong>05</strong> Discovered Webinar Ecosystems (edWeb.net)</li></ul>" },
+    { title: "Key Finding #1: Hashtag Communities", content: "<ul><li><strong>#edchat / #edtechchat</strong>: Global discourse and tech integration</li><li><strong>#NGSS / #scichat</strong>: High school science standards & inquiry</li><li><strong>#PBLchat</strong>: Project-Based Learning design for capstone units</li><li><strong>#ObserveMe</strong>: Peer observation and professional vulnerability</li></ul>" },
+    { title: "Key Finding #2: Authoritative Accounts", content: "<ul><li><strong>@keslerscience</strong>: Inquiry-based labs, \"productive chaos\"</li><li><strong>@nsta</strong>: NGSS guidance, safety protocols, AI epistemology</li><li><strong>@thephysicsgirl</strong>: Advanced physics made accessible</li><li><strong>@principalkafele</strong>: Transformational leadership</li></ul>" },
+    { title: "Key Finding #3: Wakelet Transforms Curation", content: "<ul><li><strong>Substitution:</strong> Replace printed links with digital collections</li><li><strong>Augmentation:</strong> Embed PhET, videos, PDFs centrally</li><li><strong>Modification:</strong> Students curate own annotated collections</li><li><strong>Redefinition:</strong> Global classrooms co-curate datasets</li></ul>" },
+    { title: "Impact on My Teaching Practice", content: "<ul><li><strong>01.</strong> Blocking Mondays 8 PM for #edtechchat</li><li><strong>02.</strong> Wakelet replaces scattered bookmark folders</li><li><strong>03.</strong> Redesigning one lab using phenomena-based instruction</li><li><strong>04.</strong> Presenting the curated Wakelet to the HS science dept</li></ul>" },
+    { title: "Critical Evaluation: Core Benefits", content: "<ul><li><strong>✓ Eradicates Geographic Isolation:</strong> Levels playing field for rural contexts</li><li><strong>✓ Fosters Teacherpreneurship:</strong> Builds professional identity</li><li><strong>✓ Enables Democratic PD:</strong> Shifts from top-down compliance</li><li><strong>✓ Supports Continuous Learning:</strong> Maps to ISTE Standard 1</li></ul>" },
+    { title: "Challenges I Cannot Ignore", content: "<ul><li><strong>The Digital Divide:</strong> Unequal access to infrastructure</li><li><strong>Information Overload:</strong> Aesthetic comparisons lead to burnout</li><li><strong>Echo Chambers:</strong> Algorithms reinforce existing biases</li><li><strong>Commercialization:</strong> Influencers monetize learning materials</li></ul>" },
+    { title: "Reflection: Carry Forward", content: "<p>Professional development can no longer be a once-a-year event. It must be a daily, networked practice.</p><p>Intentionality transforms social media from noise into a precision learning tool.</p><p style='padding-left:1rem; border-left:4px solid var(--clr-accent-1); margin-top:2rem'><em>\"The EdTech professional must be the first teacher to all learners.\"</em></p>" }
+  ];
+
+  const slidesContainer = document.getElementById('slidesContainer');
+  const slideCounter = document.getElementById('currentSlide');
+  const prevBtn = document.getElementById('prevSlide');
+  const nextBtn = document.getElementById('nextSlide');
+  
+  if (slidesContainer) {
+    let currentIdx = 0;
+    
+    // Inject Slides
+    slideData.forEach((s, idx) => {
+      const li = document.createElement('li');
+      li.className = 'slide' + (idx === 0 ? ' active' : '');
+      li.innerHTML = `<h2>${s.title}</h2>${s.content}`;
+      slidesContainer.appendChild(li);
+    });
+
+    const updateSlider = () => {
+      slidesContainer.style.transform = `translateX(-${currentIdx * 100}%)`;
+      Array.from(slidesContainer.children).forEach((slide, idx) => {
+        slide.classList.toggle('active', idx === currentIdx);
+      });
+      slideCounter.innerText = currentIdx + 1;
+      prevBtn.disabled = currentIdx === 0;
+      nextBtn.disabled = currentIdx === slideData.length - 1;
+    };
+
+    prevBtn.addEventListener('click', () => { if (currentIdx > 0) { currentIdx--; updateSlider(); }});
+    nextBtn.addEventListener('click', () => { if (currentIdx < slideData.length - 1) { currentIdx++; updateSlider(); }});
+    updateSlider(); // initial state
+  }
+
+})();
+</script>
+
+</body>
+</html>
