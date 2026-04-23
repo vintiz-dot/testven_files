@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learning Theories Project — MTEC 02/2026 Cohort 2</title>
+<style>
+  :root {
+    --primary: #1f4e79;
+    --primary-dark: #12395b;
+    --accent: #2e86ab;
+    --light: #f4f7fa;
+    --border: #d6dde4;
+    --text: #1f2933;
+    --muted: #556676;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--text);
+    background: var(--light);
+    line-height: 1.6;
+  }
+  header.site {
+    background: var(--primary);
+    color: white;
+    padding: 24px 40px;
+    border-bottom: 4px solid var(--primary-dark);
+  }
+  header.site h1 {
+    margin: 0;
+    font-size: 28px;
+    letter-spacing: 0.3px;
+  }
+  header.site .sub {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-top: 4px;
+    font-style: italic;
+  }
+  nav.main {
+    background: var(--primary-dark);
+    padding: 0 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+  }
+  nav.main button {
+    background: transparent;
+    color: white;
+    border: none;
+    padding: 14px 18px;
+    font-family: Georgia, serif;
+    font-size: 14px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  nav.main button:hover {
+    background: rgba(255,255,255,0.08);
+  }
+  nav.main button.active {
+    background: rgba(255,255,255,0.15);
+    border-bottom-color: #f0b64b;
+  }
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 30px 80px;
+  }
+  .page { display: none; }
+  .page.active { display: block; }
+  h2 {
+    color: var(--primary);
+    font-size: 26px;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 8px;
+    margin-top: 0;
+  }
+  h3 {
+    color: var(--primary-dark);
+    font-size: 20px;
+    margin-top: 32px;
+  }
+  h4 {
+    color: var(--accent);
+    font-size: 17px;
+    margin-top: 20px;
+    margin-bottom: 6px;
+  }
+  .byline {
+    color: var(--muted);
+    font-style: italic;
+    font-size: 14px;
+    margin-top: -8px;
+    margin-bottom: 20px;
+  }
+  .example-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--accent);
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .example-card h3 {
+    margin-top: 0;
+    color: var(--primary);
+  }
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    background: var(--light);
+    padding: 10px 14px;
+    border-radius: 4px;
+    margin: 10px 0 14px;
+    font-size: 14px;
+  }
+  .meta-row span { color: var(--muted); }
+  .meta-row strong { color: var(--primary-dark); }
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: white;
+    font-size: 15px;
+  }
+  .comparison-table th, .comparison-table td {
+    border: 1px solid var(--border);
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  .comparison-table th {
+    background: var(--primary);
+    color: white;
+    font-family: Georgia, serif;
+  }
+  .comparison-table tr:nth-child(even) td { background: var(--light); }
+  ul, ol { padding-left: 24px; }
+  ul li, ol li { margin-bottom: 4px; }
+  .callout {
+    background: #fff8e1;
+    border-left: 4px solid #f0b64b;
+    padding: 14px 18px;
+    margin: 20px 0;
+    font-size: 15px;
+  }
+  .reference-list {
+    font-size: 14px;
+    background: white;
+    padding: 16px 20px 16px 40px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  .reference-list li {
+    margin-bottom: 10px;
+    text-indent: -22px;
+    padding-left: 22px;
+  }
+  footer.site {
+    text-align: center;
+    padding: 20px;
+    color: var(--muted);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+    background: white;
+  }
+  a { color: var(--accent); }
+  a:hover { color: var(--primary-dark); }
+  .ack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .ack-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    padding: 14px 18px;
+    border-radius: 4px;
+  }
+  .ack-card .name { font-weight: bold; color: var(--primary-dark); font-size: 16px; }
+  .ack-card .contrib { font-size: 14px; color: var(--muted); margin-top: 4px; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <h1>Learning Theories Project</h1>
+  <div class="sub">MTEC 02/2026 Cohort 2 &middot; Module 42, Activity 1: Instructional Design — From Theory to Practice</div>
+</header>
+
+<nav class="main" id="mainNav">
+  <button data-target="home" class="active">Home</button>
+  <button data-target="robotics">Educational Robotics &amp; Constructionism</button>
+  <button data-target="elearning">E-Learning Theory</button>
+  <button data-target="ocl">Online Collaborative Learning</button>
+  <button data-target="disinhibition">Online Disinhibition Effect</button>
+  <button data-target="blooms">Bloom's Domains of Learning</button>
+  <button data-target="ack">Acknowledgements &amp; Citations</button>
+</nav>
+
+<main>
+
+<!-- ============================ HOME ============================ -->
+<section id="home" class="page active">
+  <h2>Welcome to Our Learning Theories Project</h2>
+  <p>This site explores how learning theories and instructional design models support effective teaching and student learning in today's technology-rich classrooms. Each section highlights a different learning theory and includes real classroom examples that show how technology can be used to support collaboration, engagement, and critical thinking.</p>
+  <p>Our goal is to connect theory to real classroom practice and demonstrate how thoughtful instructional design helps teachers create meaningful learning experiences for students.</p>
+
+  <h3>From Classic Theories to Technology-Based Theories</h3>
+  <p>Modern media- and technology-based learning theories did not emerge in a vacuum. They build on — and in some cases push back against — classical theories of how people learn. A quick comparison helps frame the four theories in the sections that follow.</p>
+
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Classical Theory</th>
+        <th>Core Idea</th>
+        <th>Connection to Technology-Based Theories</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Behaviorism</strong> (Skinner, Pavlov)</td>
+        <td>Learning is a change in observable behavior shaped by stimulus, response, and reinforcement.</td>
+        <td>Drill-and-practice apps, gamified feedback loops, and adaptive quizzes in <em>E-Learning Theory</em> still echo behaviorist reinforcement.</td>
+      </tr>
+      <tr>
+        <td><strong>Cognitivism</strong> (Miller, Sweller)</td>
+        <td>The mind processes information like a system with limited working memory.</td>
+        <td><em>E-Learning Theory</em> (Mayer, Sweller, Moreno) is a direct descendant — Cognitive Load Theory is its backbone.</td>
+      </tr>
+      <tr>
+        <td><strong>Constructivism</strong> (Piaget, Vygotsky)</td>
+        <td>Learners actively build knowledge through experience and social interaction.</td>
+        <td><em>Educational Robotics &amp; Constructionism</em> (Papert) extends this — students learn best when building something shareable. <em>Online Collaborative Learning</em> extends Vygotsky's social construction to digital spaces.</td>
+      </tr>
+      <tr>
+        <td><strong>Humanism &amp; Identity Theories</strong></td>
+        <td>Learning is shaped by motivation, self-concept, and the social contexts students inhabit.</td>
+        <td>The <em>Online Disinhibition Effect</em> explains how students' online identities and perceived anonymity change how they learn, contribute, and behave.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <strong>How to navigate this site:</strong> Use the navigation bar at the top to move between each theory. Each theory section includes a definition, key features, two classroom examples (with grade band, subject, purpose, scope, activities, tools, and resources), and references. The Acknowledgements page credits each cohort member's contribution.
+  </div>
+</section>
+
+<!-- ============================ EDUCATIONAL ROBOTICS ============================ -->
+<section id="robotics" class="page">
+  <h2>Educational Robotics and Constructionism</h2>
+  <div class="byline">Contributed by Dante</div>
+
+  <h3>What Is Educational Robotics &amp; Constructionism?</h3>
+  <p>Educational Robotics is the use of programmable robots and robotics kits as hands-on learning tools in the classroom. It is grounded in <strong>Constructionism</strong>, a theory developed by Seymour Papert (1980) that extends Piaget's constructivism: students learn best when they are actively <em>constructing</em> a tangible, shareable object that matters to them. Building and debugging a robot becomes the vehicle for learning math, science, engineering, computational thinking, and problem-solving.</p>
+
+  <h3>Key Features</h3>
+  <ul>
+    <li>Learning happens through <strong>making and building</strong>, not just listening.</li>
+    <li>Students move through iterative cycles of designing, coding, testing, and debugging.</li>
+    <li>Errors are reframed as data — a robot that doesn't move is a puzzle to solve, not a failure.</li>
+    <li>Collaboration, peer teaching, and sharing finished projects are central.</li>
+    <li>Abstract STEM concepts (angles, forces, variables, conditionals) become concrete through physical outcomes.</li>
+  </ul>
+
+  <h3>When Should You Use Educational Robotics?</h3>
+  <p>Educational Robotics is most powerful when the goal is to develop computational thinking, engineering design, and persistence — and when there is time for iteration. It fits naturally into STEM units, maker spaces, after-school programs, and cross-curricular projects. It works across grade bands, from early-elementary tactile kits through advanced secondary engineering electives.</p>
+
+  <div class="example-card">
+    <h3>Classroom Example 1: Bee-Bot Mapping Adventure</h3>
+    <div class="meta-row">
+      <span><strong>Grade Band:</strong> Pre-K – 2nd Grade</span>
+      <span><strong>Subject Area:</strong> Mathematics &amp; Early Literacy</span>
+    </div>
+
+    <h4>Purpose</h4>
+    <p>To introduce young students to foundational computational thinking — sequencing, directionality, and debugging — while reinforcing early math (counting, spatial reasoning) and literacy (letter and story recognition).</p>
+
+    <h4>Description &amp; Scope of Use</h4>
+    <p>Students program a Bee-Bot (a small, floor-based robot with arrow buttons) to travel across a themed floor mat — for example, a mat with letters, numbers, or scenes from a story. Working in pairs, students plan a sequence of moves on a "coding strip" before pressing the buttons, then test and revise. This activity can be used across a 3–4 week unit as a weekly 30-minute station.</p>
+
+    <h4>Activities</h4>
+    <ol>
+      <li>Pre-activity: read a picture book or review target letters/numbers.</li>
+      <li>Students sketch the robot's path on a paper grid.</li>
+      <li>Students translate the path into a sequence of arrow presses.</li>
+      <li>Students run the program; when the Bee-Bot lands off-target, they debug.</li>
+      <li>Pairs share their successful sequences with another pair.</li>
+    </ol>
+
+    <h4>Tools &amp; Resources</h4>
+    <ul>
+      <li>Bee-Bot robots (or the free Bee-Bot app as a low-cost alternative)</li>
+      <li>Printed themed floor mats (alphabet, number line, story map)</li>
+      <li>Teacher-made "coding strips" for pre-planning</li>
+      <li>Reference: <a href="https://www.terrapinlogo.com/bee-bot.html" target="_blank" rel="noopener">Terrapin Bee-Bot Teacher Resources</a></li>
+    </ul>
+  </div>
+
+  <div class="example-card">
+    <h3>Classroom Example 2: LEGO SPIKE Prime Engineering Design Challenge</h3>
+    <div class="meta-row">
+      <span><strong>Grade Band:</strong> Secondary (6th – 8th Grade)</span>
+      <span><strong>Subject Area:</strong> STEM / Engineering &amp; Physical Science</span>
+    </div>
+
+    <h4>Purpose</h4>
+    <p>To have students apply the engineering design process to a constraint-based problem — designing, building, programming, and iterating on a robot that completes a defined task — while making Newton's laws of motion, gear ratios, and conditional logic concrete.</p>
+
+    <h4>Description &amp; Scope of Use</h4>
+    <p>Over a 4–6 week unit, teams of 3–4 students design a robot that must navigate an obstacle course, deliver a payload, and return to base within a time limit. Students document their iterations in an engineering notebook, including sketches, pseudocode, test data, and reflections on failed attempts.</p>
+
+    <h4>Activities</h4>
+    <ol>
+      <li>Introduction: analyze the challenge rubric and constraints.</li>
+      <li>Design sprint: sketch three candidate designs; justify one.</li>
+      <li>Build and program using the SPIKE App's block-based environment.</li>
+      <li>Run timed trials; log data on distance, time, and failure points.</li>
+      <li>Iterate — redesign chassis, gear ratios, or code based on data.</li>
+      <li>Final showcase with a short oral defense of design choices.</li>
+    </ol>
+
+    <h4>Tools &amp; Resources</h4>
+    <ul>
+      <li>LEGO Education SPIKE Prime kits (or VEX IQ as an alternative)</li>
+      <li>SPIKE App (Word Blocks and Python modes)</li>
+      <li>Engineering notebooks (physical or Google Docs templates)</li>
+      <li>Obstacle course materials: masking tape, cardboard, weighted objects</li>
+      <li>Reference: <a href="https://education.lego.com/en-us/products/lego-education-spike-prime-set/" target="_blank" rel="noopener">LEGO Education SPIKE Prime</a></li>
+      <li>Reference: FIRST LEGO League Challenge resources — <a href="https://www.firstlegoleague.org/" target="_blank" rel="noopener">firstlegoleague.org</a></li>
+    </ul>
+  </div>
+
+  <h3>References</h3>
+  <ol class="reference-list">
+    <li>Alimisis, D. (2013). Educational robotics: Open questions and new challenges. <em>Themes in Science and Technology Education, 6</em>(1), 63–71.</li>
+    <li>Papert, S. (1980). <em>Mindstorms: Children, computers, and powerful ideas.</em> Basic Books.</li>
+    <li>LEGO Education. (n.d.). <em>SPIKE Prime set.</em> https://education.lego.com/en-us/products/lego-education-spike-prime-set/</li>
+    <li>Terrapin. (n.d.). <em>Bee-Bot teacher resources.</em> https://www.terrapinlogo.com/bee-bot.html</li>
+  </ol>
+</section>
+
+<!-- ============================ E-LEARNING THEORY ============================ -->
+<section id="elearning" class="page">
+  <h2>E-Learning Theory</h2>
+  <div class="byline">Contributed by Mahali</div>
+
+  <h3>Overview</h3>
+  <p>E-Learning Theory explains how students learn using digital tools such as computers, tablets, videos, and online platforms. This theory is based on how the brain processes information. It focuses on using simple, clear, and well-designed digital lessons to help students understand and remember information better. E-learning works best when lessons include pictures, short text, audio, and interactive activities instead of long lectures.</p>
+  <p>E-Learning Theory is connected to Cognitive Learning Theory and Cognitive Load Theory. These ideas say students learn better when information is not too much at one time and when lessons are broken into small parts.</p>
+
+  <h3>Definition &amp; Purpose</h3>
+  <p>E-Learning Theory is a learning theory that explains how technology can be used to support learning in an effective way. It focuses on how digital tools should be designed and used so students can understand information easily, stay engaged, and remember what they learn. The theory explains that learning improves when digital lessons are simple, organized, and interactive.</p>
+
+  <h3>Key Features</h3>
+  <ul>
+    <li>Uses digital tools such as videos, simulations, and online platforms.</li>
+    <li>Presents information in small, clear sections.</li>
+    <li>Uses pictures, text, and audio together to support understanding.</li>
+    <li>Encourages active learning through interaction.</li>
+    <li>Provides feedback to support learning.</li>
+    <li>Reduces information overload for students.</li>
+  </ul>
+
+  <div class="example-card">
+    <h3>Classroom Example 1: Engineering Design Using Online Videos</h3>
+    <div class="meta-row">
+      <span><strong>Grade Band:</strong> 5th Grade (Elementary)</span>
+      <span><strong>Subject Area:</strong> STEM (Engineering)</span>
+    </div>
+    <h4>Purpose</h4>
+    <p>The purpose of this lesson is to help students learn the engineering design process. Students watch short instructional videos and then design a simple structure using classroom materials. E-Learning Theory is applied by using short videos, clear instructions, and visual examples — respecting working memory limits.</p>
+    <h4>Activities</h4>
+    <ol>
+      <li>Students watch a short video about building strong bridges.</li>
+      <li>They plan and draw their design.</li>
+      <li>Students build and test their structure.</li>
+    </ol>
+    <h4>Tools &amp; Resources</h4>
+    <ul>
+      <li>YouTube or teacher-made videos</li>
+      <li>Google Slides or Google Drawings</li>
+      <li>Building materials (paper, straws, tape)</li>
+    </ul>
+  </div>
+
+  <div class="example-card">
+    <h3>Classroom Example 2: Coding with Guided Online Lessons</h3>
+    <div class="meta-row">
+      <span><strong>Grade Band:</strong> 3rd – 5th Grade (Elementary)</span>
+      <span><strong>Subject Area:</strong> STEM (Technology)</span>
+    </div>
+    <h4>Purpose</h4>
+    <p>This activity introduces basic coding skills using an online platform. The purpose is to help students learn problem-solving through guided, interactive lessons. E-Learning Theory supports learning through short lessons, visual cues, and immediate practice.</p>
+    <h4>Activities</h4>
+    <ol>
+      <li>Students complete short coding puzzles.</li>
+      <li>Instructions are given one step at a time.</li>
+      <li>Students receive feedback if the code works or not.</li>
+    </ol>
+    <h4>Tools &amp; Resources</h4>
+    <ul>
+      <li>Code.org</li>
+      <li>Classroom computers or tablets</li>
+      <li>Teacher monitoring and support</li>
+    </ul>
+  </div>
+
+  <h3>References</h3>
+  <ol class="reference-list">
+    <li>He, H. (2020). <em>E-Learning theory.</em> In Theoretical Models for Teaching and Research. Washington State University Open Text. https://opentext.wsu.edu/theoreticalmodelsforteachingandresearch/chapter/e-learning-theory/</li>
+    <li>Mayer, R. E., Sweller, J., &amp; Moreno, R. (2015). <em>E-Learning theory.</em> Learning-Theories.com. https://learning-theories.com/e-learning-theory-mayer-sweller-moreno.html</li>
+    <li>Wikipedia contributors. (2026). <em>E-learning (theory).</em> Wikipedia. https://en.wikipedia.org/wiki/E-learning_(theory)</li>
+    <li>PhET Interactive Simulations. (n.d.). University of Colorado Boulder. https://phet.colorado.edu/</li>
+    <li>Khan Academy. (n.d.). https://www.khanacademy.org/</li>
+    <li>Code.org. (n.d.). https://code.org/</li>
+    <li>21K School. (n.d.). <em>10 benefits of e-learning for students.</em> https://www.21kschool.com/bd/blog/benefits-of-e-learning/</li>
+  </ol>
+</section>
+
+<!-- ============================ ONLINE COLLABORATIVE LEARNING ============================ -->
+<section id="ocl" class="page">
+  <h2>Online Collaborative Learning Theory</h2>
+  <div class="byline">Contributed by Ryan</div>
+
+  <h3>Definition</h3>
+  <p>Online Collaborative Learning (OCL) Theory focuses on learning through discussion, teamwork, and shared problem solving using digital tools. Instead of students working alone, they interact with each other to build understanding together. Technology supports communication, idea sharing, and group learning, allowing students to learn from both the teacher and their peers.</p>
+  <p>In elementary classrooms, Online Collaborative Learning helps students practice communication skills, explain their thinking, and support each other's learning while using digital tools such as Chromebooks and collaborative platforms.</p>
+
+  <h3>Key Features of Online Collaborative Learning Theory</h3>
+  <ul>
+    <li>Students learn through discussion and teamwork.</li>
+    <li>Learning happens through shared ideas.</li>
+    <li>Technology supports communication.</li>
+    <li>Students explain their thinking to others.</li>
+    <li>Teachers guide and facilitate collaboration.</li>
+  </ul>
+
+  <div class="example-card">
+    <h3>Classroom Example 1: Nearpod Collaborative Board for Literacy Discussions</h3>
+    <div class="meta-row">
+      <span><strong>Grade Band:</strong> Elementary (2nd – 4th Grade)</span>
+      <span><strong>Subject Area:</strong> Literacy</span>
+    </div>
+    <h4>Purpose</h4>
+    <p>The purpose of this activity is to help students build reading comprehension skills while working together in a digital environment. Students collaborate to share their understanding of a reading passage and respond to classmates' ideas.</p>
+    <h4>Description &amp; Scope of Use</h4>
+    <p>Students read a short passage during a literacy lesson. After reading, students respond to a comprehension question using the Nearpod Collaborative Board. Each student posts their response and reads classmates' responses. Students are encouraged to agree, disagree, or build on ideas shared by peers. This activity can be used weekly during reading comprehension lessons or small group literacy instruction.</p>
+    <h4>Activities</h4>
+    <ul>
+      <li>Read a short passage.</li>
+      <li>Respond to comprehension questions.</li>
+      <li>Share responses on a collaborative board.</li>
+      <li>Review classmates' responses.</li>
+      <li>Discuss similarities and differences in answers.</li>
+    </ul>
+    <h4>Tools &amp; Resources</h4>
+    <ul>
+      <li>Nearpod</li>
+      <li>Chromebooks</li>
+      <li>Digital reading passages</li>
+      <li>Teacher-created comprehension questions</li>
+    </ul>
+  </div>
+
+  <div class="example-card">
+    <h3>Classroom Example 2: Google Classroom Peer Response Writing Activity</h3>
+    <div class="meta-row">
+      <span><strong>Grade Band:</strong> Elementary (3rd – 4th Grade)</span>
+      <span><strong>Subject Area:</strong> Writing / Reading Comprehension</span>
+    </div>
+    <h4>Purpose</h4>
+    <p>The purpose of this activity is to help students improve comprehension and writing skills through peer interaction and collaboration.</p>
+    <h4>Description &amp; Scope of Use</h4>
+    <p>Students complete a written response to a reading prompt in Google Classroom. After submitting their response, students read responses from assigned classmates and leave positive feedback or questions. This encourages students to reflect on their own work while learning from others. This activity can be used during writing instruction or comprehension lessons throughout the school year.</p>
+    <h4>Activities</h4>
+    <ul>
+      <li>Respond to reading prompt.</li>
+      <li>Submit writing response digitally.</li>
+      <li>Review peer responses.</li>
+      <li>Provide feedback or ask questions.</li>
+      <li>Reflect on feedback received.</li>
+    </ul>
+    <h4>Tools &amp; Resources</h4>
+    <ul>
+      <li>Google Classroom</li>
+      <li>Chromebooks</li>
+      <li>Writing prompts</li>
+      <li>Digital discussion tools</li>
+    </ul>
+  </div>
+
+  <h3>Benefits of Online Collaborative Learning</h3>
+  <ul>
+    <li>Encourages student discussion.</li>
+    <li>Builds communication skills.</li>
+    <li>Promotes teamwork.</li>
+    <li>Supports deeper thinking.</li>
+    <li>Increases student engagement.</li>
+    <li>Allows teachers to monitor student understanding.</li>
+  </ul>
+
+  <h3>Real-World Classroom Connection</h3>
+  <p>Online Collaborative Learning fits well in classrooms where students use Chromebooks and digital learning tools. In a 1:1 Chromebook environment, students can easily interact with peers through shared digital platforms. Collaborative literacy tools like Nearpod and Google Classroom allow students to participate in group discussions, share responses, and build understanding together. These tools support both whole-group instruction and small-group learning.</p>
+
+  <h3>References</h3>
+  <ol class="reference-list">
+    <li>Harasim, L. (2017). <em>Learning theory and online technologies</em> (2nd ed.). Routledge.</li>
+    <li>Mayer, R. E. (2014). <em>The Cambridge handbook of multimedia learning</em> (2nd ed.). Cambridge University Press.</li>
+    <li>Picciano, A. G. (2017). Theories and frameworks for online education: Seeking an integrated model. <em>Online Learning, 21</em>(3), 166–190.</li>
+  </ol>
+</section>
+
+<!-- ============================ ONLINE DISINHIBITION EFFECT ============================ -->
+<section id="disinhibition" class="page">
+  <h2>The Online Disinhibition Effect</h2>
+  <div class="byline">Contributed by Victor</div>
+
+  <h3>Definition</h3>
+  <p>The <strong>Online Disinhibition Effect</strong>, first described by psychologist John Suler (2004), refers to the way people loosen up, behave, and express themselves differently online than they do face-to-face. In digital environments, students often feel less constrained by social norms. That disinhibition can cut two ways. <strong>Benign disinhibition</strong> shows up when a student who is quiet in class posts a thoughtful, vulnerable response in a discussion board. <strong>Toxic disinhibition</strong> shows up as flaming, trolling, or cyberbullying behind a username.</p>
+
+  <h3>Suler's Six Factors</h3>
+  <p>Suler identified six interacting factors that explain why online behavior shifts:</p>
+  <ol>
+    <li><strong>Dissociative anonymity</strong> — "You don't know me."</li>
+    <li><strong>Invisibility</strong> — "You can't see me."</li>
+    <li><strong>Asynchronicity</strong> — "See you later." Replies don't have to be in real time.</li>
+    <li><strong>Solipsistic introjection</strong> — "It's all in my head." Students imagine the other party's tone.</li>
+    <li><strong>Dissociative imagination</strong> — "It's just a game." Online feels separate from real life.</li>
+    <li><strong>Minimizing authority</strong> — Hierarchy and status cues are weaker online.</li>
+  </ol>
+
+  <h3>Why It Matters for Secondary Classrooms</h3>
+  <p>Adolescents live much of their social life online. Secondary teachers cannot ignore the disinhibition effect — students already experience it on social media, in group chats, in gaming platforms, and in the comment sections of whatever video they watched last night. Instructional design at the secondary level should do two things at once: <strong>harness</strong> benign disinhibition to surface voices that rarely speak up in class, and <strong>intentionally teach against</strong> toxic disinhibition by building digital citizenship, empathy, and perspective-taking into the curriculum.</p>
+
+  <h3>Key Features</h3>
+  <ul>
+    <li>Online identity and perceived anonymity change how students contribute.</li>
+    <li>Quieter or marginalized students often participate more in digital spaces.</li>
+    <li>Asynchronous tools reduce social pressure and allow more reflective responses.</li>
+    <li>Without intentional norms, the same conditions can enable harmful behavior.</li>
+    <li>Effective instruction names the effect explicitly so students can recognize it in themselves.</li>
+  </ul>
+
+  <div class="example-card">
+    <h3>Classroom Example 1: Anonymous Padlet "Bystander to Upstander" Digital Citizenship Unit</h3>
+    <div class="meta-row">
+      <span><strong>Grade Band:</strong> Secondary (9th – 10th Grade)</span>
+      <span><strong>Subject Area:</strong> English Language Arts &amp; Health / Advisory</span>
+    </div>
+
+    <h4>Purpose</h4>
+    <p>To make the Online Disinhibition Effect visible and discussable. Students analyze real-world cyberbullying case studies, recognize Suler's six factors in action, and move from being passive bystanders to becoming <em>upstanders</em> who intervene — both online and off. The dual goal is to build empathy and to give students metacognitive language for their own online behavior.</p>
+
+    <h4>Description &amp; Scope of Use</h4>
+    <p>This is a two-week unit of daily 45-minute lessons, co-taught by the ELA teacher and a school counselor or health teacher. It is designed to use the mechanics of anonymity (benign disinhibition) to get students to share honestly about their own digital experiences, while simultaneously teaching them why those same mechanics can produce toxic behavior. The unit culminates in a student-designed digital citizenship pledge for the school.</p>
+
+    <h4>Activities</h4>
+    <ol>
+      <li><strong>Day 1–2:</strong> Anchor reading — excerpts from Suler's <em>The Online Disinhibition Effect</em>, paired with short video case studies (Common Sense Education).</li>
+      <li><strong>Day 3:</strong> Anonymous Padlet wall — "Describe a time you saw or experienced something online that would never happen in person." Students post anonymously; teacher moderates for safety. The class then labels posts with Suler's six factors.</li>
+      <li><strong>Day 4–6:</strong> Analyze three anonymized student scenarios in small groups. Groups identify which factor(s) drove each behavior and propose an intervention.</li>
+      <li><strong>Day 7–8:</strong> Role-play in Flip (formerly Flipgrid): students record 60-second videos practicing upstander language ("Hey, not cool" / reporting / supporting the target).</li>
+      <li><strong>Day 9–10:</strong> Co-author a classroom digital citizenship pledge in Google Docs and share it with the school principal for adoption.</li>
+    </ol>
+
+    <h4>Tools &amp; Resources</h4>
+    <ul>
+      <li>Padlet (with anonymous posting enabled) — <a href="https://padlet.com/" target="_blank" rel="noopener">padlet.com</a></li>
+      <li>Flip for asynchronous video reflection — <a href="https://info.flip.com/" target="_blank" rel="noopener">info.flip.com</a></li>
+      <li>Common Sense Education Digital Citizenship Curriculum, Grade 9–10 — <a href="https://www.commonsense.org/education/digital-citizenship" target="_blank" rel="noopener">commonsense.org/education/digital-citizenship</a></li>
+      <li>Suler (2004) excerpts (teacher-prepared handout)</li>
+      <li>Google Docs (shared pledge)</li>
+      <li>School counselor as co-facilitator</li>
+    </ul>
+  </div>
+
+  <div class="example-card">
+    <h3>Classroom Example 2: Anonymous Peer Writing Feedback in a Junior/Senior English Workshop</h3>
+    <div class="meta-row">
+      <span><strong>Grade Band:</strong> Secondary (11th – 12th Grade)</span>
+      <span><strong>Subject Area:</strong> English Language Arts (Writing Workshop)</span>
+    </div>
+
+    <h4>Purpose</h4>
+    <p>To leverage <em>benign</em> disinhibition — the same mechanism that can enable trolling — for a constructive end: honest, thoughtful peer feedback on student writing. Juniors and seniors often self-censor feedback to protect friendships or avoid conflict. Carefully structured anonymity paired with explicit norms can produce richer, more specific critique while also teaching students to recognize the conditions that shape their own online voice.</p>
+
+    <h4>Description &amp; Scope of Use</h4>
+    <p>Used recurrently across a semester-long writing workshop for college-prep and AP English, typically once per major essay (4–5 cycles per semester). The teacher creates anonymized feedback loops using a shared Google Form feeding a blind-review spreadsheet — drafts go out with pseudonyms only. Before each cycle, the class reviews the norms they themselves authored, which are grounded explicitly in Suler's framework so students know <em>why</em> the protocol exists.</p>
+
+    <h4>Activities</h4>
+    <ol>
+      <li><strong>Cycle 1 (norm-setting):</strong> Students read Suler (2004) in excerpt form and discuss: "What would make this peer-review space produce benign disinhibition instead of toxic?" They draft a class norms charter.</li>
+      <li><strong>Drafting:</strong> Students submit essay drafts to the teacher, who strips names and assigns pseudonyms.</li>
+      <li><strong>Blind review:</strong> Each student receives two anonymized drafts via a Google Form and submits feedback using a rubric (strengths, growth areas, one line-level edit, one big-picture suggestion).</li>
+      <li><strong>Return:</strong> Authors receive anonymized feedback through the teacher.</li>
+      <li><strong>Reflection:</strong> Authors write a one-paragraph reflection on whether the feedback felt more or less candid than in-person critique, and why — naming which of Suler's factors were at work.</li>
+      <li><strong>Optional reveal:</strong> Reviewers can choose whether to reveal themselves; this itself becomes a discussion point about ownership of online speech.</li>
+    </ol>
+
+    <h4>Tools &amp; Resources</h4>
+    <ul>
+      <li>Google Forms + Google Sheets (for anonymized intake)</li>
+      <li>Google Docs with suggesting/commenting mode</li>
+      <li>Teacher-designed peer-review rubric aligned to the essay outcome</li>
+      <li>Class-authored "Norms Charter" (displayed in the room and on the LMS)</li>
+      <li>Suler (2004) excerpts</li>
+      <li>Optional: Canvas or Schoology Discussion Boards for extension conversations</li>
+    </ul>
+  </div>
+
+  <h3>Real-World Classroom Connection</h3>
+  <p>Secondary students arrive in class already fluent in online disinhibition — they have experienced both its benign and toxic forms in group chats, on TikTok comments, and in Discord servers. Teachers who ignore the effect leave it to operate invisibly. Teachers who name it give students a vocabulary for their own behavior, and an instructional designer can deliberately engineer classroom tools so that anonymity serves learning rather than undermining it.</p>
+
+  <h3>References</h3>
+  <ol class="reference-list">
+    <li>Suler, J. (2004). The online disinhibition effect. <em>CyberPsychology &amp; Behavior, 7</em>(3), 321–326. https://doi.org/10.1089/1094931041291295</li>
+    <li>Lapidot-Lefler, N., &amp; Barak, A. (2012). Effects of anonymity, invisibility, and lack of eye-contact on toxic online disinhibition. <em>Computers in Human Behavior, 28</em>(2), 434–443.</li>
+    <li>Common Sense Education. (n.d.). <em>Digital citizenship curriculum.</em> https://www.commonsense.org/education/digital-citizenship</li>
+    <li>Padlet. (n.d.). https://padlet.com/</li>
+    <li>Flip. (n.d.). Microsoft. https://info.flip.com/</li>
+    <li>Ribble, M. (2015). <em>Digital citizenship in schools: Nine elements all students should know</em> (3rd ed.). International Society for Technology in Education.</li>
+  </ol>
+</section>
+
+<!-- ============================ BLOOM'S DOMAINS ============================ -->
+<section id="blooms" class="page">
+  <h2>Bloom's Domains of Learning</h2>
+  <div class="byline">Contributed by Kevin</div>
+
+  <p>Bloom's Domains of Learning describe three broad categories of educational objectives — the cognitive (thinking), affective (feeling), and psychomotor (doing) domains. This section illustrates how Bloom's framework can be applied in the classroom across elementary and secondary grade bands.</p>
+
+  <div class="example-card">
+    <h3>Example 1: Mini Shoebox Ecosystem Project</h3>
+    <div class="meta-row">
+      <span><strong>Grade Band:</strong> Elementary (Grade 5)</span>
+      <span><strong>Subject Area:</strong> Science — Plants and Ecosystems</span>
+    </div>
+
+    <h4>Purpose</h4>
+    <p>Specifically, the cognitive aspect of Bloom's Domain will enable the students to move from remembering plant parts to analyzing how environments affect growth. Fifth grade is a strong fit because students are still curious about the world around them but old enough to research and execute a final product.</p>
+
+    <h4>Activities</h4>
+    <ol>
+      <li>Label Plant and Ecosystem Diagrams (Remember / Understand)</li>
+      <li>Growing Plants Observations (Apply / Analyze)</li>
+      <li>Class Discussion &amp; Critique (Analyze / Evaluate)</li>
+      <li>Present Final Shoebox Ecosystem Project (Create)</li>
+    </ol>
+
+    <h4>Tools &amp; Resources</h4>
+    <ul>
+      <li>Classroom plants, worksheets, notebooks, shoeboxes, science lab materials, scissors, papers, glue, tape, construction paper, markers, pencils, sharpeners, erasers, paint</li>
+      <li><a href="https://www.diy.org/challenges/create-a-habitat-diorama" target="_blank" rel="noopener">DIY: Create a Habitat Diorama</a></li>
+      <li><a href="https://littlebinsforlittlehands.com/animal-habitat-projects/" target="_blank" rel="noopener">Little Bins for Little Hands: Animal Habitat Projects</a></li>
+    </ul>
+
+    <h4>Usage &amp; Specific Strategies</h4>
+    <ol>
+      <li>Use comprehension-check questions like "Why is this part of the plant called the root?" or "Why did this plant grow better than the other ones?"</li>
+      <li>Scaffold steps.</li>
+      <li>Use the think-pair-share method as a class for the critique (Analyze stage).</li>
+      <li>Always provide a rubric for each project.</li>
+    </ol>
+  </div>
+
+  <div class="example-card">
+    <h3>Example 2: Create an Alternate Ending or Extra Scene</h3>
+    <div class="meta-row">
+      <span><strong>Grade Band:</strong> Secondary (Grade 10)</span>
+      <span><strong>Subject Area:</strong> Literature</span>
+    </div>
+
+    <h4>Purpose</h4>
+    <p>The comprehensive aspect of Bloom's Domain will enable students to expand their abilities — showing progress in how they critique, evaluate, and interpret what's happening in a story.</p>
+
+    <h4>Activities</h4>
+    <ol>
+      <li>Written Summaries and Quizzes Based on the Reading (Remember / Understand)</li>
+      <li>Theme-Driven Summaries and Character Biographies based on student choice (Analyze)</li>
+      <li>Class Debates on Story Outcomes, Character Development, and Author Intentions (Evaluate)</li>
+      <li>Presentation of a Final Written Alternate Ending or an Added Scene to the Story (Create)</li>
+    </ol>
+
+    <h4>Tools &amp; Resources</h4>
+    <ul>
+      <li>Pens, worksheets, notebooks, papers, novels, rubrics, discussion points, prompts or flashcards, computers</li>
+      <li><a href="https://writingexercises.co.uk/plotgenerator.php" target="_blank" rel="noopener">Writing Exercises: Plot Generator</a></li>
+      <li><a href="https://www.storyboardthat.com/literature-library" target="_blank" rel="noopener">Storyboard That: Literature Library</a></li>
+    </ul>
+
+    <h4>Usage &amp; Specific Strategies</h4>
+    <ol>
+      <li>Use multi-layered questions like "What happened and why? Do you agree with the outcome of the story?"</li>
+      <li>Students demonstrate analytical thinking by writing a one-page summary of the story's themes.</li>
+      <li>Use peer assessments for the debate (Evaluation step).</li>
+      <li>Students attach a minimum one-page brief of either an argumentative or persuasive article explaining why they chose that particular alternate ending or added scene.</li>
+    </ol>
+  </div>
+
+  <h3>References</h3>
+  <ol class="reference-list">
+    <li>DIY. (n.d.). <em>Create a habitat diorama.</em> https://www.diy.org/challenges/create-a-habitat-diorama</li>
+    <li>Little Bins for Little Hands. (n.d.). <em>Animal habitat projects.</em> https://littlebinsforlittlehands.com/animal-habitat-projects/</li>
+    <li>Writing Exercises. (n.d.). <em>Plot generator.</em> https://writingexercises.co.uk/plotgenerator.php</li>
+    <li>Storyboard That. (n.d.). <em>Literature library.</em> https://www.storyboardthat.com/literature-library</li>
+  </ol>
+</section>
+
+<!-- ============================ ACKNOWLEDGEMENTS ============================ -->
+<section id="ack" class="page">
+  <h2>Acknowledgements &amp; Citations</h2>
+
+  <p>This learning theories project was a collaborative effort of MTEC 02/2026 Cohort 2. Each member researched a learning theory, developed classroom examples, and contributed to the shared site. We are grateful to our instructor, <strong>Charles Guilford</strong>, for guidance throughout Module 42.</p>
+
+  <h3>Cohort Contributions</h3>
+  <div class="ack-grid">
+    <div class="ack-card">
+      <div class="name">Kevin</div>
+      <div class="contrib">Bloom's Domains of Learning — research, elementary and secondary classroom examples, references.</div>
+    </div>
+    <div class="ack-card">
+      <div class="name">Dante</div>
+      <div class="contrib">Educational Robotics &amp; Constructionism — theory summary and classroom applications across elementary and secondary grade bands.</div>
+    </div>
+    <div class="ack-card">
+      <div class="name">Mahali</div>
+      <div class="contrib">E-Learning Theory — overview, key features, and elementary STEM classroom examples using videos and interactive coding lessons.</div>
+    </div>
+    <div class="ack-card">
+      <div class="name">Ryan</div>
+      <div class="contrib">Online Collaborative Learning Theory — definition, key features, and elementary literacy and writing classroom examples.</div>
+    </div>
+    <div class="ack-card">
+      <div class="name">Victor</div>
+      <div class="contrib">Online Disinhibition Effect — theory summary grounded in Suler's six factors, and two secondary classroom examples applying both benign and toxic disinhibition.</div>
+    </div>
+  </div>
+
+  <h3>Consolidated References (APA 7th Edition)</h3>
+  <ol class="reference-list">
+    <li>Alimisis, D. (2013). Educational robotics: Open questions and new challenges. <em>Themes in Science and Technology Education, 6</em>(1), 63–71.</li>
+    <li>Common Sense Education. (n.d.). <em>Digital citizenship curriculum.</em> https://www.commonsense.org/education/digital-citizenship</li>
+    <li>DIY. (n.d.). <em>Create a habitat diorama.</em> https://www.diy.org/challenges/create-a-habitat-diorama</li>
+    <li>Flip. (n.d.). Microsoft. https://info.flip.com/</li>
+    <li>Harasim, L. (2017). <em>Learning theory and online technologies</em> (2nd ed.). Routledge.</li>
+    <li>He, H. (2020). E-Learning theory. In <em>Theoretical Models for Teaching and Research.</em> Washington State University Open Text. https://opentext.wsu.edu/theoreticalmodelsforteachingandresearch/chapter/e-learning-theory/</li>
+    <li>Khan Academy. (n.d.). https://www.khanacademy.org/</li>
+    <li>Lapidot-Lefler, N., &amp; Barak, A. (2012). Effects of anonymity, invisibility, and lack of eye-contact on toxic online disinhibition. <em>Computers in Human Behavior, 28</em>(2), 434–443. https://doi.org/10.1016/j.chb.2011.10.014</li>
+    <li>LEGO Education. (n.d.). <em>SPIKE Prime set.</em> https://education.lego.com/en-us/products/lego-education-spike-prime-set/</li>
+    <li>Little Bins for Little Hands. (n.d.). <em>Animal habitat projects.</em> https://littlebinsforlittlehands.com/animal-habitat-projects/</li>
+    <li>Mayer, R. E. (2014). <em>The Cambridge handbook of multimedia learning</em> (2nd ed.). Cambridge University Press.</li>
+    <li>Mayer, R. E., Sweller, J., &amp; Moreno, R. (2015). <em>E-Learning theory.</em> Learning-Theories.com. https://learning-theories.com/e-learning-theory-mayer-sweller-moreno.html</li>
+    <li>Padlet. (n.d.). https://padlet.com/</li>
+    <li>Papert, S. (1980). <em>Mindstorms: Children, computers, and powerful ideas.</em> Basic Books.</li>
+    <li>PhET Interactive Simulations. (n.d.). University of Colorado Boulder. https://phet.colorado.edu/</li>
+    <li>Picciano, A. G. (2017). Theories and frameworks for online education: Seeking an integrated model. <em>Online Learning, 21</em>(3), 166–190.</li>
+    <li>Ribble, M. (2015). <em>Digital citizenship in schools: Nine elements all students should know</em> (3rd ed.). International Society for Technology in Education.</li>
+    <li>Storyboard That. (n.d.). <em>Literature library.</em> https://www.storyboardthat.com/literature-library</li>
+    <li>Suler, J. (2004). The online disinhibition effect. <em>CyberPsychology &amp; Behavior, 7</em>(3), 321–326. https://doi.org/10.1089/1094931041291295</li>
+    <li>Terrapin. (n.d.). <em>Bee-Bot teacher resources.</em> https://www.terrapinlogo.com/bee-bot.html</li>
+    <li>Wikipedia contributors. (2026). <em>E-learning (theory).</em> Wikipedia. https://en.wikipedia.org/wiki/E-learning_(theory)</li>
+    <li>Writing Exercises. (n.d.). <em>Plot generator.</em> https://writingexercises.co.uk/plotgenerator.php</li>
+  </ol>
+</section>
+
+</main>
+
+<footer class="site">
+  MTEC 02/2026 Cohort 2 &middot; Module 42, Activity 1 &middot; Instructor: Charles Guilford &middot; Moreland University
+</footer>
+
+<script>
+  const buttons = document.querySelectorAll('nav.main button');
+  const pages = document.querySelectorAll('section.page');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.target;
+      buttons.forEach(b => b.classList.toggle('active', b === btn));
+      pages.forEach(p => p.classList.toggle('active', p.id === target));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+</script>
+
+</body>
+</html>

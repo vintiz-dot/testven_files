@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Disinhibition Effect (Victor)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #222;
+    background: #fff;
+    line-height: 1.55;
+  }
+
+  /* ---------- HEADER with halftone pattern ---------- */
+  .page-header {
+    position: relative;
+    background: #1a1a1a;
+    color: #ffffff;
+    padding: 80px 20px 70px;
+    text-align: center;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle, rgba(255,255,255,0.18) 1.5px, transparent 2px),
+      radial-gradient(circle, rgba(255,255,255,0.10) 1px, transparent 1.5px);
+    background-size: 22px 22px, 14px 14px;
+    background-position: 0 0, 11px 11px;
+    opacity: 0.85;
+    pointer-events: none;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0.2) 100%);
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0.2) 100%);
+  }
+  .page-header h1 {
+    position: relative;
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    line-height: 1.25;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .page-header .underline {
+    position: relative;
+    display: block;
+    width: 260px;
+    height: 3px;
+    background: #d7263d;
+    margin: 18px auto 0;
+  }
+
+  /* ---------- MAIN CONTAINER ---------- */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 20px 80px;
+  }
+
+  /* ---------- PROJECT CARD ---------- */
+  .project-row {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 40px;
+    align-items: start;
+    margin-bottom: 70px;
+  }
+  .project-image-wrap { display: flex; flex-direction: column; align-items: center; }
+  .project-image {
+    width: 280px;
+    height: 280px;
+    background: #f2f2f2;
+    display: block;
+    overflow: hidden;
+  }
+  .project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .project-btn {
+    display: inline-block;
+    background: #d7263d;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    margin-top: 10px;
+    text-decoration: none;
+    border: none;
+  }
+  .project-content h2 {
+    font-size: 22px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #1a1a1a;
+    margin-bottom: 14px;
+    line-height: 1.3;
+  }
+  .project-content .meta {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 12px;
+    letter-spacing: 0.3px;
+  }
+  .project-content .meta span {
+    display: inline-block;
+    margin-right: 14px;
+  }
+  .project-content .meta strong { color: #1a1a1a; }
+  .project-content p {
+    font-size: 13.5px;
+    color: #3a3a3a;
+    margin-bottom: 10px;
+  }
+  .project-content h3 {
+    font-size: 13px;
+    text-transform: uppercase;
+    color: #d7263d;
+    letter-spacing: 0.8px;
+    margin-top: 14px;
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+  .project-content ul, .project-content ol {
+    padding-left: 20px;
+    margin-bottom: 8px;
+  }
+  .project-content li {
+    font-size: 13px;
+    color: #3a3a3a;
+    margin-bottom: 3px;
+  }
+
+  /* ---------- REFERENCES ---------- */
+  .references-section {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 40px;
+    margin-top: 20px;
+  }
+  .references-section h2 {
+    font-size: 20px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #1a1a1a;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .references-section .red-bar {
+    display: block;
+    width: 100px;
+    height: 3px;
+    background: #d7263d;
+    margin-bottom: 20px;
+  }
+  .references-section ol {
+    list-style: none;
+    padding: 0;
+  }
+  .references-section li {
+    font-size: 13px;
+    color: #3a3a3a;
+    padding-left: 22px;
+    text-indent: -22px;
+    margin-bottom: 10px;
+    line-height: 1.55;
+  }
+  .references-section a {
+    color: #d7263d;
+    text-decoration: none;
+    word-break: break-word;
+  }
+  .references-section a:hover { text-decoration: underline; }
+
+  @media (max-width: 720px) {
+    .project-row { grid-template-columns: 1fr; gap: 18px; }
+    .project-image-wrap { align-items: flex-start; }
+    .project-image { width: 100%; max-width: 320px; height: 240px; }
+    .page-header h1 { font-size: 24px; }
+    .page-header .underline { width: 180px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <h1>Online Disinhibition<br>Effect (Victor)</h1>
+  <span class="underline"></span>
+</header>
+
+<div class="container">
+
+  <!-- =========================== PROJECT 1: Theory Overview =========================== -->
+  <div class="project-row">
+    <div class="project-image-wrap">
+      <div class="project-image"><img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=560&h=560&q=80" alt="Teen using smartphone" loading="lazy"></div>
+      <a href="#project-1" class="project-btn">Project 1 details</a>
+    </div>
+    <div class="project-content" id="project-1">
+      <h2>What Is the Online Disinhibition Effect?</h2>
+      <p>The <strong>Online Disinhibition Effect</strong>, first described by psychologist John Suler (2004), refers to the way people loosen up, behave, and express themselves differently online than they do face-to-face. In digital environments, students often feel less constrained by social norms.</p>
+      <p>Disinhibition can cut two ways. <strong>Benign disinhibition</strong> shows up when a student who is quiet in class posts a thoughtful, vulnerable response in a discussion board. <strong>Toxic disinhibition</strong> shows up as flaming, trolling, or cyberbullying behind a username.</p>
+      <p>Adolescents live much of their social life online. Secondary teachers cannot ignore this effect — students already experience it on social media, in group chats, in gaming platforms, and in comment sections. Instructional design at the secondary level should do two things at once: <em>harness</em> benign disinhibition to surface voices that rarely speak up in class, and intentionally <em>teach against</em> toxic disinhibition by building digital citizenship and empathy into the curriculum.</p>
+    </div>
+  </div>
+
+  <!-- =========================== PROJECT 2: Suler's Six Factors =========================== -->
+  <div class="project-row">
+    <div class="project-image-wrap">
+      <div class="project-image"><img src="https://images.unsplash.com/photo-1558403194-611308249627?auto=format&fit=crop&w=560&h=560&q=80" alt="Anonymous figure with hood representing online anonymity" loading="lazy"></div>
+      <a href="#project-2" class="project-btn">Project 2 details</a>
+    </div>
+    <div class="project-content" id="project-2">
+      <h2>Suler's Six Factors</h2>
+      <p>Suler identified six interacting factors that explain why online behavior shifts. Naming these for secondary students gives them vocabulary to recognize the effect in themselves.</p>
+      <ol>
+        <li><strong>Dissociative anonymity</strong> — "You don't know me."</li>
+        <li><strong>Invisibility</strong> — "You can't see me."</li>
+        <li><strong>Asynchronicity</strong> — "See you later." Replies don't have to be in real time.</li>
+        <li><strong>Solipsistic introjection</strong> — "It's all in my head." Students imagine the other party's tone.</li>
+        <li><strong>Dissociative imagination</strong> — "It's just a game." Online feels separate from real life.</li>
+        <li><strong>Minimizing authority</strong> — Hierarchy and status cues are weaker online.</li>
+      </ol>
+      <h3>Key Features</h3>
+      <ul>
+        <li>Online identity and perceived anonymity change how students contribute.</li>
+        <li>Quieter students often participate more in digital spaces.</li>
+        <li>Asynchronous tools reduce social pressure and allow reflective responses.</li>
+        <li>Without intentional norms, the same conditions can enable harmful behavior.</li>
+        <li>Effective instruction names the effect so students recognize it in themselves.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- =========================== PROJECT 3: Classroom Example 1 =========================== -->
+  <div class="project-row">
+    <div class="project-image-wrap">
+      <div class="project-image"><img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=560&h=560&q=80" alt="High school students collaborating with laptops in classroom" loading="lazy"></div>
+      <a href="#project-3" class="project-btn">Project 3 details</a>
+    </div>
+    <div class="project-content" id="project-3">
+      <h2>Classroom Example 1: "Bystander to Upstander" Digital Citizenship Unit</h2>
+      <div class="meta">
+        <span><strong>Grade Band:</strong> Secondary (9th – 10th Grade)</span>
+        <span><strong>Subject:</strong> ELA &amp; Health / Advisory</span>
+      </div>
+
+      <h3>Purpose</h3>
+      <p>To make the Online Disinhibition Effect visible and discussable. Students analyze real-world cyberbullying case studies, recognize Suler's six factors in action, and move from passive bystanders to <em>upstanders</em> who intervene — online and off. The dual goal: build empathy and give students metacognitive language for their own online behavior.</p>
+
+      <h3>Description &amp; Scope of Use</h3>
+      <p>A two-week unit of daily 45-minute lessons, co-taught by the ELA teacher and a school counselor or health teacher. It uses anonymity (benign disinhibition) to get students to share honestly about their digital experiences, while teaching why those same mechanics can produce toxic behavior. Culminates in a student-designed digital citizenship pledge for the school.</p>
+
+      <h3>Activities</h3>
+      <ol>
+        <li><strong>Day 1–2:</strong> Anchor reading — excerpts from Suler's <em>The Online Disinhibition Effect</em>, paired with video case studies (Common Sense Education).</li>
+        <li><strong>Day 3:</strong> Anonymous Padlet wall — "Describe a time you saw something online that would never happen in person." The class labels posts with Suler's six factors.</li>
+        <li><strong>Day 4–6:</strong> Small groups analyze three anonymized scenarios, identify driving factors, and propose interventions.</li>
+        <li><strong>Day 7–8:</strong> Role-play in Flip — 60-second videos practicing upstander language ("Hey, not cool" / reporting / supporting the target).</li>
+        <li><strong>Day 9–10:</strong> Co-author a classroom digital citizenship pledge in Google Docs; share with principal for adoption.</li>
+      </ol>
+
+      <h3>Tools &amp; Resources</h3>
+      <ul>
+        <li>Padlet (anonymous posting enabled) — padlet.com</li>
+        <li>Flip for asynchronous video reflection — info.flip.com</li>
+        <li>Common Sense Education Digital Citizenship Curriculum, Grade 9–10</li>
+        <li>Suler (2004) teacher-prepared excerpt handout</li>
+        <li>Google Docs (shared pledge); school counselor as co-facilitator</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- =========================== PROJECT 4: Classroom Example 2 =========================== -->
+  <div class="project-row">
+    <div class="project-image-wrap">
+      <div class="project-image"><img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=560&h=560&q=80" alt="Student writing and typing on laptop" loading="lazy"></div>
+      <a href="#project-4" class="project-btn">Project 4 details</a>
+    </div>
+    <div class="project-content" id="project-4">
+      <h2>Classroom Example 2: Anonymous Peer Feedback in a Writing Workshop</h2>
+      <div class="meta">
+        <span><strong>Grade Band:</strong> Secondary (11th – 12th Grade)</span>
+        <span><strong>Subject:</strong> English Language Arts (Writing Workshop)</span>
+      </div>
+
+      <h3>Purpose</h3>
+      <p>To leverage <em>benign</em> disinhibition — the same mechanism that enables trolling — for a constructive end: honest, thoughtful peer feedback on student writing. Juniors and seniors often self-censor feedback to protect friendships. Structured anonymity paired with explicit norms produces richer critique while teaching students to recognize what shapes their online voice.</p>
+
+      <h3>Description &amp; Scope of Use</h3>
+      <p>Used recurrently across a semester-long workshop for college-prep and AP English, typically once per major essay (4–5 cycles per semester). The teacher creates anonymized feedback loops using a Google Form feeding a blind-review spreadsheet — drafts go out with pseudonyms only. Before each cycle, students review the norms they themselves authored, grounded in Suler's framework so they know <em>why</em> the protocol exists.</p>
+
+      <h3>Activities</h3>
+      <ol>
+        <li><strong>Cycle 1 (norm-setting):</strong> Read Suler (2004) excerpts; draft a class norms charter answering "What makes peer-review space produce benign disinhibition instead of toxic?"</li>
+        <li><strong>Drafting:</strong> Students submit essay drafts; teacher strips names and assigns pseudonyms.</li>
+        <li><strong>Blind review:</strong> Each student receives two anonymized drafts via Google Form; submits rubric-based feedback (strengths, growth areas, line-level edit, big-picture suggestion).</li>
+        <li><strong>Return:</strong> Authors receive anonymized feedback through the teacher.</li>
+        <li><strong>Reflection:</strong> Authors write a one-paragraph reflection on whether feedback felt more or less candid than in-person critique, naming which of Suler's factors were at work.</li>
+        <li><strong>Optional reveal:</strong> Reviewers choose whether to reveal themselves — itself a discussion point about ownership of online speech.</li>
+      </ol>
+
+      <h3>Tools &amp; Resources</h3>
+      <ul>
+        <li>Google Forms + Google Sheets (anonymized intake)</li>
+        <li>Google Docs with suggesting/commenting mode</li>
+        <li>Teacher-designed peer-review rubric aligned to the essay outcome</li>
+        <li>Class-authored "Norms Charter" displayed in room and on the LMS</li>
+        <li>Suler (2004) excerpts; optional Canvas or Schoology Discussion Boards</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- =========================== REFERENCES =========================== -->
+  <section class="references-section">
+    <h2>References</h2>
+    <span class="red-bar"></span>
+    <ol>
+      <li>Suler, J. (2004). The online disinhibition effect. <em>CyberPsychology &amp; Behavior, 7</em>(3), 321–326. <a href="https://doi.org/10.1089/1094931041291295" target="_blank" rel="noopener">https://doi.org/10.1089/1094931041291295</a></li>
+      <li>Lapidot-Lefler, N., &amp; Barak, A. (2012). Effects of anonymity, invisibility, and lack of eye-contact on toxic online disinhibition. <em>Computers in Human Behavior, 28</em>(2), 434–443. <a href="https://doi.org/10.1016/j.chb.2011.10.014" target="_blank" rel="noopener">https://doi.org/10.1016/j.chb.2011.10.014</a></li>
+      <li>Ribble, M. (2015). <em>Digital citizenship in schools: Nine elements all students should know</em> (3rd ed.). International Society for Technology in Education.</li>
+      <li>Common Sense Education. (n.d.). <em>Digital citizenship curriculum.</em> <a href="https://www.commonsense.org/education/digital-citizenship" target="_blank" rel="noopener">https://www.commonsense.org/education/digital-citizenship</a></li>
+      <li>Padlet. (n.d.). <a href="https://padlet.com/" target="_blank" rel="noopener">https://padlet.com/</a></li>
+      <li>Flip. (n.d.). Microsoft. <a href="https://info.flip.com/" target="_blank" rel="noopener">https://info.flip.com/</a></li>
+    </ol>
+  </section>
+
+</div>
+
+</body>
+</html>

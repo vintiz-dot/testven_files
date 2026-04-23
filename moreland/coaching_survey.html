@@ -1,0 +1,1340 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EdTech Coaching — Instructional Needs Analysis Survey</title>
+  <meta name="description"
+    content="Role-based needs analysis survey for teachers and administrators. Backward-planned from the TEACH-NOW PD/Coaching Template to inform four PD sessions and two coaching plans.">
+  <meta name="color-scheme" content="light dark">
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== DESIGN TOKENS ===== */
+    :root {
+      --primary: #6366F1;
+      --primary-light: #818CF8;
+      --primary-dark: #4F46E5;
+      --accent: #06B6D4;
+      --accent-light: #22D3EE;
+      --success: #10B981;
+      --success-glow: rgba(16, 185, 129, .35);
+      --warning: #F59E0B;
+      --bg: #F8FAFC;
+      --surface: rgba(255, 255, 255, .72);
+      --surface-2: rgba(255, 255, 255, .55);
+      --text: #0F172A;
+      --text-muted: #64748B;
+      --border: rgba(148, 163, 184, .28);
+      --radius: 16px;
+      --radius-lg: 24px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, .06);
+      --shadow-md: 0 8px 30px rgba(0, 0, 0, .08);
+      --shadow-lg: 0 20px 60px rgba(0, 0, 0, .12);
+      --blur: saturate(180%) blur(20px);
+      --transition: .25s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0B1120;
+        --surface: rgba(30, 41, 59, .65);
+        --surface-2: rgba(30, 41, 59, .45);
+        --text: #E2E8F0;
+        --text-muted: #94A3B8;
+        --border: rgba(148, 163, 184, .18);
+      }
+    }
+
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-size: 15px; line-height: 1.6; color: var(--text);
+      background: var(--bg); min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== ANIMATED BACKGROUND ===== */
+    body::before {
+      content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background:
+        radial-gradient(ellipse 900px 700px at 15% -5%, rgba(99, 102, 241, .18), transparent 60%),
+        radial-gradient(ellipse 800px 600px at 85% 10%, rgba(6, 182, 212, .14), transparent 55%),
+        radial-gradient(ellipse 700px 500px at 50% 90%, rgba(16, 185, 129, .10), transparent 60%);
+      animation: bgShift 20s ease-in-out infinite alternate;
+    }
+    @keyframes bgShift { 0% { opacity: 1; } 50% { opacity: .7; } 100% { opacity: 1; } }
+
+    /* ===== KEYFRAMES ===== */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+    @keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, .4); } 70% { box-shadow: 0 0 0 12px rgba(99, 102, 241, 0); } 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); } }
+    @keyframes checkPop { 0% { transform: scale(0) rotate(-45deg); opacity: 0; } 60% { transform: scale(1.15) rotate(0deg); } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
+    @keyframes slideDown { from { opacity: 0; max-height: 0; } to { opacity: 1; max-height: 800px; } }
+    @keyframes shake { 0%, 100% { transform: translateX(0); } 15% { transform: translateX(-6px); } 30% { transform: translateX(5px); } 45% { transform: translateX(-4px); } 60% { transform: translateX(3px); } 75% { transform: translateX(-2px); } }
+
+    /* ===== HEADER ===== */
+    .survey-header {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+      background: var(--surface-2); border-bottom: 1px solid var(--border);
+      animation: fadeUp .6s ease both;
+    }
+    .header-inner {
+      max-width: 780px; margin: 0 auto;
+      padding: 16px clamp(16px, 4vw, 28px);
+      display: flex; align-items: center; gap: 14px;
+      justify-content: space-between; flex-wrap: wrap;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-icon {
+      width: 40px; height: 40px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: grid; place-items: center;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, .3);
+      font-size: 18px; color: #fff;
+    }
+    .brand h1 { font-size: 18px; font-weight: 700; letter-spacing: -.01em; }
+    .brand .sub { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+    .timer-badge {
+      font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 999px;
+      color: #fff; background: linear-gradient(135deg, var(--primary), var(--accent));
+      animation: pulse-ring 2.4s infinite; white-space: nowrap;
+    }
+    .progress-wrap { max-width: 780px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 28px); }
+    .progress-bar { height: 5px; border-radius: 999px; background: var(--border); margin-top: -1px; overflow: hidden; }
+    .progress-bar>.fill {
+      height: 100%; width: 0;
+      background: linear-gradient(90deg, var(--primary), var(--accent), var(--success));
+      background-size: 200% 100%; animation: shimmer 3s linear infinite;
+      transition: width .5s cubic-bezier(.4, 0, .2, 1); border-radius: 999px;
+    }
+
+    /* ===== MAIN CONTAINER ===== */
+    .survey-main { max-width: 780px; margin: 0 auto; padding: 28px clamp(16px, 4vw, 28px) 140px; }
+
+    /* ===== INTRO CARD ===== */
+    .intro-card {
+      border: 1px solid var(--border); border-radius: var(--radius-lg);
+      background: var(--surface); backdrop-filter: var(--blur);
+      padding: 28px; margin-bottom: 28px; box-shadow: var(--shadow-md);
+      animation: fadeUp .7s ease both;
+    }
+    .intro-card h2 {
+      font-size: 22px; font-weight: 800; margin-bottom: 8px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .intro-card p { color: var(--text-muted); font-size: 14px; line-height: 1.7; }
+    .intro-card .meta-row { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; }
+    .meta-pill {
+      font-size: 12px; padding: 5px 12px; border-radius: 999px;
+      border: 1px solid var(--border); background: var(--surface-2);
+      color: var(--text-muted); display: flex; align-items: center; gap: 5px;
+    }
+    .meta-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); }
+
+    /* ===== QUESTION CARD ===== */
+    .q-card {
+      border: 1px solid var(--border); border-radius: var(--radius-lg);
+      background: var(--surface); backdrop-filter: var(--blur);
+      padding: 24px; margin-bottom: 20px; box-shadow: var(--shadow-sm);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      animation: fadeUp .7s ease both; position: relative;
+    }
+    .q-card:nth-child(2) { animation-delay: .08s; }
+    .q-card:nth-child(3) { animation-delay: .16s; }
+    .q-card:nth-child(4) { animation-delay: .24s; }
+    .q-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: rgba(99, 102, 241, .25); }
+    .q-card.completed { border-color: rgba(16, 185, 129, .35); }
+    .q-card.completed::after {
+      content: '✓'; position: absolute; top: 16px; right: 18px;
+      width: 26px; height: 26px; border-radius: 50%; background: var(--success);
+      color: #fff; display: grid; place-items: center; font-size: 14px; font-weight: 700;
+      animation: checkPop .4s cubic-bezier(.4, 0, .2, 1) both;
+      box-shadow: 0 2px 8px var(--success-glow);
+    }
+    .q-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px; border-radius: 8px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff; font-size: 13px; font-weight: 700; margin-right: 10px; flex-shrink: 0;
+    }
+    .q-label { font-size: 15px; font-weight: 600; margin-bottom: 6px; display: flex; align-items: center; }
+    .q-hint { font-size: 13px; color: var(--text-muted); margin-bottom: 14px; padding-left: 38px; }
+
+    /* ===== FORM INPUTS ===== */
+    .field-wrap { position: relative; }
+    .field-wrap+.field-wrap { margin-top: 12px; }
+    input[type="text"], input[type="email"], input[type="number"], textarea, select {
+      width: 100%; padding: 12px 16px; border-radius: 12px;
+      border: 1px solid var(--border); background: var(--surface-2);
+      color: var(--text); font-family: inherit; font-size: 14px;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none; border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, .12);
+    }
+    textarea { min-height: 100px; resize: vertical; }
+    select {
+      cursor: pointer; appearance: none; padding-right: 36px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2364748B'%3E%3Cpath d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center;
+    }
+
+    /* Checkbox / Radio groups */
+    .option-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+    .option-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px; border-radius: 12px;
+      border: 1px solid var(--border); background: var(--surface-2);
+      cursor: pointer; transition: all var(--transition); font-size: 14px;
+    }
+    .option-item:hover { border-color: var(--primary-light); background: rgba(99, 102, 241, .06); }
+    .option-item input[type="checkbox"],
+    .option-item input[type="radio"] {
+      width: 18px; height: 18px; accent-color: var(--primary);
+      cursor: pointer; flex-shrink: 0;
+    }
+    .option-item.selected { border-color: var(--primary); background: rgba(99, 102, 241, .08); box-shadow: 0 0 0 1px rgba(99, 102, 241, .15); }
+
+    /* ===== AUTO-COMPLETE DROPDOWN ===== */
+    .ac-dropdown {
+      position: absolute; left: 0; right: 0; top: 100%; z-index: 60;
+      margin-top: 4px; border: 1px solid var(--border); border-radius: 12px;
+      background: var(--surface); backdrop-filter: var(--blur);
+      box-shadow: var(--shadow-lg); max-height: 220px; overflow-y: auto;
+      display: none; animation: slideDown .2s ease;
+    }
+    .ac-dropdown.visible { display: block; }
+    .ac-item {
+      padding: 10px 16px; cursor: pointer; font-size: 14px; color: var(--text);
+      transition: background .15s; display: flex; align-items: center; gap: 8px;
+    }
+    .ac-item:first-child { border-radius: 12px 12px 0 0; }
+    .ac-item:last-child { border-radius: 0 0 12px 12px; }
+    .ac-item:hover, .ac-item.active { background: rgba(99, 102, 241, .08); }
+    .ac-item .ac-icon {
+      width: 20px; height: 20px; border-radius: 6px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, .15), rgba(6, 182, 212, .15));
+      display: grid; place-items: center; font-size: 10px; flex-shrink: 0; color: var(--primary);
+    }
+    .ac-item .ac-match { font-weight: 600; color: var(--primary); }
+    .ai-badge {
+      position: absolute; top: -8px; right: 12px;
+      font-size: 10px; font-weight: 700; letter-spacing: .04em;
+      padding: 2px 8px; border-radius: 6px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff; text-transform: uppercase;
+      box-shadow: 0 2px 8px rgba(99, 102, 241, .3);
+    }
+
+    /* ===== ROLE SELECTOR ===== */
+    .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    .role-btn {
+      padding: 18px; border-radius: 14px; border: 2px solid var(--border);
+      background: var(--surface-2); cursor: pointer; text-align: center;
+      transition: all var(--transition);
+    }
+    .role-btn:hover { border-color: var(--primary-light); transform: translateY(-2px); }
+    .role-btn.selected {
+      border-color: var(--primary); background: rgba(99, 102, 241, .08);
+      box-shadow: 0 0 0 2px rgba(99, 102, 241, .12);
+    }
+    .role-btn input { display: none; }
+    .role-btn .role-emoji { font-size: 28px; margin-bottom: 6px; }
+    .role-btn .role-title { font-weight: 700; font-size: 14px; }
+    .role-btn .role-sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+    /* ===== CONDITIONAL SECTIONS ===== */
+    .branch { display: none; }
+    .branch.active { display: block; animation: fadeUp .5s ease both; }
+
+    /* ===== SECTION DIVIDER ===== */
+    .section-divider {
+      display: flex; align-items: center; gap: 12px;
+      margin: 20px 0 16px; color: var(--text-muted);
+      font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+    }
+    .section-divider::before, .section-divider::after {
+      content: ''; flex: 1; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+
+    /* ===== FOOTER / SUBMIT ===== */
+    .survey-footer {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+      background: var(--surface-2); backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+      border-top: 1px solid var(--border); box-shadow: 0 -4px 20px rgba(0, 0, 0, .06);
+    }
+    .footer-inner {
+      max-width: 780px; margin: 0 auto;
+      padding: 12px clamp(16px, 4vw, 28px);
+      display: flex; align-items: center; gap: 14px;
+      justify-content: space-between; flex-wrap: wrap;
+    }
+    .progress-text { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+    .btn-submit {
+      appearance: none; border: none; cursor: pointer;
+      padding: 12px 28px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #fff; font-family: inherit; font-size: 15px; font-weight: 700;
+      letter-spacing: -.01em; box-shadow: 0 4px 14px rgba(99, 102, 241, .35);
+      transition: all var(--transition); position: relative; overflow: hidden;
+    }
+    .btn-submit::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(120deg, rgba(255, 255, 255, .3), transparent 40% 60%, rgba(255, 255, 255, .15));
+      transform: translateX(-100%);
+    }
+    .btn-submit:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(99, 102, 241, .4); }
+    .btn-submit:hover::before { transform: translateX(100%); transition: transform .6s ease; }
+    .btn-submit:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn-submit.success { background: linear-gradient(135deg, var(--success), #059669); box-shadow: 0 4px 14px var(--success-glow); }
+
+    /* ===== TOAST ===== */
+    .toast {
+      position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(20px);
+      padding: 12px 24px; border-radius: 14px; z-index: 200;
+      background: var(--surface); backdrop-filter: var(--blur);
+      border: 1px solid var(--border); box-shadow: var(--shadow-lg);
+      font-size: 14px; font-weight: 600; opacity: 0; pointer-events: none;
+      transition: all .35s cubic-bezier(.4, 0, .2, 1);
+    }
+    .toast.visible { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+    .toast.toast-success { border-color: rgba(16, 185, 129, .35); }
+    .toast.toast-error { border-color: rgba(239, 68, 68, .35); color: #EF4444; }
+
+    /* ===== SUCCESS OVERLAY ===== */
+    .success-overlay {
+      position: fixed; inset: 0; z-index: 300;
+      background: rgba(0, 0, 0, .5); backdrop-filter: blur(8px);
+      display: none; place-items: center;
+    }
+    .success-overlay.visible { display: grid; }
+    .success-card {
+      background: var(--surface); border-radius: var(--radius-lg);
+      padding: 40px; text-align: center; max-width: 420px;
+      box-shadow: var(--shadow-lg); animation: fadeUp .5s ease both;
+    }
+    .success-card .big-check {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--success), #059669);
+      display: grid; place-items: center; margin: 0 auto 18px;
+      font-size: 28px; color: #fff; box-shadow: 0 6px 20px var(--success-glow);
+      animation: checkPop .6s cubic-bezier(.4, 0, .2, 1) both;
+    }
+    .success-card h3 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+    .success-card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+    .success-card .btn-close {
+      margin-top: 20px; padding: 10px 24px; border-radius: 12px;
+      border: 1px solid var(--border); background: var(--surface-2);
+      color: var(--text); font-family: inherit; font-size: 14px; font-weight: 600;
+      cursor: pointer; transition: all var(--transition);
+    }
+    .success-card .btn-close:hover { border-color: var(--primary); }
+
+    /* ===== VALIDATION ERRORS ===== */
+    .validation-error {
+      display: flex; align-items: flex-start; gap: 8px;
+      margin-top: 14px; padding: 10px 14px; border-radius: 10px;
+      background: rgba(239, 68, 68, .08); border: 1px solid rgba(239, 68, 68, .25);
+      font-size: 13px; line-height: 1.5; color: #EF4444;
+      opacity: 0; transform: translateY(-6px);
+      transition: opacity .3s ease, transform .3s ease;
+    }
+    .validation-error.visible { opacity: 1; transform: translateY(0); }
+    .validation-error .val-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+    .q-card.has-error { border-color: rgba(239, 68, 68, .4) !important; box-shadow: 0 0 0 2px rgba(239, 68, 68, .08) !important; }
+    .q-card.shake { animation: shake .5s ease; }
+
+    @media (prefers-color-scheme: dark) {
+      .validation-error { background: rgba(239, 68, 68, .12); border-color: rgba(239, 68, 68, .3); color: #FCA5A5; }
+      .toast.toast-error { color: #FCA5A5; }
+    }
+
+    /* ===== CONFETTI ===== */
+    #confetti { position: fixed; inset: 0; pointer-events: none; z-index: 400; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      .brand h1 { font-size: 15px; }
+      .q-card { padding: 18px; }
+      .option-grid { grid-template-columns: 1fr; }
+      .intro-card { padding: 20px; }
+      .footer-inner { flex-direction: column; gap: 8px; }
+      .btn-submit { width: 100%; }
+      .role-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="survey-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-icon">🎯</div>
+        <div>
+          <h1>Instructional Coaching Needs Survey</h1>
+          <div class="sub">Module 41 · Unit 4 · Capstone</div>
+        </div>
+      </div>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <a href="./masters.html"
+          style="font-size:13px; font-weight:600; color:var(--text-muted); text-decoration:none; padding:6px 12px; border-radius:8px; border:1px solid var(--border); background:var(--surface); transition:all .2s; display:inline-flex; align-items:center; gap:4px;"
+          onMouseOver="this.style.color='var(--text)'; this.style.borderColor='var(--text-muted)'"
+          onMouseOut="this.style.color='var(--text-muted)'; this.style.borderColor='var(--border)'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg> Portfolio
+        </a>
+        <span class="timer-badge">⏱ ~5 min</span>
+      </div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="fill" id="progressFill"></div></div>
+    </div>
+  </header>
+
+  <!-- ===== MAIN ===== -->
+  <main class="survey-main">
+
+    <!-- Intro -->
+    <div class="intro-card">
+      <h2>Help Shape PD & Coaching Plans</h2>
+      <p>
+        This survey uses <strong>role-based branching</strong> — selecting your role below tailors the questions to your perspective.
+        Your responses will directly inform <strong>four PD training sessions</strong> and <strong>two individualized coaching plans</strong>
+        for educational technology integration.
+      </p>
+      <div class="meta-row">
+        <span class="meta-pill"><span class="dot"></span> Confidential</span>
+        <span class="meta-pill">📋 Role-adaptive</span>
+        <span class="meta-pill">⏱ ~5 minutes</span>
+        <span class="meta-pill">🤖 Smart Auto-Complete</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         Q1 — ROLE IDENTIFICATION
+         Maps to: Template header (Candidate, School) + branch routing
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="q-card" id="q1-card" data-q="1">
+      <div class="q-label"><span class="q-num">1</span> About You</div>
+      <div class="q-hint">Select your role to see questions tailored to your perspective.</div>
+
+      <div class="role-grid">
+        <label class="role-btn" onclick="selectRole('teacher', this)">
+          <input type="radio" name="q1role" value="Teacher">
+          <div class="role-emoji">👩‍🏫</div>
+          <div class="role-title">Teacher</div>
+          <div class="role-sub">Share technology usage, challenges, and PD needs</div>
+        </label>
+        <label class="role-btn" onclick="selectRole('admin', this)">
+          <input type="radio" name="q1role" value="Administrator">
+          <div class="role-emoji">🏫</div>
+          <div class="role-title">Administrator</div>
+          <div class="role-sub">Provide priorities and coaching recommendations</div>
+        </label>
+      </div>
+
+      <div class="field-wrap" style="margin-bottom:12px;">
+        <label style="font-size:13px; font-weight:600; margin-bottom:6px; display:block;">Full Name:</label>
+        <input type="text" id="q1-name" placeholder="e.g. Jane Smith">
+      </div>
+      <div class="field-wrap" style="margin-bottom:12px;">
+        <label style="font-size:13px; font-weight:600; margin-bottom:6px; display:block;">School / Campus:</label>
+        <input type="text" id="q1-school" placeholder="e.g. Hanoi International School">
+      </div>
+      <div class="field-wrap">
+        <label style="font-size:13px; font-weight:600; margin-bottom:6px; display:block;">Grade level & Subject (if teacher):</label>
+        <input type="text" id="q1-grade" placeholder="e.g. Grade 9-12, Science">
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+                      TEACHER BRANCH
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="branch" id="teacherBranch">
+
+      <!-- Q2T — DEVICE USAGE & FREQUENCY -->
+      <div class="q-card" id="q2t-card" data-q="2t">
+        <div class="q-label"><span class="q-num">2</span> What devices do students use, and how often?</div>
+        <div class="q-hint">Select all devices that apply, then indicate usage frequency.</div>
+        <div class="option-grid" id="q2t-options">
+          <label class="option-item"><input type="checkbox" name="q2tdev" value="Laptops / Chromebooks"> Laptops / Chromebooks</label>
+          <label class="option-item"><input type="checkbox" name="q2tdev" value="Tablets (iPads)"> Tablets (iPads)</label>
+          <label class="option-item"><input type="checkbox" name="q2tdev" value="Desktop Computers"> Desktop Computers</label>
+          <label class="option-item"><input type="checkbox" name="q2tdev" value="Student Smartphones"> Student Smartphones</label>
+          <label class="option-item"><input type="checkbox" name="q2tdev" value="Interactive Whiteboard"> Interactive Whiteboard</label>
+          <label class="option-item"><input type="checkbox" name="q2tdev" value="No devices currently"> No devices currently</label>
+        </div>
+        <div class="field-wrap" style="margin-top:16px;">
+          <label style="font-size:13px; font-weight:600; margin-bottom:6px; display:block;">How frequently do students use devices?</label>
+          <div class="option-grid">
+            <label class="option-item"><input type="radio" name="q2tfreq" value="Daily"> Daily</label>
+            <label class="option-item"><input type="radio" name="q2tfreq" value="Few times per week"> Few times/week</label>
+            <label class="option-item"><input type="radio" name="q2tfreq" value="Occasionally"> Occasionally</label>
+            <label class="option-item"><input type="radio" name="q2tfreq" value="Rarely or never"> Rarely/never</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q3T — TECHNOLOGY USAGE -->
+      <div class="q-card" id="q3t-card" data-q="3t">
+        <div class="q-label"><span class="q-num">3</span> How are you primarily using technology in class?</div>
+        <div class="q-hint">Select all that apply.</div>
+        <div class="option-grid" id="q3t-options">
+          <label class="option-item"><input type="checkbox" name="q3tuse" value="Research"> Research</label>
+          <label class="option-item"><input type="checkbox" name="q3tuse" value="Content creation (presentations, videos)"> Content creation</label>
+          <label class="option-item"><input type="checkbox" name="q3tuse" value="Assessments (quizzes, tests)"> Assessments</label>
+          <label class="option-item"><input type="checkbox" name="q3tuse" value="Collaboration (shared docs, group work)"> Collaboration</label>
+          <label class="option-item"><input type="checkbox" name="q3tuse" value="Practice / drill software (IXL, ST Math)"> Practice / drill software</label>
+          <label class="option-item"><input type="checkbox" name="q3tuse" value="Communication (home-school)"> Communication</label>
+        </div>
+        <div class="field-wrap" style="margin-top:12px; position:relative;">
+          <span class="ai-badge">AI Assist</span>
+          <input type="text" id="q3t-other" placeholder="Other usage? Start typing…" autocomplete="off" data-ac="tech_uses">
+          <div class="ac-dropdown" id="q3t-dropdown"></div>
+        </div>
+      </div>
+
+      <!-- Q4T — CHALLENGES -->
+      <div class="q-card" id="q4t-card" data-q="4t">
+        <div class="q-label"><span class="q-num">4</span> What are your biggest challenges with classroom technology?</div>
+        <div class="q-hint">Select all that apply — this directly drives PD topic selection.</div>
+        <div class="option-grid" id="q4t-options">
+          <label class="option-item"><input type="checkbox" name="q4tchal" value="Students getting distracted / off-task"> Student distraction</label>
+          <label class="option-item"><input type="checkbox" name="q4tchal" value="Not enough devices"> Not enough devices</label>
+          <label class="option-item"><input type="checkbox" name="q4tchal" value="Tech issues (Wi-Fi, software)"> Tech issues (Wi-Fi, software)</label>
+          <label class="option-item"><input type="checkbox" name="q4tchal" value="Not enough training / PD"> Not enough training / PD</label>
+          <label class="option-item"><input type="checkbox" name="q4tchal" value="Classroom management with devices"> Classroom management</label>
+          <label class="option-item"><input type="checkbox" name="q4tchal" value="Using technology for differentiation"> Differentiation</label>
+          <label class="option-item"><input type="checkbox" name="q4tchal" value="Using data from platforms"> Using data from platforms</label>
+          <label class="option-item"><input type="checkbox" name="q4tchal" value="Not enough planning time"> Not enough planning time</label>
+        </div>
+        <div class="field-wrap" style="margin-top:12px; position:relative;">
+          <span class="ai-badge">AI Assist</span>
+          <input type="text" id="q4t-other" placeholder="Other challenge? Start typing…" autocomplete="off" data-ac="hurdles">
+          <div class="ac-dropdown" id="q4t-dropdown"></div>
+        </div>
+      </div>
+
+      <!-- Q5T — PD TOPICS & FORMAT -->
+      <div class="q-card" id="q5t-card" data-q="5t">
+        <div class="q-label"><span class="q-num">5</span> Which PD topics would be most valuable?</div>
+        <div class="q-hint">Select your top picks — these map directly to four proposed PD sessions.</div>
+        <div class="option-grid" id="q5t-options">
+          <label class="option-item"><input type="checkbox" name="q5ttopic" value="Using technology for differentiation & UDL"> Differentiation & UDL</label>
+          <label class="option-item"><input type="checkbox" name="q5ttopic" value="Digital assessment tools & data analysis"> Assessment tools & data</label>
+          <label class="option-item"><input type="checkbox" name="q5ttopic" value="Student engagement strategies with tech"> Student engagement</label>
+          <label class="option-item"><input type="checkbox" name="q5ttopic" value="Classroom management with devices"> Classroom management</label>
+          <label class="option-item"><input type="checkbox" name="q5ttopic" value="Creating interactive / multimedia lessons"> Interactive lessons</label>
+          <label class="option-item"><input type="checkbox" name="q5ttopic" value="AI literacy & ethical use"> AI literacy</label>
+          <label class="option-item"><input type="checkbox" name="q5ttopic" value="Google Workspace workflows"> Google Workspace</label>
+          <label class="option-item"><input type="checkbox" name="q5ttopic" value="Data tracking and progress monitoring"> Data tracking</label>
+        </div>
+        <div class="field-wrap" style="margin-top:12px; position:relative;">
+          <span class="ai-badge">AI Assist</span>
+          <input type="text" id="q5t-other" placeholder="Other PD topic? Start typing…" autocomplete="off" data-ac="pd_needs">
+          <div class="ac-dropdown" id="q5t-dropdown"></div>
+        </div>
+        <div class="field-wrap" style="margin-top:16px;">
+          <label style="font-size:13px; font-weight:600; margin-bottom:6px; display:block;">Preferred PD format (maps to Template: Presentation Session vs. Hands-On Workshop):</label>
+          <div class="option-grid">
+            <label class="option-item"><input type="radio" name="q5tfmt" value="Presentation Session"> Presentation Session</label>
+            <label class="option-item"><input type="radio" name="q5tfmt" value="Hands-On Workshop"> Hands-On Workshop</label>
+            <label class="option-item"><input type="radio" name="q5tfmt" value="Mix of both"> Mix of both</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q6T — COACHING INTEREST & WISH -->
+      <div class="q-card" id="q6t-card" data-q="6t">
+        <div class="q-label"><span class="q-num">6</span> Coaching Interest & Open Response</div>
+        <div class="q-hint">Your answer informs whether you'll be recommended for one-on-one coaching.</div>
+        <div class="field-wrap" style="margin-bottom:16px;">
+          <label style="font-size:13px; font-weight:600; margin-bottom:6px; display:block;">Would you be interested in one-on-one instructional coaching?</label>
+          <div class="option-grid">
+            <label class="option-item"><input type="radio" name="q6tcoach" value="Yes"> Yes — welcome support</label>
+            <label class="option-item"><input type="radio" name="q6tcoach" value="Maybe"> Maybe — depends on topic</label>
+            <label class="option-item"><input type="radio" name="q6tcoach" value="No"> No — prefer group PD</label>
+          </div>
+        </div>
+        <div class="field-wrap" style="position:relative;">
+          <span class="ai-badge">AI Assist</span>
+          <label style="font-size:13px; font-weight:600; margin-bottom:8px; display:block;">
+            What is the one thing you wish technology supported better in your classroom?
+          </label>
+          <textarea id="q6t-wish" rows="3" placeholder="e.g., Better tools for tracking individual student progress in science labs…" data-ac="improvements"></textarea>
+          <div class="ac-dropdown" id="q6t-dropdown"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+                      ADMIN BRANCH
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="branch" id="adminBranch">
+
+      <!-- Q2A — SYSTEM PRIORITIES -->
+      <div class="q-card" id="q2a-card" data-q="2a">
+        <div class="q-label"><span class="q-num">2</span> What are your top priorities for technology integration?</div>
+        <div class="q-hint">Select all that apply — these shape the four PD proposals.</div>
+        <div class="option-grid" id="q2a-options">
+          <label class="option-item"><input type="checkbox" name="q2apri" value="Improving student engagement"> Student engagement</label>
+          <label class="option-item"><input type="checkbox" name="q2apri" value="Increasing teacher efficiency"> Teacher efficiency</label>
+          <label class="option-item"><input type="checkbox" name="q2apri" value="Supporting data-driven instruction"> Data-driven instruction</label>
+          <label class="option-item"><input type="checkbox" name="q2apri" value="Strengthening digital literacy"> Digital literacy</label>
+          <label class="option-item"><input type="checkbox" name="q2apri" value="Enhancing assessment practices"> Assessment practices</label>
+          <label class="option-item"><input type="checkbox" name="q2apri" value="Curriculum alignment with technology"> Curriculum alignment</label>
+        </div>
+        <div class="field-wrap" style="margin-top:16px;">
+          <label style="font-size:13px; font-weight:600; margin-bottom:6px; display:block;">How would you describe technology use across classrooms?</label>
+          <div class="option-grid">
+            <label class="option-item"><input type="radio" name="q2adesc" value="Consistent and purposeful"> Consistent and purposeful</label>
+            <label class="option-item"><input type="radio" name="q2adesc" value="Inconsistent"> Inconsistent</label>
+            <label class="option-item"><input type="radio" name="q2adesc" value="Overused"> Overused</label>
+            <label class="option-item"><input type="radio" name="q2adesc" value="Underused"> Underused</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q3A — CONCERNS & PD FOCUS -->
+      <div class="q-card" id="q3a-card" data-q="3a">
+        <div class="q-label"><span class="q-num">3</span> Concerns & PD Focus Areas</div>
+        <div class="q-hint">Select all that apply in each section.</div>
+        <label style="font-size:13px; font-weight:600; margin-bottom:6px; display:block;">What concerns you most about current device use?</label>
+        <div class="option-grid" style="margin-bottom:16px;">
+          <label class="option-item"><input type="checkbox" name="q3aconcern" value="Passive student use"> Passive student use</label>
+          <label class="option-item"><input type="checkbox" name="q3aconcern" value="Technology replacing instruction"> Replacing instruction</label>
+          <label class="option-item"><input type="checkbox" name="q3aconcern" value="Weak writing / typing skills"> Weak writing/typing</label>
+          <label class="option-item"><input type="checkbox" name="q3aconcern" value="Classroom management issues"> Classroom management</label>
+          <label class="option-item"><input type="checkbox" name="q3aconcern" value="Inconsistent expectations"> Inconsistent expectations</label>
+        </div>
+        <label style="font-size:13px; font-weight:600; margin-bottom:6px; display:block;">What areas should PD focus on?</label>
+        <div class="option-grid">
+          <label class="option-item"><input type="checkbox" name="q3afocus" value="Purposeful use of EdTech programs"> Purposeful tech use</label>
+          <label class="option-item"><input type="checkbox" name="q3afocus" value="Knowing when NOT to use devices"> When NOT to use tech</label>
+          <label class="option-item"><input type="checkbox" name="q3afocus" value="Classroom management with devices"> Device management</label>
+          <label class="option-item"><input type="checkbox" name="q3afocus" value="Using data to adjust instruction"> Data-driven instruction</label>
+          <label class="option-item"><input type="checkbox" name="q3afocus" value="Technology for student creation"> Student creation</label>
+          <label class="option-item"><input type="checkbox" name="q3afocus" value="Student-centered learning"> Student-centered learning</label>
+        </div>
+      </div>
+
+      <!-- Q4A — COACHING RECOMMENDATION #1 -->
+      <div class="q-card" id="q4a-card" data-q="4a">
+        <div class="q-label"><span class="q-num">4</span> Coaching Recommendation #1</div>
+        <div class="q-hint">Recommend a teacher who would benefit from individualized instructional coaching.</div>
+        <div class="field-wrap" style="margin-bottom:12px;">
+          <label style="font-size:13px; font-weight:600; margin-bottom:6px; display:block;">Teacher Name:</label>
+          <input type="text" id="q4a-name" placeholder="e.g. Ms. Johnson">
+        </div>
+        <div class="field-wrap" style="margin-bottom:12px;">
+          <label style="font-size:13px; font-weight:600; margin-bottom:6px; display:block;">Grade & Subject:</label>
+          <input type="text" id="q4a-subject" placeholder="e.g. Grade 8 — Mathematics">
+        </div>
+        <div class="field-wrap" style="margin-bottom:12px;">
+          <label style="font-size:13px; font-weight:600; margin-bottom:6px; display:block;">General Goal or Recommendation:</label>
+          <textarea id="q4a-goal" rows="3" placeholder="e.g. Needs support transitioning from paper-based to digital formative assessments…"></textarea>
+        </div>
+        <div class="field-wrap">
+          <label style="font-size:13px; font-weight:600; margin-bottom:6px; display:block;">Primary Coaching Focus:</label>
+          <div class="option-grid">
+            <label class="option-item"><input type="radio" name="q4afocus" value="Technology integration"> Tech integration</label>
+            <label class="option-item"><input type="radio" name="q4afocus" value="Data-driven instruction"> Data use</label>
+            <label class="option-item"><input type="radio" name="q4afocus" value="Student creation over consumption"> Student creation</label>
+            <label class="option-item"><input type="radio" name="q4afocus" value="Classroom management with devices"> Device management</label>
+            <label class="option-item"><input type="radio" name="q4afocus" value="Differentiation through technology"> Differentiation</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q5A — COACHING RECOMMENDATION #2 -->
+      <div class="q-card" id="q5a-card" data-q="5a">
+        <div class="q-label"><span class="q-num">5</span> Coaching Recommendation #2</div>
+        <div class="q-hint">Recommend a second teacher for coaching support.</div>
+        <div class="field-wrap" style="margin-bottom:12px;">
+          <label style="font-size:13px; font-weight:600; margin-bottom:6px; display:block;">Teacher Name:</label>
+          <input type="text" id="q5a-name" placeholder="e.g. Mr. Chen">
+        </div>
+        <div class="field-wrap" style="margin-bottom:12px;">
+          <label style="font-size:13px; font-weight:600; margin-bottom:6px; display:block;">Grade & Subject:</label>
+          <input type="text" id="q5a-subject" placeholder="e.g. Grade 10 — Biology">
+        </div>
+        <div class="field-wrap" style="margin-bottom:12px;">
+          <label style="font-size:13px; font-weight:600; margin-bottom:6px; display:block;">General Goal or Recommendation:</label>
+          <textarea id="q5a-goal" rows="3" placeholder="e.g. Would benefit from coaching on using simulations (PhET, Gizmos)…"></textarea>
+        </div>
+        <div class="field-wrap">
+          <label style="font-size:13px; font-weight:600; margin-bottom:6px; display:block;">Primary Coaching Focus:</label>
+          <div class="option-grid">
+            <label class="option-item"><input type="radio" name="q5afocus" value="Technology integration"> Tech integration</label>
+            <label class="option-item"><input type="radio" name="q5afocus" value="Data-driven instruction"> Data use</label>
+            <label class="option-item"><input type="radio" name="q5afocus" value="Student creation over consumption"> Student creation</label>
+            <label class="option-item"><input type="radio" name="q5afocus" value="Classroom management with devices"> Device management</label>
+            <label class="option-item"><input type="radio" name="q5afocus" value="Differentiation through technology"> Differentiation</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q6A — VISION -->
+      <div class="q-card" id="q6a-card" data-q="6a">
+        <div class="q-label"><span class="q-num">6</span> Vision & Success Metrics</div>
+        <div class="q-hint">Your strategic vision aligns coaching with school improvement goals.</div>
+        <label style="font-size:13px; font-weight:600; margin-bottom:6px; display:block;">What outcomes indicate successful technology integration?</label>
+        <div class="option-grid" style="margin-bottom:16px;">
+          <label class="option-item"><input type="checkbox" name="q6aoutcome" value="Increased student engagement"> Student engagement</label>
+          <label class="option-item"><input type="checkbox" name="q6aoutcome" value="Improved academic outcomes (MAP, ERB)"> Academic outcomes</label>
+          <label class="option-item"><input type="checkbox" name="q6aoutcome" value="Increased teacher confidence"> Teacher confidence</label>
+          <label class="option-item"><input type="checkbox" name="q6aoutcome" value="Consistent technology use"> Consistent use</label>
+          <label class="option-item"><input type="checkbox" name="q6aoutcome" value="Improved assessment data use"> Better data use</label>
+        </div>
+        <div class="field-wrap" style="margin-bottom:12px; position:relative;">
+          <span class="ai-badge">AI Assist</span>
+          <label style="font-size:13px; font-weight:600; margin-bottom:8px; display:block;">How can coaching best support your school goals?</label>
+          <textarea id="q6a-vision" rows="3" placeholder="Describe how coaching fits into your school improvement plan…" data-ac="improvements"></textarea>
+          <div class="ac-dropdown" id="q6a-dropdown"></div>
+        </div>
+        <div class="field-wrap">
+          <label style="font-size:13px; font-weight:600; margin-bottom:8px; display:block;">What should EdTech success look like one year from now?</label>
+          <textarea id="q6a-oneyear" rows="3" placeholder="Paint a picture of your ideal outcome…"></textarea>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="survey-footer">
+    <div class="footer-inner">
+      <span class="progress-text" id="progressText">Select your role to begin</span>
+      <button class="btn-submit" id="submitBtn" disabled>Submit Survey</button>
+    </div>
+  </footer>
+
+  <!-- ===== TOAST ===== -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ===== SUCCESS OVERLAY ===== -->
+  <div class="success-overlay" id="successOverlay">
+    <div class="success-card">
+      <div class="big-check">✓</div>
+      <h3>Thank You!</h3>
+      <p>Your response has been recorded. This data will directly inform four PD training sessions and two instructional coaching plans for your campus.</p>
+      <button class="btn-close" onclick="document.getElementById('successOverlay').classList.remove('visible')">Close</button>
+    </div>
+  </div>
+
+  <!-- ===== CONFETTI ===== -->
+  <canvas id="confetti"></canvas>
+
+  <!-- ===== SCRIPT ===== -->
+  <script>
+  /**
+   * ============================================================
+   *  EdTech Coaching — Instructional Needs Analysis Survey
+   *  JavaScript Engine (mirrors capstone.html architecture)
+   * ============================================================
+   */
+
+  /* ============================================================
+     SECTION 1 — AUTO-COMPLETE DICTIONARY
+     ============================================================ */
+  const AC_DICTIONARY = {
+    tech_uses: [
+      "Research and information gathering",
+      "Content creation (presentations, videos, design work)",
+      "Formative / summative assessments",
+      "Collaboration (shared docs, group work)",
+      "Practice / drill software (IXL, ST Math)",
+      "Station rotation activities",
+      "Video-based lessons (EdPuzzle, YouTube)",
+      "Google Classroom / LMS assignments",
+      "Typing practice and digital literacy",
+      "Coding / robotics activities",
+      "Science simulations (PhET, Gizmos)",
+      "Reading programs (Lexia, Raz-Kids, Epic!)",
+      "Creative multimedia projects",
+      "Virtual field trips and exploration",
+      "Social-emotional learning (SEL) programs",
+      "Portfolio and reflection tools (Seesaw)",
+      "Gamified learning (Kahoot, Quizizz, Blooket)"
+    ],
+    hurdles: [
+      "Students getting distracted / off-task behavior",
+      "Not enough devices for all students",
+      "Wi-Fi / connectivity issues",
+      "Not enough training or PD on how to use tools",
+      "Classroom management with devices",
+      "Using technology for differentiation",
+      "Using data from platforms to inform instruction",
+      "Not enough planning time",
+      "Device performance (slow / outdated)",
+      "Software / login difficulties",
+      "Hardware damage (broken screens, missing keys)",
+      "Content filtering too restrictive",
+      "Battery life too short for full school day",
+      "Students bypassing content filters",
+      "No dedicated tech support or IT staff",
+      "Lack of a clear tech integration policy",
+      "Digital divide among students"
+    ],
+    pd_needs: [
+      "Using technology for differentiation & UDL",
+      "Digital assessment tools & data analysis",
+      "Student engagement strategies with tech",
+      "Classroom management with devices",
+      "Creating interactive / multimedia lessons",
+      "AI literacy & ethical use in the classroom",
+      "Google Workspace organization & workflows",
+      "Data tracking and progress monitoring",
+      "Station rotation models with technology",
+      "Blended learning design and implementation",
+      "Formative assessment using digital tools",
+      "Video creation for student projects",
+      "Project-based learning with technology",
+      "Assistive technology for students with disabilities",
+      "Gamification strategies (Kahoot, Quizizz)",
+      "STEM / STEAM integration strategies",
+      "Typing and digital literacy instruction"
+    ],
+    improvements: [
+      "Reliable Wi-Fi across all classrooms",
+      "1:1 device program for all grade levels",
+      "Dedicated technology integration coach on staff",
+      "Monthly professional development focused on meaningful tech use",
+      "Subject-specific tech PD (e.g., Desmos for math)",
+      "On-site tech support with same-day response",
+      "A clear tech integration framework (SAMR/TPACK)",
+      "Student digital citizenship curriculum",
+      "Teacher voice in technology purchasing decisions",
+      "Training focused on data-driven instruction",
+      "Peer mentoring program for tech-reluctant teachers",
+      "Coaching frameworks and clear look-fors",
+      "PD aligned to real classroom problems",
+      "Clear schoolwide expectations for device use",
+      "Reduce content filtering for educational sites",
+      "Annual device refresh cycle",
+      "Build a dedicated makerspace / innovation lab"
+    ]
+  };
+
+
+  /* ============================================================
+     SECTION 2 — AUTO-COMPLETE ENGINE
+     ============================================================ */
+  class AutoComplete {
+    constructor(inputEl, dropdownEl, category) {
+      this.input = inputEl;
+      this.dropdown = dropdownEl;
+      this.items = AC_DICTIONARY[category] || [];
+      this.activeIdx = -1;
+      this.visible = false;
+      this._bindEvents();
+    }
+    _match(query) {
+      if (!query || query.length < 1) return [];
+      const q = query.toLowerCase().trim();
+      const isTextarea = this.input.tagName === 'TEXTAREA';
+      let searchQ = q;
+      if (isTextarea) {
+        const segments = q.split(/[,.\n]/);
+        searchQ = (segments[segments.length - 1] || '').trim();
+        if (searchQ.length < 2) return [];
+      }
+      return this.items
+        .map(item => {
+          const lower = item.toLowerCase();
+          let score = 0;
+          if (lower.startsWith(searchQ)) score = 3;
+          else if (lower.split(/\s+/).some(w => w.startsWith(searchQ))) score = 2;
+          else if (lower.includes(searchQ)) score = 1;
+          return { item, score };
+        })
+        .filter(s => s.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .map(s => s.item)
+        .slice(0, 12);
+    }
+    _render(matches, query) {
+      this.dropdown.innerHTML = '';
+      if (!matches.length) { this._hide(); return; }
+      const q = query.toLowerCase().trim();
+      const isTextarea = this.input.tagName === 'TEXTAREA';
+      let highlightQ = q;
+      if (isTextarea) {
+        const segments = q.split(/[,.\n]/);
+        highlightQ = (segments[segments.length - 1] || '').trim();
+      }
+      matches.forEach((text, i) => {
+        const div = document.createElement('div');
+        div.className = 'ac-item';
+        div.dataset.index = i;
+        const lower = text.toLowerCase();
+        const idx = lower.indexOf(highlightQ);
+        let html = '<span class="ac-icon">⚡</span>';
+        if (idx >= 0 && highlightQ.length > 0) {
+          html += text.substring(0, idx) + '<span class="ac-match">' + text.substring(idx, idx + highlightQ.length) + '</span>' + text.substring(idx + highlightQ.length);
+        } else { html += text; }
+        div.innerHTML = html;
+        div.addEventListener('mousedown', e => { e.preventDefault(); this._select(text); });
+        this.dropdown.appendChild(div);
+      });
+      this._show();
+      this.activeIdx = -1;
+    }
+    _show() { this.dropdown.classList.add('visible'); this.visible = true; }
+    _hide() { this.dropdown.classList.remove('visible'); this.visible = false; this.activeIdx = -1; }
+    _select(text) {
+      if (this.input.tagName === 'TEXTAREA') {
+        const val = this.input.value;
+        const segments = val.split(/([,.\n])/);
+        let lastTextIdx = segments.length - 1;
+        while (lastTextIdx >= 0 && /^[,.\n]$/.test(segments[lastTextIdx])) lastTextIdx--;
+        if (lastTextIdx >= 0) segments[lastTextIdx] = ' ' + text;
+        this.input.value = segments.join('').trim();
+      } else { this.input.value = text; }
+      this._hide();
+      this.input.dispatchEvent(new Event('input', { bubbles: true }));
+      this.input.focus();
+    }
+    _navigate(dir) {
+      const items = this.dropdown.querySelectorAll('.ac-item');
+      if (!items.length) return;
+      if (this.activeIdx >= 0) items[this.activeIdx].classList.remove('active');
+      this.activeIdx += dir;
+      if (this.activeIdx < 0) this.activeIdx = items.length - 1;
+      if (this.activeIdx >= items.length) this.activeIdx = 0;
+      items[this.activeIdx].classList.add('active');
+      items[this.activeIdx].scrollIntoView({ block: 'nearest' });
+    }
+    _bindEvents() {
+      this.input.addEventListener('input', () => { this._render(this._match(this.input.value), this.input.value); });
+      this.input.addEventListener('keydown', e => {
+        if (!this.visible) return;
+        if (e.key === 'ArrowDown') { e.preventDefault(); this._navigate(1); }
+        else if (e.key === 'ArrowUp') { e.preventDefault(); this._navigate(-1); }
+        else if (e.key === 'Enter' && this.activeIdx >= 0) { e.preventDefault(); const m = this._match(this.input.value); if (m[this.activeIdx]) this._select(m[this.activeIdx]); }
+        else if (e.key === 'Escape') { this._hide(); }
+        else if (e.key === 'Tab' && this.activeIdx >= 0) { e.preventDefault(); const m = this._match(this.input.value); if (m[this.activeIdx]) this._select(m[this.activeIdx]); }
+      });
+      this.input.addEventListener('blur', () => { setTimeout(() => this._hide(), 200); });
+      this.input.addEventListener('focus', () => { if (this.input.value.length >= 1) this._render(this._match(this.input.value), this.input.value); });
+    }
+  }
+
+  function initAutoComplete() {
+    const fields = [
+      { input: 'q3t-other', dropdown: 'q3t-dropdown', category: 'tech_uses' },
+      { input: 'q4t-other', dropdown: 'q4t-dropdown', category: 'hurdles' },
+      { input: 'q5t-other', dropdown: 'q5t-dropdown', category: 'pd_needs' },
+      { input: 'q6t-wish',  dropdown: 'q6t-dropdown', category: 'improvements' },
+      { input: 'q6a-vision', dropdown: 'q6a-dropdown', category: 'improvements' },
+    ];
+    fields.forEach(f => {
+      const inp = document.getElementById(f.input);
+      const dd = document.getElementById(f.dropdown);
+      if (inp && dd) new AutoComplete(inp, dd, f.category);
+    });
+  }
+
+
+  /* ============================================================
+     SECTION 3 — ROLE BRANCHING + PROGRESS TRACKING
+     ============================================================ */
+  let currentRole = null;
+  const TOTAL_Q = { teacher: 6, admin: 6 };
+
+  function selectRole(role, el) {
+    currentRole = role;
+    document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+    el.querySelector('input').checked = true;
+
+    const tBranch = document.getElementById('teacherBranch');
+    const aBranch = document.getElementById('adminBranch');
+    if (role === 'teacher') {
+      tBranch.classList.add('active');
+      aBranch.classList.remove('active');
+    } else {
+      aBranch.classList.add('active');
+      tBranch.classList.remove('active');
+    }
+    updateProgress();
+    setTimeout(() => {
+      const target = role === 'teacher' ? tBranch : aBranch;
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 200);
+  }
+
+  function getAnsweredCount() {
+    if (!currentRole) return { count: 0, total: 1 };
+    let answered = 0;
+    const total = TOTAL_Q[currentRole];
+
+    // Q1 — role + name + school
+    const role = document.querySelector('input[name="q1role"]:checked');
+    const name = document.getElementById('q1-name').value.trim();
+    const school = document.getElementById('q1-school').value.trim();
+    if (role && name && school) answered++;
+
+    if (currentRole === 'teacher') {
+      // Q2T
+      const devs = document.querySelectorAll('input[name="q2tdev"]:checked').length > 0;
+      const freq = !!document.querySelector('input[name="q2tfreq"]:checked');
+      if (devs && freq) answered++;
+      // Q3T
+      if (document.querySelectorAll('input[name="q3tuse"]:checked').length > 0 || document.getElementById('q3t-other').value.trim()) answered++;
+      // Q4T
+      if (document.querySelectorAll('input[name="q4tchal"]:checked').length > 0 || document.getElementById('q4t-other').value.trim()) answered++;
+      // Q5T
+      if (document.querySelectorAll('input[name="q5ttopic"]:checked').length > 0) answered++;
+      // Q6T
+      const coachInt = !!document.querySelector('input[name="q6tcoach"]:checked');
+      const wish = document.getElementById('q6t-wish').value.trim();
+      if (coachInt && wish) answered++;
+
+    } else {
+      // Q2A
+      const pris = document.querySelectorAll('input[name="q2apri"]:checked').length > 0;
+      const desc = !!document.querySelector('input[name="q2adesc"]:checked');
+      if (pris && desc) answered++;
+      // Q3A
+      const conc = document.querySelectorAll('input[name="q3aconcern"]:checked').length > 0;
+      const foc = document.querySelectorAll('input[name="q3afocus"]:checked').length > 0;
+      if (conc && foc) answered++;
+      // Q4A
+      const c1name = document.getElementById('q4a-name').value.trim();
+      const c1goal = document.getElementById('q4a-goal').value.trim();
+      const c1focus = !!document.querySelector('input[name="q4afocus"]:checked');
+      if (c1name && c1goal && c1focus) answered++;
+      // Q5A
+      const c2name = document.getElementById('q5a-name').value.trim();
+      const c2goal = document.getElementById('q5a-goal').value.trim();
+      const c2focus = !!document.querySelector('input[name="q5afocus"]:checked');
+      if (c2name && c2goal && c2focus) answered++;
+      // Q6A
+      const outcomes = document.querySelectorAll('input[name="q6aoutcome"]:checked').length > 0;
+      const vision = document.getElementById('q6a-vision').value.trim();
+      if (outcomes && vision) answered++;
+    }
+
+    return { count: answered, total };
+  }
+
+  function updateProgress() {
+    const { count, total } = getAnsweredCount();
+    const pct = Math.round((count / total) * 100);
+    const fill = document.getElementById('progressFill');
+    if (fill) fill.style.width = pct + '%';
+    const text = document.getElementById('progressText');
+    if (text) text.textContent = currentRole ? `${count} of ${total} answered` : 'Select your role to begin';
+    const btn = document.getElementById('submitBtn');
+    if (btn) btn.disabled = !currentRole || count < total;
+
+    // Mark cards completed
+    markCardComplete('q1-card', () => {
+      const r = document.querySelector('input[name="q1role"]:checked');
+      const n = document.getElementById('q1-name').value.trim();
+      const s = document.getElementById('q1-school').value.trim();
+      return !!r && !!n && !!s;
+    });
+
+    if (currentRole === 'teacher') {
+      markCardComplete('q2t-card', () => document.querySelectorAll('input[name="q2tdev"]:checked').length > 0 && !!document.querySelector('input[name="q2tfreq"]:checked'));
+      markCardComplete('q3t-card', () => document.querySelectorAll('input[name="q3tuse"]:checked').length > 0 || document.getElementById('q3t-other').value.trim().length > 0);
+      markCardComplete('q4t-card', () => document.querySelectorAll('input[name="q4tchal"]:checked').length > 0 || document.getElementById('q4t-other').value.trim().length > 0);
+      markCardComplete('q5t-card', () => document.querySelectorAll('input[name="q5ttopic"]:checked').length > 0);
+      markCardComplete('q6t-card', () => !!document.querySelector('input[name="q6tcoach"]:checked') && document.getElementById('q6t-wish').value.trim().length > 0);
+    } else if (currentRole === 'admin') {
+      markCardComplete('q2a-card', () => document.querySelectorAll('input[name="q2apri"]:checked').length > 0 && !!document.querySelector('input[name="q2adesc"]:checked'));
+      markCardComplete('q3a-card', () => document.querySelectorAll('input[name="q3aconcern"]:checked').length > 0 && document.querySelectorAll('input[name="q3afocus"]:checked').length > 0);
+      markCardComplete('q4a-card', () => document.getElementById('q4a-name').value.trim() && document.getElementById('q4a-goal').value.trim() && !!document.querySelector('input[name="q4afocus"]:checked'));
+      markCardComplete('q5a-card', () => document.getElementById('q5a-name').value.trim() && document.getElementById('q5a-goal').value.trim() && !!document.querySelector('input[name="q5afocus"]:checked'));
+      markCardComplete('q6a-card', () => document.querySelectorAll('input[name="q6aoutcome"]:checked').length > 0 && document.getElementById('q6a-vision').value.trim().length > 0);
+    }
+  }
+
+  function markCardComplete(id, checkFn) {
+    const card = document.getElementById(id);
+    if (card) card.classList.toggle('completed', checkFn());
+  }
+
+  function styleOptionItems() {
+    document.querySelectorAll('.option-item').forEach(label => {
+      const input = label.querySelector('input');
+      if (!input) return;
+      input.addEventListener('change', () => {
+        if (input.type === 'radio') {
+          document.querySelectorAll(`input[name="${input.name}"]`).forEach(r => r.closest('.option-item')?.classList.remove('selected'));
+        }
+        label.classList.toggle('selected', input.checked);
+        updateProgress();
+      });
+    });
+  }
+
+
+  /* ============================================================
+     SECTION 4 — COLLECT FORM DATA
+     ============================================================ */
+  function collectFormData() {
+    const role = document.querySelector('input[name="q1role"]:checked')?.value || '';
+    const base = {
+      submission_id: Date.now().toString(36) + Math.random().toString(36).slice(2, 8),
+      timestamp: new Date().toISOString(),
+      role,
+      full_name: document.getElementById('q1-name').value.trim(),
+      school: document.getElementById('q1-school').value.trim(),
+      grade_subject: document.getElementById('q1-grade').value.trim()
+    };
+
+    if (currentRole === 'teacher') {
+      const devs = []; document.querySelectorAll('input[name="q2tdev"]:checked').forEach(cb => devs.push(cb.value));
+      const uses = []; document.querySelectorAll('input[name="q3tuse"]:checked').forEach(cb => uses.push(cb.value));
+      const q3Other = document.getElementById('q3t-other').value.trim(); if (q3Other) uses.push(q3Other);
+      const chals = []; document.querySelectorAll('input[name="q4tchal"]:checked').forEach(cb => chals.push(cb.value));
+      const q4Other = document.getElementById('q4t-other').value.trim(); if (q4Other) chals.push(q4Other);
+      const topics = []; document.querySelectorAll('input[name="q5ttopic"]:checked').forEach(cb => topics.push(cb.value));
+      const q5Other = document.getElementById('q5t-other').value.trim(); if (q5Other) topics.push(q5Other);
+
+      return { ...base,
+        devices: devs.join('; '),
+        usage_frequency: document.querySelector('input[name="q2tfreq"]:checked')?.value || '',
+        tech_uses: uses.join('; '),
+        challenges: chals.join('; '),
+        pd_topics: topics.join('; '),
+        pd_format: document.querySelector('input[name="q5tfmt"]:checked')?.value || '',
+        coaching_interest: document.querySelector('input[name="q6tcoach"]:checked')?.value || '',
+        tech_wish: document.getElementById('q6t-wish').value.trim()
+      };
+    } else {
+      const pris = []; document.querySelectorAll('input[name="q2apri"]:checked').forEach(cb => pris.push(cb.value));
+      const concerns = []; document.querySelectorAll('input[name="q3aconcern"]:checked').forEach(cb => concerns.push(cb.value));
+      const focuses = []; document.querySelectorAll('input[name="q3afocus"]:checked').forEach(cb => focuses.push(cb.value));
+      const outcomes = []; document.querySelectorAll('input[name="q6aoutcome"]:checked').forEach(cb => outcomes.push(cb.value));
+
+      return { ...base,
+        priorities: pris.join('; '),
+        tech_description: document.querySelector('input[name="q2adesc"]:checked')?.value || '',
+        concerns: concerns.join('; '),
+        pd_focus: focuses.join('; '),
+        coach1_name: document.getElementById('q4a-name').value.trim(),
+        coach1_subject: document.getElementById('q4a-subject').value.trim(),
+        coach1_goal: document.getElementById('q4a-goal').value.trim(),
+        coach1_focus: document.querySelector('input[name="q4afocus"]:checked')?.value || '',
+        coach2_name: document.getElementById('q5a-name').value.trim(),
+        coach2_subject: document.getElementById('q5a-subject').value.trim(),
+        coach2_goal: document.getElementById('q5a-goal').value.trim(),
+        coach2_focus: document.querySelector('input[name="q5afocus"]:checked')?.value || '',
+        success_indicators: outcomes.join('; '),
+        coaching_vision: document.getElementById('q6a-vision').value.trim(),
+        one_year_vision: document.getElementById('q6a-oneyear').value.trim()
+      };
+    }
+  }
+
+
+  /* ============================================================
+     SECTION 5 — GOOGLE APPS SCRIPT SUBMISSION (GET-based)
+     ============================================================ */
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbya14p6H1IGM2alwKuP9XpbPJNpyKPOI9d7K7kshncj2-eoOHyFDaxSNsM0xSUxPdnp/exec';
+
+  function buildSubmitURL(data) {
+    const params = new URLSearchParams();
+    Object.entries(data).forEach(([key, value]) => params.set(key, typeof value === 'object' ? JSON.stringify(value) : value));
+    return APPS_SCRIPT_URL + '?' + params.toString();
+  }
+
+  function submitViaIframe(data) {
+    return new Promise(resolve => {
+      const url = buildSubmitURL(data);
+      const iframe = document.createElement('iframe');
+      iframe.name = 'survey-submit-' + Date.now();
+      iframe.style.cssText = 'position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;';
+      document.body.appendChild(iframe);
+      let resolved = false;
+      function done(success) {
+        if (resolved) return; resolved = true;
+        console.log('[Survey] iframe submission ' + (success ? 'completed' : 'timed out'));
+        setTimeout(() => { if (iframe.parentNode) iframe.remove(); }, 3000);
+        resolve(true);
+      }
+      iframe.addEventListener('load', () => done(true));
+      iframe.addEventListener('error', () => done(false));
+      setTimeout(() => done(false), 8000);
+      iframe.src = url;
+    });
+  }
+
+  function submitViaImageBeacon(data) {
+    return new Promise(resolve => {
+      const url = buildSubmitURL(data);
+      const img = new Image(); img.style.display = 'none';
+      img.onload = () => { cleanup(); resolve(true); };
+      img.onerror = () => { cleanup(); resolve(true); };
+      img.src = url; document.body.appendChild(img);
+      function cleanup() { setTimeout(() => { if (img.parentNode) img.remove(); }, 1000); }
+      setTimeout(() => { cleanup(); resolve(true); }, 5000);
+    });
+  }
+
+  async function submitViaFetchGet(data) {
+    try {
+      await fetch(buildSubmitURL(data), { method: 'GET', mode: 'no-cors', redirect: 'follow' });
+      return true;
+    } catch (err) { console.warn('[Survey] fetch failed:', err.message); return false; }
+  }
+
+
+  /* ============================================================
+     SECTION 6 — VALIDATION ENGINE
+     ============================================================ */
+  function showCardError(cardId, message) {
+    const card = document.getElementById(cardId);
+    if (!card) return;
+    clearCardError(cardId);
+    const errorEl = document.createElement('div');
+    errorEl.className = 'validation-error';
+    errorEl.innerHTML = `<span class="val-icon">⚠</span> ${message}`;
+    card.appendChild(errorEl);
+    card.classList.add('has-error');
+    requestAnimationFrame(() => errorEl.classList.add('visible'));
+  }
+
+  function clearCardError(cardId) {
+    const card = document.getElementById(cardId);
+    if (!card) return;
+    const existing = card.querySelector('.validation-error');
+    if (existing) existing.remove();
+    card.classList.remove('has-error');
+  }
+
+  function validateForm() {
+    const errors = [];
+    const allCards = currentRole === 'teacher'
+      ? ['q1-card', 'q2t-card', 'q3t-card', 'q4t-card', 'q5t-card', 'q6t-card']
+      : ['q1-card', 'q2a-card', 'q3a-card', 'q4a-card', 'q5a-card', 'q6a-card'];
+    allCards.forEach(id => clearCardError(id));
+
+    // Q1
+    if (!document.querySelector('input[name="q1role"]:checked') || !document.getElementById('q1-name').value.trim() || !document.getElementById('q1-school').value.trim()) {
+      showCardError('q1-card', 'Please select your role and enter your name and school.');
+      errors.push('q1');
+    }
+
+    if (currentRole === 'teacher') {
+      if (document.querySelectorAll('input[name="q2tdev"]:checked').length === 0) { showCardError('q2t-card', 'Please select at least one device.'); errors.push('q2t'); }
+      else if (!document.querySelector('input[name="q2tfreq"]:checked')) { showCardError('q2t-card', 'Please select usage frequency.'); errors.push('q2t'); }
+      if (document.querySelectorAll('input[name="q3tuse"]:checked').length === 0 && !document.getElementById('q3t-other').value.trim()) { showCardError('q3t-card', 'Please select at least one technology use.'); errors.push('q3t'); }
+      if (document.querySelectorAll('input[name="q4tchal"]:checked').length === 0 && !document.getElementById('q4t-other').value.trim()) { showCardError('q4t-card', 'Please select at least one challenge.'); errors.push('q4t'); }
+      if (document.querySelectorAll('input[name="q5ttopic"]:checked').length === 0) { showCardError('q5t-card', 'Please select at least one PD topic.'); errors.push('q5t'); }
+      if (!document.querySelector('input[name="q6tcoach"]:checked')) { showCardError('q6t-card', 'Please indicate your coaching interest.'); errors.push('q6t'); }
+      else if (!document.getElementById('q6t-wish').value.trim()) { showCardError('q6t-card', 'Please share your open response.'); errors.push('q6t'); }
+    } else {
+      if (document.querySelectorAll('input[name="q2apri"]:checked').length === 0) { showCardError('q2a-card', 'Please select at least one priority.'); errors.push('q2a'); }
+      else if (!document.querySelector('input[name="q2adesc"]:checked')) { showCardError('q2a-card', 'Please describe current technology use.'); errors.push('q2a'); }
+      if (document.querySelectorAll('input[name="q3aconcern"]:checked').length === 0 || document.querySelectorAll('input[name="q3afocus"]:checked').length === 0) { showCardError('q3a-card', 'Please select at least one concern AND one PD focus.'); errors.push('q3a'); }
+      if (!document.getElementById('q4a-name').value.trim() || !document.getElementById('q4a-goal').value.trim() || !document.querySelector('input[name="q4afocus"]:checked')) { showCardError('q4a-card', 'Please complete the teacher name, goal, and coaching focus.'); errors.push('q4a'); }
+      if (!document.getElementById('q5a-name').value.trim() || !document.getElementById('q5a-goal').value.trim() || !document.querySelector('input[name="q5afocus"]:checked')) { showCardError('q5a-card', 'Please complete the teacher name, goal, and coaching focus.'); errors.push('q5a'); }
+      if (document.querySelectorAll('input[name="q6aoutcome"]:checked').length === 0 || !document.getElementById('q6a-vision').value.trim()) { showCardError('q6a-card', 'Please select outcomes and describe your coaching vision.'); errors.push('q6a'); }
+    }
+    return { valid: errors.length === 0, errors };
+  }
+
+
+  /* ============================================================
+     SECTION 7 — SUBMIT HANDLER + CONFETTI
+     ============================================================ */
+  function showToast(msg, type = '') {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.className = 'toast visible' + (type ? ` toast-${type}` : '');
+    setTimeout(() => toast.classList.remove('visible'), 4500);
+  }
+
+  async function handleSubmit() {
+    const btn = document.getElementById('submitBtn');
+    const validation = validateForm();
+    if (!validation.valid) {
+      showToast(`Please fix ${validation.errors.length} issue${validation.errors.length > 1 ? 's' : ''} before submitting.`, 'error');
+      const first = document.querySelector('.q-card.has-error');
+      if (first) { first.scrollIntoView({ behavior: 'smooth', block: 'center' }); first.classList.add('shake'); setTimeout(() => first.classList.remove('shake'), 600); }
+      return;
+    }
+    const data = collectFormData();
+    btn.disabled = true; btn.textContent = 'Submitting…';
+
+    try { await submitViaIframe(data); } catch (err) {
+      try { await submitViaImageBeacon(data); } catch (err2) { await submitViaFetchGet(data); }
+    }
+
+    setTimeout(() => {
+      btn.textContent = '✓ Submitted!'; btn.classList.add('success');
+      showToast('Thank you! Your response has been recorded.', 'success');
+      document.getElementById('successOverlay').classList.add('visible');
+      fireConfetti();
+    }, 600);
+  }
+
+  function fireConfetti() {
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    const particles = [];
+    const colors = ['#6366F1', '#06B6D4', '#10B981', '#F59E0B', '#EC4899', '#8B5CF6'];
+    for (let i = 0; i < 150; i++) {
+      particles.push({ x: Math.random() * canvas.width, y: -20 - Math.random() * 60,
+        w: 4 + Math.random() * 4, h: 6 + Math.random() * 8,
+        vx: (Math.random() - 0.5) * 3, vy: 2 + Math.random() * 3,
+        rot: Math.random() * 360, rotSpeed: (Math.random() - 0.5) * 8,
+        color: colors[Math.floor(Math.random() * colors.length)], opacity: 1 });
+    }
+    let frame = 0;
+    function tick() {
+      frame++; ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.x += p.vx; p.y += p.vy; p.vy += 0.04; p.rot += p.rotSpeed;
+        if (frame > 100) p.opacity -= 0.015;
+        ctx.save(); ctx.translate(p.x, p.y); ctx.rotate((p.rot * Math.PI) / 180);
+        ctx.fillStyle = p.color; ctx.globalAlpha = Math.max(0, p.opacity);
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); ctx.restore();
+      });
+      if (frame < 180) requestAnimationFrame(tick);
+      else ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    tick();
+  }
+
+
+  /* ============================================================
+     SECTION 8 — INITIALIZATION
+     ============================================================ */
+  document.addEventListener('DOMContentLoaded', () => {
+    initAutoComplete();
+    styleOptionItems();
+    document.addEventListener('input', updateProgress);
+    document.addEventListener('change', updateProgress);
+    updateProgress();
+
+    document.getElementById('submitBtn').addEventListener('click', e => { e.preventDefault(); handleSubmit(); });
+    document.getElementById('successOverlay').addEventListener('click', e => { if (e.target === e.currentTarget) e.target.classList.remove('visible'); });
+
+    console.log('[Survey] Coaching Needs Survey loaded. Auto-complete + validation active.');
+  });
+  </script>
+
+</body>
+</html>
