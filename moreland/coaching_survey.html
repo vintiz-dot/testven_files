@@ -390,7 +390,7 @@
           <div class="sub">Module 41 · Unit 4 · Capstone</div>
         </div>
       </div>
-      <div style="display:flex; gap:10px; align-items:center;">
+      <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
         <a href="./masters.html"
           style="font-size:13px; font-weight:600; color:var(--text-muted); text-decoration:none; padding:6px 12px; border-radius:8px; border:1px solid var(--border); background:var(--surface); transition:all .2s; display:inline-flex; align-items:center; gap:4px;"
           onMouseOver="this.style.color='var(--text)'; this.style.borderColor='var(--text-muted)'"
@@ -398,7 +398,19 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg> Portfolio
         </a>
-        <span class="timer-badge">⏱ ~5 min</span>
+        <a href="survey_results.html"
+          style="font-size:13px; font-weight:600; color:var(--success); text-decoration:none; padding:6px 12px; border-radius:8px; border:1px solid var(--success); background:rgba(16, 185, 129, .05); transition:all .2s; display:inline-flex; align-items:center; gap:4px;" 
+          onMouseOver="this.style.background='rgba(16, 185, 129, .15)'" 
+          onMouseOut="this.style.background='rgba(16, 185, 129, .05)'">
+          Results Data <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </a>
+        <a href="coaching_template.html"
+          style="font-size:13px; font-weight:600; color:var(--primary); text-decoration:none; padding:6px 12px; border-radius:8px; border:1px solid var(--primary); background:rgba(99,102,241,0.05); transition:all .2s; display:inline-flex; align-items:center; gap:4px;" 
+          onMouseOver="this.style.background='rgba(99,102,241,0.15)'" 
+          onMouseOut="this.style.background='rgba(99,102,241,0.05)'">
+          Coaching Plan <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </a>
+        <span class="timer-badge" style="background: linear-gradient(135deg, var(--success), #059669); animation: none; box-shadow: 0 2px 8px var(--success-glow);">✅ Completed</span>
       </div>
     </div>
     <div class="progress-wrap">
@@ -422,6 +434,24 @@
         <span class="meta-pill">📋 Role-adaptive</span>
         <span class="meta-pill">⏱ ~5 minutes</span>
         <span class="meta-pill">🤖 Smart Auto-Complete</span>
+      </div>
+
+      <div class="section-divider" style="margin-top: 24px; margin-bottom: 16px;">Project Artifacts</div>
+      <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <a href="coaching_template.html"
+          style="display:inline-flex; align-items:center; gap:8px; font-size:13px; font-weight:600; color:var(--primary); text-decoration:none; padding:10px 16px; border-radius:12px; background:rgba(99, 102, 241, .08); border:1px solid rgba(99, 102, 241, .2); transition:all .2s;"
+          onMouseOver="this.style.background='rgba(99, 102, 241, .15)'; this.style.borderColor='rgba(99, 102, 241, .3)'"
+          onMouseOut="this.style.background='rgba(99, 102, 241, .08)'; this.style.borderColor='rgba(99, 102, 241, .2)'">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          PD Coaching Template
+        </a>
+        <a href="survey_results.html"
+          style="display:inline-flex; align-items:center; gap:8px; font-size:13px; font-weight:600; color:var(--success); text-decoration:none; padding:10px 16px; border-radius:12px; background:rgba(16, 185, 129, .08); border:1px solid rgba(16, 185, 129, .2); transition:all .2s;"
+          onMouseOver="this.style.background='rgba(16, 185, 129, .15)'; this.style.borderColor='rgba(16, 185, 129, .3)'"
+          onMouseOut="this.style.background='rgba(16, 185, 129, .08)'; this.style.borderColor='rgba(16, 185, 129, .2)'">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          Survey Results Data
+        </a>
       </div>
     </div>
 

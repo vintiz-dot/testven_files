@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Survey Results Data — TEACH-NOW</title>
+  <meta name="color-scheme" content="light dark">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Reuse Liquid Glass styles */
+    :root {
+      --primary: #6366F1; --primary-light: #818CF8; --primary-dark: #4F46E5;
+      --accent: #06B6D4; --accent-light: #22D3EE;
+      --success: #10B981; --success-glow: rgba(16, 185, 129, .35);
+      --bg: #F8FAFC; --surface: rgba(255, 255, 255, .72); --surface-2: rgba(255, 255, 255, .55);
+      --text: #0F172A; --text-muted: #64748B; --border: rgba(148, 163, 184, .28);
+      --radius: 16px; --radius-lg: 24px; --shadow-md: 0 8px 30px rgba(0, 0, 0, .08);
+      --blur: saturate(180%) blur(20px); --transition: .25s cubic-bezier(.4, 0, .2, 1);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0B1120; --surface: rgba(30, 41, 59, .65); --surface-2: rgba(30, 41, 59, .45);
+        --text: #E2E8F0; --text-muted: #94A3B8; --border: rgba(148, 163, 184, .18);
+      }
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.6; color: var(--text); background: var(--bg); min-height: 100vh; }
+    body::before {
+      content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background: radial-gradient(ellipse 900px 700px at 15% -5%, rgba(99, 102, 241, .18), transparent 60%), radial-gradient(ellipse 800px 600px at 85% 10%, rgba(6, 182, 212, .14), transparent 55%), radial-gradient(ellipse 700px 500px at 50% 90%, rgba(16, 185, 129, .10), transparent 60%);
+      animation: bgShift 20s ease-in-out infinite alternate;
+    }
+    @keyframes bgShift { 0% { opacity: 1; } 50% { opacity: .7; } 100% { opacity: 1; } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+    .header { position: sticky; top: 0; z-index: 50; backdrop-filter: var(--blur); background: var(--surface-2); border-bottom: 1px solid var(--border); animation: fadeUp .6s ease both; }
+    .header-inner { max-width: 1200px; margin: 0 auto; padding: 16px clamp(16px, 4vw, 28px); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-icon { width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, var(--success), #059669); display: grid; place-items: center; box-shadow: 0 4px 14px var(--success-glow); font-size: 18px; color: #fff; }
+    .brand h1 { font-size: 18px; font-weight: 700; letter-spacing: -.01em; }
+    .brand .sub { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+
+    .main { max-width: 1200px; margin: 0 auto; padding: 28px clamp(16px, 4vw, 28px) 28px; }
+    
+    .card { border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); backdrop-filter: var(--blur); padding: 32px; margin-bottom: 24px; box-shadow: var(--shadow-md); animation: fadeUp .7s ease both; overflow-x: auto; }
+    .card h2 { font-size: 22px; font-weight: 800; margin-bottom: 16px; background: linear-gradient(135deg, var(--success), #059669); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+    .download-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 12px; background: linear-gradient(135deg, var(--success), #059669); color: #fff; text-decoration: none; font-weight: 600; font-size: 14px; box-shadow: 0 4px 14px var(--success-glow); transition: all .2s; }
+    .download-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--success-glow); }
+
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 13px; }
+    th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+    th { background: rgba(16, 185, 129, 0.05); color: var(--text); font-weight: 700; text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em; white-space: nowrap; position: sticky; top: 0; }
+    tr:hover td { background: rgba(16, 185, 129, 0.02); }
+    .role-badge { display: inline-block; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+    .role-teacher { background: rgba(99, 102, 241, 0.1); color: var(--primary); }
+    .role-admin { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
+    
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-icon">📊</div>
+        <div>
+          <h1>Survey Results Data</h1>
+          <div class="sub">Module 41 · Unit 4 · Capstone</div>
+        </div>
+      </div>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <a href="coaching_survey.html" style="font-size:13px; font-weight:600; color:var(--text-muted); text-decoration:none; padding:8px 14px; border-radius:10px; border:1px solid var(--border); background:var(--surface); transition:all .2s;">Back to Survey</a>
+        <a href="Victor_Moronu_Survey_Results_EdTech_Needs.xlsx" download class="download-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Download Original (.xlsx)
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="card" style="animation-delay: 0.1s;">
+      <h2>Educational Technology Needs Survey — Teacher Responses (n=18)</h2>
+      <p style="color:var(--text-muted); margin-bottom: 24px;">Greenfield Preparatory Middle School · Collected April 2026</p>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>Name</th>
+            <th>Grade/Subject</th>
+            <th>Frequency</th>
+            <th>Top Challenges</th>
+            <th>Most Wanted PD</th>
+            <th>1:1 Coaching?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="role-badge role-teacher">Teacher</span></td><td>Ms. Vera Vectore</td><td>7th Grade Math</td><td>Daily</td><td>Students getting distracted; Not enough training; Classroom management</td><td>Using data to adjust instruction; Classroom management with devices</td><td>Yes</td></tr>
+          <tr><td><span class="role-badge role-teacher">Teacher</span></td><td>Mr. Luis Luma</td><td>6th Grade Science</td><td>Daily</td><td>Students getting distracted; Concerns about passive use</td><td>Creating interactive lessons; Student engagement strategies</td><td>Yes</td></tr>
+          <tr><td><span class="role-badge role-teacher">Teacher</span></td><td>Ms. Hana Ortiz</td><td>8th Grade Algebra I</td><td>A few times a week</td><td>Students getting distracted; Differentiation support</td><td>Using technology for differentiation; Classroom management with devices</td><td>Yes</td></tr>
+          <tr><td><span class="role-badge role-teacher">Teacher</span></td><td>Mr. Dre Patel</td><td>7th Grade Science</td><td>Daily</td><td>Students getting distracted</td><td>Creating interactive lessons; Classroom management with devices</td><td>Maybe</td></tr>
+          <tr><td><span class="role-badge role-teacher">Teacher</span></td><td>Ms. Brynn Kilpatrick</td><td>6th Grade Math</td><td>Daily</td><td>Students getting distracted; Not enough training; Differentiation support</td><td>Classroom management with devices; Using technology for differentiation</td><td>Yes</td></tr>
+          <tr><td><span class="role-badge role-teacher">Teacher</span></td><td>Mr. Tyrone Okafor</td><td>8th Grade Physical Science</td><td>A few times a week</td><td>Lack of time; Lesson planning support</td><td>Creating interactive lessons</td><td>Maybe</td></tr>
+          <tr><td><span class="role-badge role-teacher">Teacher</span></td><td>Ms. Priya Raman</td><td>6th Grade Science</td><td>A few times a week</td><td>Students getting distracted; Not enough training</td><td>Creating interactive lessons; Classroom management with devices; Student engagement strategies</td><td>Yes</td></tr>
+          <tr><td><span class="role-badge role-teacher">Teacher</span></td><td>Mr. Ernesto Guzman</td><td>7th Grade Math (Resource/Inclusion)</td><td>Daily</td><td>Differentiation support; Students getting distracted; Not enough training</td><td>Using technology for differentiation; Supporting struggling learners</td><td>Yes</td></tr>
+          <tr><td><span class="role-badge role-teacher">Teacher</span></td><td>Ms. Carol Mendez</td><td>8th Grade Biology</td><td>Daily</td><td>Students getting distracted</td><td>Student engagement strategies; Creating interactive lessons</td><td>Maybe</td></tr>
+          <tr><td><span class="role-badge role-teacher">Teacher</span></td><td>Mr. Austin Nwosu</td><td>7th Grade Math</td><td>A few times a week</td><td>Students getting distracted; Troubleshooting issues; Not enough training</td><td>Classroom management with devices; Using data to adjust instruction</td><td>Yes</td></tr>
+          <tr><td><span class="role-badge role-teacher">Teacher</span></td><td>Ms. Rose Tang</td><td>6th Grade Math</td><td>Daily</td><td>Differentiation support; Lack of time</td><td>Using technology for differentiation; Using data to adjust instruction</td><td>Yes</td></tr>
+          <tr><td><span class="role-badge role-teacher">Teacher</span></td><td>Mr. Karim El-Sayed</td><td>8th Grade Math</td><td>Daily</td><td>Students getting distracted; Not enough training</td><td>Classroom management with devices; Creating interactive lessons</td><td>Yes</td></tr>
+          <tr><td><span class="role-badge role-teacher">Teacher</span></td><td>Ms. Ada Ijeoma</td><td>6th Grade Science</td><td>Daily</td><td>Students getting distracted; Not enough training; Lesson planning support</td><td>Creating interactive lessons; Classroom management with devices; Student engagement strategies</td><td>Yes</td></tr>
+          <tr><td><span class="role-badge role-teacher">Teacher</span></td><td>Mr. Graham Shaw</td><td>8th Grade Physical Science</td><td>A few times a week</td><td>Concerns about effectiveness</td><td>Creating interactive lessons</td><td>Maybe</td></tr>
+          <tr><td><span class="role-badge role-teacher">Teacher</span></td><td>Ms. Jamila Richardson</td><td>7th Grade Math</td><td>Daily</td><td>Students getting distracted; Not enough training; Differentiation support</td><td>Classroom management with devices; Using technology for differentiation</td><td>Yes</td></tr>
+          <tr><td><span class="role-badge role-teacher">Teacher</span></td><td>Ms. Devan Mariscal</td><td>6th Grade Math (Inclusion)</td><td>Daily</td><td>Differentiation support; Students getting distracted</td><td>Using technology for differentiation; Supporting struggling learners; Classroom management with devices</td><td>Yes</td></tr>
+          <tr><td><span class="role-badge role-teacher">Teacher</span></td><td>Mr. Hudson Blake</td><td>7th Grade Science</td><td>A few times a week</td><td>Students getting distracted; Lesson planning support</td><td>Creating interactive lessons; Classroom management with devices</td><td>Maybe</td></tr>
+          <tr><td><span class="role-badge role-teacher">Teacher</span></td><td>Ms. Sage Whittaker</td><td>8th Grade Biology</td><td>Daily</td><td>Lack of time</td><td>Creating interactive lessons; Using data to adjust instruction</td><td>No</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" style="animation-delay: 0.2s;">
+      <h2>Administrator Responses (n=4)</h2>
+      <p style="color:var(--text-muted); margin-bottom: 24px;">Greenfield Preparatory Middle School Leadership</p>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Top Priorities</th>
+            <th>Biggest Concerns</th>
+            <th>PD Focus Areas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="role-badge role-admin">Admin</span></td><td>Dr. Kendra Ashford</td><td>Principal</td><td>Supporting data-driven instruction; Managing student devices and distractions; Differentiation through technology</td><td>Passive student use; Classroom management issues; Weak writing/typing skills</td><td>Data-driven instruction; Classroom management with devices; Differentiation through technology</td></tr>
+          <tr><td><span class="role-badge role-admin">Admin</span></td><td>Mr. Devon Marshall</td><td>Assistant Principal for Instruction</td><td>Student-centered learning; Supporting data-driven instruction; Teacher technology integration</td><td>Technology replacing instruction; Inconsistent expectations; Passive student use</td><td>Data-driven instruction; Student engagement strategies; Creating interactive lessons</td></tr>
+          <tr><td><span class="role-badge role-admin">Admin</span></td><td>Ms. Regina Park</td><td>Dean of Students</td><td>Managing student devices and distractions; Classroom management support</td><td>Classroom management issues; Passive student use; Device damage / repairs</td><td>Classroom management with devices; Student engagement strategies</td></tr>
+          <tr><td><span class="role-badge role-admin">Admin</span></td><td>Dr. Imani Brooks</td><td>Director of Teaching & Learning</td><td>Supporting data-driven instruction; Differentiation through technology; Teacher technology integration</td><td>Weak writing/typing skills; Technology replacing instruction; Passive student use</td><td>Differentiation through technology; Data-driven instruction; Supporting struggling learners</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+</body>
+</html>
