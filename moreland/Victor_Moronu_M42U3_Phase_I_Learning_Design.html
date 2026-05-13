@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Phase I — Learning Design Solution: Information Gathering</title>
+<style>
+  :root {
+    --ink:#0F172A;
+    --ink-soft:#475569;
+    --bg:#FAFAF7;
+    --card:#FFFFFF;
+    --accent:#4338CA;
+    --accent-2:#0891B2;
+    --accent-soft:#EEF2FF;
+    --green:#047857;
+    --gold:#B45309;
+    --rose:#BE123C;
+    --line:#E2E8F0;
+    --radius:14px;
+  }
+  * { box-sizing:border-box; }
+  html,body { margin:0; padding:0; }
+  body {
+    font-family: "Iowan Old Style", "Source Serif Pro", Georgia, "Times New Roman", serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.65;
+    font-size:17px;
+  }
+  .page { max-width:860px; margin:0 auto; padding:48px 32px 80px; }
+  .ui { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+
+  header.cover {
+    border-bottom:1px solid var(--line);
+    padding-bottom:24px;
+    margin-bottom:32px;
+  }
+  .eyebrow {
+    text-transform:uppercase;
+    letter-spacing:0.14em;
+    font-size:12px;
+    color:var(--accent);
+    font-weight:700;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  }
+  h1 {
+    font-size:34px;
+    line-height:1.2;
+    margin:8px 0 14px;
+    font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  .subtitle { font-weight:400; color:var(--ink-soft); font-size:22px; }
+  .meta {
+    color:var(--ink-soft);
+    font-size:14px;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    display:flex; flex-wrap:wrap; gap:18px 28px;
+  }
+  .meta span b { color:var(--ink); font-weight:600; }
+  h2 {
+    font-size:22px;
+    margin:42px 0 6px;
+    color:var(--ink);
+    letter-spacing:-0.005em;
+  }
+  .h2-tag {
+    display:inline-block;
+    background:var(--accent-soft);
+    color:var(--accent);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:11px; font-weight:700; letter-spacing:0.1em;
+    text-transform:uppercase;
+    padding:3px 8px; border-radius:6px;
+    margin-bottom:4px;
+  }
+  h3 {
+    font-size:16px;
+    margin:24px 0 6px;
+    color:var(--accent);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-weight:700;
+    letter-spacing:0.02em;
+    text-transform:uppercase;
+  }
+  p { margin:0 0 14px; }
+  ul, ol { margin:0 0 14px; padding-left:22px; }
+  li { margin-bottom:6px; }
+
+  .card {
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:24px 28px;
+    margin:14px 0 22px;
+  }
+
+  .stat-row {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+    margin:14px 0 22px;
+  }
+  .stat {
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;
+    text-align:left;
+  }
+  .stat .num {
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:26px;
+    font-weight:700;
+    color:var(--accent);
+    line-height:1.1;
+  }
+  .stat .lbl {
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:12px;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    margin-top:4px;
+  }
+  @media (max-width:680px) {
+    .stat-row { grid-template-columns:1fr; }
+  }
+
+  .bloom {
+    display:flex; flex-direction:column;
+    gap:6px;
+    margin:14px 0 22px;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:13px;
+  }
+  .bloom-row {
+    display:grid; grid-template-columns:130px 1fr; gap:14px; align-items:center;
+    padding:8px 14px;
+    border-radius:8px;
+    background:var(--card);
+    border:1px solid var(--line);
+  }
+  .bloom-row.target {
+    background:linear-gradient(90deg, #EEF2FF 0%, #FAFAF7 100%);
+    border-color:var(--accent);
+  }
+  .bloom-row .level { font-weight:700; color:var(--accent); font-size:13px; }
+  .bloom-row.dim .level { color:var(--ink-soft); font-weight:600; }
+  .bloom-row.dim { opacity:0.6; }
+
+  table.grid {
+    width:100%;
+    border-collapse:collapse;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:14px;
+    margin:10px 0 22px;
+  }
+  table.grid th, table.grid td {
+    border:1px solid var(--line);
+    padding:11px 14px;
+    text-align:left;
+    vertical-align:top;
+  }
+  table.grid th {
+    background:#F1F5F9;
+    color:var(--ink);
+    font-weight:700;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+  }
+  table.grid td:first-child {
+    color:var(--accent);
+    font-weight:700;
+    width:200px;
+  }
+
+  .pull {
+    background:var(--accent-soft);
+    border-left:4px solid var(--accent);
+    padding:18px 22px;
+    border-radius:0 var(--radius) var(--radius) 0;
+    margin:22px 0;
+    font-style:italic;
+    color:var(--ink);
+  }
+
+  .toc {
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:18px 22px;
+    margin:14px 0 32px;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:14px;
+  }
+  .toc b { display:block; font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-soft); margin-bottom:8px; }
+  .toc ol { padding-left:0; list-style:none; counter-reset:toc; margin:0; }
+  .toc ol li { counter-increment:toc; margin-bottom:4px; }
+  .toc ol li::before {
+    content:counter(toc,upper-roman) ". ";
+    color:var(--accent); font-weight:700; margin-right:6px;
+  }
+  .toc a { color:var(--ink); text-decoration:none; }
+  .toc a:hover { color:var(--accent); text-decoration:underline; }
+
+  .footer-rule {
+    text-align:center;
+    color:var(--ink-soft);
+    margin-top:60px;
+    font-size:12px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  }
+
+  .data-bar { display:flex; align-items:center; gap:8px; font-size:13px; margin-bottom:4px; }
+  .data-bar .label { width:240px; color:var(--ink); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+  .data-bar .bar-wrap { flex:1; background:#F1F5F9; height:18px; border-radius:6px; overflow:hidden; }
+  .data-bar .bar { height:100%; background:var(--accent); border-radius:6px; }
+  .data-bar .pct { width:64px; text-align:right; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; color:var(--ink-soft); font-size:12px; }
+
+  .quote-row {
+    display:grid; grid-template-columns:1fr 1fr; gap:14px;
+    margin:14px 0 22px;
+  }
+  @media (max-width:680px) { .quote-row { grid-template-columns:1fr; } }
+  .quote {
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:13px;
+    color:var(--ink);
+  }
+  .quote .who { display:block; color:var(--ink-soft); font-size:11px; margin-top:8px; font-style:normal; }
+  .quote .body { font-style:italic; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="cover">
+  <div class="eyebrow">Module 42 · Unit 3 · TEACH-NOW Learning Design Solution</div>
+  <h1>Phase I — Information Gathering<br><span class="subtitle">Greenfield Preparatory Middle School · EdTech Coaching Program</span></h1>
+  <div class="meta">
+    <span><b>Author:</b> Victor Moronu</span>
+    <span><b>Role:</b> Instructional Designer / EdTech Coach Candidate</span>
+    <span><b>Date Created:</b> May 13, 2026</span>
+    <span><b>Reviewed by:</b> Charles Guilford</span>
+  </div>
+</header>
+
+<div class="toc ui">
+  <b>Phase I sections</b>
+  <ol>
+    <li><a href="#audience">Target Audience</a></li>
+    <li><a href="#purpose">Purpose &amp; Goal</a></li>
+    <li><a href="#bloom">Learning Levels (Bloom&rsquo;s Hierarchy)</a></li>
+    <li><a href="#research">Research Reviewed — Learning Theories &amp; ID Models</a></li>
+  </ol>
+</div>
+
+<section id="audience">
+  <span class="h2-tag">Section I</span>
+  <h2>Target Audience</h2>
+
+  <div class="stat-row">
+    <div class="stat"><div class="num">18</div><div class="lbl">Classroom teachers, grades 6&ndash;8</div></div>
+    <div class="stat"><div class="num">67%</div><div class="lbl">Want 1:1 instructional coaching</div></div>
+    <div class="stat"><div class="num">~28%</div><div class="lbl">Multilingual learner population</div></div>
+  </div>
+
+  <h3>Who they are</h3>
+  <p>The target audience is the full 6&ndash;8 instructional faculty at <strong>Greenfield Preparatory Middle School</strong> &mdash; 18 teachers across Math, Science, Algebra I, Biology, Physical Science, Inclusion, and Resource sections, plus 4 administrators (Principal, Assistant Principal for Instruction, Dean of Students, Director of Teaching &amp; Learning) who provide the strategic frame for the work. The school serves a heterogeneous, urban-suburban student population with roughly 28% multilingual learners and a meaningful inclusion population in both Math and Science.</p>
+
+  <p>From the Educational Technology Needs &amp; Instructional Coaching Survey I conducted in April 2026 (<em>n</em>&nbsp;=&nbsp;18 teachers, <em>n</em>&nbsp;=&nbsp;4 administrators, 100% response rate), the audience has three defining characteristics:</p>
+
+  <ul>
+    <li><strong>Daily device users, weak strategic users.</strong> 13 of 18 teachers use Chromebooks daily; 5 use them a few times a week. But usage clusters around three modes &mdash; practice apps (IXL, Khan), research, and assessments &mdash; with very little student creation, simulation, or data-driven instruction.</li>
+    <li><strong>Differentiation-confidence gap.</strong> Teacher self-rating on &ldquo;confidence using tech for differentiation&rdquo; clusters tightly between 2 and 4 on a 5-point scale, with <strong>12 of 18 (67%) rating themselves at 3 or below</strong>. Zero teachers rated themselves a 5.</li>
+    <li><strong>High coaching appetite.</strong> 12 of 18 teachers (67%) said &ldquo;Yes&rdquo; to 1:1 coaching; 5 said &ldquo;Maybe&rdquo;; only 1 said no. This is unusually high and suggests the audience is ready, not resistant.</li>
+  </ul>
+
+  <h3>The learning gap, in their own words</h3>
+
+  <div class="quote-row">
+    <div class="quote"><span class="body">&ldquo;I assign IXL but I don&rsquo;t know what the data is really telling me.&rdquo;</span><span class="who">7th Grade Math teacher</span></div>
+    <div class="quote"><span class="body">&ldquo;Help me design stations that don&rsquo;t collapse when I&rsquo;m with one group.&rdquo;</span><span class="who">8th Grade Algebra I, Ms. Ortiz</span></div>
+    <div class="quote"><span class="body">&ldquo;Scaffolds for my IEP students that live inside the tools we already have.&rdquo;</span><span class="who">7th Grade Math, Inclusion section</span></div>
+    <div class="quote"><span class="body">&ldquo;Stop the YouTube rabbit hole &mdash; I need real management support.&rdquo;</span><span class="who">6th Grade Science teacher</span></div>
+  </div>
+
+  <h3>The administrative concern</h3>
+  <p>All four administrators independently named <em>passive student use</em> as their top concern (4 of 4; 100%). The Principal&rsquo;s one-year vision is the most specific: &ldquo;Every classroom has one device-management routine everyone can name; teachers pull at least one instructional move per week from their data; walkthrough look-fors show tech used for <em>creation, not just consumption</em>.&rdquo; That phrase &mdash; <strong>creation, not consumption</strong> &mdash; is the gap this learning solution exists to close.</p>
+
+  <h3>Identified learning gap (composite)</h3>
+  <div class="card">
+    <p>Greenfield Prep&rsquo;s 6&ndash;8 teachers can <em>operate</em> classroom technology but cannot reliably <em>design with it</em>. The gap sits in three overlapping skill areas: (1) device-management routines that prevent passive use and distraction, (2) differentiation moves that use existing tools (IXL data, Desmos Activity Builder, EdPuzzle, GoGuardian, Google Translate, Newsela) to actually meet learners where they are, and (3) data-literacy &mdash; reading practice-app dashboards as instructional information rather than as compliance reports. Closing the gap requires sustained, job-embedded coaching, not one-off PD.</p>
+  </div>
+
+  <h3>Impact on the learning solution</h3>
+  <p>The audience profile drives four design constraints I will carry through Phases II and III:</p>
+  <ul>
+    <li><strong>Coaching-centric, not webinar-centric.</strong> A 7th-grade Math teacher said it plainly: &ldquo;A coach in my room once a week for a month would change everything.&rdquo; The solution will be built around 1:1 and small-group coaching cycles, not stand-and-deliver sessions.</li>
+    <li><strong>Tool-specific, not tool-generic.</strong> Teachers asked for help with the exact platforms they already have (IXL data interpretation, Desmos Activity Builder, GoGuardian, PhET, EdPuzzle). The solution will scaffold those specific tools rather than teaching abstract &ldquo;edtech.&rdquo;</li>
+    <li><strong>Inclusion- and ML-aware.</strong> Three respondents flagged multilingual and IEP scaffolding as their top need. The solution must embed differentiation moves into every coaching cycle, not treat it as a separate workstream.</li>
+    <li><strong>Time-efficient.</strong> Multiple teachers cited &ldquo;lack of time&rdquo; and &ldquo;lesson planning support&rdquo; as constraints. The solution will deliver in 45-minute weekly blocks, not full PD days.</li>
+  </ul>
+</section>
+
+<section id="purpose">
+  <span class="h2-tag">Section II</span>
+  <h2>Purpose &amp; Goal</h2>
+
+  <h3>Purpose statement</h3>
+  <p>This learning design solution exists to <strong>convert Greenfield Prep&rsquo;s daily Chromebook usage from a substitution-level tool into an instructional asset</strong> that supports student creation, differentiation, and data-driven decision-making. It is built for teachers who already use technology but want to use it well, and it is built to be sustained inside the school&rsquo;s existing PD calendar &mdash; not bolted on as a parallel program.</p>
+
+  <h3>Overarching goal</h3>
+  <div class="card">
+    <p style="margin:0;"><strong>By the end of the 2026&ndash;2027 school year</strong>, every Greenfield Prep 6&ndash;8 teacher will (a) operate one named, schoolwide-visible device-management routine, (b) pull at least one instructional move per week from a tool dashboard (IXL, Desmos, EdPuzzle, or PowerSchool), and (c) design and ship at least one student-creation lesson using a Chromebook tool per quarter &mdash; with coaching support every step of the way.</p>
+  </div>
+
+  <h3>Sub-goals (the goal, decomposed)</h3>
+  <table class="grid">
+    <thead>
+      <tr><th>Sub-goal</th><th>Aligned to learning need</th><th>Evidence at end of year</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Routine fluency</td>
+        <td>Distraction (78% top challenge); admin concern: passive use</td>
+        <td>Walkthrough look-fors show a named, consistent device-management routine in every classroom; new-teacher onboarding includes the routine playbook.</td>
+      </tr>
+      <tr>
+        <td>Data-driven instruction</td>
+        <td>&ldquo;I don&rsquo;t know what the data is telling me.&rdquo; (multiple teachers); admin priority (75%)</td>
+        <td>Every teacher pulls and acts on one IXL/Desmos/EdPuzzle data move per week, logged in PLC documents.</td>
+      </tr>
+      <tr>
+        <td>Differentiation with existing tools</td>
+        <td>67% confidence-rating &le;3; specific asks for IEP and ML scaffolds</td>
+        <td>Confidence-survey re-take shows a one-point shift in the median; coaching artifacts show at least two differentiated moves per teacher per quarter.</td>
+      </tr>
+      <tr>
+        <td>Student creation over consumption</td>
+        <td>Admin one-year vision: &ldquo;creation, not consumption&rdquo;</td>
+        <td>One student-creation lesson per teacher per quarter (4/year); samples archived in a schoolwide showcase.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Alignment with the identified learning gap</h3>
+  <p>The gap was that teachers can operate but cannot design with technology. The goal is therefore explicitly an <strong>instructional-design goal</strong>, not a tool-training goal. Buying more software would not close the gap. Coaching every teacher through a real design cycle, four times in the year, will.</p>
+</section>
+
+<section id="bloom">
+  <span class="h2-tag">Section III</span>
+  <h2>Learning Levels &mdash; Bloom&rsquo;s Hierarchy</h2>
+
+  <p>Because the audience is <em>adult professional learners</em>, Bloom&rsquo;s is applied here to the <strong>teachers</strong> as the immediate learners, not to their students. The audience can already <em>remember</em> and <em>understand</em> what the tools do; the gap is in <em>applying</em>, <em>analyzing</em>, and <em>creating</em> with them.</p>
+
+  <div class="bloom">
+    <div class="bloom-row dim"><span class="level">Remember</span><span>Already in place. Teachers know what Chromebooks, IXL, and Google Classroom are.</span></div>
+    <div class="bloom-row dim"><span class="level">Understand</span><span>Largely in place. Teachers understand the basic purpose of each tool.</span></div>
+    <div class="bloom-row target"><span class="level">Apply &nbsp; ←</span><span><strong>Primary target.</strong> Apply IXL data to grouping decisions; apply Desmos Activity Builder to a new lesson; apply GoGuardian to a tested management routine.</span></div>
+    <div class="bloom-row target"><span class="level">Analyze &nbsp; ←</span><span><strong>Primary target.</strong> Analyze a class&rsquo;s practice-app dashboard to identify three students who need a different next step; analyze an EdPuzzle response set to spot misconception clusters.</span></div>
+    <div class="bloom-row target"><span class="level">Evaluate &nbsp; ←</span><span><strong>Secondary target.</strong> Evaluate whether a lesson move &ldquo;worked&rdquo; using both observation and data; evaluate fellow teachers&rsquo; lessons using a shared look-fors tool.</span></div>
+    <div class="bloom-row target"><span class="level">Create &nbsp; ←</span><span><strong>Stretch target.</strong> Create one student-creation lesson per quarter that leverages a Chromebook tool for production (Desmos slides, multimedia book reports, simulation labs, podcast tasks, etc.).</span></div>
+  </div>
+
+  <h3>Why these levels</h3>
+  <p>The administrative team named <em>passive student use</em> as the universal concern. Passive use is the symptom of teachers themselves operating at <em>Apply</em> at best &mdash; following a script &mdash; rather than at <em>Analyze</em> and <em>Create</em>. Pushing teacher learning into the upper half of Bloom&rsquo;s is the lever that, in turn, pushes student tasks into the upper half. The goal is not to make teachers experts in software; it is to make them designers of student work, with software as one of the tools.</p>
+
+  <h3>Implication for the design (forward look to Phase II)</h3>
+  <ul>
+    <li>Coaching cycles must end with <em>application artifacts</em> (a lesson move actually run, not a planning document) to land at Apply.</li>
+    <li>PLC debriefs must include <em>data analysis</em> against tool dashboards to land at Analyze.</li>
+    <li>A quarterly &ldquo;creation showcase&rdquo; structures the highest level into the calendar &mdash; teachers cannot avoid Create if it is on the schedule.</li>
+  </ul>
+</section>
+
+<section id="research">
+  <span class="h2-tag">Section IV</span>
+  <h2>Research Reviewed — Learning Theories &amp; Instructional Design Models</h2>
+
+  <p>Before settling on an instructional design approach, I reviewed five frameworks alongside the survey data and three of my prior course artifacts (ADDIE Instructional Model Template, Peer Review of Algo-Heuristic Theory, and the Technology Integration Model project). Each framework contributed something specific to the design that is taking shape; none of them is sufficient on its own.</p>
+
+  <table class="grid">
+    <thead>
+      <tr>
+        <th>Framework / Theory</th>
+        <th>What it contributes</th>
+        <th>How it shows up in this design</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>TPACK <span style="font-weight:400;color:var(--ink-soft);">(Mishra &amp; Koehler)</span></td>
+        <td>Insists that good tech integration sits at the intersection of <em>content</em>, <em>pedagogy</em>, and <em>technology</em> &mdash; not any one alone.</td>
+        <td>Every coaching cycle in Phase II is co-planned with a teacher around <em>their</em> content (e.g., 7th-grade Math), <em>their</em> pedagogy (station rotation), and <em>their</em> tool (IXL + Desmos). Generic edtech PD is explicitly out of scope.</td>
+      </tr>
+      <tr>
+        <td>SAMR <span style="font-weight:400;color:var(--ink-soft);">(Puentedura)</span></td>
+        <td>Provides a vocabulary for moving from Substitution to Redefinition &mdash; the difference between a Chromebook used as a worksheet and one used to do something previously impossible.</td>
+        <td>The walkthrough look-fors tool the admin team wants will be SAMR-banded. The goal is to move the median observed use from Substitution / Augmentation into Modification / Redefinition over the year.</td>
+      </tr>
+      <tr>
+        <td>ADDIE <span style="font-weight:400;color:var(--ink-soft);">(Analyze, Design, Develop, Implement, Evaluate)</span></td>
+        <td>A disciplined ID lifecycle. Particularly strong on the Analyze and Evaluate bookends, which are usually skipped in school PD.</td>
+        <td>This Phase I document <em>is</em> the Analyze step. Phase III builds in formal Evaluate via the re-take of the EdTech Coaching survey and walkthrough data. Coaching cycles in Phase II follow Design&nbsp;&rarr;&nbsp;Develop&nbsp;&rarr;&nbsp;Implement.</td>
+      </tr>
+      <tr>
+        <td>Cognitive Coaching <span style="font-weight:400;color:var(--ink-soft);">(Costa &amp; Garmston)</span></td>
+        <td>Non-judgmental coaching grounded in three questions: planning, reflecting, problem-resolving. Builds teacher self-directedness instead of dependence.</td>
+        <td>The 1:1 coaching cycle uses Cognitive Coaching&rsquo;s planning and reflecting conversations as its bookends. The coach is explicitly not a fixer; the coach is a thinking partner.</td>
+      </tr>
+      <tr>
+        <td>Design Thinking <span style="font-weight:400;color:var(--ink-soft);">(Stanford d.school)</span></td>
+        <td>Empathize&nbsp;&rarr;&nbsp;Define&nbsp;&rarr;&nbsp;Ideate&nbsp;&rarr;&nbsp;Prototype&nbsp;&rarr;&nbsp;Test, with a bias toward rough prototypes and real users.</td>
+        <td>Each quarterly creation lesson is built using a compressed design thinking cycle (see M42U3A1). Teachers empathize with one student, design one move, prototype on paper, ship it Monday, and debrief in PLC.</td>
+      </tr>
+      <tr>
+        <td>Algo-Heuristic Theory <span style="font-weight:400;color:var(--ink-soft);">(Landa)</span></td>
+        <td>Distinguishes algorithmic procedures from heuristic problem-solving and provides explicit instruction in both.</td>
+        <td>The device-management routine (Sub-goal 1) is an <em>algorithmic</em> procedure &mdash; predictable, named, observable. The data-driven instruction work (Sub-goals 2 and 3) is <em>heuristic</em> &mdash; teachers learn the questions, not a script.</td>
+      </tr>
+      <tr>
+        <td>Andragogy <span style="font-weight:400;color:var(--ink-soft);">(Knowles)</span></td>
+        <td>Adult learners need (a) relevance to immediate work, (b) respect for prior experience, (c) self-direction, and (d) problem-centered (not content-centered) learning.</td>
+        <td>Every coaching cycle starts from a real instructional problem the teacher is currently facing. PD topics teachers did not ask for are not on the calendar. Veteran teachers are explicitly paired as co-coaches, not as students.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>The synthesis: what I am choosing, and why</h3>
+  <p>The instructional design solution that is forming for Phase II is best described as <strong>an ADDIE-shell holding a TPACK-and-SAMR core, delivered through Cognitive Coaching cycles, with quarterly Design Thinking sprints for creation lessons</strong>. In plain English: ADDIE gives us the lifecycle discipline; TPACK and SAMR give us the look-fors; Cognitive Coaching gives us the human method; Design Thinking gives us the cadence for the harder, creation-level work.</p>
+
+  <div class="pull">The frameworks are not in competition. They are layered. ADDIE is the calendar, Cognitive Coaching is the conversation, TPACK and SAMR are the rubric, Design Thinking is the sprint. Andragogy and Algo-Heuristic theory tell me when to be procedural and when to be heuristic. Together they make a coaching program; alone, none of them does.</div>
+
+  <h3>Diagrams / models referenced</h3>
+  <ul>
+    <li><strong>TPACK Venn diagram</strong> — the three-circle intersection of Content, Pedagogy, and Technology.</li>
+    <li><strong>SAMR ladder</strong> — Substitution &rarr; Augmentation &rarr; Modification &rarr; Redefinition.</li>
+    <li><strong>ADDIE cycle</strong> — Analyze, Design, Develop, Implement, Evaluate (will be redrawn as the Phase II flowchart).</li>
+    <li><strong>Cognitive Coaching planning &amp; reflecting maps</strong> — referenced in my prior M41 Peer Coaching template artifact.</li>
+    <li><strong>d.school design cycle</strong> — Empathize, Define, Ideate, Prototype, Test (annotated in M42U3A1).</li>
+  </ul>
+
+  <h3>Brainstorm with cohort (per activity requirement)</h3>
+  <p>I shared this Phase I draft with two cohort members during the small-group breakout. Their strongest pushback shaped the design in two ways:</p>
+  <ul>
+    <li><strong>Don&rsquo;t over-engineer the routines.</strong> The first draft of Sub-goal 1 had three routine layers. Cohort feedback was that one named, shared routine has far higher adoption than three. I cut two.</li>
+    <li><strong>Make the data work visible to admin from week one.</strong> The recommendation was to publish coaching artifacts in a shared admin folder weekly, so that the work is not invisible until the year-end evaluation. Phase III will build that in.</li>
+  </ul>
+</section>
+
+<div class="footer-rule">M42U3 · Phase I — Information Gathering · Victor Moronu · 13 May 2026</div>
+
+</div>
+</body>
+</html>

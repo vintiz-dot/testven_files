@@ -1,0 +1,1101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Capstone — Learning Design Solution & Technology Plan</title>
+<style>
+  :root {
+    --ink:#0F172A;
+    --ink-soft:#475569;
+    --ink-mid:#334155;
+    --bg:#FAFAF7;
+    --card:#FFFFFF;
+    --accent:#4338CA;
+    --accent-2:#0891B2;
+    --accent-soft:#EEF2FF;
+    --accent-2-soft:#ECFEFF;
+    --green:#047857;
+    --green-soft:#ECFDF5;
+    --gold:#B45309;
+    --gold-soft:#FFFBEB;
+    --rose:#BE123C;
+    --rose-soft:#FFF1F2;
+    --line:#E2E8F0;
+    --radius:14px;
+  }
+  * { box-sizing:border-box; }
+  html,body { margin:0; padding:0; }
+  body {
+    font-family: "Iowan Old Style", "Source Serif Pro", Georgia, "Times New Roman", serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.65;
+    font-size:17px;
+  }
+  .page { max-width:920px; margin:0 auto; padding:48px 32px 80px; }
+  .ui { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+
+  header.cover {
+    border-bottom:1px solid var(--line);
+    padding-bottom:24px;
+    margin-bottom:32px;
+  }
+  .eyebrow {
+    text-transform:uppercase;
+    letter-spacing:0.14em;
+    font-size:12px;
+    color:var(--accent);
+    font-weight:700;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  }
+  h1 {
+    font-size:38px;
+    line-height:1.15;
+    margin:8px 0 14px;
+    font-weight:700;
+    letter-spacing:-0.015em;
+  }
+  .subtitle { font-weight:400; color:var(--ink-soft); font-size:22px; }
+  .meta {
+    color:var(--ink-soft);
+    font-size:14px;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    display:flex; flex-wrap:wrap; gap:18px 28px;
+  }
+  .meta span b { color:var(--ink); font-weight:600; }
+
+  h2 {
+    font-size:24px;
+    margin:48px 0 6px;
+    color:var(--ink);
+    letter-spacing:-0.01em;
+  }
+  .h2-tag {
+    display:inline-block;
+    background:var(--accent-soft);
+    color:var(--accent);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:11px; font-weight:700; letter-spacing:0.1em;
+    text-transform:uppercase;
+    padding:3px 8px; border-radius:6px;
+    margin-bottom:4px;
+  }
+  h3 {
+    font-size:18px;
+    margin:30px 0 8px;
+    color:var(--ink);
+    font-weight:700;
+    letter-spacing:-0.005em;
+  }
+  h4 {
+    font-size:13px;
+    margin:18px 0 6px;
+    color:var(--accent);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-weight:700;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+  }
+
+  p { margin:0 0 14px; }
+  ul, ol { margin:0 0 14px; padding-left:22px; }
+  li { margin-bottom:6px; }
+
+  .toc {
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:18px 22px;
+    margin:14px 0 32px;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:14px;
+  }
+  .toc b { display:block; font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-soft); margin-bottom:8px; }
+  .toc ol { padding-left:0; list-style:none; counter-reset:toc; margin:0; columns:2; column-gap:32px; }
+  .toc ol li { counter-increment:toc; margin-bottom:6px; break-inside:avoid; }
+  .toc ol li::before {
+    content:counter(toc) ". ";
+    color:var(--accent); font-weight:700; margin-right:6px;
+  }
+  .toc a { color:var(--ink); text-decoration:none; }
+  .toc a:hover { color:var(--accent); text-decoration:underline; }
+  @media (max-width:680px) { .toc ol { columns:1; } }
+
+  .card {
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:24px 28px;
+    margin:14px 0 22px;
+  }
+  .card.accent { background:var(--accent-soft); border-color:#C7D2FE; }
+  .card.gold { background:var(--gold-soft); border-color:#FDE68A; }
+  .card.green { background:var(--green-soft); border-color:#A7F3D0; }
+
+  .pull {
+    background:var(--accent-soft);
+    border-left:4px solid var(--accent);
+    padding:18px 22px;
+    border-radius:0 var(--radius) var(--radius) 0;
+    margin:22px 0;
+    font-style:italic;
+    color:var(--ink);
+  }
+
+  .stat-row {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin:14px 0 22px;
+  }
+  .stat {
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;
+  }
+  .stat .num {
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:26px;
+    font-weight:700;
+    color:var(--accent);
+    line-height:1.1;
+  }
+  .stat .lbl {
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:11px;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    margin-top:4px;
+  }
+  @media (max-width:680px) {
+    .stat-row { grid-template-columns:repeat(2,1fr); }
+  }
+
+  table.grid {
+    width:100%;
+    border-collapse:collapse;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:14px;
+    margin:10px 0 22px;
+  }
+  table.grid th, table.grid td {
+    border:1px solid var(--line);
+    padding:10px 12px;
+    text-align:left;
+    vertical-align:top;
+  }
+  table.grid th {
+    background:#F1F5F9;
+    color:var(--ink);
+    font-weight:700;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+  }
+  table.grid td:first-child {
+    color:var(--accent);
+    font-weight:700;
+    width:180px;
+  }
+  table.grid tr.capstone-row td {
+    background:var(--gold-soft);
+  }
+  table.grid tr.capstone-row td:first-child {
+    color:var(--gold);
+  }
+
+  /* Flowchart card */
+  .flow-wrap {
+    background:linear-gradient(135deg, #FAFAFA 0%, #F1F5F9 100%);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:20px;
+    margin:14px 0 32px;
+    overflow:auto;
+  }
+  .flow-wrap .caption {
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:12px;
+    color:var(--ink-soft);
+    text-align:center;
+    margin-top:10px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+  }
+  svg { display:block; margin:0 auto; max-width:100%; height:auto; }
+
+  /* Gantt-style timeline */
+  .gantt {
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:20px;
+    margin:14px 0 22px;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:13px;
+    overflow-x:auto;
+  }
+  .gantt-grid {
+    display:grid;
+    grid-template-columns:200px repeat(12,1fr);
+    gap:2px;
+    min-width:780px;
+  }
+  .gantt-grid .hdr {
+    font-size:10px;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    text-align:center;
+    padding:6px 4px;
+    background:#F1F5F9;
+    border-radius:4px;
+  }
+  .gantt-grid .row-label {
+    padding:8px 6px;
+    color:var(--ink);
+    font-weight:600;
+    font-size:13px;
+    line-height:1.3;
+  }
+  .gantt-grid .cell {
+    height:30px;
+    background:#F8FAFC;
+    border-radius:4px;
+    position:relative;
+  }
+  .gantt-grid .bar {
+    background:var(--accent);
+    color:#fff;
+    font-size:11px;
+    padding:0 8px;
+    line-height:30px;
+    border-radius:4px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .gantt-grid .bar.alt1 { background:var(--accent-2); }
+  .gantt-grid .bar.alt2 { background:var(--green); }
+  .gantt-grid .bar.alt3 { background:var(--gold); }
+  .gantt-grid .bar.alt4 { background:var(--rose); }
+  .gantt-grid .bar.cap { background:var(--gold); }
+
+  .milestone {
+    display:flex; align-items:flex-start; gap:14px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;
+    margin-bottom:10px;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:14px;
+  }
+  .milestone .marker {
+    flex-shrink:0;
+    width:42px; height:42px;
+    border-radius:50%;
+    background:var(--accent);
+    color:#fff;
+    display:grid; place-items:center;
+    font-weight:700;
+    font-size:14px;
+  }
+  .milestone .marker.cap { background:var(--gold); }
+  .milestone .body b { display:block; color:var(--ink); font-size:15px; }
+  .milestone .body span.date { color:var(--ink-soft); font-size:12px; }
+
+  .talking-card {
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:16px 20px;
+    margin-bottom:12px;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:14px;
+  }
+  .talking-card .timestamp {
+    display:inline-block;
+    background:var(--accent-soft);
+    color:var(--accent);
+    font-size:11px;
+    font-weight:700;
+    padding:2px 8px;
+    border-radius:6px;
+    margin-right:8px;
+  }
+  .talking-card b { font-size:15px; color:var(--ink); }
+
+  .badge {
+    display:inline-block;
+    background:var(--gold-soft);
+    color:var(--gold);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:11px; font-weight:700; letter-spacing:0.06em;
+    text-transform:uppercase;
+    padding:2px 8px; border-radius:6px;
+    margin-left:8px;
+  }
+
+  .footer-rule {
+    text-align:center;
+    color:var(--ink-soft);
+    margin-top:60px;
+    font-size:12px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  }
+
+  .role-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:14px 0 22px; }
+  .role { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px 16px; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size:13px; }
+  .role b { display:block; color:var(--accent); font-size:13px; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:6px; }
+  @media (max-width:680px) { .role-grid { grid-template-columns:1fr; } }
+
+  .cohort-quote {
+    border-left:3px solid var(--accent-2);
+    padding:6px 0 6px 14px;
+    color:var(--ink-mid);
+    font-style:italic;
+    margin:8px 0 14px;
+    font-size:15px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="cover">
+  <div class="eyebrow">Module 42 · Unit 4 · Activity 1 (Capstone)</div>
+  <h1>Learning Design Solution &amp;<br>Technology Implementation Plan<br><span class="subtitle">Greenfield Preparatory Middle School · EdTech Coaching Program · 2026&ndash;2027</span></h1>
+  <div class="meta">
+    <span><b>Author:</b> Victor Moronu</span>
+    <span><b>Role:</b> Instructional Designer / EdTech Coach Candidate</span>
+    <span><b>Date Created:</b> May 13, 2026</span>
+    <span><b>Instructor:</b> Charles Guilford</span>
+    <span><b>Reviewed by:</b> Dr. Marisol Vega (Principal, Greenfield Prep)</span>
+  </div>
+</header>
+
+<div class="toc ui">
+  <b>Document map</b>
+  <ol>
+    <li><a href="#summary">Executive summary</a></li>
+    <li><a href="#flowchart">Phase II visualization &mdash; the learner journey</a></li>
+    <li><a href="#solution">Phase II.A &mdash; Solution overview</a></li>
+    <li><a href="#coaching">Phase II.B &mdash; The 1:1 coaching cycle</a></li>
+    <li><a href="#plc">Phase II.C &mdash; PLC cadence &amp; data routines</a></li>
+    <li><a href="#sprint">Phase II.D &mdash; Quarterly design thinking sprint</a></li>
+    <li><a href="#stack">Phase II.E &mdash; Technology stack &amp; tooling</a></li>
+    <li><a href="#roles">Phase II.F &mdash; Roles, responsibilities, governance</a></li>
+    <li><a href="#equity">Phase II.G &mdash; Equity, inclusion, ML/IEP support</a></li>
+    <li><a href="#timeline">Phase III.A &mdash; Implementation timeline</a></li>
+    <li><a href="#milestones">Phase III.B &mdash; Milestones &amp; capstone scope</a></li>
+    <li><a href="#pilot">Phase III.C &mdash; Pilot &amp; focused-group testing</a></li>
+    <li><a href="#resources">Phase III.D &mdash; Resources, budget, build vs. buy</a></li>
+    <li><a href="#risk">Phase III.E &mdash; Risks &amp; mitigation</a></li>
+    <li><a href="#evaluation">Phase III.F &mdash; Evaluation &amp; success metrics</a></li>
+    <li><a href="#admin">Admin video &mdash; summary &amp; talking points</a></li>
+    <li><a href="#appendix">Appendix &mdash; Cohort review, references</a></li>
+  </ol>
+</div>
+
+<!-- ====================== EXECUTIVE SUMMARY ====================== -->
+<section id="summary">
+  <span class="h2-tag">Executive Summary</span>
+  <h2>What this is and why now</h2>
+
+  <p>This document is the Phase II Learning Design Solution and Phase III Technology Implementation Plan for an <strong>EdTech Coaching Program</strong> at Greenfield Preparatory Middle School. It builds directly on the Phase I information-gathering work (audience analysis, learning gap, goal, Bloom&rsquo;s levels, ID models reviewed) and on the EdTech &amp; Instructional Coaching Survey conducted in April 2026.</p>
+
+  <div class="stat-row">
+    <div class="stat"><div class="num">1.0</div><div class="lbl">School year (2026&ndash;27)</div></div>
+    <div class="stat"><div class="num">18+4</div><div class="lbl">Teachers + admins served</div></div>
+    <div class="stat"><div class="num">12&times;</div><div class="lbl">Coaching cycles per teacher</div></div>
+    <div class="stat"><div class="num">8 weeks</div><div class="lbl">Capstone implementation window</div></div>
+  </div>
+
+  <p>The core insight from Phase I is that Greenfield Prep teachers already <em>operate</em> classroom technology &mdash; 13 of 18 use Chromebooks daily &mdash; but cannot reliably <em>design with it</em>. Of the 18 teachers surveyed, 67% want 1:1 coaching, 67% rate themselves at or below a 3 (out of 5) on differentiation-with-tech confidence, and 100% of administrators name <em>passive student use</em> as their top concern. Buying more software will not close that gap. <strong>Coaching teachers through real instructional design cycles will.</strong></p>
+
+  <div class="pull">The solution is not a tool. It is a coaching program with three layers (1:1 cycles, PLC data routines, quarterly design sprints), powered by a small, fit-for-purpose technology stack and governed by a tight measurement model.</div>
+</section>
+
+<!-- ====================== FLOWCHART ====================== -->
+<section id="flowchart">
+  <span class="h2-tag">Phase II Visualization</span>
+  <h2>The learner journey &mdash; one teacher through the year</h2>
+
+  <p>The diagram below traces one Greenfield Prep teacher through a full year of the program. It is the visual answer to the rubric question &ldquo;how will learning occur through your solution?&rdquo; The three vertical lanes are the three coaching layers; the horizontal axis is time.</p>
+
+  <div class="flow-wrap">
+    <svg viewBox="0 0 900 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Greenfield Prep EdTech Coaching Program — learner journey">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#4338CA"/>
+        </marker>
+        <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/>
+        </marker>
+        <linearGradient id="bgGrad" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="#FAFAFA"/>
+          <stop offset="100%" stop-color="#F1F5F9"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Background -->
+      <rect width="900" height="640" fill="url(#bgGrad)"/>
+
+      <!-- Title -->
+      <text x="450" y="28" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="14" font-weight="700" fill="#0F172A">EdTech Coaching Program — Annual Learner Journey</text>
+      <text x="450" y="48" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="11" fill="#64748B">Time flows left → right (Aug 2026 → Jun 2027). Three coaching layers run in parallel.</text>
+
+      <!-- Lane labels (left) -->
+      <text x="14" y="160" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" font-weight="700" fill="#4338CA" text-transform="uppercase" letter-spacing="0.08em">LAYER 1</text>
+      <text x="14" y="174" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="12" font-weight="700" fill="#0F172A">1:1 COACHING CYCLE</text>
+      <text x="14" y="190" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" fill="#64748B">(weekly, ~30 min)</text>
+
+      <text x="14" y="330" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" font-weight="700" fill="#0891B2" text-transform="uppercase" letter-spacing="0.08em">LAYER 2</text>
+      <text x="14" y="344" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="12" font-weight="700" fill="#0F172A">PLC DATA ROUTINE</text>
+      <text x="14" y="360" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" fill="#64748B">(biweekly, 45 min)</text>
+
+      <text x="14" y="500" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" font-weight="700" fill="#B45309" text-transform="uppercase" letter-spacing="0.08em">LAYER 3</text>
+      <text x="14" y="514" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="12" font-weight="700" fill="#0F172A">DESIGN THINKING SPRINT</text>
+      <text x="14" y="530" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" fill="#64748B">(quarterly, 90 min)</text>
+
+      <!-- Quarter dividers -->
+      <line x1="200" y1="60" x2="200" y2="620" stroke="#CBD5E1" stroke-dasharray="3 3"/>
+      <line x1="400" y1="60" x2="400" y2="620" stroke="#CBD5E1" stroke-dasharray="3 3"/>
+      <line x1="600" y1="60" x2="600" y2="620" stroke="#CBD5E1" stroke-dasharray="3 3"/>
+      <line x1="800" y1="60" x2="800" y2="620" stroke="#CBD5E1" stroke-dasharray="3 3"/>
+
+      <text x="300" y="76" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="11" font-weight="700" fill="#475569">Q1  ·  Aug–Oct</text>
+      <text x="500" y="76" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="11" font-weight="700" fill="#475569">Q2  ·  Nov–Jan</text>
+      <text x="700" y="76" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="11" font-weight="700" fill="#475569">Q3  ·  Feb–Apr</text>
+      <text x="850" y="76" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="11" font-weight="700" fill="#475569">Q4 · May</text>
+
+      <!-- Trigger / Start -->
+      <rect x="120" y="100" width="80" height="56" rx="10" fill="#EEF2FF" stroke="#4338CA" stroke-width="1.5"/>
+      <text x="160" y="124" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="11" font-weight="700" fill="#4338CA">GAP</text>
+      <text x="160" y="140" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" fill="#0F172A">survey + admin</text>
+      <text x="160" y="152" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" fill="#0F172A">walkthrough</text>
+
+      <!-- LAYER 1: 1:1 coaching cycles (12 cycles, 4 shown grouped per quarter) -->
+      <!-- Q1 -->
+      <rect x="220" y="110" width="160" height="80" rx="10" fill="#fff" stroke="#4338CA" stroke-width="1.5"/>
+      <text x="300" y="128" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="11" font-weight="700" fill="#4338CA">Cycles 1–3</text>
+      <text x="300" y="146" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" fill="#0F172A">Plan → Observe →</text>
+      <text x="300" y="160" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" fill="#0F172A">Reflect → Apply</text>
+      <text x="300" y="178" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="9" fill="#64748B" font-style="italic">Focus: routines</text>
+
+      <!-- Q2 -->
+      <rect x="420" y="110" width="160" height="80" rx="10" fill="#fff" stroke="#4338CA" stroke-width="1.5"/>
+      <text x="500" y="128" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="11" font-weight="700" fill="#4338CA">Cycles 4–6</text>
+      <text x="500" y="146" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" fill="#0F172A">Plan → Observe →</text>
+      <text x="500" y="160" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" fill="#0F172A">Reflect → Apply</text>
+      <text x="500" y="178" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="9" fill="#64748B" font-style="italic">Focus: data moves</text>
+
+      <!-- Q3 -->
+      <rect x="620" y="110" width="160" height="80" rx="10" fill="#fff" stroke="#4338CA" stroke-width="1.5"/>
+      <text x="700" y="128" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="11" font-weight="700" fill="#4338CA">Cycles 7–9</text>
+      <text x="700" y="146" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" fill="#0F172A">Plan → Observe →</text>
+      <text x="700" y="160" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" fill="#0F172A">Reflect → Apply</text>
+      <text x="700" y="178" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="9" fill="#64748B" font-style="italic">Focus: differentiation</text>
+
+      <!-- Q4 -->
+      <rect x="820" y="110" width="60" height="80" rx="10" fill="#fff" stroke="#4338CA" stroke-width="1.5"/>
+      <text x="850" y="146" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" font-weight="700" fill="#4338CA">Cyc</text>
+      <text x="850" y="160" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" font-weight="700" fill="#4338CA">10–12</text>
+
+      <!-- LAYER 2: PLC (biweekly, shown as 2 per quarter) -->
+      <rect x="220" y="270" width="160" height="80" rx="10" fill="#fff" stroke="#0891B2" stroke-width="1.5"/>
+      <text x="300" y="288" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="11" font-weight="700" fill="#0891B2">PLC Q1</text>
+      <text x="300" y="306" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" fill="#0F172A">Dashboard review</text>
+      <text x="300" y="320" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" fill="#0F172A">+ Look-fors calibration</text>
+      <text x="300" y="338" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="9" fill="#64748B" font-style="italic">~6 meetings</text>
+
+      <rect x="420" y="270" width="160" height="80" rx="10" fill="#fff" stroke="#0891B2" stroke-width="1.5"/>
+      <text x="500" y="288" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="11" font-weight="700" fill="#0891B2">PLC Q2</text>
+      <text x="500" y="306" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" fill="#0F172A">Mid-year audit +</text>
+      <text x="500" y="320" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" fill="#0F172A">SAMR move-up</text>
+
+      <rect x="620" y="270" width="160" height="80" rx="10" fill="#fff" stroke="#0891B2" stroke-width="1.5"/>
+      <text x="700" y="288" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="11" font-weight="700" fill="#0891B2">PLC Q3</text>
+      <text x="700" y="306" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" fill="#0F172A">Differentiation rounds</text>
+      <text x="700" y="320" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" fill="#0F172A">+ ML/IEP audit</text>
+
+      <rect x="820" y="270" width="60" height="80" rx="10" fill="#fff" stroke="#0891B2" stroke-width="1.5"/>
+      <text x="850" y="306" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" font-weight="700" fill="#0891B2">PLC Q4</text>
+      <text x="850" y="322" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="9" fill="#64748B">retro</text>
+
+      <!-- LAYER 3: Sprints -->
+      <rect x="220" y="440" width="160" height="80" rx="10" fill="#fff" stroke="#B45309" stroke-width="1.5"/>
+      <text x="300" y="458" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="11" font-weight="700" fill="#B45309">Sprint Q1</text>
+      <text x="300" y="476" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" fill="#0F172A">"Redesign First 5"</text>
+      <text x="300" y="492" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" fill="#0F172A">DT cycle → prototype</text>
+      <text x="300" y="510" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="9" fill="#64748B" font-style="italic">ship lesson Mon.</text>
+
+      <rect x="420" y="440" width="160" height="80" rx="10" fill="#fff" stroke="#B45309" stroke-width="1.5"/>
+      <text x="500" y="458" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="11" font-weight="700" fill="#B45309">Sprint Q2</text>
+      <text x="500" y="476" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" fill="#0F172A">"Data-driven group"</text>
+      <text x="500" y="492" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" fill="#0F172A">DT cycle on IXL data</text>
+
+      <rect x="620" y="440" width="160" height="80" rx="10" fill="#fff" stroke="#B45309" stroke-width="1.5"/>
+      <text x="700" y="458" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="11" font-weight="700" fill="#B45309">Sprint Q3</text>
+      <text x="700" y="476" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" fill="#0F172A">"Student-creation"</text>
+      <text x="700" y="492" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" fill="#0F172A">DT cycle on creation</text>
+
+      <rect x="820" y="440" width="60" height="80" rx="10" fill="#fff" stroke="#B45309" stroke-width="1.5"/>
+      <text x="850" y="476" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" font-weight="700" fill="#B45309">Showcase</text>
+      <text x="850" y="492" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="9" fill="#64748B">+ measure</text>
+
+      <!-- Lane connecting arrows (left → right within each lane) -->
+      <line x1="380" y1="150" x2="420" y2="150" stroke="#4338CA" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <line x1="580" y1="150" x2="620" y2="150" stroke="#4338CA" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <line x1="780" y1="150" x2="820" y2="150" stroke="#4338CA" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <line x1="380" y1="310" x2="420" y2="310" stroke="#0891B2" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <line x1="580" y1="310" x2="620" y2="310" stroke="#0891B2" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <line x1="780" y1="310" x2="820" y2="310" stroke="#0891B2" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <line x1="380" y1="480" x2="420" y2="480" stroke="#B45309" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <line x1="580" y1="480" x2="620" y2="480" stroke="#B45309" stroke-width="1.5" marker-end="url(#arrow)"/>
+      <line x1="780" y1="480" x2="820" y2="480" stroke="#B45309" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+      <!-- Cross-lane feedback arrows (vertical, soft grey) -->
+      <line x1="300" y1="350" x2="300" y2="440" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow2)"/>
+      <line x1="300" y1="190" x2="300" y2="270" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow2)"/>
+      <line x1="500" y1="190" x2="500" y2="270" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow2)"/>
+      <line x1="500" y1="350" x2="500" y2="440" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow2)"/>
+      <line x1="700" y1="190" x2="700" y2="270" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow2)"/>
+      <line x1="700" y1="350" x2="700" y2="440" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow2)"/>
+
+      <!-- Trigger to Q1 -->
+      <line x1="200" y1="150" x2="220" y2="150" stroke="#4338CA" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+      <!-- Outcome box -->
+      <rect x="430" y="582" width="440" height="44" rx="10" fill="#ECFDF5" stroke="#047857" stroke-width="1.5"/>
+      <text x="650" y="600" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="11" font-weight="700" fill="#047857">YEAR-END OUTCOMES</text>
+      <text x="650" y="618" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="10" fill="#0F172A">Named routines in every room · 1 weekly data move · 1 creation lesson per quarter · +1 differentiation confidence</text>
+
+      <!-- Outcome arrow -->
+      <line x1="850" y1="540" x2="700" y2="582" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow2)"/>
+      <line x1="850" y1="380" x2="700" y2="582" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow2)"/>
+      <line x1="850" y1="220" x2="700" y2="582" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow2)"/>
+    </svg>
+    <div class="caption">Figure 1. Annual learner journey through the EdTech Coaching Program — three parallel layers, four quarterly cadences, one outcome ribbon.</div>
+  </div>
+</section>
+
+<!-- ====================== SOLUTION OVERVIEW ====================== -->
+<section id="solution">
+  <span class="h2-tag">Phase II · A</span>
+  <h2>Solution overview &mdash; how the three layers work together</h2>
+
+  <p>The solution is a one-year, three-layer coaching program. Each layer addresses a different aspect of the Phase I gap, runs on its own cadence, and feeds the others.</p>
+
+  <table class="grid">
+    <thead>
+      <tr><th>Layer</th><th>What it is</th><th>Frequency</th><th>Primary outcome</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1. 1:1 Coaching Cycle</td>
+        <td>Cognitive-Coaching-based Plan&nbsp;&rarr;&nbsp;Observe&nbsp;&rarr;&nbsp;Reflect&nbsp;&rarr;&nbsp;Apply cycle between the coach and one teacher around a teacher-chosen problem.</td>
+        <td>Weekly, ~30 min</td>
+        <td>One specific, applied instructional move per cycle.</td>
+      </tr>
+      <tr>
+        <td>2. PLC Data Routine</td>
+        <td>Grade-team meeting structured around tool dashboards (IXL, Desmos, EdPuzzle) and SAMR-banded walkthrough look-fors.</td>
+        <td>Biweekly, 45 min</td>
+        <td>Shared instructional move from data; calibrated look-fors.</td>
+      </tr>
+      <tr>
+        <td>3. Design Thinking Sprint</td>
+        <td>Compressed Empathize&nbsp;&rarr;&nbsp;Define&nbsp;&rarr;&nbsp;Ideate&nbsp;&rarr;&nbsp;Prototype&nbsp;&rarr;&nbsp;Test cycle around a single high-leverage instructional problem.</td>
+        <td>Quarterly, 90 min</td>
+        <td>One student-creation lesson shipped &amp; archived in showcase.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Why three layers instead of one</h3>
+  <p>A single layer cannot do all the work. A coaching cycle alone produces individual gains but no schoolwide consistency. A PLC alone produces shared talk but rarely shared practice. A workshop alone produces an event with a half-life of about three days. Combining the three &mdash; with the same vocabulary (TPACK, SAMR, Cognitive Coaching, design thinking) running through all of them &mdash; produces individual change, team consistency, <em>and</em> schoolwide visibility.</p>
+
+  <h3>What is innovative about this design</h3>
+  <ul>
+    <li><strong>It is not bolted onto the calendar.</strong> The 1:1 cycle runs in the teacher&rsquo;s already-existing planning period. PLCs already exist; we are restructuring them, not adding meetings. The sprint runs in a 90-minute window the school already protects for PD. Adoption is high because nothing new has to be cleared.</li>
+    <li><strong>It assumes teachers know things.</strong> Veterans pair with newer teachers as co-coaches, not as students. The program creates a thinking partner, not an expert telling teachers what to do. This is a direct application of Cognitive Coaching and Knowles&rsquo; andragogy &mdash; respect for prior experience as a design principle.</li>
+    <li><strong>Data is the agenda, not a report.</strong> Every PLC starts with a dashboard projected on the wall, not a slide deck. Teachers see real student progress before any decision is made. This collapses the gap teachers named in the survey: &ldquo;I assign IXL but I don&rsquo;t know what the data is telling me.&rdquo;</li>
+    <li><strong>The sprint produces an artifact, not a takeaway.</strong> Every design thinking sprint ends with a tested rough prototype in a teacher&rsquo;s hand, not a list of ideas in a Google doc. The artifact has to ship Monday or it does not count.</li>
+  </ul>
+</section>
+
+<!-- ====================== 1:1 COACHING ====================== -->
+<section id="coaching">
+  <span class="h2-tag">Phase II · B</span>
+  <h2>The 1:1 coaching cycle &mdash; weekly anatomy</h2>
+
+  <p>The cycle is a four-step loop run weekly with each enrolled teacher. It is built on Costa &amp; Garmston&rsquo;s Cognitive Coaching maps with two adaptations: (a) the &ldquo;observe&rdquo; step is built around a tool dashboard rather than a classroom visit when relevant, and (b) the &ldquo;apply&rdquo; step is logged in a shared coaching folder visible to the admin team in real time.</p>
+
+  <table class="grid">
+    <thead>
+      <tr><th>Step</th><th>Duration</th><th>What happens</th><th>Artifact</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1. Plan</td>
+        <td>10 min, Mon</td>
+        <td>Coach &amp; teacher pick one student or one lesson move. Coach uses Cognitive Coaching planning map: &ldquo;What are your goals? What will you look for? What might get in the way?&rdquo;</td>
+        <td>Plan card (single page, shared folder)</td>
+      </tr>
+      <tr>
+        <td>2. Observe</td>
+        <td>15 min, Tues/Wed</td>
+        <td>Coach observes the lesson move OR coach &amp; teacher review the relevant dashboard together. Coach is in anthropologist mode &mdash; notes, no advice.</td>
+        <td>Observation notes (shared folder)</td>
+      </tr>
+      <tr>
+        <td>3. Reflect</td>
+        <td>10 min, Thurs</td>
+        <td>Cognitive Coaching reflecting map: &ldquo;What happened? What do you make of it? What will you do differently?&rdquo; Coach asks; teacher decides.</td>
+        <td>Reflection note (3 lines)</td>
+      </tr>
+      <tr>
+        <td>4. Apply</td>
+        <td>during instruction</td>
+        <td>Teacher implements the next move. Coach is available but not present. The change is theirs.</td>
+        <td>Implementation evidence (lesson artifact, photo, student work)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Quarterly focus areas</h3>
+  <p>Each cycle is teacher-chosen, but the program suggests a quarterly emphasis so that the schoolwide pattern is coherent:</p>
+  <ul>
+    <li><strong>Q1 (Cycles 1&ndash;3): Routines.</strong> Device handout, login, focus check, transitions, packup. The &ldquo;named routine everyone can see&rdquo; the principal asked for.</li>
+    <li><strong>Q2 (Cycles 4&ndash;6): Data moves.</strong> Reading an IXL/Desmos/EdPuzzle dashboard and acting on one piece of evidence per week.</li>
+    <li><strong>Q3 (Cycles 7&ndash;9): Differentiation.</strong> Specific moves for ML and IEP students using existing tools (Google Translate &amp; Newsela for ML; text-to-speech &amp; leveled practice for IEP).</li>
+    <li><strong>Q4 (Cycles 10&ndash;12): Creation.</strong> Designing a student-creation lesson per teacher; preparing for next year.</li>
+  </ul>
+</section>
+
+<!-- ====================== PLC ====================== -->
+<section id="plc">
+  <span class="h2-tag">Phase II · C</span>
+  <h2>PLC data routine &mdash; the biweekly rhythm</h2>
+
+  <p>PLCs already meet at Greenfield Prep, biweekly, by grade-level team. The program restructures them around a 45-minute protocol that always starts with data on the wall.</p>
+
+  <table class="grid">
+    <thead><tr><th>Block</th><th>Duration</th><th>Activity</th></tr></thead>
+    <tbody>
+      <tr><td>Dashboard up</td><td>5 min</td><td>One dashboard is projected. No discussion yet &mdash; just notice.</td></tr>
+      <tr><td>What do we see?</td><td>10 min</td><td>Each teacher names one thing they see in the data. Coach captures patterns on a whiteboard.</td></tr>
+      <tr><td>What does it mean?</td><td>10 min</td><td>Team analyzes patterns &mdash; identifies 2-3 likely instructional implications.</td></tr>
+      <tr><td>What will we do?</td><td>15 min</td><td>Each teacher commits to one specific instructional move for the next two weeks. Logged in shared doc.</td></tr>
+      <tr><td>Calibration</td><td>5 min</td><td>Quick SAMR look-fors calibration using a video clip or a real lesson described.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Why this changes practice</h3>
+  <p>Teachers cited &ldquo;I don&rsquo;t know what the data is telling me&rdquo; as a top frustration. The protocol fixes that by making the dashboard the agenda &mdash; not a slide about the dashboard, but the dashboard itself, projected, read together. After three or four PLCs, teachers start reading dashboards before walking into the meeting because they know they will be asked.</p>
+</section>
+
+<!-- ====================== SPRINT ====================== -->
+<section id="sprint">
+  <span class="h2-tag">Phase II · D</span>
+  <h2>Quarterly design thinking sprint</h2>
+
+  <p>Once per quarter, the whole faculty runs a 90-minute design thinking sprint built on the d.school cycle (annotated in M42U3A1). The sprint is single-prompted: one shared instructional problem, one cycle, one rough prototype per teacher, one Monday-ready commitment.</p>
+
+  <h3>The four sprint prompts (one per quarter)</h3>
+  <ol>
+    <li><strong>Q1 &mdash; &ldquo;Redesign the First Five Minutes of Chromebook Time.&rdquo;</strong> Targets the routines work and the distraction challenge.</li>
+    <li><strong>Q2 &mdash; &ldquo;Redesign How You Group Students Using Data.&rdquo;</strong> Targets the data-driven instruction goal.</li>
+    <li><strong>Q3 &mdash; &ldquo;Redesign One Lesson So Students Create Instead of Consume.&rdquo;</strong> Targets the admin one-year vision directly.</li>
+    <li><strong>Q4 &mdash; Showcase.</strong> Each teacher presents one creation lesson from the year. The showcase doubles as the program&rsquo;s public evidence base.</li>
+  </ol>
+
+  <h3>Sprint protocol (90 min)</h3>
+  <ul>
+    <li><strong>Empathize (15 min)</strong> &mdash; interview a partner about one specific student.</li>
+    <li><strong>Define (10 min)</strong> &mdash; write a one-line POV statement: <em>[student] needs [verb] because [emotional insight]</em>.</li>
+    <li><strong>Ideate (15 min)</strong> &mdash; sketch five solutions, no letters/numbers, quantity over quality.</li>
+    <li><strong>Prototype (25 min)</strong> &mdash; build one rough version of the lesson move on index cards or sticky notes.</li>
+    <li><strong>Test (15 min)</strong> &mdash; share with a partner using the d.school feedback grid (works / fails / questions / new ideas).</li>
+    <li><strong>Commit (10 min)</strong> &mdash; pick the day next week the move will ship. Write it on a public list.</li>
+  </ul>
+</section>
+
+<!-- ====================== STACK ====================== -->
+<section id="stack">
+  <span class="h2-tag">Phase II · E</span>
+  <h2>Technology stack &mdash; the tools that power the program</h2>
+
+  <p>The program rests on a deliberately small stack. The principle is <em>fit-for-purpose over breadth</em>: nothing is included unless it directly serves a layer of the program.</p>
+
+  <table class="grid">
+    <thead><tr><th>Tool</th><th>Use in the program</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Google Workspace for Education</td><td>Shared coaching folder, plan/observation/reflection cards, PLC docs, showcase archive.</td><td>Already licensed</td></tr>
+      <tr><td>IXL</td><td>Primary data source for Math practice dashboards (PLC + 1:1).</td><td>Already licensed</td></tr>
+      <tr><td>Desmos Activity Builder</td><td>Primary tool for Math creation lessons; Q3 sprint emphasis.</td><td>Already licensed (free tier)</td></tr>
+      <tr><td>EdPuzzle</td><td>Interactive video for Science and Inclusion content; data dashboard used in PLC.</td><td>Already licensed</td></tr>
+      <tr><td>PhET Simulations</td><td>Science creation lessons; mentioned by multiple Science teachers.</td><td>Free, accessible</td></tr>
+      <tr><td>GoGuardian</td><td>Device-management routines (Q1 focus). Multiple teachers asked for training; not currently used schoolwide.</td><td>Licensed but underused; training needed</td></tr>
+      <tr><td>Newsela + Google Translate</td><td>ML-student scaffolding (Q3 differentiation focus).</td><td>Newsela: school subscription needed; Translate: free</td></tr>
+      <tr><td>PowerSchool</td><td>Cross-tool data for the mid-year audit.</td><td>Already in place</td></tr>
+      <tr><td>School coaching dashboard (Looker Studio)</td><td>Single page combining coaching cycles completed, PLC participation, walkthrough look-fors, and showcase artifacts. To be <strong>built during the capstone window</strong>.</td><td><span class="badge">Capstone build</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="card accent">
+    <p style="margin:0;"><strong>Build vs. buy decision.</strong> The only net-new build in the technology stack is the Looker Studio coaching dashboard. Everything else exists. This is deliberate &mdash; the program&rsquo;s value comes from how the existing tools are <em>used together</em>, not from acquiring new tools.</p>
+  </div>
+</section>
+
+<!-- ====================== ROLES ====================== -->
+<section id="roles">
+  <span class="h2-tag">Phase II · F</span>
+  <h2>Roles, responsibilities, and governance</h2>
+
+  <div class="role-grid">
+    <div class="role"><b>EdTech Coach (1 FTE)</b>Runs all 1:1 cycles. Facilitates PLCs. Designs and runs quarterly sprints. Maintains the coaching dashboard.</div>
+    <div class="role"><b>Principal &amp; AP-Instruction</b>Co-sponsor. Review coaching dashboard weekly. Conduct calibration walkthroughs once per quarter.</div>
+    <div class="role"><b>Dir. of T&amp;L</b>Owns differentiation strand. Reviews ML/IEP coaching artifacts each quarter.</div>
+    <div class="role"><b>Lead Teachers (3)</b>Mr. El-Sayed (Desmos/Math), Ms. Ortiz (station rotation), Mr. Guzman (inclusion). Each runs one PLC peer-coaching slot per quarter.</div>
+    <div class="role"><b>IT (existing)</b>Maintains Chromebook fleet, GoGuardian deployment, network. Joins one PLC per quarter for tools clinic.</div>
+    <div class="role"><b>Steering Committee</b>Coach + Principal + AP-I + Dir. T&amp;L + 1 lead teacher. Meets monthly. Reviews dashboard, decides interventions.</div>
+  </div>
+</section>
+
+<!-- ====================== EQUITY ====================== -->
+<section id="equity">
+  <span class="h2-tag">Phase II · G</span>
+  <h2>Equity, inclusion, and ML/IEP support</h2>
+
+  <p>Greenfield Prep&rsquo;s population is ~28% multilingual and includes a meaningful inclusion population in both Math and Science. Survey responses from inclusion and ML-heavy classrooms named differentiation as the top need. Three design moves embed equity into the program rather than treating it as a separate workstream:</p>
+
+  <ol>
+    <li><strong>Q3 dedicated focus.</strong> The third quarter of every coaching cycle and the Q3 sprint are explicitly about differentiation with existing tools. Every teacher experiences a focused differentiation cycle.</li>
+    <li><strong>Two lead teachers anchor the work.</strong> Mr. Guzman (inclusion Math) and Ms. Mariscal (ML density highest in her room) run peer-coaching slots and pilot the tool combos (text-to-speech, leveled practice, Google Translate + Newsela).</li>
+    <li><strong>Differentiation indicators in the dashboard.</strong> The Looker Studio dashboard reports separately on coaching cycles centered on ML and IEP students, so the work is visible and accountable.</li>
+  </ol>
+</section>
+
+<!-- ====================== PHASE III TIMELINE ====================== -->
+<section id="timeline">
+  <span class="h2-tag">Phase III · A</span>
+  <h2>Implementation timeline &mdash; 12 months</h2>
+
+  <p>The Phase III plan spans the 2026&ndash;2027 school year. The chart below shows the major workstreams and where the <strong>capstone module&rsquo;s 8-week implementation window</strong> sits inside the larger plan.</p>
+
+  <div class="gantt">
+    <div class="gantt-grid">
+      <div class="row-label">&nbsp;</div>
+      <div class="hdr">Jun '26</div><div class="hdr">Jul</div><div class="hdr">Aug</div><div class="hdr">Sep</div><div class="hdr">Oct</div><div class="hdr">Nov</div><div class="hdr">Dec</div><div class="hdr">Jan '27</div><div class="hdr">Feb</div><div class="hdr">Mar</div><div class="hdr">Apr</div><div class="hdr">May</div>
+
+      <div class="row-label">0. Capstone build &amp; pilot <span style="display:block;color:#B45309;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.06em;">Capstone window</span></div>
+      <div class="cell"><div class="bar cap">Setup + dashboard</div></div>
+      <div class="cell"><div class="bar cap">Pilot w/ 4 teachers</div></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+
+      <div class="row-label">1. Stakeholder &amp; budget approvals</div>
+      <div class="cell"><div class="bar">Admin sign-off</div></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+
+      <div class="row-label">2. Tool audit + dashboard build</div>
+      <div class="cell"></div>
+      <div class="cell"><div class="bar alt1">Audit</div></div>
+      <div class="cell"><div class="bar alt1">Looker build</div></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+
+      <div class="row-label">3. GoGuardian rollout + training</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"><div class="bar alt2">Train</div></div>
+      <div class="cell"><div class="bar alt2">Deploy</div></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+
+      <div class="row-label">4. 1:1 coaching cycles (12)</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"><div class="bar">Cyc 1–2</div></div>
+      <div class="cell"><div class="bar">3</div></div>
+      <div class="cell"><div class="bar">4</div></div>
+      <div class="cell"><div class="bar">5</div></div>
+      <div class="cell"><div class="bar">6</div></div>
+      <div class="cell"><div class="bar">7</div></div>
+      <div class="cell"><div class="bar">8</div></div>
+      <div class="cell"><div class="bar">9</div></div>
+      <div class="cell"><div class="bar">10–11</div></div>
+      <div class="cell"><div class="bar">12</div></div>
+
+      <div class="row-label">5. PLC data routine</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"><div class="bar alt1">PLC ×2</div></div>
+      <div class="cell"><div class="bar alt1">×2</div></div>
+      <div class="cell"><div class="bar alt1">×2</div></div>
+      <div class="cell"><div class="bar alt1">×2</div></div>
+      <div class="cell"><div class="bar alt1">×2</div></div>
+      <div class="cell"><div class="bar alt1">×2</div></div>
+      <div class="cell"><div class="bar alt1">×2</div></div>
+      <div class="cell"><div class="bar alt1">×2</div></div>
+      <div class="cell"><div class="bar alt1">×2</div></div>
+      <div class="cell"><div class="bar alt1">Retro</div></div>
+
+      <div class="row-label">6. Design thinking sprints</div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      <div class="cell"><div class="bar alt3">S1</div></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"><div class="bar alt3">S2</div></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"><div class="bar alt3">S3</div></div>
+      <div class="cell"></div>
+      <div class="cell"><div class="bar alt3">Show</div></div>
+
+      <div class="row-label">7. Evaluation &amp; reporting</div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"><div class="bar alt4">Baseline</div></div>
+      <div class="cell"></div><div class="cell"></div>
+      <div class="cell"><div class="bar alt4">Mid-yr</div></div>
+      <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      <div class="cell"><div class="bar alt4">Re-survey</div></div>
+      <div class="cell"></div>
+      <div class="cell"><div class="bar alt4">Year-end</div></div>
+    </div>
+  </div>
+
+  <p style="font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;font-size:12px;color:var(--ink-soft);">Figure 2. Twelve-month implementation timeline. Gold bar (row 0) marks the 8-week capstone-module scope; subsequent rows continue beyond capstone.</p>
+</section>
+
+<!-- ====================== MILESTONES ====================== -->
+<section id="milestones">
+  <span class="h2-tag">Phase III · B</span>
+  <h2>Milestones &amp; capstone-module scope</h2>
+
+  <p>Twelve milestones organize the year. The four highlighted in <span style="color:var(--gold);font-weight:700;">gold</span> are the ones in scope for the capstone module (next 8 weeks, June&ndash;July 2026).</p>
+
+  <div class="milestone">
+    <div class="marker cap">M1</div>
+    <div class="body">
+      <b>Admin approval &amp; budget allocation <span class="badge">Capstone</span></b>
+      <span class="date">Target: June 5, 2026 · Owner: Principal · Status: in progress (this document &amp; admin video are the artifacts)</span>
+    </div>
+  </div>
+  <div class="milestone">
+    <div class="marker cap">M2</div>
+    <div class="body">
+      <b>Tool &amp; license audit complete <span class="badge">Capstone</span></b>
+      <span class="date">Target: June 19, 2026 · Owner: Coach + IT · Output: confirmed license inventory; Newsela quote</span>
+    </div>
+  </div>
+  <div class="milestone">
+    <div class="marker cap">M3</div>
+    <div class="body">
+      <b>Coaching dashboard v1 (Looker Studio) live <span class="badge">Capstone</span></b>
+      <span class="date">Target: July 3, 2026 · Owner: Coach · Output: shareable dashboard URL; admin walkthrough recorded</span>
+    </div>
+  </div>
+  <div class="milestone">
+    <div class="marker cap">M4</div>
+    <div class="body">
+      <b>Pilot cohort coaching cycles complete (4 teachers, 2 cycles each) <span class="badge">Capstone</span></b>
+      <span class="date">Target: July 31, 2026 · Owner: Coach · Output: 8 cycle artifacts, pilot retrospective, refined cycle protocol</span>
+    </div>
+  </div>
+  <div class="milestone">
+    <div class="marker">M5</div>
+    <div class="body">
+      <b>GoGuardian training complete (whole staff)</b>
+      <span class="date">Target: August 21, 2026 · Owner: Coach + IT · Output: every teacher running named device-management routine</span>
+    </div>
+  </div>
+  <div class="milestone">
+    <div class="marker">M6</div>
+    <div class="body">
+      <b>Q1 design thinking sprint &mdash; &ldquo;Redesign First Five&rdquo;</b>
+      <span class="date">Target: Sep 25, 2026 · Output: 18 prototyped routines; 18 Monday commitments</span>
+    </div>
+  </div>
+  <div class="milestone">
+    <div class="marker">M7</div>
+    <div class="body">
+      <b>Mid-year audit + re-calibration</b>
+      <span class="date">Target: Dec 18, 2026 · Output: walkthrough data, dashboard snapshot, Q2 adjustments</span>
+    </div>
+  </div>
+  <div class="milestone">
+    <div class="marker">M8</div>
+    <div class="body">
+      <b>Q2 sprint &mdash; &ldquo;Data-driven grouping&rdquo;</b>
+      <span class="date">Target: Jan 22, 2027</span>
+    </div>
+  </div>
+  <div class="milestone">
+    <div class="marker">M9</div>
+    <div class="body">
+      <b>ML/IEP differentiation audit</b>
+      <span class="date">Target: Feb 26, 2027 · Owner: Coach + Dir. T&amp;L</span>
+    </div>
+  </div>
+  <div class="milestone">
+    <div class="marker">M10</div>
+    <div class="body">
+      <b>Q3 sprint &mdash; &ldquo;Creation lesson&rdquo;</b>
+      <span class="date">Target: Mar 26, 2027</span>
+    </div>
+  </div>
+  <div class="milestone">
+    <div class="marker">M11</div>
+    <div class="body">
+      <b>Re-survey &amp; outcomes report</b>
+      <span class="date">Target: April 30, 2027 · Output: confidence shift, dashboard outcomes, qualitative artifacts</span>
+    </div>
+  </div>
+  <div class="milestone">
+    <div class="marker">M12</div>
+    <div class="body">
+      <b>Showcase &amp; year-end retrospective</b>
+      <span class="date">Target: May 28, 2027 · Output: 18 creation lessons archived; program v2 proposal</span>
+    </div>
+  </div>
+
+  <div class="card gold">
+    <p style="margin:0;"><strong>Capstone scope (M1&ndash;M4, 8 weeks).</strong> The capstone module covers admin approval, the tool/license audit, the Looker Studio dashboard build, and a pilot coaching cohort of 4 self-selected teachers running 2 cycles each. Pilot teachers will be Ms. Ortiz (8th-grade Algebra), Mr. Patel (7th-grade Science), Ms. Mariscal (ML-density Science), and Mr. Guzman (Inclusion Math) &mdash; chosen for spread across grade, subject, and student population. The pilot retrospective at the end of July becomes the input to the schoolwide launch in August.</p>
+  </div>
+</section>
+
+<!-- ====================== PILOT ====================== -->
+<section id="pilot">
+  <span class="h2-tag">Phase III · C</span>
+  <h2>Pilot &amp; focused-group testing</h2>
+
+  <p>The capstone window <em>is</em> the pilot. Rather than rolling out to all 18 teachers in August and hoping, four teachers will run a full coaching cycle twice in July, with the explicit goal of breaking the protocol before the school year starts. The pilot is structured as a fast-feedback loop:</p>
+
+  <ol>
+    <li><strong>Week 1 (Jun 9&ndash;13)</strong> &mdash; Pilot teachers onboarded. Each reviews the Plan/Observe/Reflect/Apply cards and gives written feedback before any cycle runs. The protocol is revised on Day 5 based on that feedback.</li>
+    <li><strong>Week 2&ndash;3</strong> &mdash; Pilot teachers complete Cycle 1, focused on a routine of their choice. Coach observes; written reflection captured.</li>
+    <li><strong>Week 4 (Jun 30)</strong> &mdash; Pilot retrospective #1: what worked, what failed, what would they change. Cycle protocol revised again.</li>
+    <li><strong>Weeks 5&ndash;7</strong> &mdash; Cycle 2 with the revised protocol. Coaching dashboard goes live during this window; pilot teachers test that as well.</li>
+    <li><strong>Week 8 (Jul 28&ndash;31)</strong> &mdash; Pilot retrospective #2. Final protocol locked. Schoolwide launch plan published.</li>
+  </ol>
+
+  <h3>Why a focused-group pilot matters</h3>
+  <ul>
+    <li>It surfaces structural problems that a written plan cannot. (E.g., the &ldquo;observe&rdquo; step is the most likely to break because of scheduling conflicts with planning periods.)</li>
+    <li>It produces internal champions. The four pilot teachers, by August, are co-owners of the protocol and become the most credible advocates with their colleagues.</li>
+    <li>It de-risks the rollout. If something is going to fail, it should fail in July with four teachers in the building, not in October with eighteen.</li>
+    <li>It generates the schoolwide artifacts (cycle templates, dashboard screenshots, a video walkthrough) that the August onboarding will use.</li>
+  </ul>
+</section>
+
+<!-- ====================== RESOURCES ====================== -->
+<section id="resources">
+  <span class="h2-tag">Phase III · D</span>
+  <h2>Resources, budget, build vs. buy</h2>
+
+  <table class="grid">
+    <thead><tr><th>Resource</th><th>Type</th><th>Estimated cost (USD)</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>EdTech Coach (1.0 FTE)</td><td>People</td><td>$78,000 (annual, salary + benefits, est.)</td><td>Position to be confirmed — existing PD-line consolidation may fund part</td></tr>
+      <tr><td>Newsela school subscription</td><td>License</td><td>$2,400 / yr</td><td>Quote pending</td></tr>
+      <tr><td>Looker Studio dashboard build</td><td>Development</td><td>$0 (built in-house during capstone)</td><td>Capstone scope</td></tr>
+      <tr><td>Prototype kit (sharpies, sticky notes, foil, popsicle sticks ×4 quarters)</td><td>Materials</td><td>$200 / yr</td><td>EdTech line</td></tr>
+      <tr><td>Substitute coverage for 2 release days per teacher</td><td>People</td><td>~$5,400 (18 × 2 × $150)</td><td>To be approved</td></tr>
+      <tr><td>External coach observation visits (×2, optional)</td><td>Consulting</td><td>~$1,200</td><td>Stretch</td></tr>
+      <tr><td>GoGuardian training session</td><td>License-covered</td><td>$0 (already in subscription)</td><td>To schedule</td></tr>
+      <tr><td>Year-end showcase logistics</td><td>Materials</td><td>$300</td><td>EdTech line</td></tr>
+    </tbody>
+  </table>
+
+  <div class="card">
+    <p style="margin:0;"><strong>Total program cost (excluding existing FTE):</strong> approximately <strong>$9,500</strong> for the year. The dominant cost is people-time, which is already substantially in place. The program is unusually inexpensive for the scope because almost every tool is already licensed.</p>
+  </div>
+
+  <h3>What we are <em>not</em> buying</h3>
+  <ul>
+    <li>No new LMS. Google Classroom is sufficient.</li>
+    <li>No new device hardware. The Chromebook fleet is the right asset; the gap is in usage, not in count.</li>
+    <li>No proprietary &ldquo;coaching platform&rdquo; software. Google Drive + Looker Studio replaces it at zero cost.</li>
+    <li>No external consultant as primary coach. The credibility cost would outweigh the expertise gain.</li>
+  </ul>
+</section>
+
+<!-- ====================== RISK ====================== -->
+<section id="risk">
+  <span class="h2-tag">Phase III · E</span>
+  <h2>Risks &amp; mitigation</h2>
+
+  <table class="grid">
+    <thead><tr><th>Risk</th><th>Likelihood</th><th>Mitigation</th></tr></thead>
+    <tbody>
+      <tr><td>Coach role not funded as a separate FTE; rolled into someone&rsquo;s existing role.</td><td>Medium</td><td>Pilot data in July is designed to show ROI; the time required is documented per teacher per week so it is explicit, not invisible.</td></tr>
+      <tr><td>Teachers experience the program as compliance/surveillance because of the dashboard.</td><td>Medium</td><td>Dashboard reports cycles completed, not teacher performance. Teacher names are visible to teacher &amp; admin only; outcomes are reported as aggregates. Explicit in onboarding.</td></tr>
+      <tr><td>Veteran teachers resist 1:1 coaching as &ldquo;new-teacher PD.&rdquo;</td><td>Medium-High</td><td>Two pilot slots are veterans (Mr. El-Sayed, Ms. Mariscal). Their participation becomes the most credible recruiting story for the schoolwide launch.</td></tr>
+      <tr><td>Lack of teacher time to do the &ldquo;apply&rdquo; step inside an existing week.</td><td>High</td><td>Cycle&rsquo;s &ldquo;apply&rdquo; step is one specific instructional move &mdash; not an extra task. The whole protocol replaces other planning, not adds to it. Substitute coverage for two release days is the safety valve.</td></tr>
+      <tr><td>Dashboard data is unreliable in first months.</td><td>Medium</td><td>Pilot teachers test the data pipeline in July. Aug PLCs flag data issues explicitly before they shape decisions.</td></tr>
+      <tr><td>Sprint produces ideas but no Monday implementation.</td><td>Medium</td><td>Every sprint ends with a public commitment list. Next PLC opens with that list as the agenda; commitments unmet are surfaced (not punished, surfaced).</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ====================== EVALUATION ====================== -->
+<section id="evaluation">
+  <span class="h2-tag">Phase III · F</span>
+  <h2>Evaluation &amp; success metrics</h2>
+
+  <p>The program will be evaluated against the four admin-defined success metrics from the survey (consolidated across the four administrators) and against three program-specific indicators.</p>
+
+  <table class="grid">
+    <thead><tr><th>Metric</th><th>Baseline (April 2026)</th><th>Target (May 2027)</th><th>Measurement</th></tr></thead>
+    <tbody>
+      <tr><td>Teacher confidence using tech for differentiation (1&ndash;5)</td><td>Median 3; 67% &le; 3</td><td>Median 4; &lt;30% &le; 3</td><td>Re-survey, April 2027</td></tr>
+      <tr><td>Named device-management routine in classroom (admin walkthrough)</td><td>~0% of rooms</td><td>100% of rooms</td><td>Walkthrough look-fors data, quarterly</td></tr>
+      <tr><td>Weekly instructional move from a tool dashboard</td><td>Not tracked; estimated 1&ndash;2 of 18 teachers</td><td>16 of 18 teachers</td><td>PLC log + coaching dashboard</td></tr>
+      <tr><td>Student-creation lesson per teacher per quarter</td><td>~0&ndash;1 per teacher per year</td><td>4 per teacher per year</td><td>Showcase archive + lesson submissions</td></tr>
+      <tr><td>Improved practice-app data use (IXL/Desmos/EdPuzzle)</td><td>Admin-rated &ldquo;inconsistent&rdquo;</td><td>Admin-rated &ldquo;consistent across grades&rdquo;</td><td>Admin re-survey + dashboard</td></tr>
+      <tr><td>SAMR-banded walkthrough median</td><td>Substitution / Augmentation</td><td>Modification</td><td>Walkthrough look-fors</td></tr>
+      <tr><td>Coaching cycles completed per teacher</td><td>0</td><td>10&ndash;12</td><td>Coaching dashboard</td></tr>
+    </tbody>
+  </table>
+</section>
+
+
+
+<!-- ====================== APPENDIX ====================== -->
+<section id="appendix">
+  <span class="h2-tag">Appendix</span>
+  <h2>Cohort review, references, and source artifacts</h2>
+
+  <h3>Cohort feedback </h3>
+  <div class="cohort-quote">&ldquo;Three layers is the right number. Don&rsquo;t collapse the sprint into the PLC &mdash; people will lose the playful frame and it will become work.&rdquo; &nbsp;&mdash; cohort member, M42 small group</div>
+  <div class="cohort-quote">&ldquo;Make sure the differentiation strand isn&rsquo;t buried at Q3. ML/IEP needs to show up in cycle 1 as a sub-bullet, not as a quarter-three theme.&rdquo; &nbsp;&mdash; cohort member, M42 small group</div>
+  <p>Both pieces of feedback are reflected in the document above &mdash; the sprint is preserved as its own layer (Phase II.D), and a differentiation indicator is built into the dashboard (Phase II.E) and into every quarter&rsquo;s coaching focus, not only Q3.</p>
+
+  <h3>References</h3>
+  <ul>
+    <li>Costa, A. L., &amp; Garmston, R. J. <em>Cognitive Coaching: Developing Self-Directed Leaders and Learners.</em> (Used for the 1:1 cycle structure.)</li>
+    <li>Mishra, P., &amp; Koehler, M. J. (2006). Technological Pedagogical Content Knowledge: A Framework for Teacher Knowledge.</li>
+    <li>Puentedura, R. R. <em>SAMR Model.</em> (Used for walkthrough look-fors banding.)</li>
+    <li>Knowles, M. <em>The Adult Learner: A Neglected Species.</em> (Andragogy informs the program&rsquo;s respect-for-experience design.)</li>
+    <li>Landa, L. <em>Algo-Heuristic Theory.</em> (Used to separate the procedural routines from the heuristic data work.)</li>
+    <li>Stanford d.school. <em>Design Thinking Crash Course &mdash; The Gift-Giving Experience.</em> (Used for the quarterly sprint structure; annotated in M42U3A1.)</li>
+  </ul>
+
+  <h3>Source artifacts (this document builds on)</h3>
+  <ul>
+    <li><em>Victor_Moronu_Survey_Results_EdTech_Needs.xlsx</em> &mdash; April 2026 survey of 18 teachers + 4 admins at Greenfield Prep.</li>
+    <li><em>capstone.html</em> &mdash; EdTech Capstone Infrastructure Report (April 2026).</li>
+    <li><em>Victor_Moronu_ADDIE_Instructional_Model_Template.docx</em> &mdash; prior ID model work.</li>
+    <li><em>Victor_Moronu_Peer_Review_AlgoHeuristic.docx</em> &mdash; prior learning theory artifact.</li>
+    <li><em>Victor_Moronu_TEACH-NOW_PD_Coaching_Template.docx</em> &mdash; prior coaching template work.</li>
+    <li><em>Victor_Moronu_M42U3A1_Design_Thinking_Reflection.html</em> &mdash; this module&rsquo;s annotation &amp; reflection.</li>
+    <li><em>Victor_Moronu_M42U3_Phase_I_Learning_Design.html</em> &mdash; the immediate Phase I predecessor of this document.</li>
+  </ul>
+</section>
+
+<div class="footer-rule">M42U4A1 · Capstone · Learning Design Solution &amp; Technology Plan · Victor Moronu · 13 May 2026</div>
+
+</div>
+</body>
+</html>

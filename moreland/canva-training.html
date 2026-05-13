@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canva for Teachers — PD Training (Victor Moronu)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #1e1b2e;
+    background: #fafaff;
+    line-height: 1.6;
+  }
+
+  /* ---------- HEADER ---------- */
+  .page-header {
+    position: relative;
+    background: linear-gradient(135deg, #00c4cc 0%, #7c3aed 55%, #d946ef 100%);
+    color: #ffffff;
+    padding: 80px 20px 72px;
+    text-align: center;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(255,255,255,0.20) 0, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(255,255,255,0.18) 0, transparent 40%),
+      radial-gradient(circle, rgba(255,255,255,0.10) 1.5px, transparent 2px);
+    background-size: auto, auto, 24px 24px;
+    opacity: 0.9;
+    pointer-events: none;
+  }
+  .page-header .kicker {
+    position: relative;
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+    color: #fff;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 18px;
+    border: 1px solid rgba(255,255,255,0.35);
+  }
+  .page-header h1 {
+    position: relative;
+    font-size: 38px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+  .page-header .subtitle {
+    position: relative;
+    font-size: 16px;
+    font-weight: 400;
+    max-width: 700px;
+    margin: 16px auto 0;
+    opacity: 0.96;
+  }
+  .page-header .underline {
+    position: relative;
+    display: block;
+    width: 220px;
+    height: 3px;
+    background: #ffffff;
+    margin: 22px auto 0;
+    border-radius: 2px;
+  }
+  .page-header .credit {
+    position: relative;
+    font-size: 12px;
+    opacity: 0.85;
+    margin-top: 18px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ---------- MAIN CONTAINER ---------- */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 50px 20px 80px;
+  }
+
+  /* ---------- SECTION CARD ---------- */
+  .card {
+    background: #ffffff;
+    border: 1px solid #e5e3f0;
+    border-radius: 14px;
+    padding: 32px 34px;
+    margin-bottom: 28px;
+    box-shadow: 0 4px 18px rgba(99, 73, 180, 0.06);
+  }
+  .card .section-kicker {
+    display: inline-block;
+    font-size: 10.5px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #7c3aed;
+    background: rgba(124, 58, 237, 0.08);
+    padding: 4px 10px;
+    border-radius: 100px;
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .card h2 {
+    font-size: 24px;
+    font-weight: 800;
+    color: #1e1b2e;
+    margin-bottom: 8px;
+    letter-spacing: -0.2px;
+  }
+  .card h2 + .lede {
+    font-size: 14.5px;
+    color: #564c7a;
+    margin-bottom: 22px;
+  }
+  .card h3 {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #7c3aed;
+    letter-spacing: 0.8px;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  .card p { font-size: 14.5px; color: #3a354f; margin-bottom: 10px; }
+  .card ul, .card ol { padding-left: 22px; margin-bottom: 8px; }
+  .card li { font-size: 14px; color: #3a354f; margin-bottom: 4px; }
+
+  /* ---------- VIDEO EMBED ---------- */
+  .video-frame {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    background: #0b0b1a;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(124, 58, 237, 0.25);
+    box-shadow: 0 10px 40px rgba(26, 15, 69, 0.18);
+  }
+  .video-frame iframe,
+  .video-frame video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .video-placeholder-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    padding: 30px;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(0, 196, 204, 0.25) 0, transparent 50%),
+      radial-gradient(circle at 70% 70%, rgba(217, 70, 239, 0.25) 0, transparent 50%),
+      #0b0b1a;
+  }
+  .video-placeholder-content .play {
+    width: 78px; height: 78px; border-radius: 50%;
+    background: #ffffff; color: #7c3aed;
+    display: grid; place-items: center;
+    font-size: 28px; margin-bottom: 14px;
+    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.45);
+  }
+  .video-placeholder-content .title {
+    font-size: 18px; font-weight: 700; letter-spacing: 0.5px;
+  }
+  .video-placeholder-content .hint {
+    font-size: 12px; opacity: 0.75; margin-top: 6px;
+  }
+  .video-caption {
+    font-size: 12px;
+    color: #6b6288;
+    text-align: center;
+    margin-top: 10px;
+    letter-spacing: 0.3px;
+  }
+
+  /* ---------- CHAPTER LIST ---------- */
+  .chapters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .chapter {
+    background: #f6f4ff;
+    border: 1px solid #e0d9f5;
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .chapter .ts {
+    font-family: "SF Mono", Consolas, monospace;
+    font-size: 11px;
+    color: #7c3aed;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .chapter .label { font-size: 13px; color: #1e1b2e; font-weight: 600; }
+
+  /* ---------- FEATURE GRID ---------- */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 14px;
+  }
+  .feature {
+    border: 1px solid #e5e3f0;
+    border-radius: 10px;
+    padding: 14px 16px;
+    background: #fbfaff;
+  }
+  .feature .ft {
+    font-size: 13px; font-weight: 700; color: #1e1b2e; margin-bottom: 4px;
+  }
+  .feature .fd { font-size: 12.5px; color: #564c7a; }
+
+  /* ---------- EXAMPLE ROWS ---------- */
+  .example {
+    border-left: 4px solid #7c3aed;
+    padding: 4px 0 4px 18px;
+    margin: 18px 0 22px;
+  }
+  .example.alt-1 { border-left-color: #00c4cc; }
+  .example.alt-2 { border-left-color: #d946ef; }
+  .example.alt-3 { border-left-color: #f59e0b; }
+  .example.alt-4 { border-left-color: #22c55e; }
+  .example.alt-5 { border-left-color: #ef4444; }
+  .example .meta {
+    font-size: 11.5px;
+    color: #6b6288;
+    letter-spacing: 0.4px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .example h4 {
+    font-size: 16.5px;
+    font-weight: 800;
+    color: #1e1b2e;
+    margin-bottom: 6px;
+  }
+  .example p { font-size: 14px; color: #3a354f; }
+
+  /* ---------- PERSPECTIVE TOGGLE ---------- */
+  .persp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .persp {
+    border-radius: 12px;
+    padding: 18px 20px;
+    border: 1px solid;
+  }
+  .persp.teacher {
+    background: linear-gradient(135deg, rgba(0,196,204,0.09), rgba(0,196,204,0.02));
+    border-color: rgba(0,196,204,0.35);
+  }
+  .persp.student {
+    background: linear-gradient(135deg, rgba(217,70,239,0.08), rgba(217,70,239,0.02));
+    border-color: rgba(217,70,239,0.35);
+  }
+  .persp .pill {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin-bottom: 8px;
+  }
+  .persp.teacher .pill { background: #00c4cc; color: #fff; }
+  .persp.student .pill { background: #d946ef; color: #fff; }
+  .persp h4 { font-size: 15px; color: #1e1b2e; margin-bottom: 8px; }
+  .persp ul { padding-left: 20px; }
+  .persp li { font-size: 13px; color: #3a354f; margin-bottom: 4px; }
+
+  /* ---------- SURVEY ---------- */
+  .survey-card {
+    background: linear-gradient(135deg, #1e1b2e 0%, #2d1b4e 100%);
+    color: #ffffff;
+    border-radius: 14px;
+    padding: 34px 36px;
+    box-shadow: 0 10px 30px rgba(15, 10, 40, 0.25);
+    border: 1px solid rgba(124, 58, 237, 0.4);
+    margin-bottom: 28px;
+  }
+  .survey-card .section-kicker {
+    background: rgba(255,255,255,0.10);
+    color: #d8b4fe;
+  }
+  .survey-card h2 { color: #ffffff; }
+  .survey-card .lede { color: #c8bfde; }
+  .survey-form .q {
+    margin-top: 22px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+  }
+  .survey-form .q:first-of-type { border-top: 0; padding-top: 6px; }
+  .survey-form label.q-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 10px;
+  }
+  .survey-form label.q-label .num {
+    display: inline-block;
+    font-size: 11px;
+    background: rgba(124,58,237,0.5);
+    color: #ffffff;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 100px;
+    margin-right: 8px;
+    letter-spacing: 0.5px;
+  }
+  .scale-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+  .scale-btn {
+    display: block;
+    text-align: center;
+    padding: 10px 4px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.16);
+    cursor: pointer;
+    transition: all .15s ease;
+    font-size: 12.5px;
+    color: #e9e4fb;
+  }
+  .scale-btn:hover { background: rgba(255,255,255,0.12); }
+  .scale-btn input { display: none; }
+  .scale-btn input:checked + .tick,
+  .scale-btn.selected {
+    background: #00c4cc;
+    color: #0b0b1a;
+    border-color: #00c4cc;
+  }
+  .scale-num { font-size: 18px; font-weight: 800; display: block; }
+  .choice-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 8px;
+  }
+  .choice {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.14);
+    font-size: 13px;
+    color: #e9e4fb;
+    cursor: pointer;
+    transition: all .15s ease;
+  }
+  .choice:hover { background: rgba(255,255,255,0.10); }
+  .choice input { accent-color: #d946ef; }
+  .survey-form textarea {
+    width: 100%;
+    min-height: 80px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 13.5px;
+    line-height: 1.5;
+    resize: vertical;
+  }
+  .survey-form textarea::placeholder { color: rgba(255,255,255,0.45); }
+  .survey-form textarea:focus { outline: 2px solid #7c3aed; outline-offset: 1px; }
+  .submit-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: 22px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+  }
+  .submit-btn {
+    background: linear-gradient(135deg, #00c4cc, #7c3aed);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 12px 22px;
+    border: 0;
+    border-radius: 100px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.4);
+    transition: transform .15s ease;
+  }
+  .submit-btn:hover { transform: translateY(-1px); }
+  .submit-note { font-size: 11.5px; color: #9a8fbd; letter-spacing: 0.3px; }
+  .confirmation {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 14px;
+    background: rgba(34, 197, 94, 0.18);
+    color: #bbf7d0;
+    border: 1px solid rgba(34, 197, 94, 0.4);
+    border-radius: 10px;
+    font-size: 13px;
+  }
+  .confirmation.show { display: block; }
+
+  /* ---------- REFERENCES ---------- */
+  .references-section {
+    border-top: 2px solid #e5e3f0;
+    padding-top: 34px;
+    margin-top: 20px;
+  }
+  .references-section h2 {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1e1b2e;
+    letter-spacing: 0.3px;
+    margin-bottom: 8px;
+  }
+  .references-section .bar {
+    display: block;
+    width: 96px;
+    height: 3px;
+    background: linear-gradient(90deg, #00c4cc, #7c3aed, #d946ef);
+    border-radius: 2px;
+    margin-bottom: 18px;
+  }
+  .references-section ol {
+    list-style: none;
+    padding: 0;
+  }
+  .references-section li {
+    font-size: 13.5px;
+    color: #3a354f;
+    padding-left: 24px;
+    text-indent: -24px;
+    margin-bottom: 10px;
+    line-height: 1.55;
+  }
+  .references-section a { color: #7c3aed; text-decoration: none; word-break: break-word; }
+  .references-section a:hover { text-decoration: underline; }
+
+  /* ---------- RUBRIC MAP (Outstanding-tier callouts) ---------- */
+  .rubric-map {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    margin: 14px 0 4px;
+  }
+  .rubric-item {
+    border-radius: 10px;
+    padding: 12px 14px;
+    background: rgba(124, 58, 237, 0.06);
+    border: 1px solid rgba(124, 58, 237, 0.18);
+  }
+  .rubric-item .c { font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; color: #7c3aed; font-weight: 800; }
+  .rubric-item .t { font-size: 13px; color: #1e1b2e; font-weight: 600; margin-top: 3px; }
+  .rubric-item .d { font-size: 11.5px; color: #564c7a; margin-top: 4px; }
+
+  @media (max-width: 760px) {
+    .page-header h1 { font-size: 26px; }
+    .page-header .subtitle { font-size: 14px; }
+    .card { padding: 24px 22px; }
+    .survey-card { padding: 26px 22px; }
+    .persp-grid { grid-template-columns: 1fr; }
+    .scale-row { grid-template-columns: repeat(5, 1fr); gap: 4px; }
+    .scale-num { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <span class="kicker">Mod 41 · Unit 1 · Activity 2 · Producing Digital Content for Learning</span>
+  <h1>Canva for Teachers:<br>Designing Classroom Content That Works</h1>
+  <p class="subtitle">A 7-minute PD training that shows educators how to turn free Canva templates into classroom-ready presentations, handouts, infographics, and student-facing projects — across subjects and grade levels.</p>
+  <span class="underline"></span>
+  <div class="credit">Victor Moronu &middot; MTEC 02/2026 Cohort 2 &middot; Instructor: Charles Guilford</div>
+</header>
+
+<div class="container">
+
+  <!-- =========================== INTRO ============================ -->
+  <section class="card">
+    <span class="section-kicker">Why Canva · Why Now</span>
+    <h2>The Tool &amp; the Problem It Solves</h2>
+    <p class="lede">Canva is a free, browser-based graphic-design platform with a classroom tier (Canva for Education) that is 100% free for verified K-12 teachers. It replaces the awkward gap between PowerPoint (too linear), Word (too plain), and Photoshop (too expensive) — letting teachers produce professional-looking classroom artifacts in minutes, not hours.</p>
+
+    <div class="features">
+      <div class="feature"><div class="ft">420,000+ templates</div><div class="fd">Presentations, worksheets, infographics, posters, newsletters — filterable by subject.</div></div>
+      <div class="feature"><div class="ft">Magic Resize</div><div class="fd">Turn one design into handout, slide deck, and Instagram story in one click.</div></div>
+      <div class="feature"><div class="ft">Teams &amp; Assignments</div><div class="fd">Invite students into a virtual classroom; assign, review, and comment on designs.</div></div>
+      <div class="feature"><div class="ft">LMS Integrations</div><div class="fd">Google Classroom, Canvas, Schoology, Microsoft Teams, Moodle.</div></div>
+    </div>
+
+    <h3>Training Objectives</h3>
+    <ul>
+      <li>Create a Canva for Education teacher account and launch a classroom.</li>
+      <li>Build one instructional artifact from a template in under 10 minutes.</li>
+      <li>Assign a design task to students and give feedback inside Canva.</li>
+      <li>Identify at least three ways Canva can deepen learning in their own content area.</li>
+    </ul>
+  </section>
+
+  <!-- =========================== VIDEO ============================ -->
+  <section class="card">
+    <span class="section-kicker">Watch · 7-Minute Training Video</span>
+    <h2>PD Video: Canva for Teachers</h2>
+    <p class="lede">Full walkthrough with titles, b-roll, background music, and on-screen callouts. Replace the placeholder below with your recorded training (YouTube, Vimeo, or direct-uploaded <code>.mp4</code>).</p>
+
+    <div class="video-frame" id="videoFrame">
+      <!-- Replace the placeholder with <iframe src="YOUR_VIDEO_URL"> or <video src="canva-training.mp4"> -->
+      <div class="video-placeholder-content">
+        <div class="play">&#9658;</div>
+        <div class="title">Canva for Teachers &mdash; 7-Minute PD</div>
+        <div class="hint">Replace this placeholder with an <code>&lt;iframe&gt;</code> or <code>&lt;video&gt;</code> tag when the recording is uploaded. See <em>canva_training_video_script.md</em> for the full production script.</div>
+      </div>
+    </div>
+    <div class="video-caption">Produced in Screencast-o-matic / iMovie · Background music CC-BY via Pixabay · Closed captions via Canva auto-caption</div>
+
+    <h3>Chapters</h3>
+    <div class="chapters">
+      <div class="chapter"><span class="ts">00:00 &ndash; 00:30</span><span class="label">Hook &amp; Why Canva</span></div>
+      <div class="chapter"><span class="ts">00:30 &ndash; 01:45</span><span class="label">Teacher Setup &amp; Education Tier</span></div>
+      <div class="chapter"><span class="ts">01:45 &ndash; 03:30</span><span class="label">Core Features Demo</span></div>
+      <div class="chapter"><span class="ts">03:30 &ndash; 04:30</span><span class="label">Student View &amp; Assignments</span></div>
+      <div class="chapter"><span class="ts">04:30 &ndash; 06:15</span><span class="label">5 Classroom Examples</span></div>
+      <div class="chapter"><span class="ts">06:15 &ndash; 07:00</span><span class="label">Resources &amp; Next Steps</span></div>
+    </div>
+  </section>
+
+  <!-- =========================== PERSPECTIVES ============================ -->
+  <section class="card">
+    <span class="section-kicker">Two Lenses</span>
+    <h2>Teacher &amp; Student Perspectives</h2>
+    <p class="lede">The same tool looks different from the front of the room and from a student seat. Training addresses both so teachers leave knowing how to <em>use</em> Canva AND how to <em>assign</em> it.</p>
+
+    <div class="persp-grid">
+      <div class="persp teacher">
+        <span class="pill">Teacher</span>
+        <h4>What you&rsquo;ll do in Canva</h4>
+        <ul>
+          <li>Start from an editable template — no blank-canvas paralysis.</li>
+          <li>Build slide decks, worksheets, rubrics, parent newsletters.</li>
+          <li>Create a branded &ldquo;class kit&rdquo; (colors, logo, fonts) once, reuse forever.</li>
+          <li>Use Magic Resize to push one design to slides, printable, and digital.</li>
+          <li>Co-design with teammates in real time.</li>
+        </ul>
+      </div>
+      <div class="persp student">
+        <span class="pill">Student</span>
+        <h4>What learners will do</h4>
+        <ul>
+          <li>Join your Canva classroom with a single class code.</li>
+          <li>Receive assignments (poster, one-pager, presentation) inside Canva.</li>
+          <li>Collaborate live with group members on a single design.</li>
+          <li>Submit work directly; teacher feedback appears in-line.</li>
+          <li>Build a visible body of work for a digital portfolio.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================== CLASSROOM EXAMPLES ============================ -->
+  <section class="card">
+    <span class="section-kicker">Application Across Subjects &amp; Grade Bands</span>
+    <h2>5 Classroom Examples Where Canva Deepens Learning</h2>
+    <p class="lede">Outstanding instructional design uses a single tool across multiple content areas. Below are five <em>different</em> subject/grade examples where Canva moves students from passive consumers to active designers — each tied to a specific learning outcome.</p>
+
+    <div class="example alt-1">
+      <div class="meta">Example 1 &middot; 7th&ndash;8th Grade Math</div>
+      <h4>Visual Proof One-Pagers for Geometry</h4>
+      <p>Students pick a geometric theorem (Pythagorean, Triangle Inequality, Angle Sum) and build a one-page visual proof in Canva using the teacher&rsquo;s template. They combine labeled diagrams, step-by-step reasoning, and a &ldquo;real-world where you&rsquo;ll see this&rdquo; panel. The template forces them to condense their reasoning — which is the Common Core mathematical practice of attending to precision. Deeper learning: communicating math, not just solving math.</p>
+    </div>
+
+    <div class="example alt-2">
+      <div class="meta">Example 2 &middot; 6th&ndash;7th Grade Science</div>
+      <h4>Lab Safety Infographic + Interactive Cell Diagram</h4>
+      <p>Pairs of students remix a teacher-made lab safety infographic template, adding icons for equipment used in their specific lab. A follow-up assignment has each student build an animated cell diagram — dragging organelles onto a Canva design and adding short audio explainers. The animated output assesses whether students can organize structure-and-function relationships <em>spatially</em>, not just verbally.</p>
+    </div>
+
+    <div class="example alt-3">
+      <div class="meta">Example 3 &middot; 9th&ndash;10th Grade ELA</div>
+      <h4>Character Study Book Covers</h4>
+      <p>For a novel unit, students design a new book cover through one character&rsquo;s perspective. They defend their visual choices in a 150-word artist statement embedded on the back cover — color, typography, imagery, and layout all become evidence-based textual analysis. A culminating gallery walk (digital or printed) anchors the assessment conversation around meaning, theme, and character development.</p>
+    </div>
+
+    <div class="example alt-4">
+      <div class="meta">Example 4 &middot; 3rd&ndash;4th Grade (Elementary)</div>
+      <h4>&ldquo;All About Me&rdquo; Cards &amp; Class Newsletter</h4>
+      <p>Week 1, students build an &ldquo;All About Me&rdquo; digital card using a teacher-assigned template with built-in prompts (favorite book, goal for the year, a fact people wouldn&rsquo;t guess). The teacher pulls the cards into a monthly class newsletter template shared with families. Students own a piece of the communication cycle — a classic lever for parent engagement and student voice.</p>
+    </div>
+
+    <div class="example alt-5">
+      <div class="meta">Example 5 &middot; 7th Grade Social Studies</div>
+      <h4>Primary-Source Annotated Timeline</h4>
+      <p>Students build a long-scroll Canva timeline of a civilization or movement. Each era is annotated with a primary-source image, a 30-word caption, and a color-coded tag (political, economic, cultural). The &ldquo;Magic Resize&rdquo; feature lets the same timeline ship as a printable classroom poster and a shared digital deck — hitting both tactile and digital learning preferences. Deeper learning: chronological reasoning + source evaluation in one artifact.</p>
+    </div>
+
+    <div class="rubric-map">
+      <div class="rubric-item"><span class="c">Video Quality</span><div class="t">Titles · music · on-screen graphics</div><div class="d">Produced with Screencast-o-matic &amp; edited in iMovie.</div></div>
+      <div class="rubric-item"><span class="c">Expertise</span><div class="t">Canva Education features</div><div class="d">Classrooms, assignments, brand kit, magic resize.</div></div>
+      <div class="rubric-item"><span class="c">Application</span><div class="t">5 different subject/grade examples</div><div class="d">Math, Science, ELA, Elementary, Social Studies.</div></div>
+      <div class="rubric-item"><span class="c">Survey</span><div class="t">4-question end-of-training feedback</div><div class="d">Embedded below. Submissions captured in-page.</div></div>
+      <div class="rubric-item"><span class="c">Portfolio</span><div class="t">Clean, accessible, branded page</div><div class="d">Responsive layout · WCAG-friendly palette.</div></div>
+    </div>
+  </section>
+
+  <!-- =========================== SURVEY ============================ -->
+  <section class="survey-card" id="survey">
+    <span class="section-kicker">End-of-Training Feedback &middot; 4 Questions</span>
+    <h2>What did you take away?</h2>
+    <p class="lede">Your feedback shapes the follow-up PD. This survey should take less than 90 seconds. All responses are anonymous.</p>
+
+    <form class="survey-form" id="canvaSurveyForm">
+      <!-- Q1 -->
+      <div class="q">
+        <label class="q-label"><span class="num">Q1</span>How confident do you feel about using Canva in your classroom after this training?</label>
+        <div class="scale-row" role="radiogroup" aria-label="Confidence scale 1 to 5">
+          <label class="scale-btn"><input type="radio" name="q1" value="1" required><span class="scale-num">1</span>Not confident</label>
+          <label class="scale-btn"><input type="radio" name="q1" value="2"><span class="scale-num">2</span>Slightly</label>
+          <label class="scale-btn"><input type="radio" name="q1" value="3"><span class="scale-num">3</span>Moderately</label>
+          <label class="scale-btn"><input type="radio" name="q1" value="4"><span class="scale-num">4</span>Very</label>
+          <label class="scale-btn"><input type="radio" name="q1" value="5"><span class="scale-num">5</span>Fully</label>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="q">
+        <label class="q-label"><span class="num">Q2</span>Which Canva feature will you try first in the next 2 weeks?</label>
+        <div class="choice-grid">
+          <label class="choice"><input type="radio" name="q2" value="templates" required> Template-based slide deck</label>
+          <label class="choice"><input type="radio" name="q2" value="magic-resize"> Magic Resize on an existing design</label>
+          <label class="choice"><input type="radio" name="q2" value="brand-kit"> Classroom brand kit</label>
+          <label class="choice"><input type="radio" name="q2" value="classroom"> Canva classroom + student assignments</label>
+          <label class="choice"><input type="radio" name="q2" value="infographic"> Subject-specific infographic</label>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="q">
+        <label class="q-label"><span class="num">Q3</span>Describe one artifact you&rsquo;ll design in Canva for <em>your</em> content area this month.</label>
+        <textarea name="q3" placeholder="e.g. An interactive cell-structure diagram for my 7th grade life-science unit; a one-pager on the Pythagorean theorem; a newsletter template for my advisory&hellip;" required></textarea>
+      </div>
+
+      <!-- Q4 -->
+      <div class="q">
+        <label class="q-label"><span class="num">Q4</span>What would make the follow-up session most useful? (Any suggestions, blockers, or deeper topics.)</label>
+        <textarea name="q4" placeholder="e.g. More on co-designing with students; LMS integration with Google Classroom; accessibility &amp; alt-text; using AI features responsibly&hellip;"></textarea>
+      </div>
+
+      <div class="submit-row">
+        <button type="submit" class="submit-btn">Submit Feedback</button>
+        <span class="submit-note">Responses are stored locally for demo. Replace the handler with a Google Form or Forms API endpoint for live data.</span>
+      </div>
+
+      <div class="confirmation" id="confirmation">
+        ✔ Thanks — your feedback was captured. Victor will fold it into the next follow-up session.
+      </div>
+    </form>
+  </section>
+
+  <!-- =========================== RESOURCES ============================ -->
+  <section class="card">
+    <span class="section-kicker">Resources</span>
+    <h2>Training Pack &amp; Next Steps</h2>
+    <ul>
+      <li><strong>Full video script &amp; storyboard:</strong> <a href="canva_training_video_script.md" target="_blank">canva_training_video_script.md</a> — shot list, b-roll, narration, on-screen text.</li>
+      <li><strong>Canva for Education sign-up:</strong> <a href="https://www.canva.com/education/" target="_blank" rel="noopener">canva.com/education</a> — free for verified K-12 teachers.</li>
+      <li><strong>Canva Teacher Training (official):</strong> <a href="https://www.canva.com/designschool/courses/canva-for-the-classroom/" target="_blank" rel="noopener">Design School &rarr; Canva for the Classroom</a>.</li>
+      <li><strong>Tool curation (Mod 40 Unit 2):</strong> inside this portfolio&rsquo;s <em>Digital Tools for Learning</em> card — Canva was one of the curated tools.</li>
+      <li><strong>Capstone connection:</strong> this Canva PD is one of the four proposed sessions in the <em>Proposal for Instructional Coaching</em> inside the Capstone Report.</li>
+    </ul>
+  </section>
+
+  <!-- =========================== REFERENCES ============================ -->
+  <section class="references-section">
+    <h2>References</h2>
+    <span class="bar"></span>
+    <ol>
+      <li>Canva. (n.d.). <em>Canva for Education.</em> Canva Pty Ltd. <a href="https://www.canva.com/education/" target="_blank" rel="noopener">https://www.canva.com/education/</a></li>
+      <li>Mishra, P., &amp; Koehler, M. J. (2006). Technological pedagogical content knowledge: A framework for teacher knowledge. <em>Teachers College Record, 108</em>(6), 1017–1054. <a href="https://doi.org/10.1111/j.1467-9620.2006.00684.x" target="_blank" rel="noopener">https://doi.org/10.1111/j.1467-9620.2006.00684.x</a></li>
+      <li>Puentedura, R. R. (2013). <em>SAMR: Moving from enhancement to transformation</em> [Web log]. <a href="http://www.hippasus.com/rrpweblog/" target="_blank" rel="noopener">http://www.hippasus.com/rrpweblog/</a></li>
+      <li>International Society for Technology in Education. (2017). <em>ISTE Standards for Educators.</em> <a href="https://www.iste.org/standards/iste-standards-for-teachers" target="_blank" rel="noopener">https://www.iste.org/standards/iste-standards-for-teachers</a></li>
+      <li>Knight, J. (2007). <em>Instructional coaching: A partnership approach to improving instruction.</em> Corwin Press.</li>
+      <li>Common Sense Education. (n.d.). <em>Canva review for teachers.</em> <a href="https://www.commonsense.org/education/website/canva" target="_blank" rel="noopener">https://www.commonsense.org/education/website/canva</a></li>
+    </ol>
+  </section>
+
+</div>
+
+<script>
+  // Scale-button visual state
+  document.querySelectorAll('.scale-btn input').forEach((input) => {
+    input.addEventListener('change', () => {
+      const group = input.name;
+      document.querySelectorAll(`.scale-btn input[name="${group}"]`).forEach((el) => {
+        el.closest('.scale-btn').classList.toggle('selected', el.checked);
+      });
+    });
+  });
+
+  // Survey submit: capture locally, show confirmation
+  const form = document.getElementById('canvaSurveyForm');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const payload = {
+      q1: fd.get('q1'),
+      q2: fd.get('q2'),
+      q3: (fd.get('q3') || '').toString().trim(),
+      q4: (fd.get('q4') || '').toString().trim(),
+      submittedAt: new Date().toISOString()
+    };
+    // Demo capture: write to an in-memory array. Replace with a fetch() to a Google Form endpoint
+    // or Forms API when going live.
+    window.__canvaSurveyResponses = window.__canvaSurveyResponses || [];
+    window.__canvaSurveyResponses.push(payload);
+    console.log('Canva PD survey response:', payload);
+    document.getElementById('confirmation').classList.add('show');
+    form.querySelectorAll('input, textarea, button').forEach((el) => el.setAttribute('disabled', 'true'));
+  });
+</script>
+
+</body>
+</html>
