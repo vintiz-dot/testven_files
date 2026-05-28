@@ -136,15 +136,18 @@
   .card li { font-size: 14px; color: #3a354f; margin-bottom: 4px; }
 
   /* ---------- VIDEO EMBED ---------- */
+  .video-wrapper {
+    background: #0b0b1a;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(124, 58, 237, 0.25);
+    box-shadow: 0 10px 40px rgba(26, 15, 69, 0.18);
+  }
   .video-frame {
     position: relative;
     width: 100%;
     padding-top: 56.25%;
     background: #0b0b1a;
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid rgba(124, 58, 237, 0.25);
-    box-shadow: 0 10px 40px rgba(26, 15, 69, 0.18);
   }
   .video-frame iframe,
   .video-frame video {
@@ -154,33 +157,27 @@
     height: 100%;
     border: 0;
   }
-  .video-placeholder-content {
-    position: absolute;
-    inset: 0;
+  .video-divider {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: #fff;
-    padding: 30px;
-    background:
-      radial-gradient(circle at 30% 30%, rgba(0, 196, 204, 0.25) 0, transparent 50%),
-      radial-gradient(circle at 70% 70%, rgba(217, 70, 239, 0.25) 0, transparent 50%),
-      #0b0b1a;
+    gap: 12px;
+    padding: 6px 20px;
+    background: #0b0b1a;
   }
-  .video-placeholder-content .play {
-    width: 78px; height: 78px; border-radius: 50%;
-    background: #ffffff; color: #7c3aed;
-    display: grid; place-items: center;
-    font-size: 28px; margin-bottom: 14px;
-    box-shadow: 0 10px 30px rgba(124, 58, 237, 0.45);
+  .video-divider::before,
+  .video-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: rgba(124, 58, 237, 0.25);
   }
-  .video-placeholder-content .title {
-    font-size: 18px; font-weight: 700; letter-spacing: 0.5px;
-  }
-  .video-placeholder-content .hint {
-    font-size: 12px; opacity: 0.75; margin-top: 6px;
+  .video-divider span {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    font-weight: 700;
+    white-space: nowrap;
   }
   .video-caption {
     font-size: 12px;
@@ -189,29 +186,6 @@
     margin-top: 10px;
     letter-spacing: 0.3px;
   }
-
-  /* ---------- CHAPTER LIST ---------- */
-  .chapters {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-    gap: 10px;
-    margin-top: 18px;
-  }
-  .chapter {
-    background: #f6f4ff;
-    border: 1px solid #e0d9f5;
-    border-radius: 10px;
-    padding: 12px 14px;
-  }
-  .chapter .ts {
-    font-family: "SF Mono", Consolas, monospace;
-    font-size: 11px;
-    color: #7c3aed;
-    font-weight: 700;
-    display: block;
-    margin-bottom: 2px;
-  }
-  .chapter .label { font-size: 13px; color: #1e1b2e; font-weight: 600; }
 
   /* ---------- FEATURE GRID ---------- */
   .features {
@@ -497,7 +471,7 @@
 <header class="page-header">
   <span class="kicker">Mod 41 · Unit 1 · Activity 2 · Producing Digital Content for Learning</span>
   <h1>Canva for Teachers:<br>Designing Classroom Content That Works</h1>
-  <p class="subtitle">A 7-minute PD training that shows educators how to turn free Canva templates into classroom-ready presentations, handouts, infographics, and student-facing projects — across subjects and grade levels.</p>
+  <p class="subtitle">A PD training that shows educators how to turn free Canva templates into classroom-ready presentations, handouts, infographics, and student-facing projects — across subjects and grade levels.</p>
   <span class="underline"></span>
   <div class="credit">Victor Moronu &middot; MTEC 02/2026 Cohort 2 &middot; Instructor: Charles Guilford</div>
 </header>
@@ -528,26 +502,25 @@
 
   <!-- =========================== VIDEO ============================ -->
   <section class="card">
-    <span class="section-kicker">Watch · 7-Minute Training Video</span>
+    <span class="section-kicker">Watch · PD Training Video</span>
     <h2>PD Video: Canva for Teachers</h2>
 
-    <div class="video-frame" id="videoFrame">
-      <!-- Replace the placeholder with <iframe src="YOUR_VIDEO_URL"> or <video src="canva-training.mp4"> -->
-      <div class="video-placeholder-content">
-        <div class="play">&#9658;</div>
-        <div class="title">Canva for Teachers &mdash; 7-Minute PD</div>
+    <div class="video-wrapper">
+      <div class="video-frame">
+        <iframe src="https://www.youtube.com/embed/_mqA9o0RcMM"
+                title="Canva for Teachers PD — Part 1"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+      </div>
+      <div class="video-divider"><span>continued</span></div>
+      <div class="video-frame">
+        <iframe src="https://www.youtube.com/embed/aEJbfEKlq2w"
+                title="Canva for Teachers PD — Part 2"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
       </div>
     </div>
-
-    <h3>Chapters</h3>
-    <div class="chapters">
-      <div class="chapter"><span class="ts">00:00 &ndash; 00:30</span><span class="label">Hook &amp; Why Canva</span></div>
-      <div class="chapter"><span class="ts">00:30 &ndash; 01:45</span><span class="label">Teacher Setup &amp; Education Tier</span></div>
-      <div class="chapter"><span class="ts">01:45 &ndash; 03:30</span><span class="label">Core Features Demo</span></div>
-      <div class="chapter"><span class="ts">03:30 &ndash; 04:30</span><span class="label">Student View &amp; Assignments</span></div>
-      <div class="chapter"><span class="ts">04:30 &ndash; 06:15</span><span class="label">5 Classroom Examples</span></div>
-      <div class="chapter"><span class="ts">06:15 &ndash; 07:00</span><span class="label">Resources &amp; Next Steps</span></div>
-    </div>
+    <p class="video-caption">Full PD training walkthrough — Canva for Teachers (Victor Moronu)</p>
   </section>
 
   <!-- =========================== PERSPECTIVES ============================ -->
@@ -672,7 +645,7 @@
 
       <div class="submit-row">
         <button type="submit" class="submit-btn">Submit Feedback</button>
-        <span class="submit-note">Responses are stored locally for demo. Replace the handler with a Google Form or Forms API endpoint for live data.</span>
+        <span class="submit-note">All responses are anonymous.</span>
       </div>
 
       <div class="confirmation" id="confirmation">
@@ -732,8 +705,7 @@
       q4: (fd.get('q4') || '').toString().trim(),
       submittedAt: new Date().toISOString()
     };
-    // Demo capture: write to an in-memory array. Replace with a fetch() to a Google Form endpoint
-    // or Forms API when going live.
+    // Capture response locally.
     window.__canvaSurveyResponses = window.__canvaSurveyResponses || [];
     window.__canvaSurveyResponses.push(payload);
     console.log('Canva PD survey response:', payload);
