@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capstone Presentation - Victor Moronu</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --secondary: #4338ca;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --accent: #10b981;
+            --text-main: #334155;
+            --text-light: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            overflow: hidden;
+        }
+
+        /* Presentation Container */
+        .presentation-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Slides */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem;
+            background-color: var(--light);
+            color: var(--text-main);
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+        }
+
+        /* Slide Content Variations */
+        .slide-dark {
+            background-color: var(--dark);
+            color: var(--light);
+        }
+        
+        .slide-accent {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-align: center;
+            line-height: 1.2;
+            color: inherit;
+        }
+
+        h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .slide-dark h2, .slide-accent h2 {
+            color: white;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            max-width: 900px;
+        }
+
+        .subtitle {
+            font-size: 2rem;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+        }
+
+        .slide-dark .subtitle, .slide-accent .subtitle {
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            width: 100%;
+            max-width: 1200px;
+            align-items: center;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* Cards & Elements */
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            text-align: center;
+            border-top: 6px solid var(--primary);
+        }
+        
+        .stat-card .number {
+            font-size: 4.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .quote-box {
+            background: rgba(79, 70, 229, 0.05);
+            border-left: 8px solid var(--primary);
+            padding: 2.5rem;
+            font-size: 1.6rem;
+            font-style: italic;
+            text-align: left;
+            margin-bottom: 2rem;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .image-gallery {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .image-gallery img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .feature-list {
+            list-style: none;
+            text-align: left;
+            font-size: 1.6rem;
+        }
+
+        .feature-list li {
+            margin-bottom: 1.2rem;
+            padding-left: 2.5rem;
+            position: relative;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .slide-accent .feature-list li::before {
+            color: white;
+        }
+
+        /* Video Embed */
+        .video-container {
+            width: 100%;
+            max-width: 900px;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        
+        /* Placeholder for local video */
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: white;
+            cursor: pointer;
+        }
+
+        .play-button {
+            width: 80px;
+            height: 80px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            transition: transform 0.2s;
+        }
+
+        .play-button:hover {
+            transform: scale(1.1);
+        }
+
+        .play-button::after {
+            content: '';
+            border-left: 25px solid white;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            margin-left: 10px;
+        }
+
+        /* Controls */
+        .controls {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 100;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            background: rgba(15, 23, 42, 0.7);
+            color: white;
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn:hover {
+            background: var(--primary);
+        }
+
+        .btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 6px;
+            background: var(--primary);
+            z-index: 100;
+            transition: width 0.3s ease;
+        }
+        
+        .slide-counter {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 100;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-light);
+            background: rgba(255,255,255,0.8);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .slide-dark .slide-counter {
+            color: white;
+            background: rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="presentation-container" id="presentation">
+        
+        <!-- Slide 1: Title -->
+        <div class="slide slide-dark active">
+            <h1>Empowering Tech-Forward Teaching</h1>
+            <div class="subtitle">A Comprehensive Instructional Coaching Plan</div>
+            <div style="margin-top: 4rem; text-align: center;">
+                <h3>Victor Moronu</h3>
+                <p style="font-size: 1.2rem; color: #cbd5e1; margin-bottom: 0.5rem;">EdTech Coach Candidate</p>
+                <p style="font-size: 1.2rem; color: #cbd5e1; margin-bottom: 0.5rem;">Greenfield Preparatory Middle School</p>
+                <p style="font-size: 1.2rem; color: #cbd5e1;">Spring 2026</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: The Pitch (Video) -->
+        <div class="slide slide-accent">
+            <h2>The Pitch</h2>
+            <p style="color: rgba(255,255,255,0.9); max-width: 800px; margin-bottom: 3rem;">A 2-minute overview of why Greenfield Prep needs targeted instructional coaching to transform our 1:1 Chromebook initiative.</p>
+            
+            <div class="video-container">
+                <video id="pitchVideo" width="100%" height="100%" controls style="display:none;">
+                    <!-- The actual video file would be linked here. Using placeholder for presentation -->
+                    <source src="victor_pitch.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="video-placeholder" id="videoPlaceholder">
+                    <div class="play-button"></div>
+                    <h3>Play Pitch Video</h3>
+                    <p style="font-size: 1rem; margin-top: 1rem;">(Click to play presentation video)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: The Data -->
+        <div class="slide">
+            <h2>The Reality: Needs-Analysis Data</h2>
+            <p style="margin-bottom: 3rem;">Data collected from the Module 41 EdTech Survey reveals a critical gap between technology access and purposeful pedagogy.</p>
+            
+            <div class="grid-3">
+                <div class="stat-card">
+                    <div class="number">68%</div>
+                    <h3 style="color: var(--text-main); font-size: 1.4rem;">Device Distraction</h3>
+                    <p style="font-size: 1.1rem; color: var(--text-light); text-align: left;">Teachers flagged student off-task device use as their #1 classroom management challenge.</p>
+                </div>
+                <div class="stat-card">
+                    <div class="number">54%</div>
+                    <h3 style="color: var(--text-main); font-size: 1.4rem;">Lack of Training</h3>
+                    <p style="font-size: 1.1rem; color: var(--text-light); text-align: left;">Teachers report insufficient training on existing management tools like GoGuardian.</p>
+                </div>
+                <div class="stat-card">
+                    <div class="number">SAMR</div>
+                    <h3 style="color: var(--text-main); font-size: 1.4rem;">Stuck at Substitution</h3>
+                    <p style="font-size: 1.1rem; color: var(--text-light); text-align: left;">Most tech integration is currently replacing analog tools without functional improvement.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Literature & Research -->
+        <div class="slide">
+            <h2>Backed by Literature</h2>
+            <div class="grid-2">
+                <div>
+                    <div class="quote-box">
+                        "Traditional, one-size-fits-all professional development fails to change classroom practice. Job-embedded coaching is essential for translating digital skills into pedagogical shifts."
+                        <div style="font-size: 1.1rem; font-weight: bold; margin-top: 1rem; font-style: normal; color: var(--text-light);">— Journal of Digital Education & Technology (2025)</div>
+                    </div>
+                    <div class="quote-box">
+                        "When combined with Professional Learning Communities, targeted digital PD acts as a strong mediator between a school's digital preparedness and actual instructional integration."
+                        <div style="font-size: 1.1rem; font-weight: bold; margin-top: 1rem; font-style: normal; color: var(--text-light);">— PLoS ONE: Amemasor et al. (2025)</div>
+                    </div>
+                </div>
+                <div>
+                    <h3>Key Research Takeaways</h3>
+                    <ul class="feature-list" style="margin-top: 2rem;">
+                        <li>"Sit-and-get" PD hours have a negative correlation with tech integration.</li>
+                        <li>Teachers suffer from a "digital competence gap" in pedagogical design.</li>
+                        <li>A BDA (Before-During-After) coaching cycle creates measurable behavioral change.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Pilot Implementation -->
+        <div class="slide">
+            <h2>The Pilot in Action</h2>
+            <p>Our two-week trial proved that targeted coaching builds immediate capacity.</p>
+            
+            <div class="grid-2">
+                <div class="image-gallery">
+                    <!-- Using existing images from the workspace -->
+                    <img src="IMG_3892.jpeg" alt="Teachers collaborating">
+                    <img src="IMG_3893.jpeg" alt="Hands-on pilot session">
+                    <img src="IMG_3894.jpeg" alt="Artifact creation">
+                    <img src="logic_lab_poster.png" alt="Pilot materials">
+                </div>
+                <div>
+                    <h3>Implementation Artifacts Produced:</h3>
+                    <ul class="feature-list" style="margin-top: 1.5rem;">
+                        <li><strong>GoGuardian Scenes:</strong> Math and Science teachers built and launched custom focus scenes.</li>
+                        <li><strong>Device Contracts:</strong> Co-authored three-norm digital citizenship contracts with students.</li>
+                        <li><strong>Attention Checks:</strong> Redesigned lessons integrating Pear Deck formative assessments.</li>
+                        <li><strong>Walkthrough Rubric:</strong> A standardized measure for tech integration.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Teacher Response -->
+        <div class="slide slide-dark">
+            <h2>Focus Group Response</h2>
+            <div class="grid-2" style="margin-top: 2rem;">
+                <div style="background: rgba(255,255,255,0.1); padding: 3rem; border-radius: 16px;">
+                    <h3 style="color: var(--accent); margin-bottom: 2rem; font-size: 2rem;">"What Worked"</h3>
+                    <ul class="feature-list" style="font-size: 1.4rem;">
+                        <li>Pre-work (Loom videos) saved time and reduced cognitive load during the session.</li>
+                        <li>Sandbox environments allowed risk-free practice of GoGuardian features.</li>
+                        <li>Teachers felt supported as designers, rather than being "evaluated".</li>
+                    </ul>
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 3rem; border-radius: 16px;">
+                    <h3 style="color: #f43f5e; margin-bottom: 2rem; font-size: 2rem;">Feedback & Iteration</h3>
+                    <ul class="feature-list" style="font-size: 1.4rem;">
+                        <li><strong>Challenge:</strong> Time constraints inside the 90-minute blocks.</li>
+                        <li><strong>Solution:</strong> Shifting more foundational tech-skills to asynchronous video libraries.</li>
+                        <li><strong>Implication:</strong> 1:1 in-class coaching cycles remain the highest leverage activity.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Value Add -->
+        <div class="slide">
+            <h2>Value Add & Competitive Advantage</h2>
+            <p style="margin-bottom: 4rem;">How this coaching model transforms Greenfield Preparatory Middle School.</p>
+            
+            <div class="grid-3">
+                <div class="stat-card" style="border-top-color: #10b981;">
+                    <h3 style="color: #10b981; font-size: 1.6rem; margin-bottom: 1rem;">Student Outcomes</h3>
+                    <p style="font-size: 1.1rem; color: var(--text-main); text-align: left;">Projected 40% reduction in off-task device time, returning critical minutes to active learning and deep cognitive work.</p>
+                </div>
+                <div class="stat-card" style="border-top-color: #f59e0b;">
+                    <h3 style="color: #f59e0b; font-size: 1.6rem; margin-bottom: 1rem;">Teacher Retention</h3>
+                    <p style="font-size: 1.1rem; color: var(--text-main); text-align: left;">Replacing frustrating mandates with supportive, 1:1 job-embedded coaching builds self-efficacy and prevents burnout.</p>
+                </div>
+                <div class="stat-card" style="border-top-color: #6366f1;">
+                    <h3 style="color: #6366f1; font-size: 1.6rem; margin-bottom: 1rem;">Tech Leadership</h3>
+                    <p style="font-size: 1.1rem; color: var(--text-main); text-align: left;">Moves our campus from being "hardware rich but pedagogy poor" to a model of authentic 21st-century integration.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Conclusion -->
+        <div class="slide slide-accent">
+            <h1>Thank You</h1>
+            <p style="color: rgba(255,255,255,0.9); margin-top: 2rem; max-width: 700px;">
+                "Technology will not replace great teachers, but technology in the hands of great teachers can be transformational."
+            </p>
+            <div style="margin-top: 4rem;">
+                <p style="font-size: 1.2rem; font-weight: bold;">Victor Moronu</p>
+                <p style="font-size: 1rem;">Greenfield Preparatory Middle School</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- UI Overlays -->
+    <div class="progress-bar" id="progressBar" style="width: 12.5%;"></div>
+    <div class="slide-counter" id="slideCounter">1 / 8</div>
+    
+    <div class="controls">
+        <button class="btn" id="prevBtn" disabled>← Prev</button>
+        <button class="btn" id="nextBtn">Next →</button>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const progressBar = document.getElementById('progressBar');
+        const slideCounter = document.getElementById('slideCounter');
+        
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+
+        function updateSlides() {
+            // Update classes
+            slides.forEach((slide, index) => {
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+
+            // Update buttons
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+
+            // Update progress and counter
+            progressBar.style.width = `${((currentSlide + 1) / totalSlides) * 100}%`;
+            slideCounter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+            
+            // Adjust counter color based on slide background
+            const activeSlide = slides[currentSlide];
+            if (activeSlide.classList.contains('slide-dark') || activeSlide.classList.contains('slide-accent')) {
+                document.body.classList.add('dark-mode-active');
+            } else {
+                document.body.classList.remove('dark-mode-active');
+            }
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlides();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlides();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'Space') {
+                if (currentSlide < totalSlides - 1) {
+                    currentSlide++;
+                    updateSlides();
+                }
+            } else if (e.key === 'ArrowLeft') {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    updateSlides();
+                }
+            }
+        });
+
+        // Video placeholder logic
+        const videoPlaceholder = document.getElementById('videoPlaceholder');
+        const pitchVideo = document.getElementById('pitchVideo');
+        
+        videoPlaceholder.addEventListener('click', () => {
+            videoPlaceholder.style.display = 'none';
+            pitchVideo.style.display = 'block';
+            // In a real scenario, pitchVideo.play() would be called here
+            // We use an alert for the mockup
+            alert("This is a placeholder for the pitch video described in Victor_Moronu_Capstone_Pitch_Script.md.");
+        });
+
+        // Initialize
+        updateSlides();
+    </script>
+</body>
+</html>
