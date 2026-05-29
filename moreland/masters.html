@@ -319,7 +319,7 @@
 
         /* Stats Row */
         .stats-row {
-            display: grid; grid-template-columns: repeat(3,1fr);
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1.25rem; margin: 3rem 0;
         }
         .stat-card {
@@ -675,16 +675,20 @@
             <!-- Animated Stats Row -->
             <div class="stats-row">
                 <div class="stat-card reveal reveal-d1">
-                    <span class="stat-number" data-target="4">0</span>
-                    <span class="stat-label">Modules Completed</span>
+                    <span class="stat-number" data-target="12">0</span>
+                    <span class="stat-label">Certification &amp; M.Ed. Modules</span>
                 </div>
                 <div class="stat-card reveal reveal-d2">
-                    <span class="stat-number" data-target="1">0</span>
-                    <span class="stat-label">Google Certifications</span>
+                    <span class="stat-number" data-target="6">0</span>
+                    <span class="stat-label">Global Certifications</span>
                 </div>
                 <div class="stat-card reveal reveal-d3">
-                    <span class="stat-number" data-target="10">0</span>
+                    <span class="stat-number" data-target="45">0</span>
                     <span class="stat-label">EdTech Tools Curated</span>
+                </div>
+                <div class="stat-card reveal reveal-d4" style="animation-delay: 0.6s;">
+                    <span class="stat-number" data-target="1">0</span>
+                    <span class="stat-label">LMS System Built</span>
                 </div>
             </div>
 
@@ -697,17 +701,64 @@
                 </div>
 
                 <div class="about-content reveal reveal-d2">
-                    <h3>The Engineer-Educator</h3>
-                    <p>Blending a background in <strong>Mechanical Engineering (B.Eng)</strong> with modern pedagogical expertise, I operate on the non-negotiable principle that child safety and emotional wellbeing are the absolute prerequisites for academic success.</p>
-                    <p>My teaching philosophy is rooted in the belief that education is not preparation for life; education is life itself. In my classroom, this translates to <strong>Failing Forward</strong> (creating a psychologically safe space for prototyping and iterating) and providing an <strong>Authentic Context</strong> (using math and physics as tools to understand the real world).</p>
-                    <p>Having successfully completed the rigorous <strong>TEACH-NOW Teacher Preparation Program</strong>, I have now transitioned into the <strong>Master's in Educational Technology</strong> track to develop district-wide technology improvement plans and bridge the gap between software engineers and authentic classroom experiences.</p>
+                    <h3 style="font-size:1.8rem; margin-bottom:1rem; color:var(--text-main);">International Educator &amp; EdTech Innovator</h3>
+                    <p>Blending a rigorous background in <strong>Mechanical Engineering (B.Eng)</strong> with global pedagogical expertise, I am a passionate international educator dedicated to delivering high-impact, experiential learning.</p>
+                    <p>Licensed by the <strong>OSSE Washington D.C.</strong> as a Secondary School Mathematics Teacher, my philosophy is rooted in the belief that education is not preparation for life; education is life itself. I leverage cutting-edge educational technology to create authentic contexts—transforming traditional classrooms into dynamic, psychologically safe spaces where students are encouraged to prototype, iterate, and "Fail Forward."</p>
+                    <p>I operate on the non-negotiable principle that child safety, safeguarding, and emotional wellbeing are the absolute prerequisites for academic success. Through my <strong>Master's in Educational Technology</strong> and extensive international training with the <strong>British Council</strong>, I bridge the gap between complex analytical systems and human-centered instructional design, empowering the next generation of global citizens.</p>
+                </div>
+            </div>
+
+            <!-- Licenses & Global Certifications -->
+            <div class="reveal" style="margin-top:4rem;">
+                <h3 style="font-size:1.7rem; margin-bottom:0.5rem;">Licenses &amp; Global Certifications</h3>
+                <p style="color:var(--text-muted); margin-bottom:2rem;">Rigorous international credentials driving best-in-class educational practices.</p>
+                
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:1.5rem;">
+                    <!-- OSSE -->
+                    <div style="background:var(--bg-card); border:1px solid rgba(139,92,246,0.3); border-radius:var(--radius-lg); padding:24px; position:relative; overflow:hidden;">
+                        <div style="position:absolute; top:0; right:0; padding:16px; opacity:0.1;"><i data-lucide="shield-check" width="64" height="64"></i></div>
+                        <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+                            <div style="width:40px; height:40px; border-radius:8px; background:rgba(139,92,246,0.15); display:flex; align-items:center; justify-content:center; color:var(--accent-secondary);">
+                                <i data-lucide="award"></i>
+                            </div>
+                            <h4 style="font-size:1.15rem; margin:0;">OSSE Washington D.C.</h4>
+                        </div>
+                        <p style="color:var(--accent-secondary); font-size:0.85rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">Standard Professional License</p>
+                        <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.6; position:relative; z-index:1;">Fully licensed Secondary School Mathematics Teacher by the Office of the State Superintendent of Education, bringing rigorous U.S. standards to international classrooms.</p>
+                    </div>
+
+                    <!-- British Council -->
+                    <div style="background:var(--bg-card); border:1px solid rgba(14,165,233,0.3); border-radius:var(--radius-lg); padding:24px; position:relative; overflow:hidden;">
+                        <div style="position:absolute; top:0; right:0; padding:16px; opacity:0.1;"><i data-lucide="globe" width="64" height="64"></i></div>
+                        <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+                            <div style="width:40px; height:40px; border-radius:8px; background:rgba(14,165,233,0.15); display:flex; align-items:center; justify-content:center; color:var(--accent-primary);">
+                                <i data-lucide="shield"></i>
+                            </div>
+                            <h4 style="font-size:1.15rem; margin:0;">British Council Core</h4>
+                        </div>
+                        <p style="color:var(--accent-primary); font-size:0.85rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">International Standards &amp; Safeguarding</p>
+                        <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.6; position:relative; z-index:1;">Certified in global best practices including Safeguarding &amp; Child Protection, EDI (Diversity), Information Management, and Safety &amp; Security.</p>
+                    </div>
+
+                    <!-- Google Certified Educator -->
+                    <div style="background:var(--bg-card); border:1px solid rgba(245,158,11,0.3); border-radius:var(--radius-lg); padding:24px; position:relative; overflow:hidden;">
+                        <div style="position:absolute; top:0; right:0; padding:16px; opacity:0.1;"><i data-lucide="chrome" width="64" height="64"></i></div>
+                        <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+                            <div style="width:40px; height:40px; border-radius:8px; background:rgba(245,158,11,0.15); display:flex; align-items:center; justify-content:center; color:var(--accent-gold);">
+                                <i data-lucide="badge-check"></i>
+                            </div>
+                            <h4 style="font-size:1.15rem; margin:0;">Google for Education</h4>
+                        </div>
+                        <p style="color:var(--accent-gold); font-size:0.85rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">Google Certified Educator — Level 2</p>
+                        <p style="color:var(--text-muted); font-size:0.9rem; line-height:1.6; position:relative; z-index:1;">Mastery of digital tools and cutting-edge EdTech platforms to drive immersive, student-led experiential learning.</p>
+                    </div>
                 </div>
             </div>
 
             <!-- Education Timeline -->
             <div class="reveal" style="margin-top:4rem;">
                 <h3 style="font-size:1.7rem; margin-bottom:0.5rem;">My Journey</h3>
-                <p style="color:var(--text-muted); margin-bottom:0;">From engineering to educational technology leadership.</p>
+                <p style="color:var(--text-muted); margin-bottom:0;">From engineering to international educational technology leadership.</p>
                 <div class="timeline">
                     <div class="timeline-item">
                         <div class="timeline-dot"><i data-lucide="graduation-cap" width="18"></i></div>
@@ -720,17 +771,17 @@
                     <div class="timeline-item">
                         <div class="timeline-dot"><i data-lucide="award" width="18"></i></div>
                         <div class="timeline-content">
-                            <span class="timeline-date">Certification</span>
+                            <span class="timeline-date">Pedagogy</span>
                             <h4>TEACH-NOW Teacher Preparation Program</h4>
                             <p>Completed rigorous international teacher certification, establishing core pedagogy & clinical practice.</p>
                         </div>
                     </div>
                     <div class="timeline-item">
-                        <div class="timeline-dot"><i data-lucide="badge-check" width="18"></i></div>
+                        <div class="timeline-dot"><i data-lucide="globe" width="18"></i></div>
                         <div class="timeline-content">
-                            <span class="timeline-date">2025</span>
-                            <h4>Google Certified Educator — Level 2</h4>
-                            <p>Earned advanced Google certification demonstrating mastery of digital tools for classroom integration.</p>
+                            <span class="timeline-date">International Standards</span>
+                            <h4>British Council &amp; OSSE D.C. Licensure</h4>
+                            <p>Licensed as a Secondary Mathematics Teacher by OSSE Washington D.C., accompanied by comprehensive British Council safeguarding &amp; diversity training.</p>
                         </div>
                     </div>
                     <div class="timeline-item">
@@ -2646,12 +2697,7 @@
                         <a href="M42U3A1_Notes_and_Reflection.html" target="_blank" class="artifact-btn" style="justify-content:flex-start;">
                             <i data-lucide="eye" width="16"></i> Notes &amp; Reflection (Interactive View)
                         </a>
-                        <a href="Victor_Moronu_Capstone_Pitch_Script.md" download class="artifact-btn" style="justify-content:flex-start;">
-                            <i data-lucide="file-text" width="16"></i> Capstone Pitch Script (MD)
-                        </a>
-                        <a href="Victor_Moronu_Capstone_Video_Script.md" download class="artifact-btn" style="justify-content:flex-start;">
-                            <i data-lucide="video" width="16"></i> Capstone Video Script (MD)
-                        </a>
+                       
                         <a href="Victor_Moronu_Capstone_Video_Slides.pptx" download class="artifact-btn" style="justify-content:flex-start;">
                             <i data-lucide="presentation" width="16"></i> Capstone Video Slides (PPTX)
                         </a>
@@ -2680,7 +2726,17 @@
         function navigate(pageId) {
             document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
             const target = document.getElementById(pageId);
-            if (target) target.classList.add('active');
+            if (target) {
+                target.classList.add('active');
+                // Force reveal elements to show instantly when tab is clicked
+                // This guarantees we never get a black screen bug from IntersectionObserver failing to trigger
+                target.querySelectorAll('.reveal').forEach(el => el.classList.add('in-view'));
+                
+                // Force animated counters to trigger
+                target.querySelectorAll('.stat-number').forEach(el => {
+                    if (typeof animateCounter === 'function') animateCounter(el);
+                });
+            }
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             document.querySelectorAll(`.nav-link[data-page="${pageId}"]`).forEach(l => l.classList.add('active'));
             const mobile = document.getElementById('mobileMenu');
@@ -2709,11 +2765,13 @@
         // ---------- Reveal-on-scroll ----------
         const io = ('IntersectionObserver' in window) ? new IntersectionObserver((entries) => {
             entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); } });
-        }, { threshold: 0.12 }) : null;
+        }, { rootMargin: '0px 0px -50px 0px', threshold: 0 }) : null;
         document.querySelectorAll('.reveal').forEach(el => { if (io) io.observe(el); else el.classList.add('in-view'); });
 
         // ---------- Animated counters ----------
         const animateCounter = (el) => {
+            if (el.dataset.animating) return;
+            el.dataset.animating = 'true';
             const target = parseFloat(el.getAttribute('data-target') || el.textContent) || 0;
             const duration = 1200;
             const start = performance.now();
@@ -2722,13 +2780,14 @@
                 const val = target * (p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2);
                 el.textContent = (Number.isInteger(target) ? Math.round(val) : val.toFixed(1));
                 if (p < 1) requestAnimationFrame(step);
+                else el.dataset.animating = '';
             };
             requestAnimationFrame(step);
         };
         const counterObs = ('IntersectionObserver' in window) ? new IntersectionObserver((entries) => {
             entries.forEach(e => { if (e.isIntersecting) { animateCounter(e.target); counterObs.unobserve(e.target); } });
-        }, { threshold: 0.5 }) : null;
-        document.querySelectorAll('[data-counter]').forEach(el => { if (counterObs) counterObs.observe(el); });
+        }, { threshold: 0.1 }) : null;
+        document.querySelectorAll('.stat-number').forEach(el => { if (counterObs) counterObs.observe(el); });
 
         // ---------- Gibbs stepper (if present) ----------
         document.querySelectorAll('.gibbs-step').forEach(step => {

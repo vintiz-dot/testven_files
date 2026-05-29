@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Peer Reviews for Educational Technology Capstone Presentations">
+    <title>Capstone Peer Reviews</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --bg-color: #0f172a;
+            --surface: rgba(30, 41, 59, 0.7);
+            --surface-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --accent: #ec4899;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        .tab-btn {
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            color: var(--text-main);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .tab-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.2);
+            border-color: var(--primary);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-color: transparent;
+            box-shadow: 0 10px 25px rgba(236, 72, 153, 0.3);
+        }
+
+        .review-content {
+            display: none;
+            animation: slideUp 0.6s ease-out forwards;
+        }
+
+        .review-content.active {
+            display: block;
+        }
+
+        .student-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .student-header h2 {
+            font-size: 2.5rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .student-header p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(12px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            color: #818cf8;
+            border-bottom: 2px solid rgba(129, 140, 248, 0.2);
+            padding-bottom: 0.5rem;
+        }
+
+        .section {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .strengths .section-title { color: var(--success); }
+        .feedback .section-title { color: var(--warning); }
+        .recommendation .section-title { color: var(--accent); }
+
+        .section p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .tabs { flex-direction: column; padding: 0 2rem; }
+            h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Capstone Peer Reviews</h1>
+            <p style="color: var(--text-muted); font-size: 1.2rem;">Educational Technology Implementation Plans</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('ryan')">Ryan Linehan</button>
+            <button class="tab-btn" onclick="showTab('magalie')">Magalie Rivera</button>
+        </div>
+
+        <!-- Ryan Linehan Review -->
+        <div id="ryan" class="review-content active">
+            <div class="student-header">
+                <h2>Ryan Linehan</h2>
+                <p>Digital Citizenship Capstone Pitch Slides (Stop, Think, Ask)</p>
+            </div>
+            
+            <div class="grid">
+                <!-- Relevance -->
+                <div class="card">
+                    <h3>🎯 Relevance to Target Audience</h3>
+                    <div class="section strengths">
+                        <div class="section-title">✨ Strengths</div>
+                        <p>The "Stop, Think, Ask" routine is incredibly relevant and developmentally appropriate for second-grade students. Recognizing that young learners need concrete examples, visual engagement, and reduced reading load shows a deep understanding of the target audience.</p>
+                    </div>
+                    <div class="section feedback">
+                        <div class="section-title">💡 Feedback for Improvement</div>
+                        <p>To further increase relevance, ensure that the scenario decks are continuously updated to reflect the exact apps, games, and digital environments the students are currently interacting with at home and in the classroom.</p>
+                    </div>
+                </div>
+
+                <!-- Learning Value -->
+                <div class="card">
+                    <h3>🧠 Learning Value</h3>
+                    <div class="section strengths">
+                        <div class="section-title">✨ Strengths</div>
+                        <p>The project excellently identifies the "Problem of Practice" as a lack of transfer rather than just access. Moving beyond simple exit tickets to having students apply the routine in realistic scenarios ensures that they are building lifelong habits.</p>
+                    </div>
+                    <div class="section feedback">
+                        <div class="section-title">💡 Feedback for Improvement</div>
+                        <p>To drive even deeper learning, consider incorporating interactive role-playing or a controlled "sandbox" digital simulation where students can practice the "Stop, Think, Ask" framework live with immediate teacher feedback.</p>
+                    </div>
+                </div>
+
+                <!-- Cost vs Value -->
+                <div class="card">
+                    <h3>💰 Cost vs Value</h3>
+                    <div class="section strengths">
+                        <div class="section-title">✨ Strengths</div>
+                        <p>The solution is highly cost-effective. By leveraging existing infrastructure (Chromebooks, Google Slides, Google Forms), the financial cost is near zero, while the value—creating a repeatable, safe digital routine—is extremely high.</p>
+                    </div>
+                    <div class="section feedback">
+                        <div class="section-title">💡 Feedback for Improvement</div>
+                        <p>To strengthen the argument for school leaders, quantify the instructional time currently lost to correcting off-task tech behavior. Showcasing how this routine reclaims lost instructional minutes will boost the perceived value.</p>
+                    </div>
+                </div>
+
+                <!-- Recommendations -->
+                <div class="card">
+                    <h3>🚀 Recommendations</h3>
+                    <div class="section recommendation">
+                        <div class="section-title">📌 Key Action Items</div>
+                        <p>I highly recommend developing a brief "Parent/Guardian Toolkit" (e.g., a simple handout or short video) that extends the "Stop, Think, Ask" routine into the home. Reinforcing this specific vocabulary outside of school hours will significantly accelerate student mastery. Additionally, consider gamifying the Google Forms checks to make formative assessments more engaging for second graders.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Magalie Rivera Review -->
+        <div id="magalie" class="review-content">
+            <div class="student-header">
+                <h2>Magalie Rivera</h2>
+                <p>Improving iPad Management & Digital Citizenship</p>
+            </div>
+            
+            <div class="grid">
+                <!-- Relevance -->
+                <div class="card">
+                    <h3>🎯 Relevance to Target Audience</h3>
+                    <div class="section strengths">
+                        <div class="section-title">✨ Strengths</div>
+                        <p>The proposed Professional Development (PD) solution is directly aligned with the needs of grades 3-5 teachers. Using survey data to identify that 100% of teachers notice off-task behavior makes the intervention highly relevant and data-driven.</p>
+                    </div>
+                    <div class="section feedback">
+                        <div class="section-title">💡 Feedback for Improvement</div>
+                        <p>Teachers have varying levels of technological proficiency. Consider offering differentiated PD tracks or choice boards so tech-savvy teachers can focus on advanced integration, while beginners focus on basic classroom management tools.</p>
+                    </div>
+                </div>
+
+                <!-- Learning Value -->
+                <div class="card">
+                    <h3>🧠 Learning Value</h3>
+                    <div class="section strengths">
+                        <div class="section-title">✨ Strengths</div>
+                        <p>By equipping teachers with clear iPad management strategies and dedicated digital citizenship instruction, the classroom environment will transform from distracted to focused. This paves the way for deeper, meaningful digital learning tasks.</p>
+                    </div>
+                    <div class="section feedback">
+                        <div class="section-title">💡 Feedback for Improvement</div>
+                        <p>To enhance the learning value for students, the PD could train teachers on how to embed digital citizenship directly into core academic subjects (e.g., evaluating online sources during a science project) rather than teaching it in isolation.</p>
+                    </div>
+                </div>
+
+                <!-- Cost vs Value -->
+                <div class="card">
+                    <h3>💰 Cost vs Value</h3>
+                    <div class="section strengths">
+                        <div class="section-title">✨ Strengths</div>
+                        <p>The value proposition is strong: the school has already invested in a 1-to-1 iPad program. Providing PD to ensure these devices are used as learning tools rather than distraction devices protects and maximizes the school's initial hardware investment.</p>
+                    </div>
+                    <div class="section feedback">
+                        <div class="section-title">💡 Feedback for Improvement</div>
+                        <p>Explicitly outline the hidden costs of the PD (e.g., substitute teacher coverage, stipends, or planning time) and weigh them against measurable outcomes, such as a projected decrease in disciplinary referrals related to tech misuse.</p>
+                    </div>
+                </div>
+
+                <!-- Recommendations -->
+                <div class="card">
+                    <h3>🚀 Recommendations</h3>
+                    <div class="section recommendation">
+                        <div class="section-title">📌 Key Action Items</div>
+                        <p>I recommend implementing a "Teacher Tech Ambassador" or peer-mentorship program. Having early adopters model these management strategies in their classrooms for peers to observe can be highly effective. Furthermore, consider introducing self-monitoring checklists for students to shift some device management responsibility from the teacher to the student.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function showTab(studentId) {
+            // Update buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Update content
+            document.querySelectorAll('.review-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(studentId).classList.add('active');
+        }
+    </script>
+</body>
+</html>
