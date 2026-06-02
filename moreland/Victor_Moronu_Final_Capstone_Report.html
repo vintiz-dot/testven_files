@@ -1,0 +1,1032 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Final Capstone Report — EdTech Coaching Program · Victor Moronu</title>
+<meta name="description" content="Final Educational Technology Capstone Project Report: EdTech Coaching Program at Greenfield Preparatory Middle School by Victor Moronu, Moreland University M.Ed. Educational Technology, Spring 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:#0F172A;
+    --ink-soft:#475569;
+    --ink-mid:#334155;
+    --bg:#FAFAF7;
+    --card:#FFFFFF;
+    --accent:#4338CA;
+    --accent-light:#6366F1;
+    --accent-2:#0891B2;
+    --accent-soft:#EEF2FF;
+    --accent-2-soft:#ECFEFF;
+    --green:#047857;
+    --green-soft:#ECFDF5;
+    --gold:#B45309;
+    --gold-soft:#FFFBEB;
+    --rose:#BE123C;
+    --rose-soft:#FFF1F2;
+    --line:#E2E8F0;
+    --radius:14px;
+  }
+  * { box-sizing:border-box; }
+  html,body { margin:0; padding:0; }
+  body {
+    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.72;
+    font-size:17px;
+  }
+  .page { max-width:960px; margin:0 auto; padding:48px 36px 100px; }
+  .ui { font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+
+  /* ── COVER ── */
+  .cover-block {
+    background: linear-gradient(135deg, var(--accent) 0%, #312e81 100%);
+    color:#fff;
+    border-radius:20px;
+    padding:56px 48px;
+    margin-bottom:40px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .cover-block::before {
+    content:'';
+    position:absolute;
+    top:-50%;right:-30%;
+    width:500px;height:500px;
+    background:radial-gradient(circle, rgba(99,102,241,.3) 0%, transparent 70%);
+    border-radius:50%;
+  }
+  .cover-block .eyebrow {
+    text-transform:uppercase;
+    letter-spacing:0.16em;
+    font-size:12px;
+    font-weight:700;
+    font-family:'Inter',sans-serif;
+    opacity:.7;
+    margin-bottom:10px;
+    position:relative;
+  }
+  .cover-block h1 {
+    font-size:clamp(28px,4.5vw,42px);
+    line-height:1.12;
+    font-weight:700;
+    margin:0 0 12px;
+    letter-spacing:-0.02em;
+    position:relative;
+  }
+  .cover-block .subtitle {
+    font-size:20px;
+    font-weight:400;
+    opacity:.85;
+    margin-bottom:28px;
+    position:relative;
+  }
+  .cover-meta {
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    opacity:.75;
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px 32px;
+    justify-content:center;
+    position:relative;
+  }
+  .cover-meta span b { font-weight:600; opacity:1; }
+
+  /* ── HEADINGS ── */
+  h2 {
+    font-size:26px;
+    margin:54px 0 10px;
+    color:var(--ink);
+    letter-spacing:-0.01em;
+    font-weight:700;
+    border-bottom:2px solid var(--accent);
+    padding-bottom:8px;
+  }
+  .h2-tag {
+    display:inline-block;
+    background:var(--accent-soft);
+    color:var(--accent);
+    font-family:'Inter',sans-serif;
+    font-size:11px; font-weight:700; letter-spacing:0.1em;
+    text-transform:uppercase;
+    padding:3px 10px; border-radius:6px;
+    margin-bottom:4px;
+  }
+  h3 {
+    font-size:19px;
+    margin:32px 0 8px;
+    color:var(--accent);
+    font-weight:700;
+  }
+  h4 {
+    font-size:16px;
+    margin:22px 0 6px;
+    color:var(--ink);
+    font-weight:700;
+  }
+
+  p { margin:0 0 14px; }
+  ul, ol { margin:0 0 14px; padding-left:24px; }
+  li { margin-bottom:7px; }
+
+  /* ── TOC ── */
+  .toc {
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px 28px;
+    margin:14px 0 36px;
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+  }
+  .toc b { display:block; font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-soft); margin-bottom:10px; }
+  .toc ol { padding-left:0; list-style:none; counter-reset:toc; margin:0; columns:2; column-gap:36px; }
+  .toc ol li { counter-increment:toc; margin-bottom:7px; break-inside:avoid; }
+  .toc ol li::before { content:counter(toc) ". "; color:var(--accent); font-weight:700; margin-right:6px; }
+  .toc a { color:var(--ink); text-decoration:none; }
+  .toc a:hover { color:var(--accent); text-decoration:underline; }
+  @media (max-width:680px) { .toc ol { columns:1; } }
+
+  /* ── CARDS ── */
+  .card {
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:24px 28px;
+    margin:14px 0 22px;
+  }
+  .card.accent { background:var(--accent-soft); border-color:#C7D2FE; }
+  .card.gold { background:var(--gold-soft); border-color:#FDE68A; }
+  .card.green { background:var(--green-soft); border-color:#A7F3D0; }
+  .card.rose { background:var(--rose-soft); border-color:#FECDD3; }
+
+  .pull {
+    background:var(--accent-soft);
+    border-left:4px solid var(--accent);
+    padding:18px 24px;
+    border-radius:0 var(--radius) var(--radius) 0;
+    margin:22px 0;
+    font-style:italic;
+    color:var(--ink);
+  }
+
+  /* ── STATS ── */
+  .stat-row {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin:14px 0 22px;
+  }
+  .stat {
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;
+    text-align:center;
+  }
+  .stat .num {
+    font-family:'Inter',sans-serif;
+    font-size:28px;
+    font-weight:800;
+    color:var(--accent);
+    line-height:1.1;
+  }
+  .stat .lbl {
+    font-family:'Inter',sans-serif;
+    font-size:11px;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    margin-top:4px;
+  }
+  @media (max-width:680px) { .stat-row { grid-template-columns:repeat(2,1fr); } }
+
+  /* ── TABLES ── */
+  table.grid {
+    width:100%;
+    border-collapse:collapse;
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    margin:12px 0 22px;
+  }
+  table.grid th, table.grid td {
+    border:1px solid var(--line);
+    padding:10px 14px;
+    text-align:left;
+    vertical-align:top;
+  }
+  table.grid th {
+    background:#F1F5F9;
+    color:var(--ink);
+    font-weight:700;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+  }
+
+  /* ── MILESTONE CARDS ── */
+  .milestone-card {
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:20px 24px;
+    margin-bottom:14px;
+  }
+  .ms-header {
+    display:flex; align-items:center; gap:14px; margin-bottom:8px;
+  }
+  .ms-marker {
+    flex-shrink:0; width:44px; height:44px; border-radius:50%;
+    display:grid; place-items:center;
+    font-weight:700; font-size:14px; color:#fff;
+    font-family:'Inter',sans-serif;
+  }
+  .ms-marker.done { background:var(--green); }
+  .ms-marker.progress { background:var(--gold); }
+  .ms-title { font-size:16px; font-weight:700; color:var(--ink); }
+  .ms-meta { font-family:'Inter',sans-serif; font-size:12px; color:var(--ink-soft); margin-top:2px; }
+  .ms-badge {
+    display:inline-block; font-family:'Inter',sans-serif;
+    font-size:10px; font-weight:700; letter-spacing:0.06em;
+    text-transform:uppercase; padding:2px 8px; border-radius:6px; margin-left:8px;
+  }
+  .ms-badge.done { background:var(--green-soft); color:var(--green); }
+  .ms-badge.progress { background:var(--gold-soft); color:var(--gold); }
+  .progress-track { height:6px; background:var(--line); border-radius:4px; overflow:hidden; margin:8px 0 6px; }
+  .progress-fill { height:100%; border-radius:4px; }
+  .progress-fill.green { background:var(--green); }
+  .progress-fill.gold { background:var(--gold); }
+  .progress-label { font-family:'Inter',sans-serif; font-size:12px; color:var(--ink-soft); font-weight:600; }
+
+  /* ── NARRATIVE GRID ── */
+  .nar-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:14px 0 22px; }
+  @media (max-width:680px) { .nar-grid { grid-template-columns:1fr; } }
+  .nar-card { border-radius:12px; padding:18px 20px; border:1px solid; }
+  .nar-card.works { background:var(--green-soft); border-color:#A7F3D0; }
+  .nar-card.challenge { background:var(--gold-soft); border-color:#FDE68A; }
+  .nar-card.solution { background:var(--accent-soft); border-color:#C7D2FE; }
+  .nar-card.next { background:var(--accent-2-soft); border-color:#A5F3FC; }
+  .nar-card .nar-label {
+    font-family:'Inter',sans-serif; font-size:10px; font-weight:800;
+    letter-spacing:0.1em; text-transform:uppercase; margin-bottom:6px;
+  }
+  .nar-card.works .nar-label { color:var(--green); }
+  .nar-card.challenge .nar-label { color:var(--gold); }
+  .nar-card.solution .nar-label { color:var(--accent); }
+  .nar-card.next .nar-label { color:var(--accent-2); }
+  .nar-card ul { margin:0; padding-left:18px; }
+  .nar-card li { font-size:14px; margin-bottom:4px; }
+
+  /* ── ARTIFACTS ── */
+  .artifact-grid {
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr));
+    gap:14px; margin:12px 0 18px;
+  }
+  .artifact-item {
+    background:var(--card); border:1px solid var(--line); border-radius:10px;
+    padding:14px 16px; font-family:'Inter',sans-serif; font-size:13px;
+    transition:border-color .15s ease;
+  }
+  .artifact-item:hover { border-color:var(--accent); }
+  .artifact-item .art-title { font-weight:700; color:var(--ink); margin-bottom:4px; font-size:14px; }
+  .artifact-item .art-desc { color:var(--ink-soft); font-size:12px; line-height:1.5; }
+  .artifact-item a { color:var(--accent); text-decoration:none; font-weight:600; font-size:12px; }
+  .artifact-item a:hover { text-decoration:underline; }
+
+  /* ── PHOTOS ── */
+  .photo-gallery {
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(200px,1fr));
+    gap:12px; margin:14px 0 18px;
+  }
+  .photo-gallery img {
+    width:100%; height:180px; object-fit:cover; border-radius:10px;
+    border:1px solid var(--line);
+  }
+  .photo-caption {
+    font-family:'Inter',sans-serif; font-size:11px;
+    color:var(--ink-soft); text-align:center; margin-top:4px;
+  }
+
+  /* ── BIBLIOGRAPHY ── */
+  .bib-list { list-style:none; padding:0; margin:14px 0; }
+  .bib-list li {
+    padding:10px 0 10px 32px; text-indent:-32px;
+    border-bottom:1px solid var(--line); font-size:15px; line-height:1.6;
+  }
+  .bib-list li:last-child { border-bottom:none; }
+  .bib-list a { color:var(--accent); text-decoration:none; word-break:break-all; }
+  .bib-list a:hover { text-decoration:underline; }
+
+  /* ── FOOTER ── */
+  .footer-rule {
+    text-align:center; color:var(--ink-soft); margin-top:60px;
+    font-size:12px; letter-spacing:0.16em; text-transform:uppercase;
+    font-family:'Inter',sans-serif;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { font-size:12pt; background:#fff; }
+    .page { max-width:100%; padding:20px; }
+    .cover-block { background:var(--accent) !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ═══════════════════ COVER ═══════════════════ -->
+<div class="cover-block">
+  <div class="eyebrow">Master of Education in Educational Technology · Final Capstone Submission</div>
+  <h1>Final Report:<br>Educational Technology Capstone Project</h1>
+  <div class="subtitle">EdTech Coaching Program · Greenfield Preparatory Middle School · 2026–2027</div>
+  <div class="cover-meta">
+    <span><b>Candidate:</b> Victor Moronu</span>
+    <span><b>University:</b> Moreland University</span>
+    <span><b>Program:</b> M.Ed. Educational Technology</span>
+    <span><b>Instructor:</b> Charles Guilford</span>
+    <span><b>Date:</b> June 2, 2026</span>
+  </div>
+</div>
+
+<!-- ═══════════════════ TOC ═══════════════════ -->
+<div class="toc ui">
+  <b>Report Contents</b>
+  <ol>
+    <li><a href="#intro">Introduction</a></li>
+    <li><a href="#contributions">Contribution of Capstone Activities</a></li>
+    <li><a href="#phase1">Phase I — Information Gathering</a></li>
+    <li><a href="#phase2">Phase II — Learning Design Solution</a></li>
+    <li><a href="#phase3">Phase III — Technology Implementation Plan</a></li>
+    <li><a href="#successes">Successes &amp; Challenges by Milestone</a></li>
+    <li><a href="#data">Statistical Research &amp; Data Review</a></li>
+    <li><a href="#litreview">Literature Review &amp; Modifications</a></li>
+    <li><a href="#progress">Implementation Progress Tracker</a></li>
+    <li><a href="#changes">Learning Design Changes Going Forward</a></li>
+    <li><a href="#recommendations">Next Steps &amp; Recommendations</a></li>
+    <li><a href="#submissions">Capstone Project Submissions Index</a></li>
+    <li><a href="#references">References</a></li>
+  </ol>
+</div>
+
+
+<!-- ═══════════════════ 1. INTRODUCTION ═══════════════════ -->
+<section id="intro">
+  <span class="h2-tag">Section 1</span>
+  <h2>Introduction</h2>
+
+  <p>This report is the culminating submission of the TEACH-NOW / Moreland University Master of Education in Educational Technology Capstone Project. It documents the design, planning, and initial implementation of an <strong>EdTech Coaching Program</strong> at Greenfield Preparatory Middle School — a 1:1 Chromebook campus serving approximately 540 middle school students across Grades 6–8 with 18 Math and Science teachers and 4 administrators.</p>
+
+  <p>The capstone project was built across four sequential phases spanning the program's modules:</p>
+
+  <ol>
+    <li><strong>Technology Infrastructure Survey</strong> (Module 40, Unit 4) — collecting live data on the school's current technology landscape, teacher confidence levels, and instructional challenges.</li>
+    <li><strong>Professional Development &amp; Instructional Coaching Workshop Plans</strong> (Module 41, Unit 4) — designing four targeted PD sessions and two individual coaching recommendations grounded in survey findings.</li>
+    <li><strong>Learning Design Solution &amp; Technology Implementation Plan</strong> (Module 42, Unit 4) — creating a three-layer coaching architecture (1:1 cycles, PLC data routines, design thinking sprints) with a 12-month implementation timeline and four capstone milestones.</li>
+    <li><strong>Implementation, Research, &amp; Final Report</strong> (Module 43) — conducting statistical research and a literature review, pilot-testing the coaching cycle, collecting implementation artifacts, and producing this final report.</li>
+  </ol>
+
+  <p>The core insight driving every phase is a single sentence from the survey data: <em>teachers at Greenfield Prep already operate classroom technology — 13 of 18 use Chromebooks daily — but cannot reliably design with it.</em> The solution is not a tool. It is a coaching program.</p>
+
+  <div class="stat-row">
+    <div class="stat"><div class="num">18+4</div><div class="lbl">Teachers + Admins Surveyed</div></div>
+    <div class="stat"><div class="num">4</div><div class="lbl">PD Sessions Designed</div></div>
+    <div class="stat"><div class="num">3</div><div class="lbl">Coaching Layers</div></div>
+    <div class="stat"><div class="num">14+</div><div class="lbl">Artifacts Collected</div></div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════ 2. CONTRIBUTION OF ACTIVITIES ═══════════════════ -->
+<section id="contributions">
+  <span class="h2-tag">Section 2 · Rubric Weight: 20%</span>
+  <h2>Contribution of Capstone Activities to the Final Submission</h2>
+
+  <p>Each capstone activity was not a standalone assignment — it was a load-bearing phase in a single, continuous arc from diagnosis to implementation. Below I detail how each of the three early capstone activities contributed to this final project.</p>
+
+  <h3>2.1 Technology Infrastructure Survey (Module 40)</h3>
+  <p>The Technology Infrastructure Survey was the diagnostic foundation of the entire project. Without it, every subsequent decision — from the coaching model to the technology stack — would have been based on assumption rather than evidence. The survey was deployed as a conditional Google Form to 18 teachers and 4 administrators at Greenfield Prep between April 13–17, 2026.</p>
+
+  <p><strong>What it contributed:</strong></p>
+  <ul>
+    <li><strong>Baseline data</strong> that made the case for coaching: 78% of teachers named device distractions as their top challenge; 67% rated differentiation confidence at 3/5 or below; 44% had received no training on GoGuardian, a tool already licensed by the school.</li>
+    <li><strong>The coaching demand signal:</strong> 67% of teachers said "Yes" to 1:1 coaching, and an additional 28% said "Maybe" — a 94% combined interest rate that validated the coaching model before it was designed.</li>
+    <li><strong>Administrator priorities</strong> that shaped the evaluation metrics: all four administrators named "data-driven instruction," "purposeful device use," and "classroom management look-fors" as their top concerns. These became the program's measurable success metrics.</li>
+    <li><strong>Named teacher coaching targets:</strong> administrators identified specific teachers and specific pedagogical goals, which directly informed the two coaching recommendations in Module 41 and the pilot cohort selection in Module 42.</li>
+  </ul>
+  <p>Without the survey, the coaching program would have been a generic proposal. With it, the program is a data-driven response to a documented, school-specific gap.</p>
+
+  <h3>2.2 Professional Development &amp; Instructional Coaching Workshop Plans (Module 41)</h3>
+  <p>The PD and Coaching plans translated the survey findings into actionable training designs. Four PD sessions were proposed, sequenced to hit the biggest survey pain first (device management) and ladder up to the more ambitious goals (differentiation, interactivity, data-driven instruction).</p>
+
+  <p><strong>What it contributed:</strong></p>
+  <ul>
+    <li><strong>PD Session 1 ("Pocket Check")</strong> — directly addressed the 78% distraction finding and the 44% who lacked GoGuardian training. This session became the template for the Q1 coaching focus area (routines) in the implementation plan.</li>
+    <li><strong>PD Session 2 ("From Data to Groups")</strong> — addressed the admin priority of data-driven instruction. The GROW protocol used in this session was later adopted as the secondary coaching model for the 1:1 coaching cycle.</li>
+    <li><strong>PD Session 3 ("Hands-On Science")</strong> — targeted the 56% who wanted interactive-lesson PD. The TPACK framework used here became a standard audit tool across all three coaching layers.</li>
+    <li><strong>PD Session 4 ("Differentiation Without Drowning")</strong> — addressed the 67% confidence gap on differentiation. The four-tier scaffolding bank designed in this session informed the Q3 differentiation coaching focus.</li>
+    <li><strong>Coaching Recommendations</strong> — the two individual coaching plans (Ms. Vectore for data-driven instruction, Mr. Luma for interactive lessons) established the blueprint for the 1:1 coaching cycle protocol, including the five-meeting arc structure that the full program adapted into its weekly Plan→Observe→Reflect→Apply cycle.</li>
+  </ul>
+
+  <h3>2.3 Learning Design Solution (Module 42)</h3>
+  <p>The Learning Design was the architectural heart of the project — the document where survey data, PD plans, coaching models, and instructional design theory converged into a single, implementable system.</p>
+
+  <p><strong>What it contributed:</strong></p>
+  <ul>
+    <li><strong>The three-layer coaching architecture</strong> — weekly 1:1 coaching cycles, biweekly PLC data routines, and quarterly design thinking sprints — which is the defining innovation of the entire capstone project.</li>
+    <li><strong>The 12-month implementation timeline</strong> with 12 named milestones, four of which (M1–M4) fall within the capstone implementation window.</li>
+    <li><strong>The technology stack philosophy</strong> — fit-for-purpose over breadth — which ensured the program costs only ~$9,500/year (excluding FTE) because almost every tool is already licensed.</li>
+    <li><strong>The evaluation framework</strong> with seven measurable success metrics tied directly to the survey baselines.</li>
+    <li><strong>The pilot design</strong> — four self-selected teachers running two coaching cycles each in July 2026 — which became the action research vehicle for the implementation phase.</li>
+  </ul>
+
+  <div class="pull">Each capstone activity functioned as a stage in a single design process: the survey diagnosed the problem, the PD plans proposed the treatment, and the learning design engineered the delivery system. Removing any one would have left the project incomplete.</div>
+</section>
+
+
+<!-- ═══════════════════ 3. PHASE I ═══════════════════ -->
+<section id="phase1">
+  <span class="h2-tag">Section 3</span>
+  <h2>Phase I — Information Gathering</h2>
+
+  <h3>Target Audience</h3>
+  <p>The program targets 18 Math and Science teachers (Grades 6–8) and 4 administrators at Greenfield Preparatory Middle School, a private, independent 1:1 Chromebook campus serving approximately 540 students. The student population includes approximately 28% multilingual learners (ML) and a significant inclusion population with IEP and 504 accommodations. The teachers range from first-year educators to 15+ year veterans, creating a wide spectrum of technology confidence and pedagogical experience.</p>
+
+  <h3>Purpose and Goal</h3>
+  <p>The program's purpose is to close the gap between technology access and purposeful technology integration. The goal, stated as a SMART objective: <em>By May 2027, 16 of 18 teachers will design and deliver at least one data-driven instructional move per week using existing tool dashboards, and median teacher confidence on differentiation with technology will rise from 3/5 to 4/5.</em></p>
+
+  <h3>Learning Levels</h3>
+  <p>The program is designed to move teachers through Bloom's taxonomy from <strong>Understanding</strong> (current state: teachers understand how to operate tools) to <strong>Creating</strong> (target state: teachers design original lessons that leverage technology for student creation and differentiation). The SAMR model is used as the parallel framework: from Substitution/Augmentation (current median) to Modification (target median).</p>
+
+  <h3>Research Reviewed</h3>
+  <p>The learning design was informed by six theoretical frameworks: Costa &amp; Garmston's Cognitive Coaching (1:1 cycle structure), Mishra &amp; Koehler's TPACK (technology-pedagogy alignment), Puentedura's SAMR (walkthrough look-fors), Knowles' Andragogy (respect for teacher experience), Landa's Algo-Heuristic Theory (separating procedural routines from heuristic coaching), and the Stanford d.school's Design Thinking (quarterly sprint structure). These were selected for their direct applicability to adult professional learning in technology-rich environments.</p>
+</section>
+
+
+<!-- ═══════════════════ 4. PHASE II ═══════════════════ -->
+<section id="phase2">
+  <span class="h2-tag">Section 4</span>
+  <h2>Phase II — Learning Design Solution</h2>
+
+  <p>The Learning Design Solution is a one-year, three-layer coaching program. Each layer addresses a different aspect of the Phase I gap, runs on its own cadence, and feeds the others. The full design is detailed in the <a href="Victor_Moronu_M42U4A1_Capstone_Learning_Design_Tech_Plan.html" target="_blank">Learning Design Solution &amp; Technology Implementation Plan</a>.</p>
+
+  <table class="grid">
+    <thead>
+      <tr><th>Layer</th><th>What It Is</th><th>Frequency</th><th>Primary Outcome</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="color:var(--accent);font-weight:700;">1. 1:1 Coaching Cycle</td>
+        <td>Cognitive-Coaching-based Plan → Observe → Reflect → Apply cycle between the coach and one teacher around a teacher-chosen problem.</td>
+        <td>Weekly, ~30 min</td>
+        <td>One specific, applied instructional move per cycle.</td>
+      </tr>
+      <tr>
+        <td style="color:var(--accent-2);font-weight:700;">2. PLC Data Routine</td>
+        <td>Grade-team meeting structured around tool dashboards (IXL, Desmos, EdPuzzle) and SAMR-banded walkthrough look-fors.</td>
+        <td>Biweekly, 45 min</td>
+        <td>Shared instructional move from data; calibrated look-fors.</td>
+      </tr>
+      <tr>
+        <td style="color:var(--gold);font-weight:700;">3. Design Thinking Sprint</td>
+        <td>Compressed Empathize → Define → Ideate → Prototype → Test cycle around a single high-leverage instructional problem.</td>
+        <td>Quarterly, 90 min</td>
+        <td>One student-creation lesson shipped &amp; archived in showcase.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Why three layers instead of one:</strong> A coaching cycle alone produces individual gains but no schoolwide consistency. A PLC alone produces shared talk but rarely shared practice. A workshop alone produces an event with a half-life of about three days. Combining the three — with the same vocabulary (TPACK, SAMR, Cognitive Coaching, design thinking) running through all of them — produces individual change, team consistency, <em>and</em> schoolwide visibility.</p>
+</section>
+
+
+<!-- ═══════════════════ 5. PHASE III ═══════════════════ -->
+<section id="phase3">
+  <span class="h2-tag">Section 5</span>
+  <h2>Phase III — Technology Implementation Plan</h2>
+
+  <p>The implementation plan spans 12 months (August 2026 – May 2027) with 12 milestones. The capstone window covers <strong>Milestones M1–M4</strong> (June–July 2026): securing admin approval, completing the tool audit, building the Looker Studio coaching dashboard, and running a pilot with four teachers.</p>
+
+  <h3>Technology Stack</h3>
+  <p>The program rests on a deliberately small stack. The principle is <em>fit-for-purpose over breadth</em>: nothing is included unless it directly serves a layer of the program. Key tools include Google Workspace for Education (coaching documentation), IXL/Desmos/EdPuzzle (data dashboards for PLC and coaching), GoGuardian (device management), and a Looker Studio coaching dashboard (the only net-new build).</p>
+
+  <h3>Budget</h3>
+  <p>Total program cost (excluding existing FTE): approximately <strong>$9,500</strong> for the year. The dominant cost is people-time, which is already substantially in place. Specific line items: Newsela subscription ($2,400/yr), substitute coverage for release days ($5,400), prototype materials ($200/yr), showcase logistics ($300), and optional external coach visits ($1,200).</p>
+</section>
+
+
+<!-- ═══════════════════ 6. SUCCESSES & CHALLENGES ═══════════════════ -->
+<section id="successes">
+  <span class="h2-tag">Section 6 · Rubric Weight: 20%</span>
+  <h2>Successes &amp; Challenges by Milestone</h2>
+
+  <p>Below I detail the specific successes and challenges encountered during each milestone of the technology project implementation.</p>
+
+  <!-- M1 -->
+  <div class="milestone-card">
+    <div class="ms-header">
+      <div class="ms-marker done">M1</div>
+      <div>
+        <div class="ms-title">Admin Approval &amp; Budget Allocation <span class="ms-badge done">Complete</span></div>
+        <div class="ms-meta">Target: June 5, 2026 · Owner: Principal &amp; Coach</div>
+      </div>
+    </div>
+    <div class="progress-track"><div class="progress-fill green" style="width:100%"></div></div>
+    <div class="progress-label">100% complete</div>
+    <h4>Successes</h4>
+    <ul>
+      <li><strong>Data-driven persuasion:</strong> The survey data made the case for admin buy-in faster than expected. When I presented that 78% of teachers flagged device distractions and 67% wanted coaching, the principal did not need a philosophical argument — the numbers spoke.</li>
+      <li><strong>Budget alignment:</strong> The program's low cost (~$9,500 excluding FTE) was a major advantage. Because almost every tool was already licensed, the conversation shifted from "can we afford this?" to "can we afford not to do this?"</li>
+      <li><strong>Admin video and talking points</strong> were produced as artifacts, giving the principal a shareable pitch for the school board.</li>
+    </ul>
+    <h4>Challenges</h4>
+    <ul>
+      <li><strong>FTE uncertainty:</strong> The dedicated EdTech Coach position ($78,000 salary + benefits) is the largest cost and remains partially unfunded. The principal proposed consolidating existing PD budget lines, but this requires board approval not yet secured.</li>
+      <li><strong>Timing:</strong> Securing approval during the final weeks of the school year meant competing with end-of-year administrative priorities.</li>
+    </ul>
+  </div>
+
+  <!-- M2 -->
+  <div class="milestone-card">
+    <div class="ms-header">
+      <div class="ms-marker progress">M2</div>
+      <div>
+        <div class="ms-title">Tool &amp; License Audit Complete <span class="ms-badge progress">In Progress (65%)</span></div>
+        <div class="ms-meta">Target: June 19, 2026 · Owner: Coach + IT</div>
+      </div>
+    </div>
+    <div class="progress-track"><div class="progress-fill gold" style="width:65%"></div></div>
+    <div class="progress-label">65% complete</div>
+    <h4>Successes</h4>
+    <ul>
+      <li><strong>License inventory confirmed:</strong> Google Workspace, IXL, Desmos, EdPuzzle, GoGuardian, and PowerSchool licenses are all active and sufficient for the program.</li>
+      <li><strong>Canva for Education PD training</strong> was delivered as a professional development artifact, demonstrating PD delivery capacity and producing immediate teacher engagement.</li>
+      <li><strong>GoGuardian deployment status documented;</strong> training session scheduled for August pre-service week.</li>
+    </ul>
+    <h4>Challenges</h4>
+    <ul>
+      <li><strong>Newsela procurement bottleneck:</strong> The subscription quote ($2,400/yr) is pending procurement approval, which runs through a different administrative pipeline than the coaching budget. This delays the ML/IEP scaffolding strand.</li>
+      <li><strong>Canva licensing confusion:</strong> Initial audit revealed that Canva for Education requires a separate domain-level signup, which IT had not completed. Resolved within 48 hours but cost a day of planning time.</li>
+    </ul>
+  </div>
+
+  <!-- M3 -->
+  <div class="milestone-card">
+    <div class="ms-header">
+      <div class="ms-marker progress">M3</div>
+      <div>
+        <div class="ms-title">Coaching Dashboard v1 (Looker Studio) Live <span class="ms-badge progress">In Progress (35%)</span></div>
+        <div class="ms-meta">Target: July 3, 2026 · Owner: Coach</div>
+      </div>
+    </div>
+    <div class="progress-track"><div class="progress-fill gold" style="width:35%"></div></div>
+    <div class="progress-label">35% complete</div>
+    <h4>Successes</h4>
+    <ul>
+      <li><strong>Survey infrastructure is live:</strong> The EdTech &amp; Instructional Coaching Survey was built as a custom web application (not a Google Form) to gain more control over data structure. It is fully functional and capturing baseline data.</li>
+      <li><strong>Data model scoped:</strong> The Looker Studio dashboard will combine coaching cycles completed, PLC participation, walkthrough look-fors, and showcase artifacts into a single administrative view.</li>
+      <li><strong>Survey results analysis page</strong> was created as a formatted reporting artifact with aggregated tallies and visual bar charts.</li>
+    </ul>
+    <h4>Challenges</h4>
+    <ul>
+      <li><strong>Technical complexity underestimated:</strong> The dashboard build requires more setup time than initially estimated. Connecting multiple data sources (Google Sheets, IXL exports, walkthrough forms) into Looker Studio requires intermediate data engineering that was not in the original time budget.</li>
+      <li><strong>Data pipeline reliability:</strong> Pilot teachers flagged that IXL export formats are inconsistent across teacher accounts. This will need standardization before the dashboard can auto-populate.</li>
+    </ul>
+  </div>
+
+  <!-- M4 -->
+  <div class="milestone-card">
+    <div class="ms-header">
+      <div class="ms-marker progress">M4</div>
+      <div>
+        <div class="ms-title">Pilot Cohort Coaching Cycles (4 Teachers, 2 Cycles Each) <span class="ms-badge progress">In Progress (20%)</span></div>
+        <div class="ms-meta">Target: July 31, 2026 · Owner: Coach</div>
+      </div>
+    </div>
+    <div class="progress-track"><div class="progress-fill gold" style="width:20%"></div></div>
+    <div class="progress-label">20% complete — pilot onboarding begun</div>
+    <h4>Successes</h4>
+    <ul>
+      <li><strong>Prototype coaching session conducted:</strong> A hands-on LEGO/engineering construction challenge was used to test the Plan→Observe→Reflect→Apply cycle with a teaching colleague. The session was audio-recorded and transcribed, producing rich qualitative data.</li>
+      <li><strong>Natural coaching dynamics emerged:</strong> Without prompting, participants fell into coach-and-learner roles, validating the Cognitive Coaching premise that teachers already have the capacity to coach — they need a structure, not a skill set.</li>
+      <li><strong>Coaching templates drafted:</strong> Plan cards, observation note templates, and reflection prompts are ready for the pilot cohort.</li>
+      <li><strong>Photographic evidence captured:</strong> Three photographs document the prototype session, showing collaborative building, peer coaching, and completed artifacts.</li>
+    </ul>
+    <h4>Challenges</h4>
+    <ul>
+      <li><strong>Scheduling the "observe" step:</strong> This was identified as the most likely failure point in the coaching cycle. Planning periods do not always align, and summer scheduling adds complexity.</li>
+      <li><strong>Raw transcript data:</strong> Audio transcription alone produced very unstructured data. The solution (see Section 10) is to pair audio recording with a structured observation template for subsequent cycles.</li>
+      <li><strong>Summer engagement:</strong> Some pilot teachers are in summer mode, making engagement timing a factor. The solution was to frame the pilot as a co-design opportunity rather than an obligation.</li>
+    </ul>
+  </div>
+</section>
+
+
+<!-- ═══════════════════ 7. STATISTICAL RESEARCH ═══════════════════ -->
+<section id="data">
+  <span class="h2-tag">Section 7</span>
+  <h2>Statistical Research &amp; Data Review</h2>
+
+  <p>The statistical research phase served two purposes: (1) to compare our survey data against published benchmarks and (2) to identify quantitative evidence that could inform modifications to the implementation plan.</p>
+
+  <h3>Key Statistical Findings That Informed the Plan</h3>
+
+  <table class="grid">
+    <thead>
+      <tr><th>Data Point</th><th>Source</th><th>Finding</th><th>Modification to Plan</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="font-weight:700;">PD hours vs. integration quality</td>
+        <td>JDET (n=73)</td>
+        <td>Negative correlation: r = −0.276 (p<0.018). More PD hours ≠ better integration.</td>
+        <td>Reinforced the decision to replace hour-based PD with coaching cycles. This statistic appears in the admin pitch as the strongest evidence that the current PD model is failing.</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;">Active modeling correlation</td>
+        <td>JDET (n=73)</td>
+        <td>Positive correlation: r = 0.377 (p=0.001). Active modeling is the only PD variable that positively correlates with integration quality.</td>
+        <td>Every coaching cycle now includes a "model-and-step-back" step where the coach demonstrates an instructional move before the teacher tries it.</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;">Coaching impact on student outcomes</td>
+        <td>Coaching & Technology Integration (n=132)</td>
+        <td>Coached teachers (n=64) produced higher student performance and critical thinking behaviors than control group (n=68).</td>
+        <td>Added student-work artifact collection to the coaching cycle protocol as a concrete measure of instructional impact.</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;">Active learning engagement</td>
+        <td>Engageli (2024)</td>
+        <td>Active sessions yield 13× more learner talk time and 62.7% participation rate vs. 5% in lectures.</td>
+        <td>Shifted PD session design from presentation-first to activity-first. The quarterly design sprint was redesigned to maximize hands-on time (70 of 90 minutes).</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;">Digital storytelling achievement</td>
+        <td>ERIC (n=856)</td>
+        <td>Student-generated digital content: experimental group post-test mean 75.21 vs. control 54.97 (p=0.001).</td>
+        <td>Validated the Q4 "student creation" coaching focus and the showcase as the culminating assessment.</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700;">Active learning and equity</td>
+        <td>PNAS meta-analysis (1,294 sources)</td>
+        <td>Active learning significantly reduces achievement gaps in STEM, with disproportionate benefit for underrepresented students.</td>
+        <td>Strengthened the equity rationale for the differentiation strand (Q3) and informed the ML/IEP coaching focus.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pull">The statistical research did not merely validate the plan — it changed it. The negative correlation between PD hours and integration quality was the single most influential finding: it converted the coaching program from a "nice to have" into the only evidence-based alternative to a demonstrably failing PD model.</div>
+</section>
+
+
+<!-- ═══════════════════ 8. LITERATURE REVIEW ═══════════════════ -->
+<section id="litreview">
+  <span class="h2-tag">Section 8 · Rubric Question: Literature Review Role</span>
+  <h2>Literature Review &amp; Modifications to the Implementation Plan</h2>
+
+  <p>Fourteen articles were reviewed across the capstone implementation. Five were selected for deep analysis in the Action Research Report based on their direct relevance to the three-layer coaching model. The full literature review spreadsheet catalogs all 14 sources with key themes, purpose, relevant data, reliability assessment, and implementation relevance.</p>
+
+  <h3>How the Literature Informed Modifications</h3>
+
+  <h4>1. Observation Protocol Adjustment (from Articles 1 &amp; 2)</h4>
+  <p>Both the Digital Promise study (50 schools) and the ERIC coaching cycle study emphasized that the "observe" step must be anthropological, not evaluative. Teachers who felt safe during observation were significantly more willing to experiment with unfamiliar tools. <strong>Modification:</strong> I added an explicit statement to the coaching protocol card: <em>"The coach's job during observation is to notice, not to advise. Write what you see. Save what you think for the reflect step."</em> This language was not in the original protocol and is a direct result of the literature review.</p>
+
+  <h4>2. Dashboard Build Acceleration (from Article 5)</h4>
+  <p>The PLoS ONE study on PLCs and digital innovation demonstrated that PLCs with shared data produce faster competence gains because they create social accountability. <strong>Modification:</strong> The dashboard (M3) must be functional before the first PLC meeting in August — not just "live" but populated with real data from the pilot. I moved the data-model build one week earlier than originally planned.</p>
+
+  <h4>3. Design Competence Focus (from Article 4)</h4>
+  <p>The Frontiers in Psychology systematic review (38 studies) found that teachers show adequate daily digital skills but particular weaknesses in digital content creation and pedagogical integration. This finding mirrors our survey data exactly. <strong>Modification:</strong> The Q3 (differentiation) and Q4 (creation) coaching foci were elevated in priority. The mid-year audit now includes an explicit "design competence" check alongside the SAMR walkthrough.</p>
+
+  <h4>4. Peer Champion Scaling (from Article 1)</h4>
+  <p>The Digital Promise Dynamic Learning Project found that coached teachers begin coaching their peers, creating a multiplier effect that scales impact without proportional increases in coaching staff. <strong>Modification:</strong> Two pilot slots are deliberately assigned to veteran teachers (Mr. El-Sayed, Ms. Mariscal) whose participation becomes the most credible recruiting story for the schoolwide launch. The program now includes a formal "peer coaching slot" where lead teachers run one PLC per quarter.</p>
+
+  <h4>5. Pilot Documentation Upgrade (from Action Research)</h4>
+  <p>The raw transcript from the LEGO prototype session demonstrated that audio transcription alone produces data that is too unstructured to analyze efficiently. <strong>Modification:</strong> For the remaining pilot cycles, I will use a structured observation template (printed, one-page, with pre-defined look-fors aligned to the SAMR bands) alongside audio recording. This produces both quantitative (look-for counts) and qualitative (coaching dialogue) data per session.</p>
+
+  <div class="card accent">
+    <p style="margin:0;"><strong>Literature review summary:</strong> The literature did not merely validate the coaching approach — it produced five concrete modifications to the implementation plan, each with a traceable connection to a specific research finding. The review functioned as a mid-course correction mechanism, which is exactly what action research is designed to do.</p>
+  </div>
+</section>
+
+
+<!-- ═══════════════════ 9. IMPLEMENTATION PROGRESS ═══════════════════ -->
+<section id="progress">
+  <span class="h2-tag">Section 9</span>
+  <h2>Implementation Progress Tracker</h2>
+
+  <p>The following table provides the complete listing of implementation steps with responsible parties, deadlines, and current status.</p>
+
+  <table class="grid">
+    <thead>
+      <tr><th>Step</th><th>Description</th><th>Owner</th><th>Deadline</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr><td style="font-weight:700;color:var(--green);">M1</td><td>Admin approval &amp; budget allocation</td><td>Principal + Coach</td><td>June 5, 2026</td><td style="color:var(--green);font-weight:700;">✅ Complete</td></tr>
+      <tr><td style="font-weight:700;color:var(--gold);">M2.1</td><td>License inventory confirmed</td><td>Coach + IT</td><td>June 12, 2026</td><td style="color:var(--green);font-weight:700;">✅ Complete</td></tr>
+      <tr><td style="font-weight:700;color:var(--gold);">M2.2</td><td>Newsela subscription quote &amp; procurement</td><td>Coach + Business Office</td><td>June 19, 2026</td><td style="color:var(--gold);font-weight:700;">🔄 Pending</td></tr>
+      <tr><td style="font-weight:700;color:var(--gold);">M2.3</td><td>GoGuardian training session scheduled</td><td>Coach + IT</td><td>August 2026</td><td style="color:var(--green);font-weight:700;">✅ Scheduled</td></tr>
+      <tr><td style="font-weight:700;color:var(--gold);">M2.4</td><td>Canva for Education PD delivered</td><td>Coach</td><td>May 2026</td><td style="color:var(--green);font-weight:700;">✅ Complete</td></tr>
+      <tr><td style="font-weight:700;color:var(--gold);">M3.1</td><td>Survey infrastructure deployed</td><td>Coach</td><td>May 2026</td><td style="color:var(--green);font-weight:700;">✅ Complete</td></tr>
+      <tr><td style="font-weight:700;color:var(--gold);">M3.2</td><td>Looker Studio data model scoped</td><td>Coach</td><td>June 2026</td><td style="color:var(--green);font-weight:700;">✅ Complete</td></tr>
+      <tr><td style="font-weight:700;color:var(--gold);">M3.3</td><td>Dashboard v1 build &amp; visualization</td><td>Coach</td><td>July 3, 2026</td><td style="color:var(--gold);font-weight:700;">🔄 In Progress</td></tr>
+      <tr><td style="font-weight:700;color:var(--gold);">M3.4</td><td>Admin dashboard walkthrough recorded</td><td>Coach + Principal</td><td>July 3, 2026</td><td style="color:var(--ink-soft);">⬜ Not Started</td></tr>
+      <tr><td style="font-weight:700;color:var(--gold);">M4.1</td><td>Pilot teacher onboarding</td><td>Coach</td><td>June 13, 2026</td><td style="color:var(--gold);font-weight:700;">🔄 In Progress</td></tr>
+      <tr><td style="font-weight:700;color:var(--gold);">M4.2</td><td>Prototype coaching session (LEGO test)</td><td>Coach</td><td>May 2026</td><td style="color:var(--green);font-weight:700;">✅ Complete</td></tr>
+      <tr><td style="font-weight:700;color:var(--gold);">M4.3</td><td>Pilot Cycle 1 (4 teachers)</td><td>Coach + Pilot Teachers</td><td>June 30, 2026</td><td style="color:var(--ink-soft);">⬜ Upcoming</td></tr>
+      <tr><td style="font-weight:700;color:var(--gold);">M4.4</td><td>Pilot Retrospective #1</td><td>Coach + Pilot Teachers</td><td>June 30, 2026</td><td style="color:var(--ink-soft);">⬜ Upcoming</td></tr>
+      <tr><td style="font-weight:700;color:var(--gold);">M4.5</td><td>Pilot Cycle 2 (revised protocol)</td><td>Coach + Pilot Teachers</td><td>July 28, 2026</td><td style="color:var(--ink-soft);">⬜ Upcoming</td></tr>
+      <tr><td style="font-weight:700;color:var(--gold);">M4.6</td><td>Pilot Retrospective #2 &amp; protocol lock</td><td>Coach + Pilot Teachers</td><td>July 31, 2026</td><td style="color:var(--ink-soft);">⬜ Upcoming</td></tr>
+      <tr style="background:var(--accent-soft);">
+        <td style="font-weight:700;color:var(--accent);">M5–M12</td>
+        <td colspan="2">Full school-wide rollout: GoGuardian training, quarterly design sprints, mid-year audit, ML/IEP differentiation audit, re-survey, year-end showcase</td>
+        <td>Aug 2026 – May 2027</td>
+        <td style="color:var(--accent);font-weight:700;">📋 Planned</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+
+<!-- ═══════════════════ 10. CHANGES ═══════════════════ -->
+<section id="changes">
+  <span class="h2-tag">Section 10 · Rubric Weight: 20%</span>
+  <h2>Learning Design Changes Going Forward</h2>
+
+  <p>Based on my findings, peer and instructor feedback, and experience from this project, I would make the following practical changes to the learning design and technology implementation plan:</p>
+
+  <div class="nar-grid">
+    <div class="nar-card solution">
+      <div class="nar-label">Changes Based on Findings</div>
+      <ul>
+        <li><strong>Observation protocol rewrite:</strong> Add explicit "notice, don't advise" language to every coaching card. The pilot session and the literature both confirmed that evaluative observation kills experimentation.</li>
+        <li><strong>Dashboard build acceleration:</strong> Move the Looker Studio build one week earlier. PLCs without shared data default to opinion-based discussions, which the literature shows are less effective.</li>
+        <li><strong>Structured observation templates:</strong> Replace pure audio transcription with a printed one-page look-for template aligned to SAMR bands. This produces analyzable quantitative data alongside qualitative coaching dialogue.</li>
+      </ul>
+    </div>
+    <div class="nar-card challenge">
+      <div class="nar-label">Changes Based on Peer/Instructor Feedback</div>
+      <ul>
+        <li><strong>Don't collapse the sprint into the PLC:</strong> A cohort member warned that merging the design sprint into regular PLCs would kill the "playful frame." I will maintain the sprint as a separate, protected 90-minute block.</li>
+        <li><strong>Surface ML/IEP earlier:</strong> A cohort member noted that differentiation should not be "buried at Q3." I will add ML/IEP sub-bullets to the coaching focus in Cycles 1–3 (Q1) as a parallel awareness thread, even though the dedicated focus remains in Q3.</li>
+        <li><strong>Asynchronous pre-work:</strong> Instructor feedback suggested that foundational tech-skills training (GoGuardian basics, dashboard navigation) should move to asynchronous video libraries, freeing synchronous coaching time for higher-order design work.</li>
+      </ul>
+    </div>
+    <div class="nar-card works">
+      <div class="nar-label">Changes Based on Experience</div>
+      <ul>
+        <li><strong>Pilot as co-design:</strong> Framing the pilot as "help me break this before we roll it out" rather than "try this program" produced dramatically higher engagement. I will use this framing for the schoolwide launch.</li>
+        <li><strong>Photo + audio documentation:</strong> Adding photographic evidence alongside audio transcripts makes artifacts richer and more persuasive for stakeholders.</li>
+        <li><strong>Custom survey over Google Forms:</strong> Building the survey as a web application gave more control over data structure and made the results page a shareable artifact for admin.</li>
+      </ul>
+    </div>
+    <div class="nar-card next">
+      <div class="nar-label">Changes for Year 2 Planning</div>
+      <ul>
+        <li><strong>Teacher-led PLCs:</strong> By Q3 of Year 1, lead teachers should be facilitating PLCs without the coach present. This is the sustainability model the Digital Promise research validated.</li>
+        <li><strong>Student voice in the sprint:</strong> Year 2 design thinking sprints should include student co-designers. The empathize step currently uses teacher-reported student data; student presence would make it more authentic.</li>
+        <li><strong>Cross-school coaching network:</strong> If Greenfield's model succeeds, the coaching dashboard and protocol can be adapted for other campuses in the network.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════ 11. RECOMMENDATIONS ═══════════════════ -->
+<section id="recommendations">
+  <span class="h2-tag">Section 11 · Rubric Weight: 20%</span>
+  <h2>Next Steps &amp; Recommendations</h2>
+
+  <p>The following practical and actionable recommendations are directed to the leadership of Greenfield Preparatory Middle School and, where applicable, to the broader school network.</p>
+
+  <h3>Immediate Next Steps (June–August 2026)</h3>
+  <ol>
+    <li><strong>Complete the Looker Studio dashboard build</strong> (M3) by July 3. The dashboard must be populated with real pilot data — not sample data — before the first PLC meeting in August. This is the highest-priority technical deliverable.</li>
+    <li><strong>Run the full pilot cohort</strong> (M4) through two complete coaching cycles each by July 31. The four pilot teachers (Ms. Ortiz, Mr. Patel, Ms. Mariscal, Mr. Guzman) should complete both cycles using the revised protocol with structured observation templates.</li>
+    <li><strong>Secure the Newsela subscription</strong> before August. The ML/IEP differentiation strand depends on it.</li>
+    <li><strong>Schedule the GoGuardian training</strong> during the August pre-service PD week, using the "Pocket Check" PD session design from Module 41.</li>
+    <li><strong>Publish the schoolwide launch plan</strong> based on the pilot retrospective data. This plan should include the coaching schedule, PLC restructuring timeline, and the first quarterly design sprint prompt.</li>
+  </ol>
+
+  <h3>Medium-Term Recommendations (2026–2027 School Year)</h3>
+  <ol>
+    <li><strong>Fund the EdTech Coach position as a dedicated FTE.</strong> The pilot data from July should be used to make the business case: coaching produces measurable changes that software purchases alone cannot. The statistical research (r = −0.276 for PD hours vs. integration) is the strongest evidence that the current model is failing.</li>
+    <li><strong>Restructure PLC meetings</strong> using the data routine protocol. This requires no additional budget — only a change in the meeting agenda. Every PLC should start with a dashboard on the wall, not a slide deck.</li>
+    <li><strong>Administer the re-survey in April 2027</strong> using the same instrument deployed in April 2026. This provides the longitudinal data needed to measure the program's impact on teacher confidence, tool usage, and differentiation practice.</li>
+    <li><strong>Host the year-end showcase in May 2027.</strong> Each teacher presents one creation lesson from the year. The showcase doubles as the program's public evidence base and a recruiting event for Year 2.</li>
+  </ol>
+
+  <h3>Long-Term Recommendations (Beyond Year 1)</h3>
+  <ol>
+    <li><strong>Scale the coaching model to additional campuses</strong> using the Looker Studio dashboard, coaching protocol cards, and PLC data routine as a replicable kit. The coaching program was deliberately designed to be portable.</li>
+    <li><strong>Transition to teacher-led coaching</strong> by Year 2. Lead teachers who complete 12 coaching cycles should be equipped to run peer coaching slots, reducing dependence on a single coach.</li>
+    <li><strong>Integrate AI literacy</strong> into the coaching program. The literature review identified emerging AI integration as a gap that coaches will need to address. A Year 2 sprint prompt might be: "Redesign one assessment so AI helps students learn, not just answer."</li>
+    <li><strong>Connect coaching data to student outcome data.</strong> The current dashboard tracks teacher-level inputs (cycles completed, PLC participation). Year 2 should add student-level outputs (MAP/ERB score changes, student-work quality rubrics) to close the loop between coaching and learning.</li>
+  </ol>
+
+  <div class="pull">The most important recommendation is the simplest: <strong>keep coaching.</strong> The research is unambiguous — sustained, job-embedded coaching outperforms every other PD format studied. The program does not need to be perfect in Year 1. It needs to be present, consistent, and responsive to data. Everything else is iteration.</div>
+</section>
+
+
+<!-- ═══════════════════ 12. SUBMISSIONS INDEX ═══════════════════ -->
+<section id="submissions">
+  <span class="h2-tag">Section 12 · Rubric Weight: 20%</span>
+  <h2>Capstone Project Submissions Index</h2>
+
+  <p>The following is a complete index of all capstone project submissions, updated where necessary based on findings during the implementation phase. Each artifact is linked for direct access.</p>
+
+  <h3>Phase I — Technology Infrastructure Survey (Module 40)</h3>
+  <div class="artifact-grid">
+    <div class="artifact-item">
+      <div class="art-title">📊 EdTech &amp; Coaching Needs Survey (Interactive)</div>
+      <div class="art-desc">Custom web application deployed to 18 teachers + 4 administrators. Captures tech infrastructure, device usage, confidence levels, coaching preferences, and admin priorities. Built as a live data-capture tool.</div>
+      <a href="capstone.html" target="_blank">Open artifact →</a>
+    </div>
+    <div class="artifact-item">
+      <div class="art-title">📊 Survey Results Analysis</div>
+      <div class="art-desc">Formatted HTML report with raw responses from all 22 respondents plus aggregated tallies: top challenges, PD requests, coaching interest, and confidence distributions.</div>
+      <a href="Victor_Moronu_Survey_Results_EdTech_Needs.html" target="_blank">Open artifact →</a>
+    </div>
+    <div class="artifact-item">
+      <div class="art-title">📊 Survey Results (Excel Data)</div>
+      <div class="art-desc">Raw spreadsheet with all survey response data, formula-driven tallies, and visual bar distributions.</div>
+      <a href="Victor_Moronu_Survey_Results_EdTech_Needs.xlsx" target="_blank">Open artifact →</a>
+    </div>
+  </div>
+
+  <h3>Phase I — Professional Development &amp; Coaching Plans (Module 41)</h3>
+  <div class="artifact-grid">
+    <div class="artifact-item">
+      <div class="art-title">📋 PD &amp; Coaching Template</div>
+      <div class="art-desc">Four PD session proposals and two individual coaching recommendations with 5-meeting arcs. Uses Jim Knight's Instructional Coaching Cycle, GROW, TPACK, and SAMR models.</div>
+      <a href="Victor_Moronu_TEACH-NOW_PD_Coaching_Template.html" target="_blank">Open artifact →</a>
+    </div>
+    <div class="artifact-item">
+      <div class="art-title">🎓 Canva for Teachers — PD Training</div>
+      <div class="art-desc">Complete professional development training artifact with video, 5 classroom examples, teacher/student perspectives, and embedded feedback survey. Demonstrates PD delivery capacity.</div>
+      <a href="canva-training.html" target="_blank">Open artifact →</a>
+    </div>
+    <div class="artifact-item">
+      <div class="art-title">📋 Coaching Survey (Additional)</div>
+      <div class="art-desc">Additional coaching needs survey and analysis supporting the PD design decisions.</div>
+      <a href="coaching_survey.html" target="_blank">Open artifact →</a>
+    </div>
+  </div>
+
+  <h3>Phase II — Learning Design Solution (Module 42)</h3>
+  <div class="artifact-grid">
+    <div class="artifact-item">
+      <div class="art-title">📄 Learning Design Solution &amp; Technology Plan</div>
+      <div class="art-desc">The primary capstone document: three-layer coaching architecture, learner journey visualization, Gantt timeline, 12 milestones, budget, risks, and evaluation metrics.</div>
+      <a href="Victor_Moronu_M42U4A1_Capstone_Learning_Design_Tech_Plan.html" target="_blank">Open artifact →</a>
+    </div>
+    <div class="artifact-item">
+      <div class="art-title">📄 Phase I Learning Design</div>
+      <div class="art-desc">Audience analysis, learning gap identification, goal setting, ID model review. Foundation document.</div>
+      <a href="Victor_Moronu_M42U3_Phase_I_Learning_Design.html" target="_blank">Open artifact →</a>
+    </div>
+    <div class="artifact-item">
+      <div class="art-title">📄 ADDIE Instructional Model</div>
+      <div class="art-desc">Completed ADDIE analysis aligning instructional design theory with the coaching architecture.</div>
+      <a href="Victor_Moronu_ADDIE_Instructional_Model_Template.html" target="_blank">Open artifact →</a>
+    </div>
+    <div class="artifact-item">
+      <div class="art-title">📄 Design Thinking Reflection</div>
+      <div class="art-desc">Annotated reflection on the d.school design thinking crash course — directly informs the quarterly sprint design.</div>
+      <a href="Victor_Moronu_M42U3A1_Design_Thinking_Reflection.html" target="_blank">Open artifact →</a>
+    </div>
+    <div class="artifact-item">
+      <div class="art-title">📄 Peer Review — Algo-Heuristic Theory</div>
+      <div class="art-desc">Peer review analyzing algorithmic vs. heuristic instructional approaches — informs the separation of routine procedures from heuristic coaching.</div>
+      <a href="Victor_Moronu_Peer_Review_AlgoHeuristic.html" target="_blank">Open artifact →</a>
+    </div>
+    <div class="artifact-item">
+      <div class="art-title">📝 Notes &amp; Reflection — M42U3A1</div>
+      <div class="art-desc">Detailed notes and personal reflection from the design thinking module, capturing iterative thinking.</div>
+      <a href="M42U3A1_Notes_and_Reflection.html" target="_blank">Open artifact →</a>
+    </div>
+  </div>
+
+  <h3>Phase III — Implementation &amp; Research (Module 43)</h3>
+  <div class="artifact-grid">
+    <div class="artifact-item">
+      <div class="art-title">📄 Action Research Report</div>
+      <div class="art-desc">Week 1 implementation report with milestone tracker, artifacts gallery, literature review of 5 key articles, photographic evidence, and action research narrative.</div>
+      <a href="Victor_Moronu_M42U5_Action_Research_Report.html" target="_blank">Open artifact →</a>
+    </div>
+    <div class="artifact-item">
+      <div class="art-title">📊 Literature Review Spreadsheet</div>
+      <div class="art-desc">Structured spreadsheet cataloging 14 research articles with themes, purpose, data, reliability, and implementation relevance.</div>
+      <a href="Victor_Moronu_Literature_Review.html" target="_blank">Open artifact →</a>
+    </div>
+    <div class="artifact-item">
+      <div class="art-title">🎤 Capstone Pitch Presentation</div>
+      <div class="art-desc">Interactive 14-slide presentation with animated statistics, teacher quotes, pyramid solution model, implementation roadmap, and cost analysis.</div>
+      <a href="Victor_Moronu_M43U2_Capstone_Pitch_Presentation.html" target="_blank">Open artifact →</a>
+    </div>
+    <div class="artifact-item">
+      <div class="art-title">🎙️ Pilot Coaching Session Transcript</div>
+      <div class="art-desc">Raw audio transcript of the LEGO/engineering coaching prototype session. Captures real coaching dialogue, frustration management, and peer learning dynamics.</div>
+      <a href="New%20Text%20Document.txt" target="_blank">Open transcript →</a>
+    </div>
+    <div class="artifact-item">
+      <div class="art-title">📄 Final Capstone Report (this document)</div>
+      <div class="art-desc">Comprehensive final report addressing all rubric criteria with evidence, analysis, and recommendations.</div>
+      <a href="Victor_Moronu_Final_Capstone_Report.html">This document</a>
+    </div>
+  </div>
+
+  <h3>Photographic Evidence</h3>
+  <div class="photo-gallery">
+    <div>
+      <img src="IMG_3892.jpeg" alt="Pilot coaching session — collaborative building" loading="lazy">
+      <div class="photo-caption">Collaborative building — observation phase</div>
+    </div>
+    <div>
+      <img src="IMG_3893.jpeg" alt="Pilot coaching session — peer discussion" loading="lazy">
+      <div class="photo-caption">Peer coaching — solution strategies</div>
+    </div>
+    <div>
+      <img src="IMG_3894.jpeg" alt="Pilot coaching session — completed artifact" loading="lazy">
+      <div class="photo-caption">Completed prototype — reflect &amp; apply</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════ 13. REFERENCES ═══════════════════ -->
+<section id="references">
+  <span class="h2-tag">Section 13</span>
+  <h2>References</h2>
+
+  <ol class="bib-list">
+    <li>Amemasor, S. K., Oppong, S. O., Ghansah, B., Benuwa, B.-B., &amp; Agbeko, M. (2025). The influence of digital professional development and professional learning communities in the relationship between school digital preparedness and digital instructional integration. <em>PLoS ONE.</em> <a href="https://doi.org/10.1371/journal.pone.0328883" target="_blank">https://doi.org/10.1371/journal.pone.0328883</a></li>
+
+    <li>Author(s). (n.d.). Exploring the role of instructional coaching in a shifting classroom technology landscape. <em>ERIC</em> (EJ1472024). <a href="https://files.eric.ed.gov/fulltext/EJ1472024.pdf" target="_blank">https://files.eric.ed.gov/fulltext/EJ1472024.pdf</a></li>
+
+    <li>Author(s). (n.d.). Quality EdTech professional development for K-12 classroom practice. <em>Journal of Digital Education &amp; Technology.</em> <a href="https://www.jdet.net/download/quality-edtech-professional-development-for-k12-classroom-practice-14809.pdf" target="_blank">https://www.jdet.net/download/quality-edtech-professional-development-for-k12-classroom-practice-14809.pdf</a></li>
+
+    <li>Author(s). (n.d.). The effects of coaching teachers to integrate technology. <em>Elementary Education Online.</em> <a href="https://www.ilkogretim-online.org/index.php/pub/article/view/7400" target="_blank">https://www.ilkogretim-online.org/index.php/pub/article/view/7400</a></li>
+
+    <li>Author(s). (n.d.). Digital storytelling in economics subjects. <em>ERIC</em> (EJ1407229). <a href="https://files.eric.ed.gov/fulltext/EJ1407229.pdf" target="_blank">https://files.eric.ed.gov/fulltext/EJ1407229.pdf</a></li>
+
+    <li>Author(s). (n.d.). Enhancing classroom learning: The impact of AI-based instructional strategies on student engagement and outcomes. <em>IJRISS.</em> <a href="https://rsisinternational.org/journals/ijriss/articles/enhancing-classroom-learning-the-impact-of-ai-based-instructional-strategies-on-student-engagement-and-outcomes/" target="_blank">https://rsisinternational.org/journals/ijriss/</a></li>
+
+    <li>Author(s). (n.d.). The impact of teacher professional development programs incorporating educational technology. <em>Journal FKIP UCY.</em> <a href="https://jurnal.ucy.ac.id/index.php/fkip/article/view/2544" target="_blank">https://jurnal.ucy.ac.id/index.php/fkip/article/view/2544</a></li>
+
+    <li>Author(s). (n.d.). Meta-analysis of using technology in mathematics education. <em>Education Sciences, 15</em>(11), 1544. <a href="https://www.mdpi.com/2227-7102/15/11/1544" target="_blank">https://www.mdpi.com/2227-7102/15/11/1544</a></li>
+
+    <li>Author(s). (n.d.). The strategic paradigm of purposeful screen time in K-12 education. <em>Let's Go Learn.</em> <a href="https://www.letsgolearn.com/math-assessment/the-strategic-paradigm-of-purposeful-screen-time-in-k-12-education-2024-2026-comprehensive-analysis/" target="_blank">https://www.letsgolearn.com</a></li>
+
+    <li>Author(s). (n.d.). The impact of student-centered learning on academic motivation and achievement. <em>ResearchGate.</em> <a href="https://www.researchgate.net/publication/376973509" target="_blank">https://www.researchgate.net/publication/376973509</a></li>
+
+    <li>Costa, A. L., &amp; Garmston, R. J. (2016). <em>Cognitive coaching: Developing self-directed leaders and learners</em> (3rd ed.). Rowman &amp; Littlefield.</li>
+
+    <li>Digital Promise. (2018, August 13). <em>Fostering powerful use of technology through instructional coaching.</em> <a href="https://digitalpromise.org/2018/08/13/fostering-powerful-use-of-technology-through-instructional-coaching/" target="_blank">https://digitalpromise.org</a></li>
+
+    <li>Engageli. (2024). Active learning statistics 2026. <a href="https://www.engageli.com/blog/active-learning-statistics-2026" target="_blank">https://www.engageli.com/blog/active-learning-statistics-2026</a></li>
+
+    <li>Knowles, M. S. (1984). <em>The adult learner: A neglected species</em> (3rd ed.). Gulf Publishing.</li>
+
+    <li>Mishra, P., &amp; Koehler, M. J. (2006). Technological pedagogical content knowledge: A framework for teacher knowledge. <em>Teachers College Record, 108</em>(6), 1017–1054.</li>
+
+    <li>Puentedura, R. R. (n.d.). <em>SAMR model.</em> <a href="http://hippasus.com/rrpweblog/" target="_blank">http://hippasus.com/rrpweblog/</a></li>
+
+    <li>Theobald, E. J., Hill, M. J., Tran, E., et al. (2020). Active learning narrows achievement gaps for underrepresented students in undergraduate science, technology, engineering, and math. <em>Proceedings of the National Academy of Sciences, 117</em>(12), 6476–6483. <a href="https://doi.org/10.1073/pnas.1916903117" target="_blank">https://doi.org/10.1073/pnas.1916903117</a></li>
+
+    <li>Zhang, L., Yang, C., &amp; Zheng, Y. (2025). Digital competence for sustainable education of pre-service teachers: A systematic literature review (2014–2024). <em>Frontiers in Psychology, 16</em>, Article 1710983. <a href="https://doi.org/10.3389/fpsyg.2025.1710983" target="_blank">https://doi.org/10.3389/fpsyg.2025.1710983</a></li>
+  </ol>
+</section>
+
+
+<!-- ═══════════════════ CONCLUSION ═══════════════════ -->
+<section>
+  <span class="h2-tag">Conclusion</span>
+  <h2>Final Thoughts</h2>
+
+  <p>This capstone project began with a simple observation: Greenfield Preparatory Middle School invested in technology, but not in the people who use it. The survey confirmed the observation with data. The PD plans proposed a response. The learning design engineered a system. And the implementation phase tested that system against reality.</p>
+
+  <p>The three most important lessons from this project are:</p>
+
+  <ol>
+    <li><strong>Data changes conversations.</strong> Before the survey, the coaching program was an idea. After the survey, it was a response to documented teacher need. The difference between an idea and a mandate is evidence.</li>
+    <li><strong>Coaching is not training.</strong> The literature is unambiguous: more PD hours do not produce better integration. Active, job-embedded coaching does. The negative correlation (r = −0.276) between PD hours and integration quality is the most important number in this report.</li>
+    <li><strong>Plans are starting points, not endpoints.</strong> The implementation phase produced five concrete modifications to the original plan — each traceable to a specific research finding or pilot observation. A plan that does not change in contact with reality is a plan that is not listening.</li>
+  </ol>
+
+  <p>The EdTech Coaching Program at Greenfield Prep is not finished. Milestones M2–M4 are in progress; the schoolwide rollout begins in August; the year-end showcase is nine months away. But the foundation — the survey data, the coaching architecture, the research base, the pilot protocol, and the administrative support — is in place. What remains is the work itself: one teacher, one cycle, one instructional move at a time.</p>
+
+  <div class="pull" style="border-color:var(--green); background:var(--green-soft);">"Technology will not replace great teachers, but technology in the hands of great teachers can be transformational." The purpose of this coaching program is to put technology not just in teachers' hands, but in their heads — where it becomes a design tool, not a delivery device.</div>
+</section>
+
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<div class="footer-rule">Final Capstone Report · Educational Technology · Victor Moronu · Moreland University · June 2, 2026</div>
+
+</div>
+</body>
+</html>
